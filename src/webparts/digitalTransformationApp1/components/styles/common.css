@@ -1,0 +1,146 @@
+
+@font-face {
+  font-family: 'ABBvoiceOffice';
+  src: url('../../assets/ABBvoiceOffice_Rg.ttf') format('ttf');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply ABB font to entire application */
+html,
+body,
+.page,
+.page * {
+  font-family: 'ABBvoiceOffice';
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    line-height: 1;
+}
+
+.btn-primary {
+    background: #0078d4;
+    color: #fff;
+}
+
+table, td, th {
+  border: 1px solid #929c9f4f !important;
+}
+
+table {
+  border-collapse: collapse !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-header {
+    display: flex;
+    align-items: start;
+    /* margin-bottom: 20px; */
+    flex-direction: column;
+}
+
+.page-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0078d4;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+div#projectDetails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+div#projectDetails p {
+    margin: 0px;
+    padding: 5px;
+    width: calc(50% - 20px);
+}
+
+.from-group-box label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+
+textarea,
+select,
+input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.table-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+
+    margin-bottom: 20px;
+}
+
+.tableColp4 {
+    flex: 1 1 32%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .tableColp4 {
+        flex: 1 1 100%;
+        /* full width on mobile */
+    }
+}
+
+
+
+
+
+
+
+
+

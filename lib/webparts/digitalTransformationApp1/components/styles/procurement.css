@@ -1,0 +1,2235 @@
+/* ============================================================ */
+/* PROCUREMENT MODULE - EXTERNAL STYLESHEET                     */
+/* ------------------------------------------------------------ */
+/* STICKY MODEL: OUTER-STICK (page-level scroll).               */
+/*   * The page itself scrolls - there is NO inner vertical     */
+/*     scroll box (no max-height + overflow:auto on the table). */
+/*   * The main "Procurement Tracker" page header is sticky at  */
+/*     top:0. When you scroll, the table header runs up, touches*/
+/*     the main header and pins just below it.                  */
+/*   * The table header uses position:sticky with a CSS custom  */
+/*     property (--sticky-header-top) equal to the main header  */
+/*     height, set from JS.                                     */
+/*   * No per-cell JS "inner" offset is used.                   */
+/* ============================================================ */
+
+/* ---------- BASE ---------- */
+
+@font-face {
+  font-family: 'ABBvoiceOffice';
+  src: url('../../assets/ABBvoiceOffice_Rg.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply ABB font to entire application */
+html,
+body,
+.project-page,
+.project-page *,
+.page,
+.page * {
+  font-family: 'ABBvoiceOffice';
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+/* ---------- MAIN / TABLE PAGE HEADER (outer sticky) ---------- */
+/*   ✅ SAME AS DCS (screenshot): title "Procurement Tracker" pinned on
+     the LEFT, "+ Add Procurement" button on the RIGHT - ONE single row.
+     NOTE: written with maximum selector specificity + !important on
+     every layout property, because the shared/global stylesheets (their
+     own .page-header / h1 rules) were re-centring the title and stacking
+     the button on a second row. These rules beat any global styling.  */
+
+/* Layer 1 - exact DOM chain incl. every helper class (highest wins) */
+.project-page.fade-in .table-section.card .page-header.stick,
+.project-page .table-section .page-header.stick,
+.project-page .table-section .page-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  text-align: left !important;
+  gap: 12px;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: #fff;
+  padding: 12px 0 15px 0;
+  margin: 0 0 25px 0;
+  border-bottom: 2px solid #e9ecef;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Layer 2 - safety net if the wrapper classes differ at runtime */
+.table-section .page-header,
+.page-header.stick {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  text-align: left !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Title - LEFT (order 1). Every property !important so no global
+   h1 / .page-header h1 rule (centred text, width:100%, float,
+   absolute positioning...) can push it back to the middle. */
+.project-page.fade-in .table-section.card .page-header.stick h1,
+.project-page .table-section .page-header h1,
+.table-section .page-header h1 {
+  order: 1 !important;
+  margin: 0 10px !important;
+  padding: 0 !important;
+  border: none !important;
+  color: #0078d4 !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+  flex: 0 1 auto !important;
+  width: auto !important;
+  max-width: 65%;
+  min-width: 0;
+  position: static !important;
+  float: none !important;
+  transform: none !important;
+  align-self: center !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* "+ Add Procurement" button - RIGHT (order 2), SAME row as the title */
+.project-page.fade-in .table-section.card .page-header .page-header-left,
+.project-page .table-section .page-header .page-header-left,
+.table-section .page-header .page-header-left {
+  order: 2 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  margin: 0 0 0 auto !important;
+  padding: 0 !important;
+  flex: 0 0 auto !important;
+  position: static !important;
+  float: none !important;
+  text-align: right !important;
+}
+
+.project-page .table-section .page-header .page-header-left .show-form-btn {
+  white-space: nowrap;
+  margin: 0 10px;
+}
+
+.project-page .table-section .page-header .page-header-left .show-form-btn {
+  font-size: 13px;
+  text-transform: none;
+  letter-spacing: 0.3px;
+}
+
+/* ---------- MODERN TABLE (base look) ---------- */
+.modern-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+  min-width: 1800px;
+}
+
+.modern-table th {
+  background: #f3f2f1;
+  text-align: center;
+  padding: 11px 10px;
+  font-weight: 600;
+  border-bottom: 2px solid #e1e1e1;
+  color: #212529;
+}
+
+.modern-table td {
+  padding: 9px 8px;
+  border-bottom: 1px solid #e9ecef;
+  border-right: 1px solid #f0f0f0;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.modern-table tbody tr:hover {
+  background: #fafafa;
+}
+
+/* ============================================================ */
+/* MAIN TABLE - SCROLL WRAPPER                                  */
+/*   Outer-sticky model: the PAGE itself scrolls vertically.    */
+/*   The wrapper must NOT be a scroll container, otherwise the  */
+/*   sticky header would pin relative to the wrapper instead of */
+/*   the viewport (causing it to appear in the middle of the    */
+/*   table). So we keep overflow:visible on both axes and let   */
+/*   the page scroll. The wide table overflows and the page     */
+/*   scrolls horizontally, so the frozen left columns stick to  */
+/*   the viewport's left edge.                                  */
+/* ============================================================ */
+.table-scroll-wrapper.main-table-scroll {
+  position: relative;
+  overflow: auto;              /* was: visible  -> now: inner scroll */
+  max-height: 70vh;            /* table body height cap            */
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background: #fff;
+  /* smooth momentum scrolling on touch devices */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---------- STICKY TABLE HEADER (outer-sticky, below main header) ---------- */
+.main-table-scroll .modern-table thead.sticky-main-header th {
+  position: sticky !important;
+  position: -webkit-sticky !important;
+  top: 0 !important;           /* was: var(--sticky-header-top)    */
+  z-index: 20 !important;
+  background: #f3f2f1;
+  border-bottom: 2px solid #e1e1e1;
+  border-right: 1px solid #e1e1e1;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.08);
+  white-space: nowrap;
+}
+
+/* ---------- STICKY LEFT COLUMNS ---------- */
+.main-table-scroll .modern-table .sticky-main-col {
+  position: sticky !important;
+  position: -webkit-sticky !important;
+  z-index: 5 !important;
+  background: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
+.main-table-scroll .modern-table .sticky-main-col.main-col-1 {
+  left: 0;
+  width: 140px;
+  min-width: 140px;
+  max-width: 140px;
+}
+
+.main-table-scroll .modern-table .sticky-main-col.main-col-2 {
+  left: 140px;
+  width: 160px;
+  min-width: 160px;
+  max-width: 160px;
+}
+
+.main-table-scroll .modern-table .sticky-main-col.main-col-3 {
+  left: 300px;
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
+}
+
+.main-table-scroll .modern-table .sticky-main-col.main-col-4 {
+  left: 500px;
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+}
+
+.main-table-scroll .modern-table .sticky-main-col.main-col-5 {
+  left: 650px;
+  width: 160px;
+  min-width: 160px;
+  max-width: 160px;
+  border-right: 2px solid #d0d0d0;
+  box-shadow: 2px 0 4px -2px rgba(0, 0, 0, 0.12);
+}
+
+/* Header + left frozen corner cells sit above both */
+.main-table-scroll .modern-table thead.sticky-main-header th.sticky-main-col {
+  z-index: 30 !important;
+  background: #f3f2f1;
+}
+
+.main-table-scroll .modern-table thead.sticky-main-header tr:last-child th {
+  border-bottom: 2px solid #e1e1e1;
+}
+
+/* Keep frozen cells opaque on row hover */
+.main-table-scroll .modern-table tbody tr:hover .sticky-main-col {
+  background: #fafafa;
+}
+
+#procurementBody .sticky-main-col .clickable-link {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+#procurementBody .project-name-text {
+  color: #212529;
+  font-weight: 500;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .main-table-scroll .modern-table .sticky-main-col {
+    -webkit-sticky: sticky;
+  }
+}
+
+/* ============================================================ */
+/* TABLE ACTIONS & FILTERS                                      */
+/*   Two-row layout like the reference:                         */
+/*     row 1 = label-less filter dropdowns + red Reset Filter   */
+/*     row 2 = action buttons (Export Excel, etc.)              */
+/* ============================================================ */
+
+
+.table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.table-actions .filter-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 15px;
+  align-items: end;
+  width: 100%;
+}
+
+.tableColp4 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tableColp4 select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 14px;
+  background: #fff;
+  color: #212529;
+  appearance: auto;
+}
+
+.tableColp4 select:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+  outline: none;
+}
+
+/* Reset Filter - red, fills its grid cell */
+.table-actions .filter-row .tableColp4.action-col {
+  justify-content: stretch;
+}
+
+.table-actions .filter-row .tableColp4.action-col .clear-filters-btn {
+  width: 100%;
+  height: 40px;
+}
+
+/* Row 2 - action buttons (kept below the dropdowns) */
+.table-actions .filter-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.table-actions .filter-actions-row .filter-actions-spacer {
+  flex: 1 1 auto;
+}
+
+/* Shared look for the action buttons */
+.table-actions .clear-filters-btn,
+.table-actions .export-excel-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 160px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  padding: 0 16px !important;
+  margin: 0 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  border-radius: 6px !important;
+}
+
+/* ============================================================ */
+/* BUTTONS                                                      */
+/* ============================================================ */
+.btn-primary,
+.btn-secondary {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-primary {
+  background: #0078d4;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #005a9e;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: #e1e1e1;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background: #ccc;
+  transform: translateY(-1px);
+}
+
+/* Coloured action buttons */
+.clear-filters-btn {
+  background-color: #dc3545 !important;
+  color: #fff !important;
+}
+
+.clear-filters-btn:hover {
+  background-color: #c82333 !important;
+}
+
+.export-excel-btn {
+  background-color: #17a2b8 !important;
+  color: #fff !important;
+}
+
+.export-excel-btn:hover {
+  background-color: #138496 !important;
+}
+
+/* ============================================================ */
+/* PAGINATION (legacy rules - kept for compatibility;           */
+/* the live pagination bar now uses .proc-pg-* classes below)   */
+/* ============================================================ */
+.pagination {
+  margin-top: 15px;
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: end;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border: none;
+  background: #e1e1e1;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background: #ccc;
+}
+
+.pagination button.active {
+  background: #0078d4;
+  color: #fff;
+}
+
+.pagination-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.pagination-row .pagination {
+  margin-top: 0;
+}
+
+.page-size-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #495057;
+}
+
+.page-size-selector label {
+  font-weight: 600;
+}
+
+.page-size-select {
+  padding: 5px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  background: #fff;
+}
+
+.pagination-info {
+  margin: 0 10px;
+  color: #666;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+
+
+/* ============================================================ */
+/* ACTION BUTTONS (View, Edit, Delete)                          */
+/* ============================================================ */
+.actions-cell {
+  display: flex;
+  gap: 5px;
+}
+
+.view-btn,
+.edit-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.view-btn {
+  background: #0078d4;
+  color: white;
+}
+
+.view-btn:hover {
+  background: #106ebe;
+}
+
+.edit-btn {
+  background-color: #ff9800;
+  color: #fff;
+}
+
+.edit-btn:hover {
+  background-color: #e68900;
+}
+
+/* ============================================================ */
+/* PROCUREMENT EDIT TABLE - FIXED HEADER & STICKY COLUMNS       */
+/* ============================================================ */
+.procurement-inputs {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.table-container {
+  overflow: auto;
+  max-height: 600px;
+  position: relative;
+}
+
+.procurement-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  min-width: 2200px;
+  font-size: 13px;
+}
+
+.procurement-table th,
+.procurement-table td {
+  border: 1px solid #e1e1e1;
+  padding: 6px 8px;
+  text-align: left;
+  white-space: nowrap;
+  min-width: 80px;
+}
+
+.procurement-table th {
+  background: #f3f2f1;
+  font-weight: 600;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* ============================================================ */
+/* 🔍 TABLE SEARCH BAR (above the line-item table)              */
+/*   ✅ Replaces the old "Filter Description..." input that used */
+/*   to sit inside the Description header cell. This box        */
+/*   searches EVERY column of the Edit / View procurement       */
+/*   table (description, quantities, status, make, model, all   */
+/*   Plan / Actual / Forecast dates and remarks).               */
+/* ============================================================ */
+.proc-table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.proc-search-wrapper {
+  position: relative;
+  flex: 0 1 420px;
+  min-width: 220px;
+}
+
+.proc-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: #6c757d;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.proc-table-search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 34px 9px 34px;
+  border: 1px solid #cfd8df;
+  border-radius: 20px;
+  background: #fff;
+  color: #212529;
+  font-size: 13px;
+  line-height: 1.2;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.proc-table-search::placeholder {
+  color: #8a949c;
+  opacity: 1;
+}
+
+.proc-table-search:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, .18);
+}
+
+.proc-search-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #dfe5ea;
+  color: #44586b;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.proc-search-clear:hover {
+  background: #0078d4;
+  color: #fff;
+}
+
+.proc-search-count {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+/* Sticky columns (left) - header & data */
+.procurement-table .sticky-col {
+  position: sticky;
+  z-index: 5;
+  background: white;
+}
+
+.procurement-table .sticky-col.col-1 {
+  left: 0;
+  min-width: 150px;
+  z-index: 15;
+}
+
+.procurement-table .sticky-col.col-2 {
+  left: 150px;
+  min-width: 80px;
+  z-index: 15;
+}
+
+.procurement-table .sticky-col.col-3 {
+  left: 230px;
+  min-width: 80px;
+  z-index: 15;
+}
+
+.procurement-table .sticky-col.col-4 {
+  left: 310px;
+  min-width: 120px;
+  z-index: 15;
+}
+
+.procurement-table .sticky-col.col-5 {
+  left: 430px;
+  min-width: 100px;
+  z-index: 15;
+}
+
+.procurement-table .sticky-col.col-6 {
+  left: 530px;
+  min-width: 100px;
+  z-index: 15;
+}
+
+.procurement-table thead .sticky-col {
+  z-index: 20 !important;
+  background: #f3f2f1;
+}
+
+.procurement-table thead .sticky-col.col-1,
+.procurement-table thead .sticky-col.col-2,
+.procurement-table thead .sticky-col.col-3,
+.procurement-table thead .sticky-col.col-4,
+.procurement-table thead .sticky-col.col-5,
+.procurement-table thead .sticky-col.col-6 {
+  z-index: 25 !important;
+}
+
+.procurement-table tfoot td.sticky-footer {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background: white;
+  border-right: 2px solid #e1e1e1;
+}
+
+.procurement-table tbody tr:hover {
+  background: #f5f5f5;
+}
+
+.procurement-table tbody tr:hover .sticky-col {
+  background: #f5f5f5;
+}
+
+/* View mode */
+.view-mode .procurement-table thead th {
+  background: #e9ecef;
+}
+
+.view-mode .procurement-table tbody td {
+  background: #f8f9fa;
+}
+
+.view-mode .procurement-table tbody .sticky-col {
+  background: #f8f9fa !important;
+}
+
+.view-mode .procurement-table tbody tr:hover .sticky-col {
+  background: #e9ecef !important;
+}
+
+.view-mode .procurement-table thead .sticky-col {
+  background: #e9ecef !important;
+}
+
+.procurement-table .form-control {
+  width: 100%;
+  min-width: 60px;
+  padding: 4px 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+.procurement-table .form-control:focus {
+  border-color: #0078d4;
+  outline: none;
+  box-shadow: 0 0 3px rgba(0, 120, 212, 0.3);
+}
+
+.procurement-table input[type="date"] {
+  min-width: 90px;
+}
+
+.procurement-table input[type="number"] {
+  min-width: 60px;
+  text-align: right;
+}
+
+/* Overdue actual date */
+.procurement-table input.actual-overdue,
+.procurement-table input.actual-overdue:focus {
+  border: 2px solid #dc3545 !important;
+  background-color: #fff5f5 !important;
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2) !important;
+}
+
+.procurement-table .view-field.actual-overdue {
+  border: 2px solid #dc3545 !important;
+  background-color: #fff5f5 !important;
+  color: #dc3545;
+  font-weight: 600;
+}
+
+/* Status display */
+.status-text-display {
+  padding: 4px 8px;
+  background: #eef6ff;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #0078d4;
+  display: inline-block;
+  min-width: 100px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.status-text-display.delivered {
+  background: #e8f5e8;
+  color: #1b5e20;
+}
+
+.status-auto-note {
+  display: block;
+  font-size: 9px;
+  color: #6c757d;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+/* Add / remove row */
+.add-procurement-row {
+  padding: 4px 12px;
+  font-size: 12px;
+}
+
+.remove-row {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.remove-row:hover {
+  background: #c82333;
+}
+
+/* Engg Qty greyed */
+.engg-qty-disabled {
+  background-color: #e9ecef !important;
+  color: #6c757d !important;
+  cursor: not-allowed !important;
+  opacity: 0.7;
+}
+
+.engg-qty-disabled::placeholder {
+  color: #adb5bd !important;
+}
+
+.engg-qty-wrapper {
+  position: relative;
+}
+
+.engg-qty-wrapper .lock-icon {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.engg-qty-wrapper .engg-qty-input {
+  padding-right: 22px;
+}
+
+/* Status badge */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  display: inline-block;
+}
+
+.status-badge[data-status="RFQ Pending"] {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-badge[data-status="Offer Pending"] {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.status-badge[data-status="TC pending"] {
+  background-color: #e8f5e8;
+  color: #388e3c;
+}
+
+.status-badge[data-status="Order Closure pending"] {
+  background-color: #fce4ec;
+  color: #c2185b;
+}
+
+.status-badge[data-status="PR pending"] {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.status-badge[data-status="PO pending"] {
+  background-color: #e0f2f1;
+  color: #00796b;
+}
+
+.status-badge[data-status="Document Approval Pending"] {
+  background-color: #fff8e1;
+  color: #ff8f00;
+}
+
+.status-badge[data-status="MFC Pending"] {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+}
+
+.status-badge[data-status="Inspection Pending"] {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.status-badge[data-status="Dispatch Pending"] {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+}
+
+.status-badge[data-status="Delivery Pending"] {
+  background-color: #fce4ec;
+  color: #880e4f;
+}
+
+.status-badge[data-status="Delivered"] {
+  background-color: #e8f5e8;
+  color: #1b5e20;
+}
+
+/* View field */
+.procurement-page .view-field {
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+.procurement-page .description-view {
+  max-width: 200px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.procurement-page .description-view:hover {
+  position: relative;
+  z-index: 1000;
+  background: white;
+  border: 1px solid #0078d4;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  white-space: normal;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: visible;
+  word-wrap: break-word;
+}
+
+.procurement-page .view-mode .form-control {
+  background-color: #f8f9fa !important;
+  border-color: #e9ecef !important;
+  cursor: not-allowed;
+}
+
+.procurement-page .remarks-view {
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+/* Clickable link */
+#procurementBody .clickable-link {
+  color: #0078d4 !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  display: inline-block !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+}
+
+#procurementBody .clickable-link:hover {
+  color: #0056b3 !important;
+  background-color: rgba(0, 120, 212, 0.08) !important;
+  text-decoration: underline;
+}
+
+#procurementBody td:first-child,
+#procurementBody td:nth-child(2) {
+  padding: 8px 12px !important;
+}
+
+/* ============================================================ */
+/* PROJECT INFO WRAPPER (edit form)                             */
+/*   ✅ TWO-COLUMN layout (user request): LEFT = Select Project / */
+/*   Project Reference / Project Center. RIGHT = Project Manager */
+/*   / Group Head / Customer. The "Project" row after the        */
+/*   dropdown was removed (it duplicated the selection). The     */
+/*   "Existing Data Found" alert is forced to its own full-width */
+/*   row BELOW both columns (flex-wrap + flex-basis 100%).       */
+/* ============================================================ */
+.project-info-wrapper {
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  padding: 20px 24px;
+  margin-bottom: 25px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0 48px;
+}
+
+/* LEFT column */
+.project-info-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* RIGHT column - same styling as the left one */
+.project-info-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.project-info-left .detail-item,
+.project-info-right .detail-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #f0f0f0;
+  text-align: left;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.project-info-left .detail-item:last-child,
+.project-info-right .detail-item:last-child {
+  border-bottom: none;
+}
+
+.project-info-left .detail-label,
+.project-info-right .detail-label {
+  font-weight: 700;
+  white-space: nowrap;
+  min-width: 140px;
+  color: #495057;
+  font-size: 13px;
+}
+
+.project-info-left .detail-value,
+.project-info-right .detail-value {
+  font-weight: 500;
+  color: #212529;
+  font-size: 14px;
+  padding-left: 10px;
+}
+
+/* Alert ("Existing Data Found!") always gets its own full-width row
+   below the two columns */
+.project-info-wrapper .alert-info,
+.project-info-wrapper #existingDataAlert {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+.project-select-container .project-select {
+  padding: 6px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: white;
+  width: 100%;
+  max-width: 400px;
+}
+
+.project-select-container .project-select:focus {
+  border-color: #0078d4;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 120, 212, 0.25);
+}
+
+.project-select-container .project-select:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.edit-mode .project-select-container select {
+  background-color: #f8f9fa !important;
+  color: #666 !important;
+  border-color: #d0d0d0 !important;
+  cursor: not-allowed !important;
+}
+
+/* ============================================================ */
+/* ALERT / FORM ACTIONS / TOTAL COLUMN                          */
+/* ============================================================ */
+.alert-info {
+  background-color: #e3f2fd;
+  border-left: 4px solid #0078d4;
+  padding: 12px 16px;
+  border-radius: 4px;
+  color: #0056b3;
+  font-size: 13px;
+  margin-top: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.alert-info strong {
+  font-weight: 600;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+  justify-content: flex-end;
+}
+
+.form-actions .btn-primary,
+.form-actions .btn-secondary {
+  padding: 10px 24px;
+  font-size: 14px;
+}
+
+.total-line-items-col {
+  text-align: center;
+  font-weight: 600;
+  background-color: #f0f7ff;
+  min-width: 80px;
+}
+
+/* ============================================================ */
+/* STICKY EDIT FORM TITLE                                       */
+/* ============================================================ */
+/* Sticky flex header for the Add / Edit / View modes:
+   title on the left (shrinks + ellipsis), top Save button on the right. */
+.form-section .page-header {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 16px !important;
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff !important;
+  padding: 12px 20px !important;
+  margin: 0 0 15px 0 !important;
+  border-bottom: 2px solid #0078d4;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.form-section #formTitle {
+  margin: 0 !important;
+  position: relative;
+  z-index: 1001;
+  /* ✅ title may shrink + ellipsis so the button never gets pushed off-screen */
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  color: #0078d4 !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  line-height: 1.3;
+}
+
+/* Top Save button - flush right in the header, never shrinks */
+.proc-btn-save-top {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  align-self: center !important;
+  white-space: nowrap !important;
+  font-size: 13px !important;
+  padding: 8px 16px !important;
+  min-height: 36px;
+  max-height: 40px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================ */
+/* IMPORT MODAL                                                 */
+/* ============================================================ */
+.import-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.import-modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.import-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 15px;
+}
+
+.import-modal-header h3 {
+  margin: 0;
+  color: #0078d4;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #666;
+  padding: 0 10px;
+  transition: all 0.2s ease;
+}
+
+.close-modal:hover {
+  color: #333;
+  transform: scale(1.1);
+}
+
+.import-section {
+  margin-bottom: 25px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.import-section h4 {
+  margin: 0 0 10px 0;
+  color: #495057;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.import-section p {
+  margin: 0 0 12px 0;
+  color: #6c757d;
+  font-size: 13px;
+}
+
+.file-upload-area {
+  border: 2px dashed #0078d4;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.file-upload-area:hover {
+  background: #e3f2fd;
+  border-color: #0056b3;
+}
+
+.file-upload-area.dragover {
+  background: #e3f2fd;
+  border-color: #0056b3;
+  border-style: solid;
+}
+
+.upload-icon {
+  font-size: 48px;
+  color: #0078d4;
+  margin-bottom: 15px;
+}
+
+.upload-icon.error {
+  color: #dc3545;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-info {
+  margin-top: 15px;
+  padding: 12px;
+  background: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.file-info.success {
+  border-color: #28a745;
+  background: #d4edda;
+  color: #155724;
+}
+
+.file-info.error {
+  border-color: #dc3545;
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.upload-progress {
+  margin-top: 15px;
+  display: none;
+}
+
+.progress-bar {
+  height: 6px;
+  background: #e9ecef;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #0078d4;
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.error-list {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  display: none;
+}
+
+.error-list.show {
+  display: block;
+}
+
+.error-list .error-title {
+  color: #721c24;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.error-list .error-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.error-list .error-items li {
+  color: #721c24;
+  font-size: 13px;
+  padding: 4px 0 4px 20px;
+  position: relative;
+}
+
+.error-list .error-items li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.error-list .error-items li.error-critical {
+  font-weight: 600;
+  color: #dc3545;
+}
+
+.error-list .error-items li.error-warning {
+  color: #856404;
+}
+
+.error-list .error-items li.error-info {
+  color: #0c5460;
+}
+
+.success-list {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  display: none;
+}
+
+.success-list.show {
+  display: block;
+}
+
+.success-list .success-title {
+  color: #155724;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.success-list .success-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.success-list .success-items li {
+  color: #155724;
+  font-size: 13px;
+  padding: 2px 0 2px 20px;
+  position: relative;
+}
+
+.success-list .success-items li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #28a745;
+  font-weight: bold;
+}
+
+.import-preview {
+  margin: 15px 0;
+}
+
+.preview-table-container {
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+}
+
+.preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.preview-table th {
+  background: #e9ecef;
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.preview-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #dee2e6;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.preview-table tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.preview-table tbody tr:hover {
+  background: #e3f2fd;
+}
+
+.preview-table .row-valid {
+  border-left: 3px solid #28a745;
+}
+
+.preview-table .row-invalid {
+  border-left: 3px solid #dc3545;
+  background: #fff5f5 !important;
+}
+
+.preview-table .row-invalid td {
+  color: #721c24;
+}
+
+.import-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.import-actions .btn-primary:disabled,
+.import-actions .btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.import-status {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 6px;
+  display: none;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.import-status.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  display: block;
+}
+
+.import-status.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  display: block;
+}
+
+.import-status.warning {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffc107;
+  display: block;
+}
+
+.import-status.info {
+  background: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+  display: block;
+}
+
+/* ============================================================ */
+/* DCS-STYLE PAGINATION BAR (.proc-pg-*)  ✅ NEW                */
+/*   Layout: LEFT = Show[size] per page + "Showing X-Y of N"    */
+/*   badge with range chip + solid-blue count chip.             */
+/*   RIGHT = "Page X of Y" info pill + « ‹ [tiles] › » icons    */
+/*   with windowed 5 page tiles and dots.                       */
+/* ============================================================ */
+.proc-pg-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: linear-gradient(180deg, #fbfcfd 0%, #f4f6f8 100%);
+  border: 1px solid #e3e8ee;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .04);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.proc-pg-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.proc-pg-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.proc-pg-icon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #44586b;
+  border: 1px solid #cfd8df;
+  border-radius: 8px;
+  font-size: 15px;
+  line-height: 1;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.proc-pg-icon:hover:not(:disabled) {
+  background: #0078d4;
+  border-color: #0078d4;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 120, 212, .35);
+  transform: translateY(-1px);
+}
+
+.proc-pg-icon:disabled {
+  background: #f1f3f5;
+  border-color: #e9ecef;
+  color: #b4bcc4;
+  cursor: not-allowed;
+  opacity: 1;
+  box-shadow: none;
+}
+
+.proc-pg-info {
+  display: inline-flex;
+  align-items: center;
+  background: #eef2f6;
+  border: 1px solid #e3e8ee;
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #44586b;
+  white-space: nowrap;
+}
+
+.proc-pg-info span {
+  color: #005a9e;
+  font-weight: 700;
+}
+
+.proc-pg-pages {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.proc-pg-number {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #cfd8df;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #44586b;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.proc-pg-number:hover:not(.active) {
+  border-color: #0078d4;
+  color: #0078d4;
+  background: #f0f7ff;
+}
+
+.proc-pg-number.active {
+  background: #0078d4;
+  border-color: #0078d4;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 120, 212, .35);
+}
+
+.proc-pg-number.dots {
+  border: none;
+  background: transparent;
+  cursor: default;
+  color: #8a8f94;
+}
+
+.proc-pg-size {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid #cfd8df;
+  border-radius: 20px;
+  padding: 4px 6px 4px 14px;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+  flex: 0 0 auto;
+}
+
+.proc-pg-size label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #44586b;
+  white-space: nowrap;
+}
+
+.proc-pg-size>span {
+  font-size: 12.5px;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+.proc-pg-size-select {
+  padding: 4px 8px;
+  border: 1px solid #cfd8df;
+  border-radius: 14px;
+  background: #f8f9fa;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #212529;
+  cursor: pointer;
+}
+
+.proc-pg-total {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #cfd8df;
+  border-radius: 20px;
+  padding: 7px 9px 7px 14px;
+  font-size: 12.5px;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+.proc-pg-total .proc-pg-range {
+  background: #e8f1fb;
+  color: #005a9e;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 2px 10px;
+}
+
+.proc-pg-total .proc-pg-count {
+  background: #0078d4;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 2px 10px;
+  box-shadow: 0 1px 3px rgba(0, 120, 212, .35);
+}
+
+/* ============================================================ */
+/* VIEW (👁️ View) ACTION BUTTON - green w/ text, same as DCS ✅  */
+/*   Overrides the legacy fixed 28x28 .view-btn sizing above.    */
+/* ============================================================ */
+.proc-view-btn {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  white-space: nowrap;
+  transition: all .2s ease;
+}
+
+.proc-view-btn:hover {
+  background-color: #218838;
+}
+
+/* ============================================================ */
+/* LOADING STATE (spinner + text, same pattern as Inventory) ✅  */
+/* ============================================================ */
+.proc-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.proc-loading-spinner {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border: 3px solid #e1e4e8;
+  border-top-color: #0078d4;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: procSpin .8s linear infinite;
+}
+
+.proc-loading-text {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+@keyframes procSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================ */
+/* RESPONSIVE                                                   */
+/* ============================================================ */
+@media (max-width: 768px) {
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .project-info-left .detail-item,
+  .project-info-right .detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 0;
+  }
+
+  .project-info-left .detail-label,
+  .project-info-right .detail-label {
+    min-width: auto;
+    margin-bottom: 2px;
+    font-size: 12px;
+  }
+
+  .project-info-left .detail-value,
+  .project-info-right .detail-value {
+    padding-left: 0;
+    font-size: 13px;
+  }
+
+  .project-info-wrapper {
+    padding: 15px;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .project-info-left,
+  .project-info-right {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .project-select-container .project-select {
+    max-width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+
+  .procurement-table {
+    min-width: 1600px;
+    font-size: 11px;
+  }
+
+  .proc-table-toolbar {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .proc-search-wrapper {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .proc-table-search {
+    font-size: 12px;
+    padding: 8px 30px 8px 30px;
+  }
+
+  .procurement-table .sticky-col.col-1 {
+    left: 0;
+    min-width: 100px;
+  }
+
+  .procurement-table .sticky-col.col-2 {
+    left: 100px;
+    min-width: 60px;
+  }
+
+  .procurement-table .sticky-col.col-3 {
+    left: 160px;
+    min-width: 60px;
+  }
+
+  .procurement-table .sticky-col.col-4 {
+    left: 220px;
+    min-width: 100px;
+  }
+
+  .procurement-table .sticky-col.col-5 {
+    left: 320px;
+    min-width: 80px;
+  }
+
+  .procurement-table .sticky-col.col-6 {
+    left: 400px;
+    min-width: 80px;
+  }
+
+  .procurement-table th,
+  .procurement-table td {
+    padding: 4px 6px;
+    font-size: 11px;
+    min-width: 60px;
+  }
+
+  .procurement-table input[type="date"] {
+    min-width: 70px;
+    font-size: 10px;
+  }
+
+  .procurement-table .form-control {
+    font-size: 10px;
+    min-width: 40px;
+    padding: 2px 4px;
+  }
+
+  .status-text-display {
+    font-size: 10px;
+    min-width: 70px;
+    padding: 2px 4px;
+  }
+
+  #procurementBody .clickable-link {
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+
+  .table-actions {
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .table-actions .filter-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-page .table-section .page-header {
+    justify-content: space-between;
+  }
+
+  .project-page .table-section .page-header .page-header-left {
+    order: 2;
+  }
+
+  .procurement-page .description-view {
+    max-width: 120px;
+  }
+
+  .table-container {
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .procurement-table {
+    min-width: 1400px;
+    font-size: 10px;
+  }
+
+  .procurement-table th,
+  .procurement-table td {
+    padding: 3px 4px;
+    min-width: 50px;
+  }
+
+  .procurement-table .sticky-col.col-1 {
+    min-width: 80px;
+  }
+
+  .procurement-table .sticky-col.col-2 {
+    left: 80px;
+    min-width: 50px;
+  }
+
+  .procurement-table .sticky-col.col-3 {
+    left: 130px;
+    min-width: 50px;
+  }
+
+  .procurement-table .sticky-col.col-4 {
+    left: 180px;
+    min-width: 80px;
+  }
+
+  .procurement-table .sticky-col.col-5 {
+    left: 260px;
+    min-width: 60px;
+  }
+
+  .procurement-table .sticky-col.col-6 {
+    left: 320px;
+    min-width: 60px;
+  }
+
+  .procurement-table input[type="date"] {
+    min-width: 60px;
+    font-size: 9px;
+  }
+
+  /* Very narrow screens: allow the header to wrap; the title stays
+     LEFT-aligned and the button stays on the RIGHT (margin-left:auto). */
+  .project-page.fade-in .table-section.card .page-header.stick {
+    flex-wrap: wrap !important;
+  }
+
+  .project-page.fade-in .table-section.card .page-header.stick h1 {
+    white-space: normal;
+    text-align: left !important;
+  }
+}
+
+/* ============================================================ */
+/* SORTABLE HEADERS - first 5 columns (same as DCS) ✅          */
+/*   Project Reference / Customer / Project / Group Head /      */
+/*   Project Manager: click toggles asc -> desc; the active     */
+/*   direction is a solid blue box w/ white arrow + glow, the   */
+/*   opposite arrow is dimmed. Blanks sort last.                */
+/* ============================================================ */
+#procurementTable thead.sticky-main-header th.proc-sortable-th {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color .15s ease;
+}
+
+#procurementTable thead.sticky-main-header th.proc-sortable-th:hover {
+  background: #dce7f5;
+}
+
+.proc-th-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  vertical-align: middle;
+}
+
+.proc-th-text {
+  white-space: nowrap;
+}
+
+.proc-sort-arrows {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+
+.proc-sort-arrows .proc-arrow-up,
+.proc-sort-arrows .proc-arrow-down {
+  width: 15px;
+  height: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* ✅ PERFECT CENTRING (same as dcs / seibies / inventory / invoicing): the ABB webfont
+     has uneven ▲/▼ glyph metrics that push the triangles off-centre inside the box. A
+     neutral system font + a zero-height line box (flex centres it) keeps the arrow
+     exactly in the middle of its box. */
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 8px;
+  line-height: 0;
+  letter-spacing: 0;
+  text-indent: 0;
+  vertical-align: middle;
+  color: #44586b;
+  background: #fff;
+  border: 1px solid #8fa3b0;
+  border-radius: 3px;
+  box-sizing: border-box;
+  transition: all .15s ease;
+}
+
+#procurementTable th.proc-sortable-th:hover .proc-arrow-up,
+#procurementTable th.proc-sortable-th:hover .proc-arrow-down {
+  border-color: #0078d4;
+  color: #0078d4;
+}
+
+.main-table-scroll .modern-table thead.sticky-main-header th.proc-sorted-asc,
+.main-table-scroll .modern-table thead.sticky-main-header th.proc-sorted-desc {
+  background: #cfe2ff !important;
+  color: #003e7e;
+  box-shadow: inset 0 -3px 0 #0078d4;
+}
+
+#procurementTable th.proc-sorted-asc .proc-arrow-up {
+  background: #0078d4;
+  border-color: #005a9e;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 120, 212, .45);
+}
+
+#procurementTable th.proc-sorted-asc .proc-arrow-down {
+  opacity: .55;
+}
+
+#procurementTable th.proc-sorted-desc .proc-arrow-down {
+  background: #0078d4;
+  border-color: #005a9e;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 120, 212, .45);
+}
+
+#procurementTable th.proc-sorted-desc .proc-arrow-up {
+  opacity: .55;
+}
+
+/* Count-column headers: wrap long status names (same as DCS) instead of
+   stretching the table; arrows stay beside the wrapped text. */
+.main-table-scroll .modern-table thead.sticky-main-header th.proc-count-th {
+  white-space: normal;
+  width: 112px;
+  min-width: 96px;
+  max-width: 150px;
+  padding: 8px 6px;
+}
+
+#procurementTable th.proc-count-th .proc-th-text {
+  white-space: normal !important;
+  display: inline-block;
+  min-width: 110px;
+  max-width: 150px;
+  line-height: 1.25;
+}
+
+/* =====================================================================
+   ✅ ADD / EDIT FORM TITLE - same blue title style as DCS / the main
+   table header. The old title rules only covered .table-section, so the
+   form header ("Add Procurement" / "Edit Procurement Plan - ...") fell
+   back to the default black browser h1. Same left-aligned blue 22px.
+   ===================================================================== */
+.project-page .form-section .page-header h1 {
+  margin: 0 !important;
+  color: #0078d4 !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+}

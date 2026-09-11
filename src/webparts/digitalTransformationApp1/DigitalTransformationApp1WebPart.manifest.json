@@ -1,0 +1,23 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "8ae6c5d5-6688-4569-83dd-c55ce43cc8ae",
+  "alias": "DigitalTransformationApp1WebPart",
+  "componentType": "WebPart",
+  "version": "1.0.0",
+  "manifestVersion": 2,
+  "requiresCustomScript": false,
+  "supportedHosts": ["SharePointWebPart", "TeamsPersonalApp", "TeamsTab", "SharePointFullPage"],
+  "supportsThemeVariants": true,
+  "preconfiguredEntries": [
+    {
+      "title": { "default": "DigitalTransformationApp1" },
+      "description": { "default": "DigitalTransformationApp1 description" },
+      "officeFabricIconFontName": "Page",
+      "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+      "group": { "default": "Advanced" },
+      "properties": {
+        "page": "dashboard"
+      }
+    }
+  ]
+}

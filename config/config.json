@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "digital-transformation-app-1-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/digitalTransformationApp1/DigitalTransformationApp1WebPart.js",
+          "manifest": "./src/webparts/digitalTransformationApp1/DigitalTransformationApp1WebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "DigitalTransformationApp1WebPartStrings": "lib/webparts/digitalTransformationApp1/loc/{locale}.js"
+  }
+}

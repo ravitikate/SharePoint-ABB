@@ -1,0 +1,55 @@
+{
+  "id": "8ae6c5d5-6688-4569-83dd-c55ce43cc8ae",
+  "alias": "DigitalTransformationApp1WebPart",
+  "componentType": "WebPart",
+  "version": "1.0.0",
+  "manifestVersion": 2,
+  "requiresCustomScript": false,
+  "supportedHosts": [
+    "SharePointWebPart",
+    "TeamsPersonalApp",
+    "TeamsTab",
+    "SharePointFullPage"
+  ],
+  "supportsThemeVariants": true,
+  "preconfiguredEntries": [
+    {
+      "title": {
+        "default": "DigitalTransformationApp1"
+      },
+      "description": {
+        "default": "DigitalTransformationApp1 description"
+      },
+      "officeFabricIconFontName": "Page",
+      "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+      "group": {
+        "default": "Advanced"
+      },
+      "properties": {
+        "page": "dashboard"
+      }
+    }
+  ],
+  "loaderConfig": {
+    "internalModuleBaseUrls": [
+      "<!-- PATH TO CDN -->"
+    ],
+    "entryModuleId": "digital-transformation-app-1-web-part",
+    "scriptResources": {
+      "digital-transformation-app-1-web-part": {
+        "type": "path",
+        "path": "digital-transformation-app-1-web-part.js"
+      },
+      "@microsoft/sp-core-library": {
+        "type": "component",
+        "id": "7263c7d0-1d6a-45ec-8d85-d4d1d234171b",
+        "version": "1.21.1"
+      },
+      "@microsoft/sp-webpart-base": {
+        "type": "component",
+        "id": "974a7777-0990-4136-8fa6-95d80114c2e0",
+        "version": "1.21.1"
+      }
+    }
+  }
+}

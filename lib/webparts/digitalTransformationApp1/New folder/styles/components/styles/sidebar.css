@@ -1,0 +1,9 @@
+.dt-sidebar {
+  background: #f3f2f1;
+  padding: 10px;
+  width: 200px;
+  float: left;
+}
+.dt-sidebar ul { list-style: none; padding: 0; }
+.dt-sidebar li { margin: 5px 0; }
+.dt-sidebar a { text-decoration: none; color: #0078d4; }
