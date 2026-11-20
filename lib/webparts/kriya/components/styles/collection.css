@@ -1,0 +1,3469 @@
+/* ============================================ */
+/* COLLECTION - Current Name Collection Styles   */
+/* ============================================ */
+
+@font-face {
+  font-family: 'ABBvoiceOffice';
+  src: url('../../assets/ABBvoiceOffice_Rg.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply ABB font to entire application */
+html,
+body,
+.collection-page,
+.collection-page * {
+  font-family: 'ABBvoiceOffice';
+}
+
+
+/* Large screens (default) */
+.collection-month-columns-table {
+  min-width: 1800px;
+}
+
+/* Medium screens */
+@media (max-width: 1400px) {
+  .collection-month-columns-table {
+    min-width: 1600px;
+  }
+
+  .collection-table-actions-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .collection-pagination-controls {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+/* Small screens */
+@media (max-width: 1024px) {
+  .collection-month-columns-table {
+    min-width: 1400px;
+  }
+
+  .collection-table-actions-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .collection-table-container {
+    overflow-x: auto;
+  }
+
+  .collection-pagination-navigation {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .collection-pagination-info {
+    margin: 5px;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 768px) {
+  .collection-month-columns-table {
+    min-width: 1200px;
+    font-size: 10px;
+  }
+
+  .collection-table-actions-row {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-table-actions {
+    padding: 10px;
+  }
+
+  .collection-pagination-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .collection-pagination-navigation {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .collection-pagination-pages {
+    order: -1;
+    margin: 10px 0;
+  }
+
+  .collection-control-btn {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+  }
+
+  .collection-value-display {
+    font-size: 10px;
+  }
+
+  .collection-form-row {
+    flex-direction: column;
+  }
+
+  .collection-form-group {
+    flex: 1 1 100%;
+  }
+
+  .collection-detailed-months-row {
+    flex-direction: column;
+  }
+
+  .collection-current-month-container,
+  .collection-next-months-container {
+    max-width: 100%;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .collection-month-columns-table {
+    min-width: 1000px;
+  }
+
+  .collection-page-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .collection-btn-primary,
+  .collection-btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+
+  .collection-pagination-btn {
+    padding: 6px 8px;
+    min-width: 60px;
+    font-size: 12px;
+  }
+
+  .collection-page-number {
+    padding: 6px 8px;
+    min-width: 30px;
+    font-size: 12px;
+  }
+}
+
+/* ===== ENHANCED SORT BUTTON STYLES ===== */
+.collection-sort-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 0px;
+}
+
+.collection-header-label {
+  font-weight: 600;
+  font-size: 10px;
+  white-space: normal !important;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  vertical-align: middle;
+  line-height: 1.25;
+}
+
+.collection-sort-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-left: 4px;
+}
+
+.collection-sort-btn {
+  align-items: center;
+  background: hsl(0deg 3.91% 74.92% / 15%);
+  border: 1px solid hsla(0, 0%, 100%, .3);
+  border-radius: 1px;
+  color: #768912fa;
+  cursor: pointer;
+  display: flex;
+  font-size: 6px;
+  height: 10px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  transition: all .2s ease;
+  width: 12px;
+}
+
+.collection-form-actions {
+  margin: 14px 16px;
+}
+
+.collection-month-subheader .collection-sort-btn {
+  background: rgba(0, 120, 212, 0.1);
+  border: 1px solid rgba(0, 120, 212, 0.3);
+  color: #0078d4;
+}
+
+.collection-sort-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.collection-month-subheader .collection-sort-btn:hover {
+  background: rgba(0, 120, 212, 0.2);
+}
+
+.collection-sort-btn.collection-sort-asc.active,
+.collection-sort-btn.collection-sort-desc.active {
+  background: #28a745;
+  color: white;
+  border-color: #28a745;
+}
+
+.collection-sort-btn:active {
+  transform: scale(0.95);
+}
+
+/* ===== SCROLL CONTAINER (sticky headers only work inside this) ===== */
+.collection-table-container {
+  max-height: 70vh;            /* table body height cap */
+  overflow: auto;              /* was: visible (page-scroll) */
+  border: 1px solid #cfd8dc;
+  border-radius: 6px;
+  background: #fff;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+/* legacy class kept for safety (if any other markup uses it) */
+.collection-table-scroll {
+  max-height: 70vh;
+  overflow: auto;
+  border: 1px solid #cfd8dc;
+}
+
+/* ===== STICKY HEADERS (vertical) ===== */
+
+/* All header cells stick to top; JS sets the exact `top` per row */
+.collection-month-columns-table thead th,
+.collection-month-columns-table thead td {
+  position: sticky;
+  top: 0;
+  /* fallback; JS refines per-row */
+  z-index: 10;
+  /* above scrolling body cells */
+  background-clip: padding-box;
+}
+
+/* Corner cells = sticky LEFT + sticky TOP → must be on top of everything */
+.collection-month-columns-table thead .collection-freeze-col,
+.collection-month-columns-table thead .collection-project-ref-col,
+.collection-month-columns-table thead .collection-customer-col,
+.collection-month-columns-table thead .collection-project-col,
+.collection-month-columns-table thead .collection-gh-col,
+.collection-month-columns-table thead .collection-pm-col,
+.collection-month-columns-table thead .collection-obl-col {
+  z-index: 15 !important;
+  /* above both header row and left columns */
+}
+
+/* Body left-sticky cells stay below headers */
+.collection-month-columns-table tbody .collection-freeze-col,
+.collection-month-columns-table tbody .collection-project-ref-col,
+.collection-month-columns-table tbody .collection-customer-col,
+.collection-month-columns-table tbody .collection-project-col,
+.collection-month-columns-table tbody .collection-gh-col,
+.collection-month-columns-table tbody .collection-pm-col,
+.collection-month-columns-table tbody .collection-obl-col {
+  z-index: 2;
+}
+
+button.collection-show-form-btn {
+  display: none;
+}
+
+/* ===== HISTORICAL TOGGLE — PLAIN ARROW ===== */
+.collection-toggle-historical-btn {
+  width: 34px !important;
+  height: 30px !important;
+  min-width: 34px !important;
+  padding: 0 !important;
+  border: 1px solid #dee2e6 !important;
+  border-radius: 4px !important;
+  background-color: #f8f9fa !important;
+  color: #495057 !important;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.collection-toggle-historical-btn:hover {
+  background-color: #e9ecef !important;
+  border-color: #adb5bd !important;
+}
+
+.collection-toggle-arrow {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+/* Expanded → arrow points UP */
+.collection-toggle-historical-btn.expanded .collection-toggle-arrow {
+  transform: rotate(180deg);
+}
+
+/* ===== UNIFORM ACTION BUTTONS ===== */
+.collection-import-actual-btn,
+.collection-export-btn,
+.collection-export-historical-btn,
+.collection-clear-filters-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 38px !important;
+  min-width: 160px !important;
+  padding: 10px 20px !important;
+  border: 1px solid #605EEE !important;
+  border-radius: 999px !important;
+  background: #605EEE !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, .08) !important;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease !important;
+}
+
+.collection-import-actual-btn:hover:not(:disabled),
+.collection-export-btn:hover:not(:disabled),
+.collection-export-historical-btn:hover:not(:disabled),
+.collection-clear-filters-btn:hover:not(:disabled) {
+  background: #4C49E0 !important;
+  border-color: #4C49E0 !important;
+  box-shadow: 0 4px 10px rgba(96, 94, 238, .22) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ===== ENHANCED RESPONSIVE DESIGN ===== */
+@media (max-width: 1400px) {
+  .collection-month-columns-table {
+    min-width: 1600px;
+  }
+
+  .collection-header-label {
+    font-size: 9px;
+  }
+
+  .collection-sort-btn {
+    width: 11px;
+    height: 9px;
+    font-size: 5px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .collection-month-columns-table {
+    min-width: 1400px;
+  }
+
+  .collection-sort-header-container {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .collection-sort-buttons-container {
+    flex-direction: row;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .collection-month-columns-table {
+    min-width: 1200px;
+  }
+
+  .collection-header-label {
+    font-size: 8px;
+  }
+
+  .collection-sort-btn {
+    width: 10px;
+    height: 8px;
+    font-size: 4px;
+  }
+}
+
+/* ===== TABLE CONTROLS ===== */
+.collection-table-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  margin-top: 2px;
+}
+
+.collection-control-btn.collection-sort-btn {
+  width: 14px;
+  height: 12px;
+  border: 1px solid #ccc;
+  background: #f8f9fa;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7px;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  padding: 0;
+  line-height: 1;
+}
+
+.collection-control-btn.collection-sort-btn:hover {
+  background: #0078d4;
+  color: white;
+  border-color: #0078d4;
+  transform: scale(1.1);
+}
+
+.collection-control-btn.collection-sort-btn.collection-sort-asc.active {
+  background: #28a745;
+  color: white;
+  border-color: #28a745;
+}
+
+.collection-control-btn.collection-sort-btn.collection-sort-desc.active {
+  background: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+
+.collection-control-btn.collection-sort-btn:active {
+  transform: scale(0.95);
+}
+
+/* Enhanced table cell styling */
+.collection-month-columns-table td {
+  padding: 3px 4px !important;
+  /* was 6px 3px */
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.collection-value-with-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 45px;
+}
+
+.collection-value-display {
+  font-weight: 600;
+  font-size: 10px;
+  color: white;
+  margin-bottom: 2px;
+  text-align: center;
+}
+
+/* Improved header styling */
+.collection-project-info-cell,
+.collection-month-column-header {
+  background: #0078d4;
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 6px 3px;
+  border: 1px solid #ddd !important;
+  position: relative;
+}
+
+.collection-month-subheader {
+  background: #e3f2fd;
+  color: #0078d4;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 5px 2px;
+  border: 1px solid #ddd !important;
+}
+
+/* Specific cell styling */
+.collection-receivable-cell,
+.collection-collection-cell {
+  font-weight: 700;
+  background: #f8f9fa !important;
+  color: #2c3e50;
+}
+
+.collection-total-cell {
+  font-weight: 600;
+  background: #e8f4fd !important;
+}
+
+.collection-month-data-cell {
+  background: white;
+  transition: background-color 0.2s ease;
+}
+
+.collection-month-data-cell:hover {
+  background: #f0f7ff !important;
+}
+
+/* Sort indicator animation */
+@keyframes collectionSortPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.collection-control-btn.collection-sort-btn.active {
+  animation: collectionSortPulse 0.3s ease;
+}
+
+/* Action buttons refinement */
+.collection-action-buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 3px;
+  min-height: 100%;
+}
+
+.collection-edit-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 4px 6px;
+  background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 50px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 1.1;
+}
+
+.collection-edit-action-btn:hover {
+  background: linear-gradient(135deg, #106ebe 0%, #005a9e 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.collection-edit-icon {
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.collection-edit-text {
+  white-space: nowrap;
+  font-size: 8px;
+}
+
+/* Zebra striping for better readability */
+.collection-month-columns-table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.collection-month-columns-table tbody tr:nth-child(odd) {
+  background: white;
+}
+
+.collection-month-columns-table tbody tr:hover {
+  background: #f0f7ff !important;
+}
+
+/* ===== CORE LAYOUT & COMPONENTS ===== */
+.collection-hidden-section {
+  display: none !important;
+}
+
+.collection-visible-section {
+  display: block !important;
+}
+
+.collection-collection-section.collection-visible-section {
+  display: block;
+}
+
+.collection-obl-section-container.collection-visible-section {
+  display: block;
+}
+
+/* ===== OBL BREAKDOWN ===== */
+.collection-obl-breakdown-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.collection-obl-breakdown-section h4 {
+  margin: 0 0 15px 0;
+  color: #0078d4;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.collection-obl-breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.collection-obl-breakdown-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.collection-obl-breakdown-item label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.collection-obl-breakdown-input {
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 12px;
+  text-align: center;
+  background: #f8f9fa !important;
+  color: #6c757d !important;
+  cursor: not-allowed;
+}
+
+/* ===== LOCK (#/freeze) COLUMN HEADER ===== */
+.collection-month-columns-table thead th.collection-freeze-col {
+  font-size: 10px !important;
+  /* match .collection-header-label */
+  font-weight: 600 !important;
+  color: #495057 !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 2px !important;
+  white-space: normal !important;
+  line-height: 1.2 !important;
+}
+
+/* ===== CARD ===== */
+.collection-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: relative; /* host for the loading overlay (master.ts pattern) */
+}
+
+/* ===== TABLE ACTIONS & FILTERS ===== */
+.collection-table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.collection-table-actions-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 15px;
+  align-items: end;
+}
+
+.collection-tableColp4 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.collection-tableColp4 label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 4px;
+}
+
+.collection-tableColp4 select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  background: #fff;
+  width: 100%;
+}
+
+/* ===== BUTTONS & ACTIONS ===== */
+.collection-btn-primary {
+  background: #0078d4;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.collection-btn-primary:hover:not(:disabled) {
+  background: #106ebe;
+  transform: translateY(-1px);
+}
+
+.collection-btn-primary:disabled {
+  background: #a19f9d;
+  cursor: not-allowed;
+}
+
+.collection-btn-secondary {
+  background: #6c757d;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.collection-btn-secondary:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+.collection-clear-filters-btn {
+  background: #dc3545 !important;
+}
+
+.collection-clear-filters-btn:hover {
+  background: #c82333 !important;
+}
+
+.collection-import-actual-btn {
+  background: #28a745 !important;
+}
+
+.collection-import-actual-btn:hover {
+  background: #218838 !important;
+}
+
+.collection-export-btn {
+  background: #17a2b8 !important;
+}
+
+.collection-export-btn:hover {
+  background: #138496 !important;
+}
+
+/* ===== FORMS & INPUTS ===== */
+.collection-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.collection-form-group {
+  flex: 1 1 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.collection-form-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.collection-form-group input,
+.collection-form-group select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* ===== PROJECT MAIN WRAPPER ===== */
+.collection-project-main-wrapper {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 0 !important;
+  background: #f8f9fa !important;
+  border-radius: 6px !important;
+  border: 1px solid #e9ecef !important;
+  overflow: hidden !important;
+  margin: 4px 0 8px 0 !important;
+  min-height: 234px !important;
+}
+
+.collection-project-left-side {
+  padding: 8px 16px !important;
+  background: #ffffff !important;
+  border-right: 1px solid #e9ecef !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+.collection-project-left-side .collection-detail-item {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 8px 0 !important;
+  font-size: 12px !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+}
+
+.collection-project-left-side .collection-detail-label {
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  min-width: 100px !important;
+  color: #495057 !important;
+}
+
+.collection-project-left-side .collection-detail-value {
+  white-space: nowrap !important;
+  color: #1a1a2e !important;
+}
+
+.collection-project-right-side {
+  padding: 8px 16px !important;
+  background: #ffffff !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  justify-content: flex-start !important;
+}
+
+/* ===== REMARKS ===== */
+.collection-remarks-group {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+}
+
+.collection-remarks-group label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #495057 !important;
+  margin-bottom: 2px !important;
+  letter-spacing: 0.5px !important;
+  text-align: left !important;
+}
+
+.collection-remarks-textarea {
+  width: 100% !important;
+  padding: 4px 8px !important;
+  border: 1px solid #ced4da !important;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  font-family: inherit !important;
+  resize: vertical !important;
+  min-height: 32px !important;
+  max-height: 50px !important;
+  background-color: #fff !important;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+  line-height: 1.4 !important;
+  text-align: left !important;
+}
+
+.collection-remarks-textarea:focus {
+  border-color: #80bdff !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.15) !important;
+}
+
+/* ===== RECEIVABLE BREAKDOWN ===== */
+.collection-receivable-breakdown-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+  border-radius: 8px !important;
+  border: 1px solid #dee2e6 !important;
+  padding: 12px 20px !important;
+  margin: 4px 0 12px 0 !important;
+  width: 100% !important;
+}
+
+.collection-breakdown-header-title h4 {
+  margin: 0 0 10px 0 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #495057 !important;
+  letter-spacing: 0.5px !important;
+}
+
+.collection-breakdown-grid {
+  display: grid !important;
+  grid-template-columns: repeat(6, 1fr) !important;
+  gap: 8px 12px !important;
+}
+
+.collection-breakdown-field {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.collection-breakdown-field label {
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  color: #6c757d !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.3px !important;
+  margin-bottom: 2px !important;
+}
+
+.collection-breakdown-input {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  background: #ffffff !important;
+  border: 1px solid #ced4da !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  height: 34px !important;
+  color: #1a1a2e !important;
+  transition: all 0.2s ease !important;
+}
+
+.collection-breakdown-input:focus {
+  border-color: #007bff !important;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15) !important;
+  outline: none !important;
+}
+
+.collection-breakdown-input.collection-input-with-value {
+  background: #ffffff !important;
+  color: #0078d4 !important;
+  font-weight: 700 !important;
+  border-color: #0078d4 !important;
+}
+
+/* ===== OBL SECTION ===== */
+.collection-obl-section-container {
+  margin: 2px 0 0 0 !important;
+  padding: 6px 12px !important;
+  background: #f8f9fa !important;
+  border-radius: 4px !important;
+  border: 1px solid #e9ecef !important;
+}
+
+.collection-obl-content {
+  display: grid !important;
+  grid-template-columns: 1fr 1.5fr !important;
+  gap: 12px !important;
+  align-items: start !important;
+}
+
+.collection-obl-left {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.collection-obl-label-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  margin-bottom: 2px !important;
+  text-align: left !important;
+}
+
+.collection-obl-label-group label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #495057 !important;
+  margin: 0 !important;
+}
+
+.collection-obl-value-display {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.collection-obl-input {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  background: #fff !important;
+  border: 1px solid #ddd !important;
+  padding: 2px 8px !important;
+  height: 36px !important;
+  width: 100% !important;
+  max-width: 140px !important;
+  border-radius: 4px !important;
+  color: #0078d4 !important;
+}
+
+.collection-obl-right {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.collection-validation-summary {
+  background: #fff !important;
+  padding: 4px 12px !important;
+  border-radius: 4px !important;
+  border: 1px solid #e9ecef !important;
+  width: 100% !important;
+}
+
+.collection-validation-item {
+  display: flex !important;
+  justify-content: space-between !important;
+  margin-bottom: 1px !important;
+  font-size: 11px !important;
+  text-align: left !important;
+}
+
+.collection-validation-label {
+  font-weight: 600 !important;
+  color: #666 !important;
+  font-size: 10px !important;
+  text-align: left !important;
+}
+
+.collection-validation-value {
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  color: #333 !important;
+  text-align: right !important;
+}
+
+.collection-validation-line {
+  height: 4px !important;
+  background: #e9ecef !important;
+  border-radius: 2px !important;
+  margin-top: 3px !important;
+  overflow: hidden !important;
+}
+
+.collection-line-fill {
+  height: 100% !important;
+  background: #28a745 !important;
+  border-radius: 2px !important;
+  transition: all 0.3s ease !important;
+  width: 0% !important;
+}
+
+.collection-line-fill.collection-warning {
+  background: #ffc107 !important;
+}
+
+.collection-line-fill.collection-danger {
+  background: #dc3545 !important;
+}
+
+.collection-validation-message {
+  display: block !important;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.collection-validation-message.collection-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.collection-validation-message.collection-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffc106;
+}
+
+.collection-validation-message.collection-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* ==== COLLECTION BASE RESTORE (rules your file no longer carries - keep above the upgrade block) ==== */
+/* Restored from your earlier full version so nothing the module renders is left unstyled.
+   Groups: detailed month boxes + month badges, enhanced input grid, category tables, yearly boxes,
+   remaining / historical containers, 3-level table header, sticky form header + top Save button,
+   table loading row, edit-section input appearance, OBL read-only input, JS-rendered inputs.
+   If any of these already live in another stylesheet of your project, delete this whole section -
+   the five-upgrade block below does NOT depend on it. */
+.collection-next-month-box {
+  flex: 1;
+  min-width: 0;
+}
+
+.collection-detailed-month-box {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  height: fit-content;
+}
+
+.collection-current-month-box {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+  border: 2px solid #0078d4;
+}
+
+.collection-next-month-box .collection-detailed-month-box {
+  background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
+  border: 1px solid #ddd;
+}
+
+.collection-current-month-indicator {
+  position: absolute !important;
+  top: 50% !important;
+  right: 12px !important;
+  transform: translateY(-50%) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  padding: 4px 10px !important;
+  border-radius: 12px !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+.collection-detailed-month-box .collection-month-header {
+  background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%) !important;
+  color: white !important;
+  padding: 12px 15px !important;
+  margin: -15px -15px 20px -15px !important;
+  border-radius: 8px 8px 0 0 !important;
+  border-bottom: 2px solid #004578 !important;
+  text-align: center !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  position: relative !important;
+  z-index: 10 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.collection-current-month-box .collection-month-header {
+  background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%) !important;
+  border-bottom: 2px solid #155724 !important;
+}
+
+.collection-enhanced-inputs-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.collection-enhanced-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.collection-enhanced-input-group label {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 4px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.collection-enhanced-input-group input, .collection-enhanced-input-group select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 12px;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.collection-enhanced-input-group input:focus, .collection-enhanced-input-group select:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+  outline: none;
+}
+
+.collection-forecast-date-input {
+  background: #fff !important;
+  color: #333 !important;
+  border: 1px solid #ddd !important;
+}
+
+.collection-categories-section {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid #e0e0e0;
+}
+
+.collection-categories-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: #666;
+  text-align: center;
+  font-weight: 600;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.collection-category-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 6px;
+  align-items: center;
+}
+
+.collection-category-row input {
+  padding: 5px 8px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 12px;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.collection-category-row input[type="text"] {
+  text-align: left;
+}
+
+.collection-category-row input[type="number"] {
+  text-align: right;
+}
+
+.collection-category-row input[type="date"] {
+  text-align: center;
+}
+
+.collection-category-row input:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 0 1px rgba(0, 120, 212, 0.2);
+  outline: none;
+}
+
+.collection-month-actual-badge, .collection-month-date-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 4px;
+  padding: 2px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.collection-month-actual-badge {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #999;
+}
+
+.collection-month-actual-badge.collection-has-value {
+  background-color: #c8e6c9;
+  border-color: #4caf50;
+  color: #1b5e20;
+}
+
+.collection-month-date-badge {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #999;
+}
+
+.collection-month-date-badge.collection-has-value {
+  background-color: #e3f2fd;
+  border-color: #007bff;
+  color: #0c5460;
+}
+
+.collection-detailed-month-box .collection-month-header {
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+
+.collection-historical-month {
+  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%) !important;
+  border: 1px solid #d0d0d0 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  opacity: 0.8;
+  position: relative;
+}
+
+.collection-historical-month * {
+  pointer-events: none !important;
+  user-select: none !important;
+  cursor: not-allowed !important;
+}
+
+.collection-historical-month::before {
+  content: "READ ONLY";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  font-size: 24px;
+  font-weight: bold;
+  color: rgba(108, 117, 125, 0.2);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.collection-historical-month .collection-month-header {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%) !important;
+  color: white !important;
+  padding: 10px 15px !important;
+  margin: -15px -15px 15px -15px !important;
+  border-radius: 8px 8px 0 0 !important;
+  border-bottom: 2px solid #343a40 !important;
+  text-align: center !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  opacity: 0.9 !important;
+}
+
+.collection-historical-month input {
+  background-color: #f8f9fa !important;
+  color: #6c757d !important;
+  border-color: #ced4da !important;
+  cursor: not-allowed !important;
+}
+
+.collection-pagination-size-selector label {
+  font-weight: 600;
+  margin: 0;
+}
+
+.collection-page-number:hover {
+  background: #e9ecef;
+  border-color: #0078d4;
+}
+
+.collection-yearly-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.collection-yearly-box {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  min-height: 200px;
+}
+
+.collection-yearly-header {
+  text-align: center;
+  font-weight: 600;
+  color: #0078d4;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.collection-yearly-inputs-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.collection-yearly-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.collection-yearly-input-group label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.collection-yearly-input-group input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.collection-yearly-input-group input:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+  outline: none;
+}
+
+.collection-yearly-plan-input {
+  background-color: #f8f9fa !important;
+  color: #6c757d !important;
+  border-color: #ced4da !important;
+}
+
+.collection-historical-container {
+  transition: opacity 0.4s ease, max-height 0.4s ease, padding 0.3s ease;
+  overflow: hidden;
+}
+
+.collection-historical-container.visible {
+  display: block !important;
+  opacity: 1;
+  max-height: 2000px;
+  padding: 5px 0;
+  overflow: visible;
+}
+
+.collection-historical-container.hidden {
+  display: none !important;
+  opacity: 0;
+  max-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.collection-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.collection-section-header:hover {
+  background-color: #f8f9fa;
+}
+
+.collection-section-header h3 {
+  margin: 0;
+  color: #495057;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 8px;
+  flex: 1;
+  pointer-events: none;
+}
+
+.collection-toggle-historical-btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .collection-enhanced-inputs-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .collection-categories-header, .collection-category-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .collection-categories-header div:nth-child(n+4), .collection-category-row input:nth-child(n+4) {
+    display: none;
+  }
+
+  .collection-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .collection-yearly-container {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-yearly-inputs-container {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+.collection-month-total-validation {
+  margin-top: 8px;
+  font-size: 11px;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  clear: both;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.collection-month-total-valid {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.collection-month-total-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+}
+
+.collection-month-total-invalid {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+.collection-month-total-validation:not(:last-child) {
+  display: none;
+}
+
+.collection-month-total-validation:last-child {
+  display: block;
+}
+
+tr.collection-frozen-row {
+  background-color: #fff8e1 !important;
+  border-left: 4px solid #ffc107 !important;
+}
+
+tr.collection-frozen-row:hover {
+  background-color: #fff3cd !important;
+}
+
+.collection-frozen-project {
+  background-color: #fff8e1 !important;
+  border-left: 4px solid #ffc107 !important;
+}
+
+.collection-frozen-input {
+  background-color: #f5f5f5 !important;
+  color: #6c757d !important;
+  cursor: not-allowed !important;
+  opacity: 0.7 !important;
+  pointer-events: none !important;
+}
+
+.collection-freeze-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background-color: #ffc107;
+  color: #856404;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.collection-freeze-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  pointer-events: auto !important;
+  z-index: 10;
+  position: relative;
+  accent-color: #0078d4;
+}
+
+.collection-freeze-checkbox:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: auto !important;
+}
+
+.collection-input-with-value {
+  background: #fff !important;
+  color: #333 !important;
+}
+
+.collection-input-empty {
+  background: #f8f9fa !important;
+  color: transparent !important;
+}
+
+.collection-edit-mode .collection-project-select-container select {
+  background-color: #f8f9fa !important;
+  color: #666 !important;
+  border-color: #d0d0d0 !important;
+  cursor: not-allowed !important;
+}
+
+.collection-readonly-field {
+  background-color: #f5f5f5 !important;
+  color: #666 !important;
+  border-color: #ddd !important;
+}
+
+.collection-historical-month input, input[readonly] {
+  background-color: #f8f9fa !important;
+  color: #6c757d !important;
+  border-color: #ced4da !important;
+  cursor: not-allowed !important;
+}
+
+.collection-main-plan-input, .collection-category-plan-input {
+  background-color: #f8f9fa !important;
+  color: #6c757d !important;
+  border-color: #ced4da !important;
+}
+
+input:read-only, select:disabled {
+  background-color: #f8f9fa !important;
+  color: #6c757d !important;
+  border-color: #ced4da !important;
+  cursor: not-allowed !important;
+}
+
+.collection-next-months-container .collection-enhanced-inputs-container {
+  grid-template-columns: 1fr 1fr;
+}
+
+.collection-next-months-container .collection-enhanced-input-group:nth-child(3), .collection-next-months-container .collection-enhanced-input-group:nth-child(4) {
+  display: none;
+}
+
+.collection-next-months-container .collection-categories-header {
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.collection-next-months-container .collection-category-row {
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.collection-next-months-container .collection-categories-header div:nth-child(4), .collection-next-months-container .collection-categories-header div:nth-child(5), .collection-next-months-container .collection-category-row input:nth-child(4), .collection-next-months-container .collection-category-row input:nth-child(5) {
+  display: none;
+}
+
+.collection-historical-month .collection-categories-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr !important;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: #666;
+  text-align: center;
+  font-weight: 600;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.collection-historical-month .collection-category-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr !important;
+  gap: 8px;
+  margin-bottom: 6px;
+  align-items: center;
+}
+
+.collection-historical-month .collection-category-row input {
+  background-color: #f8f9fa !important;
+  color: #6c757d !important;
+  border-color: #ced4da !important;
+  cursor: not-allowed !important;
+}
+
+.collection-historical-month .collection-categories-header div:nth-child(4), .collection-historical-month .collection-categories-header div:nth-child(5), .collection-historical-month .collection-category-row input:nth-child(4), .collection-historical-month .collection-category-row input:nth-child(5) {
+  display: none !important;
+}
+
+.collection-yearly-box .collection-categories-section {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.collection-yearly-box .collection-categories-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: #666;
+  text-align: center;
+  font-weight: 600;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.collection-yearly-box .collection-category-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 6px;
+  align-items: center;
+}
+
+.collection-yearly-box .collection-category-row input[type="text"] {
+  text-align: left;
+}
+
+.collection-yearly-box .collection-category-row input[type="number"] {
+  text-align: right;
+}
+
+.collection-yearly-box .collection-category-row input:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 0 1px rgba(0, 120, 212, 0.2);
+  outline: none;
+}
+
+.collection-forecast-validation {
+  display: none;
+}
+
+.collection-yearly-total-validation {
+  display: none;
+}
+
+.collection-obl-error-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #dc3545;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+  max-width: 300px;
+  animation: collectionSlideInRight 0.3s ease;
+}
+
+.collection-obl-error-toast.collection-warning {
+  background: #ffc107;
+  color: #856404;
+}
+
+@keyframes collectionSlideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+}
+
+.collection-toast-close {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 10px;
+  float: right;
+}
+
+.collection-freeze-col {
+  left: 0;
+  min-width: 40px;
+  max-width: 40px;
+  width: 40px;
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 4px 2px !important;
+  white-space: nowrap !important;
+}
+
+.collection-month-columns-table th {
+  box-sizing: border-box;
+}
+
+.collection-freeze-col {
+  left: 0;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+}
+
+.collection-project-ref-col {
+  left: 40px;
+  width: 95px;
+  min-width: 95px;
+  max-width: 95px;
+}
+
+.collection-customer-col {
+  left: 135px;
+  /* 40 + 95 */
+  width: 115px;
+  min-width: 115px;
+  max-width: 115px;
+}
+
+.collection-project-col {
+  left: 250px;
+  /* 135 + 115 */
+  width: 155px;
+  min-width: 155px;
+  max-width: 155px;
+}
+
+.collection-gh-col {
+  left: 405px;
+  /* 250 + 155 */
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+  text-align: center;
+}
+
+.collection-pm-col {
+  left: 465px;
+  /* 405 + 60 */
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
+}
+
+.collection-obl-col {
+  left: 555px;
+  /* 465 + 90 */
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
+}
+
+.collection-month-scroll-col {
+  min-width: 60px;
+}
+
+.collection-month-columns-table .collection-freeze-col, .collection-month-columns-table .collection-project-ref-col, .collection-month-columns-table .collection-project-col, .collection-month-columns-table .collection-pm-col, .collection-month-columns-table .collection-gh-col, .collection-month-columns-table .collection-customer-col, .collection-month-columns-table .collection-obl-col {
+  position: sticky;
+  z-index: 2;
+  background: white;
+}
+
+.collection-month-columns-table thead th.collection-month-column-header {
+  background: #0078d4 !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+  padding: 4px !important;
+}
+
+.collection-month-columns-table thead th.collection-month-column-header .collection-header-label {
+  color: #ffffff !important;
+}
+
+.collection-month-columns-table thead th.collection-month-group-header {
+  text-align: center;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 3px !important;
+}
+
+.collection-month-columns-table thead th.collection-prev-group {
+  background: #e3f2fd !important;
+  /* light blue */
+  color: #0d47a1 !important;
+}
+
+.collection-month-columns-table thead th.collection-curr-group {
+  background: #e8f5e9 !important;
+  /* light green */
+  color: #1b5e20 !important;
+}
+
+.collection-month-columns-table thead th.collection-month-subheader {
+  background: #f1f8e9 !important;
+  /* pale green like your Excel */
+  color: #33691e !important;
+  font-weight: 600;
+  font-size: 10px;
+  text-align: center;
+  padding: 3px 2px !important;
+}
+
+@media (max-width: 768px) {
+  .collection-freeze-col {
+    left: 0;
+    min-width: 30px;
+    max-width: 30px;
+    width: 30px;
+  }
+
+  .collection-project-ref-col {
+    left: 30px;
+    min-width: 80px;
+    max-width: 80px;
+    width: 80px;
+  }
+
+  .collection-customer-col {
+    left: 110px;
+    min-width: 80px;
+    max-width: 80px;
+    width: 80px;
+  }
+
+  .collection-project-col {
+    left: 190px;
+    min-width: 100px;
+    max-width: 100px;
+    width: 100px;
+  }
+
+  .collection-gh-col {
+    left: 290px;
+    min-width: 70px;
+    max-width: 70px;
+    width: 70px;
+  }
+
+  .collection-pm-col {
+    left: 360px;
+    min-width: 70px;
+    max-width: 70px;
+    width: 70px;
+  }
+
+  .collection-obl-col {
+    left: 430px;
+    min-width: 90px;
+    max-width: 90px;
+    width: 90px;
+  }
+
+}
+
+.collection-actions-cell {
+  min-width: 80px;
+  border: 1px solid #ddd !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  width: 80px !important;
+  min-width: 80px !important;
+  max-width: 80px !important;
+  background: #f8f9fa;
+}
+
+.collection-actions-cell:hover {
+  background: #f0f7ff !important;
+}
+
+.collection-month-columns-table tr:has(.collection-action-buttons-container) td.collection-actions-cell {
+  vertical-align: middle !important;
+}
+
+.collection-remaining-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.collection-remaining-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  width: 100%;
+}
+
+.collection-simple-month {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  min-height: 180px;
+}
+
+.collection-simple-month .collection-month-header {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
+  color: white !important;
+  padding: 10px 12px !important;
+  margin: -15px -15px 15px -15px !important;
+  border-radius: 8px 8px 0 0 !important;
+  border-bottom: 2px solid #0c5460 !important;
+  text-align: center !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+
+.collection-simple-month .collection-main-inputs-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.collection-simple-month .collection-main-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.collection-simple-month .collection-main-input-group label {
+  font-size: 10px;
+  color: #6c757d;
+  margin-bottom: 3px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+.collection-simple-month .collection-main-input-group input {
+  width: 100%;
+  padding: 5px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 13px;
+  background: #f8f9fa;
+  transition: all 0.2s ease;
+  cursor: not-allowed;
+}
+
+.collection-simple-month .collection-main-input-group input:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+  outline: none;
+}
+
+.collection-simple-month .collection-categories-section {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.collection-simple-month .collection-categories-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 10px;
+  color: #6c757d;
+  text-align: center;
+  font-weight: 600;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #eee;
+}
+
+.collection-simple-month .collection-category-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 3px;
+  align-items: center;
+}
+
+.collection-simple-month .collection-category-row input {
+  padding: 4px 6px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 11px;
+  background: #f8f9fa;
+  transition: all 0.2s ease;
+  cursor: not-allowed;
+}
+
+.collection-simple-month .collection-category-row input[type="text"] {
+  text-align: left;
+  font-size: 10px;
+  background: transparent;
+  /* border: none; */
+  font-weight: 500;
+  color: #495057;
+  cursor: default;
+}
+
+.collection-simple-month .collection-category-row input[type="number"] {
+  text-align: right;
+}
+
+.collection-simple-month .collection-category-row input:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 0 1px rgba(0, 120, 212, 0.2);
+  outline: none;
+}
+
+.collection-simple-month .collection-month-total-validation {
+  font-size: 9px;
+  text-align: center;
+  margin-top: 4px;
+  padding: 3px;
+  border-radius: 3px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  line-height: 1.2;
+  display: none;
+}
+
+.collection-simple-month .collection-month-total-validation.collection-month-total-invalid {
+  background: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+  display: block;
+}
+
+.collection-simple-month .collection-month-total-validation.collection-month-total-warning {
+  background: #fff3cd;
+  color: #856404;
+  border-color: #ffeaa7;
+  display: block;
+}
+
+.collection-simple-month .collection-month-total-validation.collection-month-total-valid {
+  background: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+  display: block;
+}
+
+@media (max-width: 1400px) {
+  .collection-remaining-row {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+}
+
+@media (max-width: 1200px) {
+  .collection-remaining-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+}
+
+@media (max-width: 992px) {
+  .collection-remaining-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 768px) {
+  .collection-remaining-row {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-simple-month .collection-main-inputs-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .collection-simple-month .collection-categories-header, .collection-simple-month .collection-category-row {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+  }
+
+}
+
+.collection-form-section .collection-page-header {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 16px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 0 12px 0 !important;
+}
+
+.collection-form-section .collection-page-header h1 {
+  margin: 0 !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  line-height: 1.3 !important;
+  color: #ffffff !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-align: left !important;
+}
+
+.collection-btn-save-top {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  align-self: center !important;
+  white-space: nowrap !important;
+  font-size: 13px !important;
+  padding: 8px 16px !important;
+  min-height: 36px !important;
+  max-height: 40px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+button#collectionSyncProjectsBtn {
+  display: none;
+}
+
+.collection-pagination-row {
+  width: auto !important;
+  flex: 0 1 auto !important;
+  display: flex !important;
+  align-items: center !important
+}
+
+.collection-pagination-top-row {
+  justify-content: flex-start !important
+}
+
+.collection-pagination-bottom-row {
+  justify-content: flex-end !important
+}
+
+@media (max-width:768px) {
+  .collection-pagination-top-row, .collection-pagination-bottom-row {
+    width: 100% !important;
+    justify-content: center !important
+  }
+
+}
+
+#oblLastMonth.collection-obl-input, #oblLastMonth.collection-obl-input:read-only {
+  background: #f5f5f5 !important;
+  color: #6c757d !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important
+}
+
+.collection-form-section input:not([readonly]), .collection-form-section textarea:not([readonly]), .collection-form-section select:not(:disabled) {
+  background-color: #ffffff !important;
+  color: #333 !important;
+}
+
+.collection-form-section input[readonly], .collection-form-section textarea[readonly], .collection-form-section select:disabled {
+  background-color: #f1f3f5 !important;
+  color: #6c757d !important;
+  border-color: #d9dde1 !important;
+  cursor: not-allowed !important;
+}
+
+.collection-detailed-month-box .collection-month-actual-input, .collection-detailed-month-box .collection-main-forecast-input, .collection-detailed-month-box .collection-category-forecast-input, .collection-detailed-month-box .collection-category-date-input {
+  border-color: #ced4da !important;
+}
+
+.collection-detailed-month-box .collection-main-forecast-input, .collection-detailed-month-box .collection-category-forecast-input, .collection-detailed-month-box .collection-category-date-input {
+  background-color: #ffffff !important;
+}
+
+.collection-detailed-month-box .collection-month-actual-input {
+  background-color: #f1f3f5 !important;
+  color: #6c757d !important;
+}
+
+.collection-simple-month .collection-main-plan-input, .collection-simple-month .collection-main-current-input {
+  border: 1px solid #e1e5e8 !important;
+  border-radius: 4px !important;
+}
+
+.collection-table-loading-row>td {
+  height: 220px !important;
+  padding: 0 !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  background: #fff !important;
+  border: 1px solid #dee2e6 !important;
+}
+
+@keyframes collectionLoadingSpin {
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+.collection-table-loading-error-row>td {
+  color: #6c757d !important;
+}
+
+input.collection-main-current-input.collection-number-input {
+    background-color: #f1f3f5 !important;
+}
+
+input.collection-yearly-current-input.collection-number-input {
+    background-color: #f1f3f5 !important;
+}
+
+.collection-filter-trigger:hover:not(:disabled) { background: #f9fafb !important; border-color: #d0d5dd !important; color: #1f2937 !important; box-shadow: 0 2px 6px rgba(16,24,40,.08); transform: translateY(-1px);
+}
+
+.collection-filter-modal .collection-table-actions-row { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 0 !important; padding: 20px 20px 0 !important; background: transparent !important; border: 0 !important;
+}
+
+.collection-filter-modal .collection-table-actions-row + .collection-table-actions-row { padding-top: 16px !important; padding-bottom: 20px !important;
+}
+
+.collection-filter-modal .collection-tableColp4 { min-width: 0;
+}
+
+.collection-filter-modal .collection-tableColp4 label { display: block; margin-bottom: 6px; color: #475569; font-size: 12px; font-weight: 600;
+}
+
+.collection-filter-modal .collection-filter-select { width: 100%;
+}
+
+.collection-filter-modal .collection-tableColp4:has(.collection-clear-filters-btn), .collection-filter-modal .collection-tableColp4:has(.collection-import-actual-btn), .collection-filter-modal .collection-tableColp4:has(.collection-export-btn), .collection-filter-modal .collection-tableColp4:has(.collection-export-historical-btn) { display: none;
+}
+
+@media (max-width: 700px) {
+  .collection-filter-modal .collection-table-actions-row { grid-template-columns: 1fr;
+  }
+
+}
+
+
+
+/* ==== COLLECTION UPGRADE BLOCK (appended last - do not move above this line) ==== */
+/* =====================================================================
+   COLLECTION - SAME FIVE UPGRADES AS INVENTORY / SEI-BIES / INVOICING /
+   PROCUREMENT / DCS
+     1. pagination   - one flat bar, exact mock text/layout
+     2. filter popup - funnel trigger + modal (Cancel / Clear / Apply),
+                       chips, "Apply" pill, popup-internal Reset Filter
+     3. sort arrows  - ONE up-down arrow inside a circle per sortable th
+     4. button format- lilac pills (Save #605EEE, Download #356BFF)
+     5. page loader  - grey track #DCDCDC + indigo bar #6664FF, no text
+   This block is intentionally LAST and re-declares the same selectors with
+   !important, so it wins over everything above it. Nothing is deleted.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------- */
+/* Design tokens (identical values to inventory.css)                 */
+/* ---------------------------------------------------------------- */
+:root {
+  --lilac-primary: #605EEE;
+  --lilac-primary-dark: #4C49E0;
+  --lilac-primary-soft: #EEEEFE;
+  --lilac-blue: #356BFF;
+  --lilac-blue-dark: #2A5CE8;
+  --lilac-ink: #1F2430;
+  --lilac-muted: #667085;
+  --lilac-line: #E4E7EC;
+  --lilac-pill: 999px;
+  --lilac-danger: #D92D20;
+  --lilac-ring: 0 0 0 3px rgba(96, 94, 238, .22);
+  --lilac-shadow-sm: 0 1px 2px rgba(16, 24, 40, .06);
+  --lilac-shadow-md: 0 4px 12px rgba(96, 94, 238, .28);
+}
+
+/* ===================================================================== */
+/* 1. BUTTONS - LILAC / PILL STYLE (mock-up screenshots)                  */
+/*    Sampled: Save Collection Plan #605EEE, Download #356BFF blue,       */
+/*    secondary = white ghost pill, radius 999px.                         */
+/*    The PAGE HEADER (title "Collection Management") keeps its own       */
+/*    layout - only the button FORMAT changes here.                       */
+/* ===================================================================== */
+.collection-btn-primary,
+.collection-btn-secondary,
+.collection-export-btn,
+.collection-export-historical-btn,
+.collection-import-actual-btn,
+.collection-filter-trigger,
+.collection-clear-filters-btn,
+.collection-filter-btn-clear,
+.collection-filter-btn-apply,
+.collection-show-form-btn,
+.collection-toggle-historical-btn,
+.collection-edit-trigger-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 38px !important;
+  padding: 10px 20px !important;
+  margin: 0 !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--lilac-pill) !important;
+  font-family: inherit !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  box-shadow: var(--lilac-shadow-sm) !important;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease !important;
+}
+
+/* PRIMARY (Save Collection Plan, Apply, + Add Collection) -> #605EEE indigo
+   "+ Add Collection" carries the SAME .btn-primary look as "+ Add Procurement". */
+.collection-btn-primary,
+.collection-filter-btn-apply,
+.collection-show-form-btn {
+  background: var(--lilac-primary) !important;
+  color: #fff !important;
+  border-color: var(--lilac-primary) !important;
+}
+.collection-btn-primary:hover:not(:disabled),
+.collection-filter-btn-apply:hover:not(:disabled),
+.collection-show-form-btn:hover:not(:disabled) {
+  background: var(--lilac-primary-dark) !important;
+  border-color: var(--lilac-primary-dark) !important;
+  box-shadow: var(--lilac-shadow-md) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* SECONDARY (Back, Cancel, Clear, Filters trigger, Upload Actual) */
+.collection-btn-secondary,
+.collection-filter-trigger,
+.collection-clear-filters-btn,
+.collection-filter-btn-clear,
+.collection-edit-trigger-btn {
+  background: #fff !important;
+  color: #344054 !important;
+  border-color: var(--lilac-line) !important;
+}
+.collection-btn-secondary:hover:not(:disabled),
+.collection-filter-trigger:hover,
+.collection-clear-filters-btn:hover:not(:disabled),
+.collection-filter-btn-clear:hover:not(:disabled) {
+  background: #F9FAFB !important;
+  border-color: #D0D5DD !important;
+  color: #1F2937 !important;
+  box-shadow: 0 2px 6px rgba(16, 24, 40, .08) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* DOWNLOAD / EXPORT -> #356BFF blue pill (both exports) */
+.collection-export-btn,
+.collection-export-historical-btn {
+  background: var(--lilac-blue) !important;
+  color: #fff !important;
+  border-color: var(--lilac-blue) !important;
+}
+.collection-export-btn:hover:not(:disabled),
+.collection-export-historical-btn:hover:not(:disabled) {
+  background: var(--lilac-blue-dark) !important;
+  border-color: var(--lilac-blue-dark) !important;
+  box-shadow: 0 4px 12px rgba(53, 107, 255, .30) !important;
+  transform: translateY(-1px) !important;
+}
+
+.collection-btn-primary:focus-visible,
+.collection-btn-secondary:focus-visible,
+.collection-export-btn:focus-visible,
+.collection-export-historical-btn:focus-visible,
+.collection-import-actual-btn:focus-visible,
+.collection-filter-trigger:focus-visible,
+.collection-filter-btn-apply:focus-visible,
+.collection-filter-btn-clear:focus-visible {
+  outline: none !important;
+  box-shadow: var(--lilac-ring) !important;
+}
+
+/* disabled pills - Clear / Apply / Reset Filter before anything is selected */
+.collection-btn-secondary:disabled,
+.collection-btn-primary:disabled,
+.collection-clear-filters-btn:disabled,
+.collection-filter-btn-clear:disabled,
+.collection-filter-btn-apply:disabled {
+  background: #fff !important;
+  color: #B4BAC6 !important;
+  border-color: var(--lilac-line) !important;
+  opacity: .75 !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+.collection-filter-btn-apply:disabled { background: var(--lilac-primary-soft) !important; color: #A5A3F3 !important; border-color: #DDDCFB !important; }
+
+/* "enabled" escape hatch for the popup Clear/Reset buttons */
+.collection-filter-btn-clear.is-enabled,
+.collection-clear-filters-btn.is-enabled {
+  color: #344054 !important;
+  border-color: var(--lilac-line) !important;
+  cursor: pointer !important;
+  opacity: 1 !important;
+}
+
+/* ===================================================================== */
+/* 2. TOOLBAR ABOVE THE TABLE (filter trigger + exports - never next to   */
+/*    the page title)                                                     */
+/* ===================================================================== */
+.collection-table-toolbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 0 12px 0 !important;
+  /* ✅ SAME grey bordered box as .proc-toolbar / inventory (mock-up) */
+  padding: 12px 16px !important;
+  background: #F8F9FA !important;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 10px !important;
+}
+.collection-toolbar-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+.collection-table-toolbar-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+.collection-filter-trigger { position: relative !important; }
+/* ✅ the funnel is an OUTLINE icon, exactly like .proc-filter-funnel
+   (same path, stroked instead of filled) */
+.collection-filter-funnel {
+  width: 16px !important;
+  height: 16px !important;
+  flex: 0 0 16px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.9 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+.collection-filter-chev {
+  width: 11px !important;
+  height: 11px !important;
+  flex: 0 0 11px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2.6 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  transition: transform .18s ease !important;
+}
+.collection-filter-trigger[aria-expanded="true"] .collection-filter-chev { transform: rotate(180deg) !important; }
+/* count badge: white chip with the count in indigo, only while a filter is
+   applied - identical to .proc-filter-count */
+.collection-filter-count {
+  display: none !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 20px !important;
+  height: 20px !important;
+  padding: 0 6px !important;
+  border-radius: var(--lilac-pill) !important;
+  background: #fff !important;
+  color: var(--lilac-primary) !important;
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+}
+/* applied -> solid indigo pill, white label (same as procurement) */
+.collection-filter-trigger.is-active {
+  background: var(--lilac-primary) !important;
+  border-color: var(--lilac-primary) !important;
+  color: #fff !important;
+}
+.collection-filter-trigger.is-active:hover:not(:disabled) {
+  background: #4C49E0 !important;
+  border-color: #4C49E0 !important;
+  color: #fff !important;
+}
+.collection-filter-trigger.is-active .collection-filter-count {
+  display: inline-flex !important;
+  background: #fff !important;
+  color: var(--lilac-primary) !important;
+}
+
+/* compact "Apply" pill - only visible while the popup has unapplied changes */
+.collection-filter-applypill {
+  display: none !important;
+  min-height: 34px !important;
+  padding: 8px 16px !important;
+  font-size: 12.5px !important;
+}
+.collection-filter-applypill.is-visible { display: inline-flex !important; }
+
+/* applied-filter chips */
+.collection-filter-summary {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin: 0 0 12px 0 !important;
+}
+.collection-filter-summary[hidden] { display: none !important; }
+.collection-filter-summary__label {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  color: var(--lilac-muted) !important;
+}
+.collection-filter-chip {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 5px 6px 5px 12px !important;
+  border: 1px solid #DCDCFB !important;
+  border-radius: var(--lilac-pill) !important;
+  background: var(--lilac-primary-soft) !important;
+  color: #3A38B8 !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+}
+.collection-filter-chip button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 18px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: #D9D8FA !important;
+  color: #3A38B8 !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+.collection-filter-chip button:hover { background: var(--lilac-primary) !important; color: #fff !important; }
+.collection-filter-chip__all {
+  padding: 5px 12px !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-radius: var(--lilac-pill) !important;
+  background: #fff !important;
+  color: #475467 !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+}
+.collection-filter-chip__all:hover { border-color: #C9C8F8 !important; color: var(--lilac-primary) !important; }
+
+/* ===================================================================== */
+/* 3. FILTER POPUP (modal) - Cancel / Clear / Apply in the footer, the    */
+/*    reset button stays INSIDE the popup                                 */
+/* ===================================================================== */
+.collection-filter-overlay {
+  display: none !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99998 !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  padding: 48px 16px 24px !important;
+  background: rgba(16, 24, 40, .45) !important;
+  backdrop-filter: blur(2px) !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+}
+.collection-filter-overlay.is-open { display: flex !important; }
+.collection-filter-modal {
+  width: min(1040px, 100%) !important;
+  margin: 0 auto !important;
+  background: #fff !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 24px 60px rgba(16, 24, 40, .22) !important;
+  padding: 18px 20px 16px !important;
+  box-sizing: border-box !important;
+}
+.collection-filter-modal-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  padding-bottom: 12px !important;
+  margin-bottom: 14px !important;
+  border-bottom: 1px solid var(--lilac-line) !important;
+}
+.collection-filter-modal-head h2 {
+  margin: 0 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  color: var(--lilac-ink) !important;
+}
+.collection-filter-modal-head button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+  color: #475467 !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+.collection-filter-modal-head button:hover { background: #F9FAFB !important; color: var(--lilac-ink) !important; }
+
+/* the popup re-uses the module's own filter row grid */
+.collection-filter-overlay .collection-table-actions-row {
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  gap: 14px 16px !important;
+  margin: 0 0 12px 0 !important;
+  align-items: end !important;
+}
+.collection-filter-overlay .collection-tableColp4 {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  min-width: 0 !important;
+}
+.collection-filter-overlay .collection-tableColp4 > label {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: var(--lilac-muted) !important;
+  text-transform: none !important;
+  letter-spacing: .01em !important;
+}
+.collection-filter-select {
+  width: 100% !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 34px 0 12px !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-radius: 10px !important;
+  background-color: #fff !important;
+  color: var(--lilac-ink) !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+}
+.collection-filter-select:hover { border-color: #D0D5DD !important; }
+.collection-filter-select:focus {
+  outline: none !important;
+  border-color: var(--lilac-primary) !important;
+  box-shadow: var(--lilac-ring) !important;
+}
+/* a field carrying a value (draft) gets a lilac tint */
+.collection-filter-select.is-set {
+  border-color: #C9C8F8 !important;
+  background-color: #FBFBFF !important;
+}
+/* the duplicate Upload/Export columns of the popup are hidden - the actions
+   live in the toolbar above the table only */
+.collection-filter-dupe-actions,
+.collection-filter-overlay .collection-tableColp4.collection-filter-dupe-actions { display: none !important; }
+.collection-filter-modal-foot {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  margin-top: 16px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid var(--lilac-line) !important;
+}
+.collection-filter-modal-foot .collection-filter-btn-apply { margin-left: 4px !important; }
+.collection-clear-filters-btn { white-space: nowrap !important; }
+
+/* ===================================================================== */
+/* 4. SORT ARROWS - EXACTLY the procurement pattern: ONE compact up-down   */
+/*    arrow glyph (two triangles stacked tight) with a soft ROUND halo on  */
+/*    hover. No boxes, no borders, no solid fill; the sorted column tints  */
+/*    the circle and colours only the ACTIVE direction's triangle, the     */
+/*    opposite one is dimmed (identical to .proc-sort-buttons-container).  */
+/* ===================================================================== */
+.collection-month-columns-table th.collection-sortable-th { cursor: pointer !important; }
+.collection-month-columns-table th.collection-sortable-th:hover { background-color: #F7F8FF !important; }
+.collection-sort-header-container {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+}
+/* the circle (hover target around BOTH arrows) - 22px, like procurement */
+.collection-sort-arrows {
+  display: inline-flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  flex: 0 0 22px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transition: background-color .15s ease !important;
+}
+/* the two triangles - together they read as ONE dark ⇅ glyph. A neutral
+   system font + a zero-height line box keeps them centred (the ABB webfont
+   has uneven ▲/▼ metrics) - same trick as procurement. */
+.collection-sort-arrows .collection-arrow-up,
+.collection-sort-arrows .collection-arrow-down {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 14px !important;
+  height: 9px !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 9px !important;
+  line-height: 0 !important;
+  letter-spacing: 0 !important;
+  color: #374151 !important;
+  background: none !important;
+  opacity: 1 !important;
+  transition: color .15s ease, opacity .15s ease !important;
+}
+/* hover -> soft grey halo around both arrows */
+.collection-month-columns-table th.collection-sortable-th:hover .collection-sort-arrows {
+  background: rgba(17, 24, 39, .08) !important;
+}
+.collection-month-columns-table th.collection-sortable-th:hover .collection-arrow-up,
+.collection-month-columns-table th.collection-sortable-th:hover .collection-arrow-down {
+  color: #111827 !important;
+}
+/* sorted column -> light blue tint on the circle */
+.collection-month-columns-table th.collection-sorted-asc .collection-sort-arrows,
+.collection-month-columns-table th.collection-sorted-desc .collection-sort-arrows {
+  background: rgba(0, 120, 212, .12) !important;
+}
+.collection-month-columns-table th.collection-sorted-asc:hover .collection-sort-arrows,
+.collection-month-columns-table th.collection-sorted-desc:hover .collection-sort-arrows {
+  background: rgba(0, 120, 212, .20) !important;
+}
+/* ACTIVE direction -> blue triangle; the opposite arrow dims */
+.collection-month-columns-table th.collection-sorted-asc .collection-arrow-up,
+.collection-month-columns-table th.collection-sorted-desc .collection-arrow-down {
+  color: #0078d4 !important;
+  opacity: 1 !important;
+}
+.collection-month-columns-table th.collection-sorted-asc .collection-arrow-down,
+.collection-month-columns-table th.collection-sorted-desc .collection-arrow-up {
+  opacity: .38 !important;
+}
+/* row 3 sub-headers are tight - same look, slightly smaller circle */
+.collection-month-subheader .collection-sort-header-container { gap: 3px !important; }
+.collection-subheader-arrows,
+.collection-month-subheader .collection-sort-arrows {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  flex-basis: 18px !important;
+}
+.collection-month-subheader .collection-sort-arrows .collection-arrow-up,
+.collection-month-subheader .collection-sort-arrows .collection-arrow-down {
+  width: 12px !important;
+  height: 8px !important;
+  font-size: 7.5px !important;
+}
+
+/* ===================================================================== */
+/* 5. PAGE LOADER - grey track #DCDCDC + indigo bar #6664FF, NO text      */
+/*    (replaces every in-code spinner/text loader of this module)         */
+/* ===================================================================== */
+.collection-page-loader {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  background: none !important;
+  padding: 0 !important;
+}
+.collection-page-loader-track {
+  position: relative !important;
+  width: 100% !important;
+  height: 6px !important;
+  overflow: hidden !important;
+  background: #DCDCDC !important;
+  border-radius: var(--lilac-pill) !important;
+}
+.collection-page-loader-bar {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 50% !important;
+  height: 100% !important;
+  background: #6664FF !important;
+  border-radius: var(--lilac-pill) !important;
+  animation: collectionPageLoaderSlide 1.25s cubic-bezier(.65, .05, .36, 1) infinite !important;
+}
+@keyframes collectionPageLoaderSlide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+/* inside the table the loader sits in a plain full-width row */
+.collection-table-loading-row > td {
+  border: 0 !important;
+  padding: 16px 12px !important;
+  background: #fff !important;
+}
+.collection-table-loading-content {
+  display: block !important;
+  width: min(520px, 100%) !important;
+  margin: 0 auto !important;
+}
+.collection-table-loading-content > span {
+  display: block !important;
+  text-align: center !important;
+  font-size: 13px !important;
+  color: var(--lilac-muted) !important;
+}
+.collection-table-loading-error-row > td { padding: 18px 12px !important; }
+.collection-table-loading-error-row .collection-table-loading-content > span { color: var(--lilac-danger) !important; font-weight: 600 !important; }
+/* legacy spinner/text markup stays hidden (the bar loader replaced it) */
+.collection-loading-spinner,
+.collection-loading-text { display: none !important; }
+
+/* ===================================================================== */
+/* 6. PAGINATION - ONE flat bar, exact mock text and order:              */
+/*    LEFT  : Items per page: [n]      Showing 1 - 25 of 60 items        */
+/*    RIGHT : «  ‹  [1 2 3]  of 6  ›  »                                  */
+/* ===================================================================== */
+.collection-pagination-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important;
+  gap: 16px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 14px 0 0 0 !important;
+  padding: 10px 14px !important;
+  background: linear-gradient(180deg, #fbfcfd, #f4f6f8) !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-radius: 12px !important;
+}
+.collection-pagination-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 18px !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+}
+.collection-pagination-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-wrap: nowrap !important;
+}
+.collection-pagination-size-selector {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin: 0 !important;
+}
+.collection-pagination-size-selector > label {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--lilac-muted) !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
+.collection-page-size-select {
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 30px 0 10px !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-radius: var(--lilac-pill) !important;
+  background-color: #fff !important;
+  color: var(--lilac-ink) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+}
+.collection-page-size-select:focus { outline: none !important; border-color: var(--lilac-primary) !important; box-shadow: var(--lilac-ring) !important; }
+.collection-pagination-info {
+  font-size: 13px !important;
+  color: var(--lilac-muted) !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+}
+.collection-pg-range,
+.collection-pg-count { color: var(--lilac-ink) !important; font-weight: 800 !important; }
+.collection-pagination-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 34px !important;
+  width: 34px !important;
+  height: 34px !important;
+  padding: 0 !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  color: #475467 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease !important;
+}
+.collection-pagination-btn:hover:not(:disabled) {
+  background: var(--lilac-primary-soft) !important;
+  border-color: #C9C8F8 !important;
+  color: var(--lilac-primary) !important;
+}
+.collection-pagination-btn:disabled {
+  background: #F2F4F7 !important;
+  color: #B4BAC6 !important;
+  border-color: var(--lilac-line) !important;
+  cursor: not-allowed !important;
+}
+.collection-pagination-btn:focus-visible { outline: none !important; box-shadow: var(--lilac-ring) !important; }
+.collection-pagination-pages {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin: 0 4px !important;
+}
+.collection-page-number {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 34px !important;
+  height: 34px !important;
+  padding: 0 8px !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  color: #475467 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease !important;
+}
+.collection-page-number:hover:not(:disabled) {
+  background: var(--lilac-primary-soft) !important;
+  border-color: #C9C8F8 !important;
+  color: var(--lilac-primary) !important;
+}
+.collection-page-number.active {
+  background: var(--lilac-primary) !important;
+  border-color: var(--lilac-primary) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(96, 94, 238, .32) !important;
+}
+.collection-page-number.collection-dots,
+.collection-page-number.collection-dots:disabled {
+  border-color: transparent !important;
+  background: transparent !important;
+  color: #98A2B3 !important;
+  cursor: default !important;
+  min-width: 20px !important;
+  padding: 0 !important;
+}
+.collection-pg-of {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: var(--lilac-muted) !important;
+  white-space: nowrap !important;
+  margin: 0 4px !important;
+}
+.collection-pg-of > span { color: var(--lilac-ink) !important; font-weight: 800 !important; }
+
+/* ===================================================================== */
+/* 7. RESPONSIVE GUARD (phones) - the pager wraps instead of overflowing  */
+/* ===================================================================== */
+@media (max-width: 768px) {
+  .collection-table-toolbar { flex-direction: column !important; align-items: stretch !important; }
+  .collection-toolbar-left,
+  .collection-table-toolbar-actions { width: 100% !important; }
+  .collection-table-toolbar-actions > button { flex: 1 1 auto !important; }
+  .collection-filter-overlay .collection-table-actions-row { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .collection-filter-modal { padding: 16px 14px !important; }
+  .collection-pagination-container { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+  .collection-pagination-left,
+  .collection-pagination-right { flex-wrap: wrap !important; white-space: normal !important; }
+  .collection-pagination-right { width: 100% !important; justify-content: flex-start !important; }
+  .collection-pagination-info { font-size: 12.5px !important; }
+}
+
+/* ===================================================================== */
+/* 7b. SPECIFICITY BUMPS - the user's own collection.css (kept verbatim   */
+/*     above) also ships the older inventory-style pager with HIGHER-     */
+/*     specificity selectors (.collection-pagination-btn.collection-      */
+/*     pg-icon, .collection-pagination-info.collection-pg-info, ...).     */
+/*     Those selectors are re-stated here with the same shape so the flat */
+/*     pager above still wins: 34px square chevrons, 10px radius, muted   */
+/*     "Showing x - y of z items" text, greyed-out ellipsis.              */
+/* ===================================================================== */
+.collection-pagination-btn.collection-pg-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 34px !important;
+  width: 34px !important;
+  height: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  color: #475467 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease !important;
+}
+.collection-pagination-btn.collection-pg-icon:hover:not(:disabled) {
+  background: var(--lilac-primary-soft) !important;
+  border-color: #C9C8F8 !important;
+  color: var(--lilac-primary) !important;
+}
+.collection-pagination-btn.collection-pg-icon:disabled {
+  background: #F2F4F7 !important;
+  color: #B4BAC6 !important;
+  border-color: var(--lilac-line) !important;
+  cursor: not-allowed !important;
+}
+.collection-pagination-info.collection-pg-info,
+.collection-pagination-info.collection-pg-total {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--lilac-muted) !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
+.collection-pagination-size-selector.collection-pg-size {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--lilac-muted) !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
+.collection-pagination-size-selector.collection-pg-size label {
+  margin: 0 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--lilac-muted) !important;
+}
+.collection-pagination-container .collection-page-size-select {
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 30px 0 10px !important;
+  border-radius: var(--lilac-pill) !important;
+  font-size: 13px !important;
+}
+.collection-page-number.collection-dots,
+.collection-page-number.collection-dots:hover,
+.collection-page-number.collection-dots:disabled {
+  min-width: 20px !important;
+  padding: 0 !important;
+  border-color: transparent !important;
+  background: transparent !important;
+  color: #98A2B3 !important;
+  cursor: default !important;
+}
+
+/* ===================================================================== */
+/* 7c. RUNTIME HOOKS RENDERED FROM JS - the ts builds these from scripts, */
+/*     so they are listed here once (the save/freeze overlay gets the     */
+/*     same bar loader). The ts also injects its own copy at runtime;     */
+/*     these !important rules simply guarantee it.                        */
+/* ===================================================================== */
+.loading-overlay {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  z-index: 99999 !important;
+  background: rgba(255, 255, 255, .94) !important;
+  backdrop-filter: blur(3px) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+.loading-container {
+  width: min(520px, 85vw) !important;
+  padding: 26px 30px !important;
+  background: #fff !important;
+  border: 1px solid #E8E8E8 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .15) !important;
+  box-sizing: border-box !important;
+}
+.collection-category-current-input,
+.collection-forecast-total-input {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 5px 8px !important;
+  border: 1px solid #ced4da !important;
+  border-radius: 3px !important;
+  background: #fff !important;
+  color: #333 !important;
+  font-size: 12px !important;
+  text-align: right !important;
+}
+.collection-category-current-input:focus {
+  outline: none !important;
+  border-color: #0078d4 !important;
+  box-shadow: 0 0 0 1px rgba(0, 120, 212, .2) !important;
+}
+.collection-forecast-total-input {
+  background: #f1f3f5 !important;
+  color: #6c757d !important;
+  cursor: not-allowed !important;
+}
+
+/* ===================================================================== */
+/* 8. DELIBERATE HIDE FROM THE ORIGINAL FILE - re-asserted LAST so the    */
+/*    upgraded date-badge rule above can never revive it                  */
+/*    (the old #collectionSyncProjectsBtn hide is NO LONGER re-asserted:   */
+/*     the Sync Projects button shows again - your own rule stays in the   */
+/*     file, untouched, it is just no longer force-hidden on top)          */
+/* ===================================================================== */
+span.collection-month-date-badge.collection-has-value { display: none !important; }
+
+/* ===================================================================== */
+/* 9. PAGE HEADER - the Add button shares the title row (right-aligned)   */
+/*    LAYOUT ONLY: the <h1> keeps its own text, size and alignment - no   */
+/*    h1 rule is added here, and the toolbar (Filters / exports) stays     */
+/*    ABOVE THE TABLE, never next to the title.                           */
+/* ===================================================================== */
+.collection-section > .page-header {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+}
+
+/* ===================================================================== */
+/* 10. THIS PASS - title-bar button removed, sync button hidden,          */
+/*     light-grey "Previous" data columns, title bar matched to Revenue.  */
+/*     Appended last on purpose: every rule here is !important so it wins */
+/*     over both the base sheet and the inline styles the ts writes.      */
+/* ===================================================================== */
+
+/* ------------------------------------------------------------------ */
+/* 10a. "+ ADD COLLECTION" - removed from the title row                */
+/*      !important is REQUIRED: the ts writes an INLINE display on this  */
+/*      button (hideForm() -> showFormBtn.style.display = "inline-block")*/
+/*      and only an author !important can outrank an inline style, so the*/
+/*      button can never come back next to the title. The form itself is */
+/*      untouched - it still opens from the Project Reference link.      */
+/* ------------------------------------------------------------------ */
+button.collection-show-form-btn,
+.collection-show-form-btn {
+  display: none !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* 10b. "SYNC PROJECTS" - hidden                                        */
+/*      The bar AND the button. The automatic sync on page load keeps    */
+/*      running exactly as before and still reports to the console       */
+/*      (setStatus -> console.log), only the manual button is gone.      */
+/* ------------------------------------------------------------------ */
+#collectionSyncBar,
+button#collectionSyncProjectsBtn {
+  display: none !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* 10c. "PREVIOUS" DATA COLUMNS - light grey plate                      */
+/*      The three sub-columns of every month group (Previous Normal /    */
+/*      Ret.n / Total) are greyed in the BODY rows and in the two totals */
+/*      rows (All Projects / Filtered - both are <td>s inside            */
+/*      .collection-month-columns-table).                                */
+/*      .collection-prev-cell is the marker the ts now emits (3 cells    */
+/*      per month group, in the body renderer and in both totals rows);  */
+/*      it is shape-independent, so no positional guessing is needed     */
+/*      however many months the window shows.                            */
+/* ------------------------------------------------------------------ */
+.collection-month-columns-table td.collection-prev-cell {
+  background: #F1F3F5 !important;
+}
+
+/* keep the plate grey on the zebra rows ... */
+.collection-month-columns-table tbody tr:nth-child(even) td.collection-prev-cell {
+  background: #F1F3F5 !important;
+}
+
+/* ... and one step darker on row hover (the row hover plate is #f0f7ff) */
+.collection-month-columns-table tbody tr:hover td.collection-prev-cell {
+  background: #E9ECEF !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* 10d. PAGE-TITLE BAR - the app's title banner.                          */
+/*      COLOURS: the gradient supplied for page titles (dark red -> red -> */
+/*      magenta -> purple -> blue, 90deg) - byte-equal to the banner       */
+/*      Master's title wears (master-upgrade-block.css, section 4), with   */
+/*      the same white title and the same neutral banner shadow.           */
+/*      BOX/HEIGHT: the Daily Sprint title bar box, so Collection measures */
+/*      exactly like it - padding 7px 25px, border-radius 12px, no bottom  */
+/*      rule, margin 0 0 14px, no min-height, and the same 22px / 600 /    */
+/*      line-height normal h1.                                            */
+/*      The module sheet carried no title background of its own, so the    */
+/*      banner has to be declared here or the bar renders flat white.      */
+/* ------------------------------------------------------------------ */
+.collection-section > .page-header {
+  background: linear-gradient(90deg, #6b0000, #8b0000 6%, #e00000 14%, red 30%, #f5002a 45%, #e81550 55%, #d1307a 63%, #b855b8 72%, #8f7ff0 82%, #7f8ff5 88%, #8a8fc0 94%, #7a7fa0) !important;
+  color: #fff !important;
+  padding: 7px 25px !important;
+  border-radius: 12px !important;
+  border-bottom: 0 !important;
+  margin: 0 0 14px !important;
+  box-shadow: 0 4px 12px rgba(16, 24, 40, 0.18) !important;
+  box-sizing: border-box !important;
+}
+
+.collection-section > .page-header h1 {
+  margin: 0 !important;
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  line-height: normal !important;
+  text-align: left !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  background-clip: border-box !important;
+}
+
+/* ===================================================================== */
+/* FIX (v3): Detailed Collection — 50% Current Month, 25% Next Months    */
+/* ===================================================================== */
+
+/* 1. Row wrapper → horizontal flex track */
+.collection-first-row-container .collection-detailed-months-row {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  gap: 15px !important;
+  width: 100% !important;
+}
+
+/* 2. Current month card — exactly 50% */
+.collection-first-row-container .collection-current-month-container {
+  flex: 0 0 calc(50% - 7.5px) !important;
+  max-width: calc(50% - 7.5px) !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* 3. Next-2-months wrapper — exactly 50% (split into two 25% cards) */
+.collection-first-row-container .collection-next-months-container {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 15px !important;
+}
+
+/* 4. Each next-month card — exactly 25% of the total row */
+.collection-first-row-container .collection-next-month-box {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* 5. Make the inner month card fill its container */
+.collection-first-row-container .collection-detailed-month-box {
+  width: 100% !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* 6. Fix inner grid & table squishing at tighter widths */
+.collection-first-row-container .collection-detailed-month-box > div[style*="grid-template-columns"] {
+  gap: 4px !important; /* reduces gap between Previous/Current/Further/Forecast */
+}
+
+.collection-first-row-container .collection-detailed-month-box table {
+  table-layout: fixed !important;
+  width: 100% !important;
+}
+
+.collection-first-row-container .collection-detailed-month-box th,
+.collection-first-row-container .collection-detailed-month-box td {
+  padding: 4px 2px !important; /* tighter padding so inputs fit */
+  word-break: break-word !important;
+}
+
+.collection-first-row-container .collection-category-current-input,
+.collection-first-row-container .collection-category-forecast-input,
+.collection-first-row-container .collection-category-date-input {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 4px !important; /* smaller padding for the date/number inputs */
+  font-size: 12px !important;
+}
+
+/* 7. Preserve the existing mobile stacking behaviour */
+@media (max-width: 1024px) {
+  .collection-first-row-container .collection-detailed-months-row {
+    flex-wrap: wrap !important;
+  }
+  .collection-first-row-container .collection-current-month-container {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+  .collection-first-row-container .collection-next-months-container {
+    flex: 0 0 100% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .collection-first-row-container .collection-detailed-months-row,
+  .collection-first-row-container .collection-next-months-container {
+    flex-direction: column !important;
+  }
+  .collection-first-row-container .collection-current-month-container,
+  .collection-first-row-container .collection-next-month-box {
+    flex: 1 1 auto !important;
+    max-width: none !important;
+  }
+}

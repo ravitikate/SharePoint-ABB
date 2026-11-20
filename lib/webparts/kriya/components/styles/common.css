@@ -1,0 +1,907 @@
+
+@font-face {
+  font-family: 'ABBvoiceOffice';
+  src: url('../../assets/ABBvoiceOffice_Rg.ttf') format('ttf');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply ABB font to entire application */
+html,
+body,
+.page,
+.page * {
+  font-family: 'ABBvoiceOffice';
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    line-height: 1;
+}
+
+.btn-primary {
+    background: #0078d4;
+    color: #fff;
+}
+
+table, td, th {
+  border: 1px solid #e8ebf5 !important;
+}
+
+table {
+  border-collapse: collapse !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-header h1,
+.collection-page-header h1,
+.daily-sprint-header h1,
+.invoicing-page-header h1,
+#formTitleInventory,
+#formTitleSeibies,
+.revenue-page .page-header h1,
+.revenue-page .page-header h1#formTitle {
+    color: #fff !important;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+div#projectDetails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+div#projectDetails p {
+    margin: 0px;
+    padding: 5px;
+    width: calc(50% - 20px);
+}
+
+.from-group-box label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+
+textarea,
+select,
+input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.table-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+
+    margin-bottom: 20px;
+}
+
+.tableColp4 {
+    flex: 1 1 32%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .tableColp4 {
+        flex: 1 1 100%;
+        /* full width on mobile */
+    }
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================================
+   SHARED ACTION BUTTONS
+   Inventory, Invoicing and Seibies retain their own page-specific rules.
+   These selectors standardise the main action buttons on all other pages.
+   Compact controls (pagination, sorting, close, edit and delete buttons)
+   intentionally keep their existing styling.
+   ===================================================================== */
+.btn-primary,
+.collection-btn-primary,
+.revenue-btn-primary,
+.dcs-btn-primary,
+.btn-primary-seibies,
+.btn-primary-inventory,
+.btn-primary-procurement,
+.btn-primary-invoicing,
+.btn-save-top-seibies,
+.btn-save-top-inventory,
+.btn-save-top-invoicing,
+#floatingFilterApplySeibies,
+#floatingFilterApplyInventory,
+#floatingFilterApplyProcurement,
+#floatingFilterApplyInvoicing {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 38px !important;
+  padding: 10px 20px !important;
+  border: 1px solid #605EEE !important;
+  border-radius: 999px !important;
+  background: #605EEE !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, .08) !important;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease !important;
+}
+
+.btn-primary:hover:not(:disabled),
+.collection-btn-primary:hover:not(:disabled),
+.revenue-btn-primary:hover:not(:disabled),
+.dcs-btn-primary:hover:not(:disabled),
+.btn-primary-seibies:hover:not(:disabled),
+.btn-primary-inventory:hover:not(:disabled),
+.btn-primary-procurement:hover:not(:disabled),
+.btn-primary-invoicing:hover:not(:disabled),
+.btn-save-top-seibies:hover:not(:disabled),
+.btn-save-top-inventory:hover:not(:disabled),
+.btn-save-top-invoicing:hover:not(:disabled),
+#floatingFilterApplySeibies:hover:not(:disabled),
+#floatingFilterApplyInventory:hover:not(:disabled),
+#floatingFilterApplyProcurement:hover:not(:disabled),
+#floatingFilterApplyInvoicing:hover:not(:disabled) {
+  background: #4C49E0 !important;
+  border-color: #4C49E0 !important;
+  box-shadow: 0 4px 10px rgba(96, 94, 238, .22) !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-secondary,
+.collection-btn-secondary,
+.revenue-btn-secondary,
+.dcs-btn-secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 38px !important;
+  padding: 10px 20px !important;
+  /* border: 1px solid #D0D5DD !important; */
+  border: 1px solid #8598c0 !important; 
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  color: #344054 !important;
+  font-family: inherit !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, .08) !important;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease !important;
+}
+
+.btn-secondary:hover:not(:disabled),
+.collection-btn-secondary:hover:not(:disabled),
+.revenue-btn-secondary:hover:not(:disabled),
+.dcs-btn-secondary:hover:not(:disabled) {
+  background: #F9FAFB !important;
+  border-color: #98A2B3 !important;
+  color: #1D2939 !important;
+  box-shadow: 0 2px 6px rgba(16, 24, 40, .08) !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.collection-btn-primary:focus-visible,
+.collection-btn-secondary:focus-visible,
+.revenue-btn-primary:focus-visible,
+.revenue-btn-secondary:focus-visible,
+.dcs-btn-primary:focus-visible,
+.dcs-btn-secondary:focus-visible,
+.btn-primary-seibies:focus-visible,
+.btn-primary-inventory:focus-visible,
+.btn-primary-procurement:focus-visible,
+.btn-primary-invoicing:focus-visible,
+.btn-save-top-seibies:focus-visible,
+.btn-save-top-inventory:focus-visible,
+.btn-save-top-invoicing:focus-visible,
+#floatingFilterApplySeibies:focus-visible,
+#floatingFilterApplyInventory:focus-visible,
+#floatingFilterApplyProcurement:focus-visible,
+#floatingFilterApplyInvoicing:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 4px rgba(96, 94, 238, .18) !important;
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.collection-btn-primary:disabled,
+.collection-btn-secondary:disabled,
+.revenue-btn-primary:disabled,
+.revenue-btn-secondary:disabled,
+.dcs-btn-primary:disabled,
+.dcs-btn-secondary:disabled {
+  background: #F9FAFB !important;
+  border-color: #EAECF0 !important;
+  color: #98A2B3 !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Shared pagination icon treatment for all pages. */
+.pagination-btn,
+.revenue-pagination-btn,
+.collection-pagination-btn,
+.dcs-pagination-btn,
+.invoicing-pagination-btn,
+.sprint-pagination-btn,
+.pagination-btn-inventory,
+.pagination-btn-seibies,
+.master-pg-btn,
+.pj-page-btn,
+.proc-pg-icon,
+.collection-pg-icon,
+.seibies-pg-icon,
+.revenue-pg-icon,
+.dcs-pg-icon,
+.invoicing-pg-icon,
+.sprint-pg-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  background: #fff !important;
+  color: #44586b !important;
+  border: 1px solid #cfd8df !important;
+  border-radius: 8px !important;
+  font-size: 15px !important;
+  line-height: 1 !important;
+  font-family: Georgia, serif !important;
+  cursor: pointer !important;
+  transition: all .15s ease !important;
+}
+
+.pagination-btn:hover:not(:disabled),
+.revenue-pagination-btn:hover:not(:disabled),
+.collection-pagination-btn:hover:not(:disabled),
+.dcs-pagination-btn:hover:not(:disabled),
+.invoicing-pagination-btn:hover:not(:disabled),
+.sprint-pagination-btn:hover:not(:disabled),
+.pagination-btn-inventory:hover:not(:disabled),
+.pagination-btn-seibies:hover:not(:disabled),
+.master-pg-btn:hover:not(:disabled),
+.pj-page-btn:hover:not(:disabled),
+.proc-pg-icon:hover:not(:disabled),
+.collection-pg-icon:hover:not(:disabled),
+.seibies-pg-icon:hover:not(:disabled),
+.revenue-pg-icon:hover:not(:disabled),
+.dcs-pg-icon:hover:not(:disabled),
+.invoicing-pg-icon:hover:not(:disabled),
+.sprint-pg-icon:hover:not(:disabled) {
+  background: #0078d4 !important;
+  border-color: #0078d4 !important;
+  color: #fff !important;
+  box-shadow: 0 2px 6px rgba(0, 120, 212, .35) !important;
+  transform: translateY(-1px) !important;
+}
+
+.pagination-btn:disabled,
+.revenue-pagination-btn:disabled,
+.collection-pagination-btn:disabled,
+.dcs-pagination-btn:disabled,
+.invoicing-pagination-btn:disabled,
+.sprint-pagination-btn:disabled,
+.pagination-btn-inventory:disabled,
+.pagination-btn-seibies:disabled,
+.master-pg-btn:disabled,
+.pj-page-btn:disabled,
+.proc-pg-icon:disabled,
+.collection-pg-icon:disabled,
+.seibies-pg-icon:disabled,
+.revenue-pg-icon:disabled,
+.dcs-pg-icon:disabled,
+.invoicing-pg-icon:disabled,
+.sprint-pg-icon:disabled {
+  background: #f1f3f5 !important;
+  border-color: #e9ecef !important;
+  color: #b4bcc4 !important;
+  cursor: not-allowed !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+
+/* Shared pagination arrows: plain chevrons matching Inventory/Invoicing. */
+.pagination-btn,
+.pagination-btn-inventory,
+.pagination-btn-seibies,
+.revenue-pagination-btn,
+.collection-pagination-btn,
+.dcs-pagination-btn,
+.invoicing-pagination-btn,
+.sprint-pagination-btn,
+.master-pg-btn,
+.pj-page-btn,
+.proc-pg-icon,
+.collection-pg-icon,
+.seibies-pg-icon,
+.revenue-pg-icon,
+.dcs-pg-icon,
+.invoicing-pg-icon,
+.sprint-pg-icon {
+  width: auto !important;
+  min-width: 26px !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  padding: 4px 5px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  color: #9aa7b1 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: color .15s ease, background-color .15s ease !important;
+}
+
+.pagination-btn:hover:not(:disabled),
+.pagination-btn-inventory:hover:not(:disabled),
+.pagination-btn-seibies:hover:not(:disabled),
+.revenue-pagination-btn:hover:not(:disabled),
+.collection-pagination-btn:hover:not(:disabled),
+.dcs-pagination-btn:hover:not(:disabled),
+.invoicing-pagination-btn:hover:not(:disabled),
+.sprint-pagination-btn:hover:not(:disabled),
+.master-pg-btn:hover:not(:disabled),
+.pj-page-btn:hover:not(:disabled),
+.proc-pg-icon:hover:not(:disabled),
+.collection-pg-icon:hover:not(:disabled),
+.seibies-pg-icon:hover:not(:disabled),
+.revenue-pg-icon:hover:not(:disabled),
+.dcs-pg-icon:hover:not(:disabled),
+.invoicing-pg-icon:hover:not(:disabled),
+.sprint-pg-icon:hover:not(:disabled) {
+  background: #f1f3f5 !important;
+  border: 0 !important;
+  color: #0078d4 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.pagination-btn:disabled,
+.pagination-btn-inventory:disabled,
+.pagination-btn-seibies:disabled,
+.revenue-pagination-btn:disabled,
+.collection-pagination-btn:disabled,
+.dcs-pagination-btn:disabled,
+.invoicing-pagination-btn:disabled,
+.sprint-pagination-btn:disabled,
+.master-pg-btn:disabled,
+.pj-page-btn:disabled,
+.proc-pg-icon:disabled,
+.collection-pg-icon:disabled,
+.seibies-pg-icon:disabled,
+.revenue-pg-icon:disabled,
+.dcs-pg-icon:disabled,
+.invoicing-pg-icon:disabled,
+.sprint-pg-icon:disabled {
+  background: transparent !important;
+  border: 0 !important;
+  color: #cbd3d9 !important;
+  cursor: default !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Download / Upload / Import / Template actions should match the Apply button style. */
+.export-btn,
+.export-excel-btn,
+.download-template-btn,
+.collection-export-btn,
+.collection-export-historical-btn,
+.revenue-export-btn,
+.revenue-export-details-btn,
+.revenue-export-historical-btn,
+.dcs-export-excel-btn,
+.dcs-export-project-excel-btn,
+.dcs-download-existing-btn,
+.dcs-export-document-btn,
+.dcs-add-output-document,
+.dcs-add-input-document,
+.sync-all-btn,
+.import-template-btn,
+.export-btn-inventory,
+.invoicing-export-btn,
+.invoicing-export-details-btn,
+.export-excel-btn,
+.add-procurement-row,
+#downloadTemplate,
+#downloadEditTemplate,
+.import-btn,
+.import-actual-btn,
+.collection-import-actual-btn,
+.revenue-import-actual-btn,
+.invoicing-import-actual-btn,
+.upload-btn,
+.btn-upload,
+.btn-import,
+.btn-secondary.export-btn,
+.btn-secondary.export-excel-btn,
+.btn-secondary.import-btn,
+.btn-secondary.upload-btn,
+.btn-secondary-seibies.export-btn-seibies,
+.btn-secondary-inventory.export-btn-inventory,
+.invoicing-btn-secondary.invoicing-export-btn,
+.invoicing-btn-secondary.invoicing-export-details-btn,
+.revenue-btn-secondary.revenue-export-btn,
+.collection-btn-secondary.collection-export-btn,
+.collection-btn-secondary.collection-import-actual-btn,
+.dcs-btn-secondary.dcs-export-excel-btn,
+.dcs-btn-secondary.dcs-download-existing-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 38px !important;
+  padding: 10px 20px !important;
+  border: 1px solid #605EEE !important;
+  border-radius: 999px !important;
+  background: #605EEE !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, .08) !important;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease !important;
+}
+
+.export-btn:hover:not(:disabled),
+.export-excel-btn:hover:not(:disabled),
+.download-template-btn:hover:not(:disabled),
+.collection-export-btn:hover:not(:disabled),
+.collection-export-historical-btn:hover:not(:disabled),
+.revenue-export-btn:hover:not(:disabled),
+.revenue-export-details-btn:hover:not(:disabled),
+.revenue-export-historical-btn:hover:not(:disabled),
+.dcs-export-excel-btn:hover:not(:disabled),
+.dcs-export-project-excel-btn:hover:not(:disabled),
+.dcs-download-existing-btn:hover:not(:disabled),
+.dcs-export-document-btn:hover:not(:disabled),
+.dcs-add-output-document:hover:not(:disabled),
+.dcs-add-input-document:hover:not(:disabled),
+.sync-all-btn:hover:not(:disabled),
+.import-template-btn:hover:not(:disabled),
+.export-btn-inventory:hover:not(:disabled),
+.invoicing-export-btn:hover:not(:disabled),
+.invoicing-export-details-btn:hover:not(:disabled),
+.export-excel-btn:hover:not(:disabled),
+.add-procurement-row:hover:not(:disabled),
+#downloadTemplate:hover:not(:disabled),
+#downloadEditTemplate:hover:not(:disabled),
+.import-btn:hover:not(:disabled),
+.import-actual-btn:hover:not(:disabled),
+.collection-import-actual-btn:hover:not(:disabled),
+.revenue-import-actual-btn:hover:not(:disabled),
+.invoicing-import-actual-btn:hover:not(:disabled),
+.upload-btn:hover:not(:disabled),
+.btn-upload:hover:not(:disabled),
+.btn-import:hover:not(:disabled),
+.btn-secondary.export-btn:hover:not(:disabled),
+.btn-secondary.export-excel-btn:hover:not(:disabled),
+.btn-secondary.import-btn:hover:not(:disabled),
+.btn-secondary.upload-btn:hover:not(:disabled),
+.btn-secondary-seibies.export-btn-seibies:hover:not(:disabled),
+.btn-secondary-inventory.export-btn-inventory:hover:not(:disabled),
+.invoicing-btn-secondary.invoicing-export-btn:hover:not(:disabled),
+.invoicing-btn-secondary.invoicing-export-details-btn:hover:not(:disabled),
+.revenue-btn-secondary.revenue-export-btn:hover:not(:disabled),
+.collection-btn-secondary.collection-export-btn:hover:not(:disabled),
+.collection-btn-secondary.collection-import-actual-btn:hover:not(:disabled),
+.dcs-btn-secondary.dcs-export-excel-btn:hover:not(:disabled),
+.dcs-btn-secondary.dcs-download-existing-btn:hover:not(:disabled) {
+  background: #4C49E0 !important;
+  border-color: #4C49E0 !important;
+  box-shadow: 0 4px 10px rgba(96, 94, 238, .22) !important;
+  transform: translateY(-1px) !important;
+}
+
+.export-btn:disabled,
+.export-excel-btn:disabled,
+.download-template-btn:disabled,
+.collection-export-btn:disabled,
+.collection-export-historical-btn:disabled,
+.revenue-export-btn:disabled,
+.revenue-export-details-btn:disabled,
+.revenue-export-historical-btn:disabled,
+.dcs-export-excel-btn:disabled,
+.dcs-export-project-excel-btn:disabled,
+.dcs-download-existing-btn:disabled,
+.dcs-export-document-btn:disabled,
+.dcs-add-output-document:disabled,
+.dcs-add-input-document:disabled,
+.sync-all-btn:disabled,
+.import-template-btn:disabled,
+.export-btn-inventory:disabled,
+.invoicing-export-btn:disabled,
+.invoicing-export-details-btn:disabled,
+.export-excel-btn:disabled,
+.add-procurement-row:disabled,
+#downloadTemplate:disabled,
+#downloadEditTemplate:disabled,
+.import-btn:disabled,
+.import-actual-btn:disabled,
+.collection-import-actual-btn:disabled,
+.revenue-import-actual-btn:disabled,
+.invoicing-import-actual-btn:disabled,
+.upload-btn:disabled,
+.btn-upload:disabled,
+.btn-import:disabled,
+.btn-secondary.export-btn:disabled,
+.btn-secondary.export-excel-btn:disabled,
+.btn-secondary.import-btn:disabled,
+.btn-secondary.upload-btn:disabled,
+.btn-secondary-seibies.export-btn-seibies:disabled,
+.btn-secondary-inventory.export-btn-inventory:disabled,
+.invoicing-btn-secondary.invoicing-export-btn:disabled,
+.invoicing-btn-secondary.invoicing-export-details-btn:disabled,
+.revenue-btn-secondary.revenue-export-btn:disabled,
+.collection-btn-secondary.collection-export-btn:disabled,
+.collection-btn-secondary.collection-import-actual-btn:disabled,
+.dcs-btn-secondary.dcs-export-excel-btn:disabled,
+.dcs-btn-secondary.dcs-download-existing-btn:disabled {
+  background: #F9FAFB !important;
+  border-color: #EAECF0 !important;
+  color: #98A2B3 !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Reset / Clear / Cancel share the same project-style danger treatment. */
+.clear-filters-btn,
+.reset-search-btn,
+.reset-search-btn-project,
+.collection-clear-filters-btn,
+.revenue-clear-filters-btn,
+.dcs-clear-filters-btn,
+.daily-sprint-clear-filters-btn,
+.seibies-filter-btn-clear,
+.inv-filter-btn-clear,
+.proc-filter-btn-clear,
+.invoicing-filter-btn-clear,
+.revenue-filter-btn-clear,
+.sprint-filter-btn-clear,
+.collection-filter-btn-clear,
+.dcs-filter-btn-clear,
+.filter-btn-text,
+.inv-filter-btn-text,
+.proc-filter-btn-text,
+.invoicing-filter-btn-text,
+.seibies-filter-btn-text,
+#collectionFilterCancel,
+#revenueFilterCancel,
+#sprintFilterCancel,
+#dcsFilterCancel,
+#filterCancelSeibies,
+#filterCancelInvoicing,
+#filterCancelInventory,
+#procFilterCancel,
+#dcsResetFormBtn,
+#cancelImport {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 38px !important;
+  padding: 10px 20px !important;
+  border: 1px solid #c82333 !important;
+  border-radius: 999px !important;
+  background: #dc3545 !important;
+  color: #fff !important;
+  font-family: inherit !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, .08) !important;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease !important;
+}
+
+.clear-filters-btn:hover:not(:disabled),
+.reset-search-btn:hover:not(:disabled),
+.reset-search-btn-project:hover:not(:disabled),
+.collection-clear-filters-btn:hover:not(:disabled),
+.revenue-clear-filters-btn:hover:not(:disabled),
+.dcs-clear-filters-btn:hover:not(:disabled),
+.daily-sprint-clear-filters-btn:hover:not(:disabled),
+.seibies-filter-btn-clear:hover:not(:disabled),
+.inv-filter-btn-clear:hover:not(:disabled),
+.proc-filter-btn-clear:hover:not(:disabled),
+.invoicing-filter-btn-clear:hover:not(:disabled),
+.revenue-filter-btn-clear:hover:not(:disabled),
+.sprint-filter-btn-clear:hover:not(:disabled),
+.collection-filter-btn-clear:hover:not(:disabled),
+.filter-btn-text:hover:not(:disabled),
+.inv-filter-btn-text:hover:not(:disabled),
+.proc-filter-btn-text:hover:not(:disabled),
+.invoicing-filter-btn-text:hover:not(:disabled),
+.seibies-filter-btn-text:hover:not(:disabled),
+#collectionFilterCancel:hover:not(:disabled),
+#revenueFilterCancel:hover:not(:disabled),
+#sprintFilterCancel:hover:not(:disabled),
+#dcsFilterCancel:hover:not(:disabled),
+#filterCancelSeibies:hover:not(:disabled),
+#filterCancelInvoicing:hover:not(:disabled),
+#filterCancelInventory:hover:not(:disabled),
+#procFilterCancel:hover:not(:disabled),
+#dcsResetFormBtn:hover:not(:disabled),
+#cancelImport:hover:not(:disabled) {
+  background: #c82333 !important;
+  border-color: #b21f2d !important;
+  box-shadow: 0 2px 6px rgba(220, 53, 69, .2) !important;
+  transform: translateY(-1px) !important;
+}
+
+.clear-filters-btn:disabled,
+.reset-search-btn:disabled,
+.reset-search-btn-project:disabled,
+.collection-clear-filters-btn:disabled,
+.revenue-clear-filters-btn:disabled,
+.dcs-clear-filters-btn:disabled,
+.daily-sprint-clear-filters-btn:disabled,
+.seibies-filter-btn-clear:disabled,
+.inv-filter-btn-clear:disabled,
+.proc-filter-btn-clear:disabled,
+.invoicing-filter-btn-clear:disabled,
+.revenue-filter-btn-clear:disabled,
+.sprint-filter-btn-clear:disabled,
+.collection-filter-btn-clear:disabled,
+.filter-btn-text:disabled,
+.inv-filter-btn-text:disabled,
+.proc-filter-btn-text:disabled,
+.invoicing-filter-btn-text:disabled,
+.seibies-filter-btn-text:disabled,
+#collectionFilterCancel:disabled,
+#revenueFilterCancel:disabled,
+#sprintFilterCancel:disabled,
+#dcsFilterCancel:disabled,
+#filterCancelSeibies:disabled,
+#filterCancelInvoicing:disabled,
+#filterCancelInventory:disabled,
+#procFilterCancel:disabled,
+#dcsResetFormBtn:disabled,
+#cancelImport:disabled {
+  background: #e9ecef !important;
+  border-color: #dfe3e8 !important;
+  color: #6c757d !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Final action palette: explicit selectors keep page-injected styles from
+   changing the Apply and Reset Filter appearance. */
+button.import-master-btn,
+button.sync-all-btn,
+button.download-template-btn,
+button.import-template-btn,
+button.collection-import-actual-btn,
+button.collection-export-btn,
+button.collection-export-historical-btn,
+button.revenue-import-actual-btn,
+button.revenue-export-btn,
+button.revenue-export-details-btn,
+button.revenue-export-historical-btn,
+button.dcs-import-excel-btn,
+button.dcs-export-project-excel-btn,
+button.dcs-download-existing-btn,
+button.dcs-add-output-document,
+button.dcs-add-input-document,
+button.export-excel-btn,
+button.add-procurement-row,
+button.invoicing-export-btn,
+button.invoicing-export-details-btn,
+button.export-btn-inventory,
+button.export-btn-seibies,
+button#downloadTemplate,
+button#downloadEditTemplate {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 38px !important;
+  padding: 10px 20px !important;
+  border: 1px solid #605EEE !important;
+  border-radius: 999px !important;
+  background: #605EEE !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, .08) !important;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease !important;
+}
+
+button.btn-primary:hover:not(:disabled),
+button.collection-btn-primary:hover:not(:disabled),
+button.revenue-btn-primary:hover:not(:disabled),
+button.dcs-btn-primary:hover:not(:disabled),
+button.btn-primary-seibies:hover:not(:disabled),
+button.btn-primary-inventory:hover:not(:disabled),
+button.btn-primary-procurement:hover:not(:disabled),
+button.btn-primary-invoicing:hover:not(:disabled),
+button.btn-save-top-seibies:hover:not(:disabled),
+button.btn-save-top-inventory:hover:not(:disabled),
+button.btn-save-top-invoicing:hover:not(:disabled),
+button.collection-filter-applypill:hover:not(:disabled),
+button.collection-filter-btn-apply:hover:not(:disabled),
+button.revenue-filter-applypill:hover:not(:disabled),
+button.revenue-filter-btn-apply:hover:not(:disabled),
+button.dcs-filter-applypill:hover:not(:disabled),
+button.dcs-filter-btn-apply:hover:not(:disabled),
+button.sprint-filter-applypill:hover:not(:disabled),
+button.sprint-filter-btn-apply:hover:not(:disabled),
+button.seibies-filter-applypill:hover:not(:disabled),
+button.inv-filter-btn-apply:hover:not(:disabled),
+button.proc-filter-applypill:hover:not(:disabled),
+button.proc-filter-btn-apply:hover:not(:disabled),
+button.invoicing-filter-applypill:hover:not(:disabled),
+button.invoicing-filter-btn-apply:hover:not(:disabled),
+button.import-master-btn:hover:not(:disabled),
+button.sync-all-btn:hover:not(:disabled),
+button.download-template-btn:hover:not(:disabled),
+button.import-template-btn:hover:not(:disabled),
+button.collection-import-actual-btn:hover:not(:disabled),
+button.collection-export-btn:hover:not(:disabled),
+button.collection-export-historical-btn:hover:not(:disabled),
+button.revenue-import-actual-btn:hover:not(:disabled),
+button.revenue-export-btn:hover:not(:disabled),
+button.revenue-export-details-btn:hover:not(:disabled),
+button.revenue-export-historical-btn:hover:not(:disabled),
+button.dcs-import-excel-btn:hover:not(:disabled),
+button.dcs-export-project-excel-btn:hover:not(:disabled),
+button.dcs-download-existing-btn:hover:not(:disabled),
+button.dcs-add-output-document:hover:not(:disabled),
+button.dcs-add-input-document:hover:not(:disabled),
+button.export-excel-btn:hover:not(:disabled),
+button.add-procurement-row:hover:not(:disabled),
+button.invoicing-export-btn:hover:not(:disabled),
+button.invoicing-export-details-btn:hover:not(:disabled),
+button.export-btn-inventory:hover:not(:disabled),
+button.export-btn-seibies:hover:not(:disabled),
+button#downloadTemplate:hover:not(:disabled),
+button#downloadEditTemplate:hover:not(:disabled) {
+  background: #4C49E0 !important;
+  border-color: #4C49E0 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 10px rgba(96, 94, 238, .22) !important;
+  transform: translateY(-1px) !important;
+}
+
+button.reset-search-btn,
+button.reset-search-btn-project,
+button.collection-clear-filters-btn,
+button.revenue-clear-filters-btn,
+button.dcs-filter-btn-clear,
+button.daily-sprint-clear-filters-btn,
+button.seibies-filter-btn-clear,
+button.inv-filter-btn-clear,
+button.proc-filter-btn-clear,
+button.invoicing-filter-btn-clear,
+button.revenue-filter-btn-clear,
+button.sprint-filter-btn-clear,
+button.collection-filter-btn-clear,
+button.filter-btn-text,
+button.inv-filter-btn-text,
+button.proc-filter-btn-text,
+button.invoicing-filter-btn-text,
+button.seibies-filter-btn-text,
+button#collectionFilterCancel,
+button#revenueFilterCancel,
+button#sprintFilterCancel,
+button#dcsFilterCancel,
+button#filterCancelSeibies,
+button#filterCancelInvoicing,
+button#filterCancelInventory,
+button#procFilterCancel,
+button#dcsResetFormBtn,
+button#cancelImport {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 38px !important;
+  padding: 10px 20px !important;
+  border: 1px solid #c82333 !important;
+  border-radius: 999px !important;
+  background: #dc3545 !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, .08) !important;
+}
+
+/* Force SweetAlert ABOVE every module overlay (.loading-overlay = 99999,
+   .proc-filter-overlay = 999998, .import-modal = 999999). */
+.swal2-container {
+  z-index: 2147483647 !important;
+}

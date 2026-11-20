@@ -1,0 +1,2064 @@
+/* ============================================================ */
+/* DCS MODULE - EXTERNAL STYLESHEET (unique)                    */
+/*   All DCS styles are merged into this ONE file.              */
+/*   Role/auth-related styles removed (no auth conditions).     */
+/*                                                              */
+/*   UI FIXES (latest):                                         */
+/*   1. Page header is sticky and NEVER scrolls away.           */
+/*   2. Filter bar + "Add Project Documents" button always fit  */
+/*      inside the screen (auto-fit responsive grid, no 100vw   */
+/*      overflow).                                              */
+/*   3. Responsive stacking for header / filters / pagination.  */
+/*   4. Sortable main-table headers (boxed up/down arrows +     */
+/*      strong outer border + active sort highlight).           */
+/*   5. Polished pagination: icon chevrons, page tiles,         */
+/*      "Page X of Y" pill, page-size group + total badge.      */
+/*   6. Compact count columns (long status headers wrap).       */
+/* ============================================================ */
+
+/* Root page container must never clip its sticky children */
+
+@font-face {
+  font-family: 'ABBvoiceOffice';
+  src: url('../../assets/ABBvoiceOffice_Rg.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply ABB font to entire application */
+html,
+body,
+.dcs-page,
+.dcs-page *,
+.page,
+.page * {
+  font-family: 'ABBvoiceOffice';
+}
+
+.dcs-card {
+  overflow: visible;
+}
+
+/* ============ PAGINATION (polished - Option A) ============ */
+.dcs-pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: linear-gradient(180deg, #fbfcfd 0%, #f4f6f8 100%);
+  border: 1px solid #e3e8ee;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.dcs-pagination-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.dcs-pagination-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Inventory-style table toolbar, filter dialog and indeterminate table loader. */
+.dcs-table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 4px 0 16px;
+}
+
+.dcs-filter-trigger { display: inline-flex; align-items: center; gap: 7px; }
+.dcs-filter-count {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #e9ecef;
+  color: #44586b;
+  font-size: 11px;
+  font-weight: 700;
+}
+.dcs-filter-trigger.is-active .dcs-filter-count { background: #0078d4; color: #fff; }
+.dcs-pg-of { color: #64748b; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.dcs-pg-of span { color: #005a9e; }
+
+.dcs-table-loading-row td { padding: 28px 20px !important; background: #fff; }
+.dcs-page-loader { width: min(360px, 80%); margin: 0 auto; height: 4px; overflow: hidden; border-radius: 999px; background: #dcdcdc; }
+.dcs-page-loader span { display: block; width: 38%; height: 100%; border-radius: inherit; background: #6664ff; animation: dcsPageLoaderSlide 1.25s cubic-bezier(.65,.05,.36,1) infinite; }
+@keyframes dcsPageLoaderSlide { from { transform: translateX(-110%); } to { transform: translateX(375%); } }
+
+.dcs-filter-overlay { position: fixed; inset: 0; z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(15, 23, 42, .35); box-sizing: border-box; }
+.dcs-filter-overlay.is-open { display: flex; }
+.dcs-filter-modal { width: min(620px, 100%); background: #fff; border-radius: 12px; box-shadow: 0 20px 55px rgba(15,23,42,.25); overflow: hidden; }
+.dcs-filter-modal-head, .dcs-filter-modal-foot { display: flex; align-items: center; padding: 16px 20px; }
+.dcs-filter-modal-head { justify-content: space-between; border-bottom: 1px solid #e5e7eb; }
+.dcs-filter-modal-head h2 { margin: 0; color: #1e293b; font-size: 18px; }
+.dcs-filter-modal-head button { border: 0; background: transparent; color: #64748b; font-size: 25px; cursor: pointer; }
+.dcs-filter-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 20px; }
+.dcs-filter-grid label { display: block; margin-bottom: 6px; color: #475569; font-size: 12px; font-weight: 600; }
+.dcs-filter-grid select { width: 100%; }
+.dcs-filter-modal-foot { justify-content: flex-end; gap: 10px; border-top: 1px solid #e5e7eb; }
+
+/* Icon nav buttons (First / Prev / Next / Last) */
+.dcs-pagination-btn.dcs-pg-icon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #44586b;
+  border: 1px solid #cfd8df;
+  border-radius: 8px;
+  font-size: 15px;
+  line-height: 1;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dcs-pagination-btn.dcs-pg-icon:hover:not(:disabled) {
+  background: #0078d4;
+  border-color: #0078d4;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 120, 212, 0.35);
+  transform: translateY(-1px);
+}
+
+.dcs-pagination-btn.dcs-pg-icon:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.dcs-pagination-btn.dcs-pg-icon:disabled {
+  background: #f1f3f5;
+  border-color: #e9ecef;
+  color: #b4bcc4;
+  cursor: not-allowed;
+  opacity: 1;
+  box-shadow: none;
+}
+
+.dcs-pagination-btn.dcs-pg-icon:focus-visible {
+  outline: 2px solid #0078d4;
+  outline-offset: 2px;
+}
+
+/* "Page X of Y" pill */
+.dcs-pagination-info {
+  display: inline-flex;
+  align-items: center;
+  background: #eef2f6;
+  border: 1px solid #e3e8ee;
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #44586b;
+  white-space: nowrap;
+}
+
+.dcs-pagination-info span {
+  color: #005a9e;
+  font-weight: 700;
+}
+
+/* Page number tiles */
+.dcs-pagination-pages {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.dcs-page-number {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #cfd8df;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #44586b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dcs-page-number:hover:not(.active) {
+  border-color: #0078d4;
+  color: #0078d4;
+  background: #f0f7ff;
+}
+
+.dcs-page-number.active {
+  background: #0078d4;
+  border-color: #0078d4;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 120, 212, 0.35);
+}
+
+.dcs-page-number.dots {
+  border: none;
+  background: transparent;
+  cursor: default;
+  color: #8a8f94;
+}
+
+/* Page-size selector as a bordered group (never wraps internally) */
+.dcs-page-size-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid #cfd8df;
+  border-radius: 20px;
+  padding: 4px 6px 4px 14px;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+  flex: 0 0 auto;
+}
+
+.dcs-page-size-selector label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #44586b;
+  white-space: nowrap;
+}
+
+.dcs-page-size-selector>span {
+  font-size: 12.5px;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+.dcs-page-size-select {
+  padding: 4px 8px;
+  border: 1px solid #cfd8df;
+  border-radius: 14px;
+  background: #f8f9fa;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #212529;
+  cursor: pointer;
+}
+
+/* TOTAL badge - "Showing 1-25 of N records" */
+.dcs-total-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #cfd8df;
+  border-radius: 20px;
+  padding: 7px 9px 7px 14px;
+  font-size: 12.5px;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+.dcs-total-badge .dcs-total-range {
+  background: #e8f1fb;
+  color: #005a9e;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 2px 10px;
+}
+
+.dcs-total-badge .dcs-total-count {
+  background: #0078d4;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 2px 10px;
+  box-shadow: 0 1px 3px rgba(0, 120, 212, 0.35);
+}
+
+/* ============================================ */
+/* FORM - PROJECT INFO 2-COLUMN LAYOUT          */
+/* (matches SEIBIES edit section)               */
+/* ============================================ */
+.dcs-project-main-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+  overflow: hidden;
+  margin: 4px 0 15px 0;
+}
+
+/* LEFT SIDE - project info rows */
+.dcs-project-left-side {
+  padding: 8px 16px;
+  background: #ffffff;
+  border-right: 1px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dcs-project-left-side .dcs-detail-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 13px;
+  border-bottom: 1px solid #f0f0f0;
+  width: 100%;
+}
+
+.dcs-project-left-side .dcs-detail-item:last-of-type {
+  border-bottom: none;
+}
+
+.dcs-project-left-side .dcs-detail-label {
+  font-weight: 700;
+  color: #495057;
+  white-space: nowrap;
+  min-width: 140px;
+}
+
+.dcs-project-left-side .dcs-detail-value {
+  color: #212529;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.dcs-project-left-side .dcs-detail-value-select {
+  flex: 1;
+  min-width: 0;
+}
+
+.dcs-project-left-side .dcs-detail-value-select select {
+  width: 100%;
+  max-width: 420px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+/* Project select disabled in Edit mode (like Procurement) */
+.dcs-project-left-side .dcs-detail-value-select select:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.dcs-edit-mode .dcs-project-select-container select {
+  background-color: #f8f9fa !important;
+  color: #666 !important;
+  border-color: #d0d0d0 !important;
+  cursor: not-allowed !important;
+}
+
+/* "View Mode" note under the project info */
+.dcs-view-mode-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: 10px 0 6px 0;
+  padding: 10px 12px;
+  background: #f8f9fa;
+  border: 1px dashed #dee2e6;
+  border-radius: 6px;
+  color: #6c757d;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+/* RIGHT SIDE - Excel import instructions */
+.dcs-project-right-side {
+  padding: 8px 16px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Excel action buttons (below the two sections) */
+.dcs-import-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.dcs-import-instructions {
+  margin: 0;
+  font-size: 12px;
+  color: #6c757d;
+  padding: 10px;
+  background: #fff3cd;
+  border-radius: 4px;
+  border: 1px solid #ffeaa7;
+}
+
+.dcs-import-instructions p {
+  margin: 0 0 5px 0;
+}
+
+.dcs-import-instructions ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.dcs-import-instructions li {
+  margin-bottom: 3px;
+}
+
+/* Hide Add Document buttons in view mode */
+.dcs-view-mode .dcs-add-input-document,
+.dcs-view-mode .dcs-add-output-document {
+  display: none !important;
+}
+
+/* Adjust table layout in view mode */
+.dcs-view-mode .dcs-modern-table {
+  width: 100%;
+  min-width: 1600px;
+}
+
+.dcs-view-mode .dcs-inputs {
+  overflow-x: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.dcs-view-mode .dcs-view-field {
+  min-height: 36px;
+  display: flex;
+  align-items: flex-start;
+  word-break: break-word;
+}
+
+.dcs-view-mode .dcs-date-field {
+  justify-content: center;
+}
+
+.dcs-view-mode .dcs-document-group td {
+  vertical-align: middle !important;
+}
+
+.dcs-view-mode .dcs-revision-row td {
+  background-color: #fafafa !important;
+}
+
+/* Ensure tables maintain edit mode column widths */
+.dcs-view-mode table {
+  table-layout: auto;
+}
+
+.dcs-view-mode th,
+.dcs-view-mode td {
+  word-wrap: break-word;
+}
+
+/* Make sure the table container is responsive */
+@media (max-width: 1600px) {
+  .dcs-view-mode .dcs-inputs {
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+  }
+}
+
+.dcs-add-input-document,
+.dcs-add-output-document {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Hide delete button for default documents */
+.dcs-page .dcs-doc-actions button[data-is-default="true"] {
+  display: none !important;
+}
+
+.dcs-page .dcs-doc-actions button[data-is-default="false"] {
+  display: inline-flex !important;
+}
+
+.dcs-page .dcs-document-header[data-is-default="true"] .dcs-remove-doc {
+  display: none !important;
+}
+
+.dcs-page .dcs-document-header[data-is-default="false"] .dcs-remove-doc {
+  display: inline-flex !important;
+}
+
+.dcs-page .view-mode .dcs-form-control {
+  background-color: #f8f9fa !important;
+  border-color: #e9ecef !important;
+  cursor: not-allowed;
+}
+
+.dcs-page .dcs-view-field {
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+.dcs-page .dcs-description-view {
+  max-width: 200px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dcs-page .dcs-description-view:hover {
+  position: relative;
+  z-index: 1000;
+  background: white;
+  border: 1px solid #0078d4;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  white-space: normal;
+  overflow: visible;
+  word-wrap: break-word;
+}
+
+.dcs-page .dcs-view-mode .dcs-form-control {
+  background-color: #f8f9fa !important;
+  border-color: #e9ecef !important;
+  cursor: not-allowed;
+}
+
+.dcs-page .dcs-status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.dcs-page .dcs-remarks-view {
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+/* Status-specific badge colors */
+.dcs-page .dcs-status-badge[data-status="Pending"] {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.dcs-page .dcs-status-badge[data-status="Submitted"] {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+.dcs-page .dcs-status-badge[data-status="Under Review"] {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.dcs-page .dcs-status-badge[data-status="Approved"] {
+  background-color: #c3e6cb;
+  color: #155724;
+  border: 1px solid #b1dfbb;
+}
+
+.dcs-page .dcs-status-badge[data-status="Rejected"] {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.dcs-page .dcs-status-badge[data-status="Revised"] {
+  background-color: #e2e3e5;
+  color: #383d41;
+  border: 1px solid #d6d8db;
+}
+
+/* Category badges */
+.dcs-page .dcs-category-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.dcs-page .dcs-category-badge[data-category="A"] {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.dcs-page .dcs-category-badge[data-category="I"] {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+/* Section headers */
+.dcs-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0 15px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #0078d4;
+}
+
+textarea.dcs-form-control.dcs-remarks-input {
+  width: 100px !important;
+}
+
+textarea.dcs-form-control.dcs-form-statuss {
+  width: 80px !important;
+}
+
+.dcs-section-header h3 {
+  color: #0078d4;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Table specific styles */
+.dcs-input-table {
+  margin-bottom: 30px;
+  border: 2px solid #28a745;
+}
+
+.dcs-input-table thead {
+  background-color: #e8f5e9;
+}
+
+.dcs-output-table {
+  margin-bottom: 30px;
+  border: 2px solid #007bff;
+}
+
+.dcs-output-table thead {
+  background-color: #e3f2fd;
+}
+
+/* Form controls */
+.dcs-form-control {
+  width: 100%;
+  padding: 4px 4px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 13px;
+  box-sizing: border-box;
+  min-height: 38px;
+}
+
+.dcs-form-control:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 0 0.2rem rgba(0, 120, 212, 0.25);
+  outline: none;
+}
+
+.dcs-form-control[readonly],
+.dcs-form-control:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+/* Textarea specific */
+.dcs-description-input,
+.dcs-remarks-input {
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+/* Merged cell styles */
+.dcs-merged-cell {
+  background-color: #f8f9fa;
+  text-align: center;
+  vertical-align: middle !important;
+  position: relative;
+}
+
+.dcs-merged-cell::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 10%;
+  bottom: 10%;
+  width: 1px;
+  background-color: #dee2e6;
+}
+
+.dcs-document-group:hover .dcs-merged-cell {
+  background-color: #e9ecef;
+}
+
+/* Revision cell styling */
+.dcs-rev-cell {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  text-align: center;
+  color: #495057;
+  min-width: 40px;
+}
+
+.dcs-document-header .dcs-rev-cell {
+  background-color: #e9ecef;
+}
+
+/* Document header row */
+.dcs-document-header {
+  background-color: #f8f9fa;
+  border-top: 2px solid #dee2e6;
+}
+
+.dcs-document-header:first-child {
+  border-top: none;
+}
+
+/* Revision rows */
+.dcs-document-group:not(.dcs-document-header) {
+  background-color: #fff;
+}
+
+.dcs-document-group:not(.dcs-document-header):nth-child(odd) {
+  background-color: #fafafa;
+}
+
+/* Category select */
+.dcs-category-select {
+  min-width: 100px;
+  font-size: 12px;
+}
+
+/* Status select (wider to fit longer status names e.g. "Document Deleted/cancelled") */
+.dcs-status-select {
+  width: 100%;
+  min-width: 130px;
+  font-size: 12px;
+}
+
+/* Engg Division select */
+.dcs-engg-division-select {
+  width: 100%;
+  min-width: 120px;
+  font-size: 12px;
+}
+
+/* Date inputs */
+.dcs-date-input {
+  width: 80% !important;
+  padding: 3px !important;
+}
+
+/* Action buttons */
+.dcs-actions-cell {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.dcs-actions-cell button {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dcs-edit-btn {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.dcs-edit-btn:hover {
+  background-color: #138496;
+}
+
+/* Project Reference edit link - SAME hyperlink style as Revenue / SEIBIES /
+   Inventory edit triggers (color:#0078d4, underline, hover:#0056b3, inherits
+   table font family + size - no bold / oversized font). */
+.dcs-page a.dcs-edit-link,
+a.dcs-edit-link {
+  background: none;
+  color: #0078d4 !important;
+  text-decoration: underline !important;
+  cursor: pointer !important;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.dcs-page a.dcs-edit-link:hover,
+a.dcs-edit-link:hover {
+  background: none;
+  color: #0056b3 !important;
+}
+
+.dcs-project-ref-cell {
+  white-space: nowrap;
+}
+
+/* ============================================ */
+/* MAIN DCS TABLE - SCROLL WRAPPER              */
+/*   Outer-sticky model: the PAGE itself scrolls vertically.   */
+/*   The wrapper must NOT be a scroll container, otherwise the  */
+/*   sticky header would pin relative to the wrapper instead of */
+/*   the viewport (causing it to appear in the middle of the    */
+/*   table). So we keep overflow:visible on both axes and let   */
+/*   the page scroll. The wide table overflows and the page     */
+/*   scrolls horizontally, so the frozen left columns stick to  */
+/*   the viewport's left edge.                                  */
+/* ============================================================ */
+.dcs-table-scroll-wrapper.dcs-main-table-scroll {
+  position: relative;
+  overflow: visible;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.dcs-main-table-scroll .dcs-modern-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 1500px;
+  margin: 0;
+}
+
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header th {
+  position: sticky !important;
+  position: -webkit-sticky !important;
+  top: var(--dcs-sticky-header-top, 0px) !important;
+  z-index: 20 !important;
+  background: #e9ecef;
+  border-bottom: 2px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.08);
+  white-space: nowrap;
+}
+
+.dcs-main-table-scroll .dcs-modern-table td {
+  border-right: 1px solid #f0f0f0;
+  white-space: nowrap;
+}
+
+/* ============================================ */
+/* MAIN TABLE - STICKY LEFT COLUMNS             */
+/* Project Reference | Customer | Project |     */
+/* Project Manager  (horizontal scroll starts   */
+/* from "Total Documents")                      */
+/* ============================================ */
+.dcs-main-table-scroll .dcs-modern-table .dcs-sticky-main-col {
+  position: sticky;
+  position: -webkit-sticky;
+  z-index: 5;
+  background: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
+/* Column 1: Project Reference */
+.dcs-main-table-scroll .dcs-modern-table .dcs-sticky-main-col.dcs-main-col-1 {
+  left: 0;
+  width: 140px;
+  min-width: 140px;
+  max-width: 140px;
+}
+
+/* Column 2: Customer */
+.dcs-main-table-scroll .dcs-modern-table .dcs-sticky-main-col.dcs-main-col-2 {
+  left: 140px;
+  width: 180px;
+  min-width: 180px;
+  max-width: 180px;
+}
+
+/* Column 3: Project */
+.dcs-main-table-scroll .dcs-modern-table .dcs-sticky-main-col.dcs-main-col-3 {
+  left: 320px;
+  width: 220px;
+  min-width: 220px;
+  max-width: 220px;
+}
+
+/* Column 4: Project Manager */
+.dcs-main-table-scroll .dcs-modern-table .dcs-sticky-main-col.dcs-main-col-4 {
+  left: 540px;
+  width: 160px;
+  min-width: 160px;
+  max-width: 160px;
+  border-right: 2px solid #d0d0d0;
+  box-shadow: 2px 0 4px -2px rgba(0, 0, 0, 0.12);
+}
+
+/* Header corner cells: frozen on top AND left */
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header th.dcs-sticky-main-col {
+  z-index: 30 !important;
+  background: #e9ecef;
+}
+
+/* Keep frozen cells opaque on row hover */
+.dcs-main-table-scroll .dcs-modern-table tbody tr:hover .dcs-sticky-main-col {
+  background: #f8f9fa;
+}
+
+/* Edit link inside the frozen column - keep ellipsis behaviour */
+.dcs-main-table-scroll .dcs-sticky-main-col a.dcs-edit-link {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  .dcs-main-table-scroll .dcs-modern-table .dcs-sticky-main-col.dcs-main-col-1 {
+    width: 110px;
+    min-width: 110px;
+    max-width: 110px;
+  }
+
+  .dcs-main-table-scroll .dcs-modern-table .dcs-sticky-main-col.dcs-main-col-2 {
+    left: 110px;
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+  }
+
+  .dcs-main-table-scroll .dcs-modern-table .dcs-sticky-main-col.dcs-main-col-3 {
+    left: 240px;
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+  }
+
+  .dcs-main-table-scroll .dcs-modern-table .dcs-sticky-main-col.dcs-main-col-4 {
+    left: 400px;
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+  }
+}
+
+/* ============================================ */
+/* MAIN TABLE - DOCUMENT COUNT COLUMNS          */
+/* (same look as Procurement's status counts:   */
+/*  centered, bold, light tinted background)    */
+/* ============================================ */
+.dcs-modern-table th.dcs-count-th {
+  min-width: 110px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.dcs-modern-table td.dcs-count-cell {
+  text-align: center;
+  font-weight: bold;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: #212529;
+}
+
+/* Total Documents - like Procurement's "Total Line Items" */
+.dcs-modern-table td.dcs-count-total {
+  background-color: #f0f7ff;
+  font-weight: 600;
+}
+
+.dcs-modern-table td.dcs-count-not-submitted {
+  background-color: #e3f2fd;
+}
+
+.dcs-modern-table td.dcs-count-not-approved {
+  background-color: #fff3e0;
+}
+
+.dcs-modern-table td.dcs-count-revised {
+  background-color: #fff8e1;
+}
+
+.dcs-modern-table td.dcs-count-approved {
+  background-color: #e8f5e8;
+}
+
+.dcs-modern-table td.dcs-count-rejected {
+  background-color: #fce4ec;
+}
+
+.dcs-modern-table td.dcs-count-retained {
+  background-color: #e0f2f1;
+}
+
+/* Zero counts shown a little softer so real numbers stand out */
+.dcs-modern-table td.dcs-count-cell.dcs-count-zero {
+  color: #8a8f94;
+  font-weight: 500;
+}
+.dcs-view-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.dcs-view-btn:hover {
+  background-color: #218838;
+}
+
+.dcs-delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.dcs-delete-btn:hover {
+  background-color: #c82333;
+}
+
+/* Revision action buttons */
+.dcs-rev-actions {
+  text-align: center;
+  padding: 4px !important;
+}
+
+.dcs-rev-actions button {
+  padding: 4px 8px;
+  font-size: 11px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Document action buttons */
+.dcs-doc-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.dcs-doc-actions button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dcs-btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.dcs-btn-success:hover {
+  background-color: #218838;
+}
+
+.dcs-btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.dcs-btn-danger:hover {
+  background-color: #c82333;
+}
+
+.dcs-add-revision-btn {
+  background-color: #28a745;
+}
+
+.dcs-remove-revision-btn {
+  background-color: #dc3545;
+}
+
+.dcs-remove-doc {
+  background-color: #dc3545;
+}
+
+/* Card styles */
+.dcs-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  overflow: visible;
+  position: relative;
+}
+
+/* Alert styles */
+.dcs-alert {
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.dcs-alert-info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+/* Button styles */
+.dcs-btn-primary {
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+  margin: 0 10px;
+}
+
+.dcs-btn-primary:hover {
+  background-color: #006cbd;
+}
+
+.dcs-btn-secondary {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.dcs-btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+/* Form styles */
+.dcs-form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.dcs-form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.dcs-form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #495057;
+}
+
+.dcs-form-group-box {
+  padding: 15px;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+}
+
+.dcs-form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+/* UI FIX 1 - outer-sticky page header that NEVER scrolls away:
+   pinned to the top of the scrolling area with its own solid
+   background + shadow; sits above the table header (z 1200 vs 20).
+   Width follows the card (100%), not 100vw, so it can never push
+   the page wider than the screen. */
+.dcs-page-header.stick {
+  position: sticky !important;
+  border-radius: 0 !important;
+  top: 0 !important;
+  left: 0;
+  z-index: 1200 !important;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0 0 14px 0;
+}
+
+.dcs-page-header.stick .dcs-show-form-btn {
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+/* Table actions (filter bar) - UI FIX 2:
+   auto-fit grid so the filters ALWAYS fit inside the screen:
+   wide screens show one row, narrower screens wrap cleanly into
+   two/three rows - nothing is ever cut off. min-width:0 lets the
+   columns shrink below the selects' intrinsic width. */
+.dcs-table-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px 14px;
+  margin-bottom: 18px;
+  align-items: end;
+  position: sticky;
+  left: 0;
+  z-index: 900;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  padding: 4px 0 10px 0;
+}
+
+.dcs-tableColp4 {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dcs-tableColp4 label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #495057;
+  font-size: 12px;
+}
+
+.dcs-tableColp4 select,
+.dcs-tableColp4 button {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.dcs-clear-filters-btn,
+.dcs-export-excel-btn {
+  justify-content: center;
+}
+
+/* Modern table */
+.dcs-modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.dcs-modern-table th {
+  background-color: #f8f9fa;
+  padding: 12px 8px;
+  text-align: center;
+  font-weight: 600;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  vertical-align: middle;
+}
+
+.dcs-modern-table td {
+  padding: 10px 8px;
+  border: 1px solid #dee2e6;
+  vertical-align: middle;
+}
+
+.dcs-modern-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.dcs-modern-table thead th {
+  background-color: #e9ecef;
+  font-weight: 600;
+}
+
+/* Revision table specific */
+.dcs-revision-table .dcs-document-group {
+  transition: background-color 0.2s ease;
+}
+
+.dcs-revision-table .dcs-document-header:hover {
+  background-color: #f1f3f4;
+}
+
+.dcs-revision-table .dcs-document-group:not(.dcs-document-header):hover {
+  background-color: #f8f9fa;
+}
+
+/* ============================================ */
+/* UI FIX 3 - RESPONSIVE                        */
+/* Header stacks, filters become full-width     */
+/* single column, everything stays in-screen.   */
+/* ============================================ */
+@media (max-width: 992px) {
+  .dcs-project-main-wrapper {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dcs-table-actions {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    padding: 2px 0 8px 0;
+  }
+
+  .dcs-project-main-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .dcs-project-left-side {
+    border-right: none;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  .dcs-form-row {
+    flex-direction: column;
+  }
+
+  .dcs-form-group {
+    min-width: 100%;
+  }
+
+  .dcs-form-actions {
+    flex-direction: column;
+  }
+
+  .dcs-form-actions .dcs-btn-primary,
+  .dcs-form-actions .dcs-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dcs-actions-cell {
+    flex-direction: column;
+  }
+
+  .dcs-input-table,
+  .dcs-output-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .dcs-revision-table {
+    font-size: 12px;
+  }
+
+  .dcs-category-select,
+  .dcs-status-select,
+  .dcs-engg-division-select {
+    font-size: 11px;
+    min-width: 80px;
+  }
+
+  .dcs-date-input {
+    padding: 6px !important;
+    font-size: 12px;
+  }
+
+  .dcs-rev-cell {
+    min-width: 30px;
+  }
+
+  .dcs-doc-actions {
+    flex-direction: row;
+  }
+
+  .dcs-doc-actions button {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  .dcs-table-toolbar { align-items: stretch; flex-direction: column; }
+  .dcs-table-toolbar button { width: 100%; justify-content: center; }
+  .dcs-filter-grid { grid-template-columns: 1fr; }
+  .dcs-table-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .dcs-tableColp4 select,
+  .dcs-tableColp4 button {
+    width: 100%;
+  }
+
+  .dcs-pagination-container {
+    align-items: stretch;
+  }
+
+  .dcs-pagination-left,
+  .dcs-pagination-right {
+    justify-content: center;
+  }
+
+  .dcs-import-buttons .dcs-btn-primary,
+  .dcs-import-buttons .dcs-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dcs-detail-label {
+    min-width: 110px;
+    font-size: 12px;
+  }
+}
+
+/* ============================================================ */
+/* MAIN TABLE - SORTABLE HEADERS (visible arrows + outer border) */
+/*   Must stay AFTER the sticky-header rules above so the        */
+/*   stronger borders override them.                             */
+/* ============================================================ */
+
+/* 1. Strong outer frame around the header row */
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header th {
+  border: 1px solid #cfd8df;
+  border-top: 2px solid #8fa3b0;
+  border-bottom: 2px solid #8fa3b0;
+}
+
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header tr th:first-child {
+  border-left: 2px solid #8fa3b0;
+}
+
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header tr th:last-child {
+  border-right: 2px solid #8fa3b0;
+}
+
+/* 2. Sortable header cell */
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header th.dcs-sortable-th {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color 0.15s ease;
+}
+
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header th.dcs-sortable-th:hover {
+  background: #dce7f5;
+}
+
+.dcs-th-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  vertical-align: middle;
+}
+
+.dcs-th-text {
+  white-space: nowrap;
+}
+
+th.dcs-th-wrap .dcs-th-text {
+  white-space: normal !important;
+  display: inline-block;
+  min-width: 110px;
+  max-width: 150px;
+  line-height: 1.25;
+  text-align: left;
+}
+
+/* 3. The arrows - each in its own bordered box for maximum visibility */
+.dcs-sort-arrows {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+
+.dcs-sort-arrows .dcs-arrow-up,
+.dcs-sort-arrows .dcs-arrow-down {
+  width: 15px;
+  height: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* ✅ PERFECT CENTRING (same as invoicing / seibies / inventory): the ABB
+     webfont has uneven ▲/▼ glyph metrics that push the triangles off-centre
+     inside the box. A neutral system font + a zero-height line box (flex
+     centres it) keeps the arrow exactly in the middle of its box. */
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 8px;
+  line-height: 0;
+  letter-spacing: 0;
+  text-indent: 0;
+  vertical-align: middle;
+  color: #44586b;
+  background: #ffffff;
+  border: 1px solid #8fa3b0;
+  border-radius: 3px;
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+}
+
+th.dcs-sortable-th:hover .dcs-arrow-up,
+th.dcs-sortable-th:hover .dcs-arrow-down {
+  border-color: #0078d4;
+  color: #0078d4;
+}
+
+/* 4. Active sort state: solid blue box + white arrow on the active direction */
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header th.dcs-sorted-asc,
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header th.dcs-sorted-desc {
+  background: #cfe2ff !important;
+  color: #003e7e;
+  box-shadow: inset 0 -3px 0 #0078d4;
+}
+
+th.dcs-sorted-asc .dcs-arrow-up {
+  background: #0078d4;
+  border-color: #005a9e;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 120, 212, 0.45);
+}
+
+th.dcs-sorted-asc .dcs-arrow-down {
+  opacity: 0.55;
+}
+
+th.dcs-sorted-desc .dcs-arrow-down {
+  background: #0078d4;
+  border-color: #005a9e;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 120, 212, 0.45);
+}
+
+th.dcs-sorted-desc .dcs-arrow-up {
+  opacity: 0.55;
+}
+
+/* ============================================================ */
+/* COMPACT COUNT COLUMNS - wrap long status headers              */
+/*   "Revised Document not Submitted / Approved With comments"   */
+/*   and "Retained for Information" wrap onto 2-3 lines instead  */
+/*   of stretching the table ~450px.                             */
+/* ============================================================ */
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header th.dcs-count-th {
+  white-space: normal;
+  width: 112px;
+  min-width: 96px;
+  max-width: 150px;
+  padding: 8px 6px;
+  vertical-align: middle;
+}
+
+/* text wraps onto multiple lines; the arrow boxes stay beside it */
+.dcs-main-table-scroll .dcs-modern-table thead th.dcs-count-th .dcs-th-text {
+  white-space: normal;
+  display: inline-block;
+  text-align: left;
+  line-height: 1.25;
+}
+
+/* The shared stylesheet owns DCI header appearance; this button stays pinned
+  beside its title in the sticky form header. */
+/* Top Save button - flush right in the header, never shrinks */
+.dcs-btn-save-top {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  align-self: center !important;
+  white-space: nowrap !important;
+  font-size: 13px !important;
+  padding: 8px 16px !important;
+  min-height: 36px;
+  max-height: 40px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================ */
+/* LOADING STATE (spinner + text, same pattern as Inventory /   */
+/* Procurement) - shown while DCS records are being fetched. ✅  */
+/* ============================================================ */
+.dcs-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.dcs-loading-spinner {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border: 3px solid #e1e4e8;
+  border-top-color: #0078d4;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: dcsSpin .8s linear infinite;
+}
+
+.dcs-loading-text {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+@keyframes dcsSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =====================================================================
+   DCI visual parity with Inventory: toolbar, pagination, sort arrows
+   and the indeterminate loader deliberately use the same measurements,
+   palette and states as the Inventory module.
+   ===================================================================== */
+.dcs-table-toolbar {
+  margin: 0 0 12px !important;
+  padding: 12px 16px !important;
+  background: #f8f9fa !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 10px !important;
+}
+
+.dcs-filter-trigger,
+.dcs-export-excel-btn {
+  min-height: 38px !important;
+  padding: 10px 20px !important;
+  border-radius: 999px !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, .06) !important;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease !important;
+}
+.dcs-filter-trigger { gap: 8px !important; background: #fff !important; color: #344054 !important; border: 1px solid #e5e7eb !important; }
+.dcs-filter-trigger:hover:not(:disabled) { background: #f9fafb !important; border-color: #d0d5dd !important; color: #1f2937 !important; box-shadow: 0 2px 6px rgba(16,24,40,.08) !important; transform: translateY(-1px) !important; }
+.dcs-filter-funnel { width: 16px; height: 16px; flex: 0 0 16px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.dcs-filter-chev { width: 11px; height: 11px; flex: 0 0 11px; stroke: currentColor; fill: none; stroke-width: 2.6; stroke-linecap: round; transition: transform .18s ease; }
+.dcs-filter-trigger[aria-expanded="true"] .dcs-filter-chev { transform: rotate(180deg); }
+.dcs-filter-trigger.is-active { background: #605eee !important; border-color: #605eee !important; color: #fff !important; }
+.dcs-filter-trigger.is-active:hover:not(:disabled) { background: #4c49e0 !important; border-color: #4c49e0 !important; color: #fff !important; }
+.dcs-filter-count { display: none !important; min-width: 20px !important; height: 20px !important; padding: 0 6px !important; background: #fff !important; color: #605eee !important; border-radius: 999px !important; font-size: 11.5px !important; font-weight: 800 !important; line-height: 1 !important; }
+.dcs-filter-trigger.is-active .dcs-filter-count { display: inline-flex !important; align-items: center !important; justify-content: center; }
+.dcs-export-excel-btn { background: #356bff !important; border: 1px solid #356bff !important; color: #fff !important; }
+.dcs-export-excel-btn:hover:not(:disabled) { background: #2a5ce8 !important; border-color: #2a5ce8 !important; color: #fff !important; box-shadow: 0 4px 12px rgba(53,107,255,.30) !important; transform: translateY(-1px) !important; }
+
+.dcs-pagination-container { margin: 0 !important; padding: 12px 16px !important; gap: 10px 24px !important; background: #fff !important; border: none !important; border-top: 1px solid #dee2e6 !important; border-radius: 0 0 8px 8px !important; box-shadow: none !important; }
+.dcs-pagination-left { gap: 10px !important; }
+.dcs-pagination-right { gap: 4px !important; flex-wrap: nowrap !important; }
+.dcs-page-size-selector { gap: 8px !important; padding: 0 !important; background: none !important; white-space: nowrap !important; }
+.dcs-page-size-selector label, .dcs-pagination-info { font-size: 12.5px !important; font-weight: 400 !important; color: #212529 !important; white-space: nowrap !important; }
+.dcs-page-size-select { min-width: 54px !important; padding: 5px 8px !important; border: 1px solid #ced4da !important; border-radius: 6px !important; background: #fff !important; color: #212529 !important; font-size: 12.5px !important; font-weight: 600 !important; }
+.dcs-pagination-info { padding: 0 !important; background: none !important; border: none !important; border-radius: 0 !important; }
+.dcs-pagination-info span, .dcs-pg-of span { color: #212529 !important; font-weight: 600 !important; }
+.dcs-pagination-btn.dcs-pg-icon { width: auto !important; height: auto !important; min-width: 26px !important; padding: 4px 5px !important; background: none !important; border: none !important; border-radius: 4px !important; color: #9aa7b1 !important; font-size: 16px !important; box-shadow: none !important; transform: none !important; }
+.dcs-pagination-btn.dcs-pg-icon:hover:not(:disabled) { background: #f1f3f5 !important; border: none !important; color: #0078d4 !important; box-shadow: none !important; transform: none !important; }
+.dcs-pagination-btn.dcs-pg-icon:disabled { background: none !important; border: none !important; color: #cbd3d9 !important; opacity: 1 !important; box-shadow: none !important; }
+.dcs-pagination-pages { gap: 5px !important; flex-wrap: wrap !important; }
+.dcs-page-number { min-width: 40px !important; height: 30px !important; padding: 0 8px !important; background: #fff !important; border: 1px solid #dee2e6 !important; border-radius: 6px !important; color: #495057 !important; font-size: 12.5px !important; font-weight: 600 !important; box-shadow: none !important; }
+.dcs-page-number:hover:not(.active):not(.dots) { border-color: #0078d4 !important; color: #0078d4 !important; background: #f0f7ff !important; }
+.dcs-page-number.active { background: #fff !important; border-color: #adb5bd !important; color: #212529 !important; font-weight: 700 !important; box-shadow: 0 1px 2px rgba(0,0,0,.05) !important; }
+.dcs-page-number.dots { min-width: 18px !important; border: none !important; background: none !important; color: #adb5bd !important; }
+.dcs-pg-of { margin: 0 4px 0 6px !important; color: #6c757d !important; font-size: 12.5px !important; font-weight: 400 !important; }
+
+/* Inventory's compact paired arrows become one 22px halo in DCI too. */
+.dcs-sort-arrows { width: 22px !important; height: 22px !important; flex: 0 0 22px !important; gap: 0 !important; border-radius: 50% !important; background: transparent !important; border: none !important; cursor: pointer; transition: background .15s ease; }
+th.dcs-sortable-th:hover .dcs-sort-arrows { background: rgba(17,24,39,.08) !important; }
+.dcs-sort-arrows .dcs-arrow-up, .dcs-sort-arrows .dcs-arrow-down { width: 14px !important; height: 9px !important; padding: 0 !important; background: none !important; border: none !important; border-radius: 0 !important; color: #374151 !important; font-size: 9px !important; line-height: 0 !important; box-shadow: none !important; }
+th.dcs-sorted-asc .dcs-sort-arrows, th.dcs-sorted-desc .dcs-sort-arrows { background: rgba(0,120,212,.12) !important; }
+th.dcs-sorted-asc .dcs-arrow-up, th.dcs-sorted-desc .dcs-arrow-down { background: none !important; border: none !important; color: #0078d4 !important; box-shadow: none !important; opacity: 1 !important; }
+th.dcs-sorted-asc .dcs-arrow-down, th.dcs-sorted-desc .dcs-arrow-up { opacity: .38 !important; }
+
+.dcs-table-loading-row td { padding: 18px 16px !important; background: #fff !important; }
+.dcs-page-loader { display: block !important; width: 100% !important; max-width: 420px; margin: 0 auto; height: auto !important; overflow: visible !important; background: none !important; }
+.dcs-page-loader-track { position: relative; width: 100%; height: 6px; overflow: hidden; background: #dcdcdc; border-radius: 999px; }
+.dcs-page-loader-bar { position: absolute; top: 0; left: 0; width: 50%; height: 100%; background: #6664ff; border-radius: 999px; animation: dcsInventoryLoaderSlide 1.25s cubic-bezier(.65,.05,.36,1) infinite; }
+@keyframes dcsInventoryLoaderSlide { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
+
+@media (max-width: 700px) { .dcs-pagination-container { justify-content: center !important; } .dcs-pagination-left, .dcs-pagination-right { width: 100% !important; justify-content: center !important; } .dcs-pagination-right { flex-wrap: wrap !important; } }
+
+/* ==== DCS UPGRADE BLOCK (appended last - do not move above this line) ==== */
+/* =====================================================================
+   DCS - SAME FIVE UPGRADES AS INVENTORY / SEI-BIES / INVOICING / PROCUREMENT
+   pagination | filter popup | sort arrow | button format | page loader
+   Your file already contains a partial "DCI visual parity" block at the
+   bottom - this block re-declares the same selectors LAST with !important
+   and is therefore the authoritative version. Nothing above it is deleted.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------- */
+/* Design tokens (identical values to inventory.css)                 */
+/* ---------------------------------------------------------------- */
+:root {
+  --lilac-primary: #605EEE;
+  --lilac-primary-dark: #4C49E0;
+  --lilac-primary-soft: #EEEEFE;
+  --lilac-blue: #356BFF;
+  --lilac-blue-dark: #2A5CE8;
+  --lilac-ink: #1F2430;
+  --lilac-muted: #667085;
+  --lilac-line: #E4E7EC;
+  --lilac-pill: 999px;
+  --lilac-danger: #D92D20;
+  --lilac-ring: 0 0 0 3px rgba(96, 94, 238, .22);
+  --lilac-shadow-sm: 0 1px 2px rgba(16, 24, 40, .06);
+  --lilac-shadow-md: 0 4px 12px rgba(96, 94, 238, .28);
+}
+
+/* ===================================================================== */
+/* 1. BUTTONS - LILAC / PILL STYLE (mock-up screenshots)                  */
+/*    Sampled: Save #605EEE indigo, Download Excel #356BFF blue,          */
+/*    secondary = white ghost pill, radius 999px.                         */
+/*    NOTE: the PAGE HEADER keeps its own layout (title left, button      */
+/*    right) - only the button FORMAT changes, because .dcs-btn-primary   */
+/*    is the shared pill recipe now.                                      */
+/* ===================================================================== */
+.dcs-btn-primary,
+.dcs-btn-secondary,
+.dcs-export-excel-btn,
+.dcs-filter-trigger,
+.dcs-import-buttons .dcs-btn-primary,
+.dcs-import-buttons .dcs-btn-secondary,
+.dcs-form-actions .dcs-btn-primary,
+.dcs-form-actions .dcs-btn-secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 38px !important;
+  padding: 10px 20px !important;
+  margin: 0 !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--lilac-pill) !important;
+  font-family: inherit !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  box-shadow: var(--lilac-shadow-sm) !important;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease !important;
+}
+
+/* PRIMARY (Save Document Data, + Add Project Documents, Apply, Import) */
+.dcs-btn-primary { background: var(--lilac-primary) !important; color: #fff !important; }
+.dcs-btn-primary:hover:not(:disabled) { background: var(--lilac-primary-dark) !important; box-shadow: var(--lilac-shadow-md) !important; transform: translateY(-1px) !important; }
+
+/* SECONDARY (Back to List, Cancel, Export Template, Download Current, Reset Form) */
+.dcs-btn-secondary { background: #fff !important; color: #344054 !important; border-color: var(--lilac-line) !important; }
+.dcs-btn-secondary:hover:not(:disabled) { background: #F9FAFB !important; border-color: #D0D5DD !important; color: #1F2937 !important; box-shadow: 0 2px 6px rgba(16, 24, 40, .08) !important; transform: translateY(-1px) !important; }
+
+/* EXPORT -> blue pill (Download Excel, same blue as Add Version) */
+.dcs-export-excel-btn { background: var(--lilac-blue) !important; color: #fff !important; border-color: var(--lilac-blue) !important; }
+.dcs-export-excel-btn:hover:not(:disabled) { background: var(--lilac-blue-dark) !important; border-color: var(--lilac-blue-dark) !important; color: #fff !important; box-shadow: 0 4px 12px rgba(53, 107, 255, .30) !important; transform: translateY(-1px) !important; }
+
+.dcs-btn-primary:focus-visible,
+.dcs-btn-secondary:focus-visible,
+.dcs-export-excel-btn:focus-visible,
+.dcs-filter-trigger:focus-visible { outline: none !important; box-shadow: var(--lilac-ring) !important; }
+
+.dcs-btn-primary:disabled,
+.dcs-btn-secondary:disabled,
+.dcs-export-excel-btn:disabled { opacity: .55 !important; cursor: not-allowed !important; transform: none !important; box-shadow: none !important; }
+
+/* Sticky form-header Save button */
+.dcs-btn-save-top { min-height: 36px !important; padding: 8px 18px !important; font-size: 13px !important; }
+
+/* View pill (green with text, same as DCS/Procurement) */
+.dcs-view-btn {
+  background-color: #28a745 !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 6px 14px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  border-radius: var(--lilac-pill) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+  box-shadow: var(--lilac-shadow-sm) !important;
+  transition: all .2s ease !important;
+}
+.dcs-view-btn:hover { background-color: #218838 !important; }
+
+/* Row action buttons (Add Revision / Remove Document / Remove Revision).
+   Specificity matches the runtime <style> the module injects, and this
+   block comes later, so the pill shape wins. */
+.dcs-doc-actions .dcs-btn-success, .dcs-doc-actions .dcs-btn-danger,
+.dcs-doc-actions .dcs-add-revision-btn, .dcs-doc-actions .dcs-remove-doc,
+.dcs-doc-actions .dcs-remove-revision-btn {
+  border: none !important;
+  border-radius: 10px !important;
+  color: #fff !important;
+  box-shadow: var(--lilac-shadow-sm) !important;
+}
+.dcs-doc-actions .dcs-btn-success, .dcs-doc-actions .dcs-add-revision-btn { background-color: #28a745 !important; }
+.dcs-doc-actions .dcs-btn-success:hover, .dcs-doc-actions .dcs-add-revision-btn:hover { background-color: #218838 !important; }
+.dcs-doc-actions .dcs-btn-danger, .dcs-doc-actions .dcs-remove-doc, .dcs-doc-actions .dcs-remove-revision-btn { background-color: #dc3545 !important; }
+.dcs-doc-actions .dcs-btn-danger:hover, .dcs-doc-actions .dcs-remove-doc:hover, .dcs-doc-actions .dcs-remove-revision-btn:hover { background-color: #c82333 !important; }
+
+/* ===================================================================== */
+/* 2. SORT ARROWS - ONE ⇅ INSIDE A 22px CIRCLE THAT LIGHTS UP ON HOVER   */
+/* ===================================================================== */
+.dcs-sort-arrows {
+  width: 22px !important;
+  height: 22px !important;
+  flex: 0 0 22px !important;
+  display: inline-flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background .15s ease !important;
+}
+th.dcs-sortable-th:hover .dcs-sort-arrows { background: rgba(17, 24, 39, .08) !important; }
+
+.dcs-sort-arrows .dcs-arrow-up,
+.dcs-sort-arrows .dcs-arrow-down {
+  width: 14px !important;
+  height: 9px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: #374151 !important;
+  /* neutral font + zero-height line box = arrows dead-centre (the ABB
+     webfont's uneven ▲/▼ metrics push them off-centre) */
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 9px !important;
+  line-height: 0 !important;
+  letter-spacing: 0 !important;
+  text-indent: 0 !important;
+  box-shadow: none !important;
+}
+
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header th.dcs-sortable-th { cursor: pointer !important; user-select: none !important; -webkit-user-select: none !important; transition: background-color .15s ease !important; }
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header th.dcs-sortable-th:hover { background: #dce7f5 !important; }
+
+/* active sort: halo tinted + the active direction solid, the other dimmed */
+th.dcs-sorted-asc .dcs-sort-arrows, th.dcs-sorted-desc .dcs-sort-arrows { background: rgba(0, 120, 212, .12) !important; }
+th.dcs-sorted-asc .dcs-arrow-up, th.dcs-sorted-desc .dcs-arrow-down { background: none !important; border: none !important; color: #0078d4 !important; box-shadow: none !important; opacity: 1 !important; }
+th.dcs-sorted-asc .dcs-arrow-down, th.dcs-sorted-desc .dcs-arrow-up { opacity: .38 !important; }
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header th.dcs-sorted-asc,
+.dcs-main-table-scroll .dcs-modern-table thead.dcs-sticky-main-header th.dcs-sorted-desc { background: #cfe2ff !important; color: #003e7e !important; box-shadow: inset 0 -3px 0 #0078d4 !important; }
+
+/* ===================================================================== */
+/* 3. PAGE LOADER - INDETERMINATE BAR (grey track + indigo bar)          */
+/*    Replaces every old loader: the first-paint loading ROW under the    */
+/*    table head and the save/fetch overlay. No text, no spinner -        */
+/*    messages go to the console.                                         */
+/* ===================================================================== */
+.dcs-table-loading-row td { padding: 18px 16px !important; background: #fff !important; }
+.dcs-page-loader { display: block !important; width: 100% !important; max-width: 420px; margin: 0 auto; height: auto !important; overflow: visible !important; background: none !important; border-radius: 0 !important; }
+.dcs-page-loader-track { position: relative; width: 100%; height: 6px; overflow: hidden; background: #DCDCDC; border-radius: 999px; }
+.dcs-page-loader-bar { position: absolute; top: 0; left: 0; width: 50%; height: 100%; background: #6664FF; border-radius: 999px; animation: dcsPageLoaderSlide 1.25s cubic-bezier(.65, .05, .36, 1) infinite; }
+@keyframes dcsPageLoaderSlide { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
+
+/* the old spinner + "Loading..." text are gone */
+.dcs-loading-spinner,
+.dcs-loading-text { display: none !important; }
+.dcs-loading { display: flex !important; justify-content: center !important; align-items: center !important; padding: 16px !important; background: #fff !important; border-bottom: 1px solid #e9ecef !important; }
+
+/* the overlay the module mounts while fetching / saving */
+.loading-overlay { position: absolute !important; inset: 0 !important; display: flex !important; align-items: center !important; justify-content: center !important; background: rgba(255, 255, 255, .94) !important; backdrop-filter: blur(3px) !important; border-radius: 10px !important; overflow: hidden !important; z-index: 99999 !important; box-sizing: border-box !important; }
+.loading-overlay .loading-container { padding: 26px 30px !important; background: #fff !important; border: 1px solid #e5e7eb !important; border-radius: 10px !important; box-shadow: 0 10px 32px rgba(16, 24, 40, .16) !important; width: min(520px, 85vw) !important; box-sizing: border-box !important; }
+
+/* ===================================================================== */
+/* 4. PAGINATION - ONE FLAT BAR (same text + layout as the mock-up)      */
+/*    LEFT  : Items per page: [n]   Showing 1 - 25 of 60 items           */
+/*    RIGHT : « ‹ [tiles] of 6 › »                                       */
+/* ===================================================================== */
+.dcs-pagination-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 10px 24px !important;
+  margin: 0 !important;
+  padding: 12px 16px !important;
+  background: #fff !important;
+  border: none !important;
+  border-top: 1px solid #dee2e6 !important;
+  border-radius: 0 0 8px 8px !important;
+  box-shadow: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+.dcs-pagination-left { display: flex !important; align-items: center !important; gap: 10px !important; flex-wrap: wrap !important; }
+.dcs-pagination-right { display: flex !important; align-items: center !important; gap: 4px !important; flex-wrap: nowrap !important; }
+
+.dcs-page-size-selector { display: inline-flex !important; align-items: center !important; gap: 8px !important; padding: 0 !important; background: none !important; border: none !important; border-radius: 0 !important; white-space: nowrap !important; flex: 0 0 auto !important; }
+.dcs-page-size-selector label, .dcs-pagination-info { font-size: 12.5px !important; font-weight: 400 !important; color: #212529 !important; white-space: nowrap !important; }
+.dcs-page-size-select { min-width: 54px !important; padding: 5px 8px !important; border: 1px solid #ced4da !important; border-radius: 6px !important; background: #fff !important; color: #212529 !important; font-size: 12.5px !important; font-weight: 600 !important; cursor: pointer !important; }
+
+.dcs-pagination-info { display: inline-flex !important; align-items: center !important; gap: 6px !important; padding: 0 !important; background: none !important; border: none !important; border-radius: 0 !important; }
+.dcs-pagination-info span, .dcs-pg-of span { color: #212529 !important; font-weight: 600 !important; }
+.dcs-pg-of { margin: 0 4px 0 6px !important; color: #6C757D !important; font-size: 12.5px !important; font-weight: 400 !important; white-space: nowrap !important; }
+
+/* chevrons = plain glyphs, no boxes */
+.dcs-pagination-btn.dcs-pg-icon { width: auto !important; height: auto !important; min-width: 26px !important; padding: 4px 5px !important; background: none !important; border: none !important; border-radius: 4px !important; color: #9AA7B1 !important; font-size: 16px !important; line-height: 1 !important; font-family: Georgia, serif !important; box-shadow: none !important; transform: none !important; cursor: pointer !important; }
+.dcs-pagination-btn.dcs-pg-icon:hover:not(:disabled) { background: #f1f3f5 !important; border: none !important; color: #0078d4 !important; box-shadow: none !important; transform: none !important; }
+.dcs-pagination-btn.dcs-pg-icon:disabled { background: none !important; border: none !important; color: #cbd3d9 !important; opacity: 1 !important; box-shadow: none !important; cursor: not-allowed !important; }
+.dcs-pagination-btn.dcs-pg-icon:focus-visible { outline: 2px solid #0078d4 !important; outline-offset: 2px !important; }
+
+.dcs-pagination-pages { display: flex !important; gap: 5px !important; flex-wrap: wrap !important; }
+.dcs-page-number { min-width: 40px !important; height: 30px !important; padding: 0 8px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; background: #fff !important; border: 1px solid #dee2e6 !important; border-radius: 6px !important; color: #495057 !important; font-size: 12.5px !important; font-weight: 600 !important; box-shadow: none !important; cursor: pointer !important; transition: all .15s ease !important; }
+.dcs-page-number:hover:not(.active):not(.dots) { border-color: #0078d4 !important; color: #0078d4 !important; background: #f0f7ff !important; }
+.dcs-page-number.active { background: #fff !important; border-color: #ADB5BD !important; color: #212529 !important; font-weight: 700 !important; box-shadow: 0 1px 2px rgba(0, 0, 0, .05) !important; }
+.dcs-page-number.dots { min-width: 18px !important; border: none !important; background: none !important; color: #ADB5BD !important; cursor: default !important; }
+
+/* ===================================================================== */
+/* 5. TOOLBAR ABOVE THE TABLE + FILTER POPUP                             */
+/*    (mock-up image 7 popup, image 8 floating Apply pill)               */
+/* ===================================================================== */
+.dcs-table-toolbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  margin: 0 0 12px !important;
+  padding: 12px 16px !important;
+  background: #F8F9FA !important;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 10px !important;
+}
+.dcs-toolbar-left { display: flex !important; align-items: center !important; gap: 10px !important; flex-wrap: wrap !important; }
+.dcs-toolbar-right { display: flex !important; align-items: center !important; gap: 10px !important; flex-wrap: wrap !important; }
+
+/* the Filters trigger (pill base comes from .dcs-btn-secondary) */
+.dcs-filter-trigger { gap: 8px !important; padding: 10px 18px !important; background: #fff !important; color: #344054 !important; border: 1px solid var(--lilac-line) !important; }
+.dcs-filter-trigger:hover:not(:disabled) { background: #F9FAFB !important; border-color: #D0D5DD !important; color: #1F2937 !important; }
+.dcs-filter-trigger.is-active { background: var(--lilac-primary) !important; border-color: var(--lilac-primary) !important; color: #fff !important; }
+.dcs-filter-trigger.is-active:hover:not(:disabled) { background: var(--lilac-primary-dark) !important; border-color: var(--lilac-primary-dark) !important; color: #fff !important; }
+.dcs-filter-funnel { width: 16px; height: 16px; flex: 0 0 16px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.dcs-filter-chev { width: 11px; height: 11px; flex: 0 0 11px; stroke: currentColor; fill: none; stroke-width: 2.6; stroke-linecap: round; transition: transform .18s ease; }
+.dcs-filter-trigger[aria-expanded="true"] .dcs-filter-chev { transform: rotate(180deg); }
+.dcs-filter-count { display: none !important; min-width: 20px !important; height: 20px !important; padding: 0 6px !important; background: #fff !important; color: var(--lilac-primary) !important; border-radius: 999px !important; font-size: 11.5px !important; font-weight: 800 !important; line-height: 1 !important; }
+.dcs-filter-trigger.is-active .dcs-filter-count { display: inline-flex !important; align-items: center !important; justify-content: center !important; }
+
+/* floating Apply pill - appears only when the popup has unapplied changes */
+.dcs-filter-applypill { display: none !important; }
+.dcs-filter-applypill.is-visible { display: inline-flex !important; min-height: 38px !important; }
+
+/* chips for the applied filters */
+.dcs-filter-summary { display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important; margin: 0 0 12px !important; }
+.dcs-filter-summary[hidden] { display: none !important; }
+.dcs-filter-summary__label { font-size: 12.5px !important; font-weight: 600 !important; color: var(--lilac-muted) !important; white-space: nowrap !important; }
+.dcs-filter-chip { display: inline-flex !important; align-items: center !important; gap: 8px !important; padding: 5px 6px 5px 12px !important; background: var(--lilac-primary-soft) !important; border: 1px solid #D9D8FB !important; border-radius: var(--lilac-pill) !important; color: #3F3D9E !important; font-size: 12.5px !important; font-weight: 600 !important; white-space: nowrap !important; }
+.dcs-filter-chip strong { font-weight: 800 !important; }
+.dcs-filter-chip button { display: inline-flex !important; align-items: center !important; justify-content: center !important; width: 18px !important; height: 18px !important; padding: 0 !important; background: rgba(96, 94, 238, .14) !important; border: none !important; border-radius: 50% !important; color: #3F3D9E !important; font-size: 13px !important; line-height: 1 !important; cursor: pointer !important; }
+.dcs-filter-chip button:hover { background: var(--lilac-primary) !important; color: #fff !important; }
+.dcs-filter-chip__all { display: inline-flex !important; align-items: center !important; padding: 5px 14px !important; background: #fff !important; border: 1px solid var(--lilac-line) !important; border-radius: var(--lilac-pill) !important; color: #344054 !important; font-size: 12.5px !important; font-weight: 700 !important; cursor: pointer !important; }
+.dcs-filter-chip__all:hover { background: #F9FAFB !important; border-color: #D0D5DD !important; }
+
+/* the popup */
+.dcs-filter-overlay { position: fixed !important; inset: 0 !important; z-index: 1200 !important; display: none !important; align-items: center !important; justify-content: center !important; padding: 20px !important; background: rgba(15, 23, 42, .35) !important; box-sizing: border-box !important; }
+.dcs-filter-overlay.is-open { display: flex !important; }
+.dcs-filter-modal { width: min(560px, 100%) !important; background: #fff !important; border-radius: 14px !important; box-shadow: 0 20px 55px rgba(15, 23, 42, .25) !important; overflow: hidden !important; }
+.dcs-filter-modal-head, .dcs-filter-modal-foot { display: flex !important; align-items: center !important; padding: 16px 20px !important; }
+.dcs-filter-modal-head { justify-content: space-between !important; border-bottom: 1px solid var(--lilac-line) !important; }
+.dcs-filter-modal-head h2 { margin: 0 !important; color: var(--lilac-ink) !important; font-size: 18px !important; font-weight: 700 !important; }
+.dcs-filter-modal-head button { border: 0 !important; background: transparent !important; color: var(--lilac-muted) !important; font-size: 25px !important; line-height: 1 !important; cursor: pointer !important; }
+.dcs-filter-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 16px !important; padding: 20px !important; }
+.dcs-filter-grid label { display: block !important; margin-bottom: 6px !important; color: #475569 !important; font-size: 12px !important; font-weight: 600 !important; }
+.dcs-filter-grid select { width: 100% !important; }
+.dcs-filter-modal-foot { justify-content: flex-end !important; gap: 10px !important; border-top: 1px solid var(--lilac-line) !important; }
+
+/* popup buttons: Clear is neutral until there is something to clear,
+   Apply stays muted until the draft differs from what is applied */
+.dcs-filter-btn-clear.is-enabled { color: var(--lilac-danger) !important; border-color: #FDA29B !important; }
+.dcs-filter-btn-clear.is-enabled:hover:not(:disabled) { background: #FEF3F2 !important; }
+.dcs-filter-btn-apply.is-enabled { background: var(--lilac-primary) !important; color: #fff !important; border-color: var(--lilac-primary) !important; }
+.dcs-filter-btn-apply.is-enabled:hover:not(:disabled) { background: var(--lilac-primary-dark) !important; border-color: var(--lilac-primary-dark) !important; }
+.dcs-filter-btn-clear:disabled, .dcs-filter-btn-apply:disabled { opacity: .5 !important; cursor: not-allowed !important; box-shadow: none !important; }
+.dcs-filter-field.is-set { border-color: var(--lilac-primary) !important; box-shadow: 0 0 0 3px rgba(96, 94, 238, .15) !important; }
+
+/* ===================================================================== */
+/* PAGE HEADER - INTENTIONALLY UNTOUCHED                                 */
+/*   Nothing in this block targets .dcs-page-header, its <h1> or         */
+/*   .dcs-show-form-btn's position/size. The title stays left and the    */
+/*   "+ Add Project Documents" button stays right, exactly as your own   */
+/*   .dcs-page-header.stick rules lay it out - the ONLY thing that       */
+/*   changes is the button FORMAT, because it already carries            */
+/*   .dcs-btn-primary and that is the shared lilac pill recipe above.    */
+/* ===================================================================== */
+
+/* ===================================================================== */
+/* PHONES - THE TOOLBAR PILLS KEEP THEIR NATURAL WIDTH                   */
+/*   Your @media (max-width: 768px) block stretches .dcs-show-form-btn   */
+/*   to 100% by design; the toolbar pills (Filters / Apply / Download    */
+/*   Excel) live in one row, so they keep their natural width. The page  */
+/*   header is NOT referenced here.                                      */
+/* ===================================================================== */
+@media (max-width: 768px) {
+  .dcs-table-toolbar { align-items: center !important; flex-direction: row !important; }
+  .dcs-table-toolbar .dcs-btn-primary,
+  .dcs-table-toolbar .dcs-btn-secondary { width: auto !important; margin-top: 0 !important; flex: 0 0 auto !important; }
+}
+
+/* narrow screens: the two pager groups stack, each centred, and the
+   right group may wrap so nothing is cut off */
+@media (max-width: 700px) {
+  .dcs-pagination-container { justify-content: center !important; }
+  .dcs-pagination-left, .dcs-pagination-right { width: 100% !important; justify-content: center !important; }
+  .dcs-pagination-right { flex-wrap: wrap !important; }
+}
+ 
+
+/* Default layout for top button group */
+.dcs-top-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+ 
+
+ 
+ 

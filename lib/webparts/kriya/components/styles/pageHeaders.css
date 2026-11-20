@@ -1,0 +1,505 @@
+.page-header,
+.collection-page-header,
+.daily-sprint-header,
+.dcs-page-header,
+.invoicing-page-header,
+.kpi-dashboard .header {
+  background:
+    /* Vertical red → white overlay (bottom = saturated, top = white) */
+    linear-gradient(
+      180deg,
+      hsla(0, 0%, 100%, .95),
+      hsla(0, 0%, 100%, .55) 22%,
+      hsla(0, 0%, 100%, .1) 45%,
+      hsla(0, 0%, 100%, 0) 60%,
+      hsla(0, 0%, 100%, 0)
+    ),
+    /* Horizontal ABB sweep (red on the left, periwinkle on the right) */
+    linear-gradient(
+      90deg,
+      #e60012,
+      #ee1a30 18%,
+      #f0305b 32%,
+      #e63a7a 48%,
+      #c94b9e 62%,
+      #a86bd0 78%,
+      #8f87ee 90%,
+      #7f8ff5
+    ) !important;
+  color: #fff !important;
+  padding: 7px 18px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.page-header,
+.collection-page-header,
+.daily-sprint-header,
+.invoicing-page-header {
+  border-radius: 12px !important;
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 7px 25px !important;
+}
+
+.project-page > .page-header {
+  background: transparent !important;
+  border-radius: 0 !important;
+  min-height: 0;
+  padding: 0 !important;
+}
+
+.project-page:not(.master-page) .form-header h2 {
+  color: #fff !important;
+  display: inline-block;
+  line-height: 1.3 !important;
+  margin: 0 0 20px !important;
+}
+
+.page-header h1,
+.collection-page-header h1,
+.daily-sprint-header h1,
+.invoicing-page-header h1 {
+  color: #fff !important;
+  line-height: 1.3 !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+.page-header h1,
+.collection-page-header h1,
+.daily-sprint-header h1,
+.invoicing-page-header h1,
+#formTitleInventory,
+#formTitleSeibies {
+  color: #fff !important;
+  line-height: 1.3 !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+.project-page.fade-in .table-section.card .page-header.stick h1 {
+  color: #fff !important;
+}
+
+.revenue-page .page-header h1,
+.revenue-page .page-header h1#formTitle {
+  color: #fff !important;
+}
+
+.seibies-page .form-section-seibies #formTitleSeibies,
+.inventory-page .form-section-inventory #formTitleInventory {
+  color: #fff !important;
+  line-height: 1.3 !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+/* Final shared title height: every main page title uses the same 48px bar. */
+.page-header,
+.collection-page-header,
+.daily-sprint-header,
+.invoicing-page-header,
+.form-section-inventory .page-header,
+.form-section-seibies .page-header,
+.invoicing-form-section .invoicing-page-header,
+.dcs-page-header.stick,
+.form-section > form > .page-header,
+.form-section > .page-header,
+.master-dashboard .page-header,
+.project-page > .page-header h1 {
+  box-sizing: border-box !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  padding: 12px 18px !important;
+}
+
+.page-header h1,
+.collection-page-header h1,
+.daily-sprint-header h1,
+.invoicing-page-header h1,
+#formTitleInventory,
+#formTitleSeibies,
+.revenue-page .page-header h1,
+.project-page > .page-header h1 {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.project-page > .page-header h1 {
+  width: fit-content !important;
+}
+
+/* Final title/action alignment. Header titles and their right-side actions
+   share one center line instead of drifting vertically between pages. */
+.page-header,
+.collection-page-header,
+.daily-sprint-header,
+.dcs-page-header,
+.invoicing-page-header,
+.form-section-inventory .page-header,
+.form-section-seibies .page-header,
+.collection-form-section .collection-page-header,
+.invoicing-form-section .invoicing-page-header,
+.dcs-page-header.stick,
+.form-section > form > .page-header,
+.form-section > .page-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+}
+
+.page-header > h1,
+.collection-page-header > h1,
+.daily-sprint-header h1,
+.dcs-page-header > h1,
+.invoicing-page-header > h1,
+.form-section-inventory .page-header > h1,
+.form-section-seibies .page-header > h1,
+.collection-form-section .collection-page-header > h1,
+.invoicing-form-section .invoicing-page-header > h1,
+.dcs-page-header.stick > h1,
+.form-section > form > .page-header > h1,
+.form-section > .page-header > h1 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  flex: 1 1 auto !important;
+  align-self: center !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Procurement and DCI use different wrapper markup, but their title actions
+   should share the same right edge and vertical alignment. */
+.project-page .table-section .page-header.stick,
+.dcs-page-header.stick {
+  padding: 5px 20px !important;
+}
+
+.project-page .table-section .page-header.stick .page-header-left,
+.dcs-page-header.stick > div {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.project-page .table-section .page-header.stick .show-form-btn,
+.dcs-page-header.stick .dcs-show-form-btn {
+  margin: 0 !important;
+  align-self: center !important;
+}
+
+/* Final pagination arrows: match the plain chevrons used by Inventory and
+   Invoicing on every paginated page. */
+.pagination-btn,
+.pagination-btn-inventory,
+.pagination-btn-seibies,
+.revenue-pagination-btn.revenue-pg-icon,
+.collection-pagination-btn.collection-pg-icon,
+.dcs-pagination-btn.dcs-pg-icon,
+.invoicing-pagination-btn.invoicing-pg-icon,
+.sprint-pagination-btn.sprint-pg-icon,
+.master-pg-btn,
+.pj-page-btn.pj-pg-icon,
+.proc-pg-icon {
+  width: auto !important;
+  min-width: 26px !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  padding: 4px 5px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  color: #9aa7b1 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: color .15s ease, background-color .15s ease !important;
+}
+
+.pagination-btn:hover:not(:disabled),
+.pagination-btn-inventory:hover:not(:disabled),
+.pagination-btn-seibies:hover:not(:disabled),
+.revenue-pagination-btn.revenue-pg-icon:hover:not(:disabled),
+.collection-pagination-btn.collection-pg-icon:hover:not(:disabled),
+.dcs-pagination-btn.dcs-pg-icon:hover:not(:disabled),
+.invoicing-pagination-btn.invoicing-pg-icon:hover:not(:disabled),
+.sprint-pagination-btn.sprint-pg-icon:hover:not(:disabled),
+.master-pg-btn:hover:not(:disabled),
+.pj-page-btn.pj-pg-icon:hover:not(:disabled),
+.proc-pg-icon:hover:not(:disabled) {
+  background: #f1f3f5 !important;
+  border: 0 !important;
+  color: #0078d4 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.pagination-btn:disabled,
+.pagination-btn-inventory:disabled,
+.pagination-btn-seibies:disabled,
+.revenue-pagination-btn.revenue-pg-icon:disabled,
+.collection-pagination-btn.collection-pg-icon:disabled,
+.dcs-pagination-btn.dcs-pg-icon:disabled,
+.invoicing-pagination-btn.invoicing-pg-icon:disabled,
+.sprint-pagination-btn.sprint-pg-icon:disabled,
+.master-pg-btn:disabled,
+.pj-page-btn.pj-pg-icon:disabled,
+.proc-pg-icon:disabled {
+  background: transparent !important;
+  border: 0 !important;
+  color: #cbd3d9 !important;
+  cursor: default !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Final arrow palette: every page uses the same dark-gray pagination glyph. */
+.pagination-btn,
+.pagination-btn-inventory,
+.pagination-btn-seibies,
+.revenue-pagination-btn.revenue-pg-icon,
+.collection-pagination-btn.collection-pg-icon,
+.dcs-pagination-btn.dcs-pg-icon,
+.invoicing-pagination-btn.invoicing-pg-icon,
+.sprint-pagination-btn.sprint-pg-icon,
+.master-pg-btn,
+.pj-page-btn,
+.proc-pg-icon {
+  color: #475467 !important;
+}
+
+.pagination-btn:hover:not(:disabled),
+.pagination-btn-inventory:hover:not(:disabled),
+.pagination-btn-seibies:hover:not(:disabled),
+.revenue-pagination-btn.revenue-pg-icon:hover:not(:disabled),
+.collection-pagination-btn.collection-pg-icon:hover:not(:disabled),
+.dcs-pagination-btn.dcs-pg-icon:hover:not(:disabled),
+.invoicing-pagination-btn.invoicing-pg-icon:hover:not(:disabled),
+.sprint-pagination-btn.sprint-pg-icon:hover:not(:disabled),
+.master-pg-btn:hover:not(:disabled),
+.pj-page-btn:hover:not(:disabled),
+.proc-pg-icon:hover:not(:disabled) {
+  color: #344054 !important;
+}
+
+.pagination-btn:disabled,
+.pagination-btn-inventory:disabled,
+.pagination-btn-seibies:disabled,
+.revenue-pagination-btn.revenue-pg-icon:disabled,
+.collection-pagination-btn.collection-pg-icon:disabled,
+.dcs-pagination-btn.dcs-pg-icon:disabled,
+.invoicing-pagination-btn.invoicing-pg-icon:disabled,
+.sprint-pagination-btn.sprint-pg-icon:disabled,
+.master-pg-btn:disabled,
+.pj-page-btn:disabled,
+.proc-pg-icon:disabled {
+  color: #98a2b3 !important;
+}
+
+/* Match Procurement Tracker header geometry across all list pages. */
+.inventory-page .page-header,
+.seibies-page .page-header,
+.invoicing-page .invoicing-page-header,
+.collection-page .page-header,
+.project-page .table-section .page-header {
+  align-items: center !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+  justify-content: space-between !important;
+  margin: 0 0 25px 0 !important;
+  padding: 12px 0 15px 0 !important;
+  text-align: left !important;
+  width: 100% !important;
+}
+
+.inventory-page .page-header h1,
+.seibies-page .page-header h1,
+.invoicing-page .invoicing-page-header h1,
+.collection-page .page-header h1,
+.project-page .table-section .page-header h1 {
+  flex: 0 1 auto !important;
+  margin: 0 10px !important;
+  max-width: 65% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  text-align: left !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Match Procurement Tracker spacing for all Add/Edit/View title bars. */
+.form-section .page-header,
+.form-section-inventory .page-header,
+.form-section-seibies .page-header,
+.invoicing-form-section .invoicing-page-header,
+.collection-form-section .collection-page-header,
+#dcsFormSection .dcs-page-header.stick {
+  align-items: center !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 16px !important;
+  justify-content: space-between !important;
+  margin: 0 0 15px 0 !important;
+  padding: 12px 20px !important;
+  text-align: left !important;
+  width: 100% !important;
+}
+
+.form-section .page-header h1,
+.form-section-inventory #formTitleInventory,
+.form-section-seibies #formTitleSeibies,
+.invoicing-form-section #formTitle,
+.collection-form-section .collection-page-header h1,
+#dcsFormSection .dcs-page-header.stick h1 {
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-align: left !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Project keeps its action buttons below the title; style only the title bar. */
+.project-page > .page-header {
+  align-items: flex-start !important;
+  background: transparent !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin: 0 0 18px 0 !important;
+  padding: 0 !important;
+}
+
+/* One shared title-bar treatment for page lists and their Add/Edit forms. */
+.dt-body .kpi-dashboard > .header,
+.dt-body .master-page .master-dashboard > .page-header,
+.dt-body .master-page .form-header,
+.dt-body .project-page > .project-title,
+.dt-body .project-page:not(.master-page) > .table-section.card > .page-header.stick,
+.dt-body .project-page:not(.master-page) .form-header,
+.dt-body .daily-sprint-page > .daily-sprint-header,
+.dt-body .revenue-page .table-section > .page-header,
+.dt-body .collection-page .collection-section > .page-header,
+.dt-body .dcs-page > .dcs-page-header,
+.dt-body .invoicing-page .invoicing-page-header,
+.dt-body .inventory-page .table-section-inventory > .page-header,
+.dt-body .seibies-page .table-section-seibies > .page-header,
+.dt-body .form-section .page-header,
+.dt-body .form-section-inventory .page-header,
+.dt-body .form-section-seibies .page-header,
+.dt-body .collection-form-section .collection-page-header,
+.dt-body .invoicing-form-section .invoicing-page-header,
+.dt-body #dcsFormSection .dcs-page-header {
+  align-items: center !important;
+  background: linear-gradient(180deg, hsla(0, 0%, 100%, .95), hsla(0, 0%, 100%, .55) 22%, hsla(0, 0%, 100%, .1) 45%, hsla(0, 0%, 100%, 0) 60%, hsla(0, 0%, 100%, 0)), linear-gradient(90deg, #e60012, #ee1a30 18%, #f0305b 32%, #e63a7a 48%, #c94b9e 62%, #a86bd0 78%, #8f87ee 90%, #7f8ff5) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-sizing: border-box !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 16px !important;
+  height: auto !important;
+  justify-content: space-between !important;
+  margin-top: 0 !important;
+  max-height: none !important;
+  min-height: 48px !important;
+  padding: 7px 18px 6px !important;
+  width: 100% !important;
+}
+
+.dt-body .kpi-dashboard > .header h1,
+.dt-body .master-page .master-dashboard > .page-header h1,
+.dt-body .master-page .form-header h2,
+.dt-body .project-page > .project-title,
+.dt-body .project-page:not(.master-page) > .table-section.card > .page-header.stick h1,
+.dt-body .project-page:not(.master-page) .form-header h2,
+.dt-body .daily-sprint-page > .daily-sprint-header h1,
+.dt-body .revenue-page .table-section > .page-header h1,
+.dt-body .collection-page .collection-section > .page-header h1,
+.dt-body .dcs-page > .dcs-page-header h1,
+.dt-body .invoicing-page .invoicing-page-header h1,
+.dt-body .inventory-page .table-section-inventory > .page-header h1,
+.dt-body .seibies-page .table-section-seibies > .page-header h1,
+.dt-body .form-section .page-header h1,
+.dt-body .form-section-inventory #formTitleInventory,
+.dt-body .form-section-seibies #formTitleSeibies,
+.dt-body .invoicing-form-section #formTitle,
+.dt-body .collection-form-section .collection-page-header h1,
+.dt-body #dcsFormSection .dcs-page-header h1 {
+  color: #fff !important;
+  flex: 1 1 auto !important;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  letter-spacing: 2.5px !important;
+  line-height: 1.3 !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  text-align: left !important;
+  text-overflow: ellipsis !important;
+  text-shadow: 0 1px 2px rgba(60, 0, 10, .35) !important;
+  white-space: nowrap !important;
+}
+
+.dt-body > .project-page,
+.dt-body > .daily-sprint-page,
+.dt-body > .revenue-page,
+.dt-body > .collection-page,
+.dt-body > .dcs-page,
+.dt-body > .invoicing-page,
+.dt-body > .inventory-page,
+.dt-body > .seibies-page {
+  background: #eaecf1 !important;
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  padding: 8px 12px 10px !important;
+}
+
+.dt-body > .project-page > .table-section.card,
+.dt-body > .daily-sprint-page > .daily-sprint-table-section,
+.dt-body > .revenue-page > .table-section,
+.dt-body > .collection-page > .collection-section,
+.dt-body > .dcs-page > #dcsTableSection,
+.dt-body > .invoicing-page > .table-section,
+.dt-body > .inventory-page > .table-section-inventory,
+.dt-body > .seibies-page > .table-section-seibies {
+  background: #fff !important;
+  border: 1px solid #e8ebf5 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 1px 3px rgba(58, 63, 88, .08), 0 1px 2px rgba(58, 63, 88, .05) !important;
+  box-sizing: border-box !important;
+}

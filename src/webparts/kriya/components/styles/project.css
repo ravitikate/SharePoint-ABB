@@ -1,0 +1,395 @@
+.dt-body {
+  margin-left: 210px;
+  padding: 20px;
+}
+
+
+.pimp-cell-blank { display: inline-block; min-height: 14px; min-width: 1px; }
+.pimp-table tr.pimp-row-error td { background: #fff5f5; }
+.pimp-table tr.pimp-row-error:hover td { background: #ffecec; }
+
+.project-page {
+  --lilac-primary: #605EEE;
+  --lilac-primary-dark: #4C49E0;
+  --lilac-primary-soft: #EEEEFE;
+  --lilac-ink: #1F2430;
+  --lilac-muted: #667085;
+  --lilac-line: #E4E7EC; 
+  --lilac-pill: 999px;
+  --lilac-shadow-sm: 0 1px 2px rgba(16, 24, 40, .06);
+}
+
+/* ===================================================================== */
+/* 1. PAGINATION - one flat bar                                          */
+/*    LEFT  : Items per page: [n]    Showing a - b of c items            */
+/*    RIGHT : « ‹ [tiles] of N › »                                       */
+/* ===================================================================== */
+.project-page .pagination-controls {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  width: 100% !important;
+  margin: 16px 0 0 0 !important;
+  padding: 10px 14px !important;
+  background: #fff !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-top: 1px solid var(--lilac-line) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--lilac-shadow-sm) !important;
+  box-sizing: border-box !important;
+}
+.project-page .pagination-left,
+.project-page .pagination-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  min-width: 0 !important;
+}
+.project-page .pagination-left { gap: 14px !important; }
+.project-page .pagination-right { justify-content: flex-end !important; }
+
+.project-page .pagination-size {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+}
+.project-page .pagination-size label {
+  display: inline-block !important;   /* his ≤480 rule hides it - keep it visible */
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  color: #344054 !important;
+  margin: 0 !important;
+}
+.project-page .pagination-size select {
+  height: 32px !important;
+  padding: 0 8px !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: var(--lilac-ink) !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+.project-page .pagination-size select:focus {
+  outline: none !important;
+  border-color: var(--lilac-primary) !important;
+  box-shadow: 0 0 0 3px rgba(96, 94, 238, .22) !important;
+}
+
+.project-page .pagination-info {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex: 0 1 auto !important;
+  font-size: 12.5px !important;
+  font-weight: 400 !important;
+  color: var(--lilac-muted) !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+.project-page .pagination-info .pj-pg-range {
+  background: #EEF2F6 !important;
+  color: #344054 !important;
+  font-weight: 700 !important;
+  border-radius: 999px !important;
+  padding: 2px 10px !important;
+}
+.project-page .pagination-info .pj-pg-count {
+  background: var(--lilac-primary-soft) !important;
+  color: var(--lilac-primary-dark) !important;
+  font-weight: 700 !important;
+  border-radius: 999px !important;
+  padding: 2px 10px !important;
+}
+
+/* « ‹ › » icon buttons */
+.project-page .pj-page-btn {
+  height: 32px !important;
+  min-width: 32px !important;
+  width: 32px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #fff !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-radius: 8px !important;
+  color: #475467 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  flex: 0 0 auto !important;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.project-page .pj-page-btn:hover:not(:disabled) {
+  background: var(--lilac-primary-soft) !important;
+  border-color: var(--lilac-primary) !important;
+  color: var(--lilac-primary-dark) !important;
+}
+.project-page .pj-page-btn:disabled {
+  /* background: #F9FAFB !important;
+  border-color: #EAECF0 !important; */
+  color: #C4C9D2 !important;
+  cursor: not-allowed !important;
+  opacity: 1 !important;
+}
+
+/* Keep Project pagination arrows identical to the shared dark-gray chevrons. */
+.project-page .pj-page-btn {
+  width: auto !important;
+  min-width: 26px !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  padding: 4px 5px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  color: #475467 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.project-page .pj-page-btn:hover:not(:disabled) {
+  background: transparent !important;
+  border: 0 !important;
+  color: #344054 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.project-page .pj-page-btn:disabled {
+  background: transparent !important;
+  border: 0 !important;
+  color: #98a2b3 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* the tiles container keeps its old .pagination class */
+.project-page .pagination {
+  display: flex !important;
+  gap: 4px !important;
+  flex: 0 0 auto !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+}
+.project-page .pagination .pj-page-number {
+  min-width: 32px !important;
+  height: 32px !important;
+  padding: 0 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #fff !important;
+  border: 1px solid var(--lilac-line) !important;
+  border-radius: 8px !important;
+  color: #475467 !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.project-page .pagination .pj-page-number:hover:not(.active):not(:disabled) {
+  background: var(--lilac-primary-soft) !important;
+  border-color: var(--lilac-primary) !important;
+  color: var(--lilac-primary-dark) !important;
+}
+.project-page .pagination .pj-page-number.active {
+  background: var(--lilac-primary) !important;
+  border-color: var(--lilac-primary) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.project-page .pagination .pj-page-number.dots,
+.project-page .pagination .pj-page-number:disabled {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: #98A2B3 !important;
+  cursor: default !important;
+  min-width: 20px !important;
+  padding: 0 !important;
+}
+.project-page .pj-pg-of {
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #475467 !important;
+  white-space: nowrap !important;
+}
+
+/* ===================================================================== */
+/* 2. PAGE LOADER - grey track #DCDCDC + indigo bar #6664FF, no text      */
+/*    (the old spinner card + its injected stylesheet are gone; the       */
+/*    status lines are logged to the console)                            */
+/* ===================================================================== */
+.project-page .pj-loading-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(255, 255, 255, .9) !important;
+  border-radius: 10px !important;
+  z-index: 9 !important;
+}
+.project-page .pj-loader-card {
+  width: min(520px, 84%) !important;
+  padding: 22px 26px !important;
+  background: #fff !important;
+  border: 1px solid #E6E9EC !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 26px rgba(15, 45, 85, .12) !important;
+}
+.project-page .pj-page-loader { display: block !important; width: 100% !important; }
+.project-page .pj-page-loader__track {
+  position: relative !important;
+  width: 100% !important;
+  height: 6px !important;
+  overflow: hidden !important;
+  background: #DCDCDC !important;
+  border-radius: 999px !important;
+}
+.project-page .pj-page-loader__bar {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 50% !important;
+  height: 100% !important;
+  background: #6664FF !important;
+  border-radius: 999px !important;
+  animation: pjPageLoaderSlide 1.25s cubic-bezier(.65, .05, .36, 1) infinite !important;
+}
+@keyframes pjPageLoaderSlide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+/* safety net: the retired spinner card can never appear even if an older
+   bundle still injects its markup */
+.project-page .table-loader-overlay { display: none !important; }
+
+/* ===================================================================== */
+/* 3. TABLE CELL STRUCTURE                                               */
+/*    Every column now has one geometry, and every person cell is        */
+/*    name / email (or a muted dash) - so the last three tabs behave.    */
+/* ===================================================================== */
+
+/* 3a. preferred widths, declared once in the markup <colgroup> */
+.project-page .modern-table col.pj-col-pc        { width: 100px; }
+.project-page .modern-table col.pj-col-ref       { width: 150px; }
+.project-page .modern-table col.pj-col-customer  { width: 180px; }
+.project-page .modern-table col.pj-col-project   { width: 240px; }
+.project-page .modern-table col.pj-col-person    { width: 155px; }
+.project-page .modern-table col.pj-col-person-lg { width: 175px; }
+
+/* 3b. header cells: identical geometry in every tab, still sticky */
+.project-page .modern-table thead th {
+  padding: 10px 12px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  color: #323130 !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+  letter-spacing: .01em !important;
+  border-bottom: 1px solid #e1e1e1 !important;
+  box-shadow: inset 0 -1px 0 #e1e1e1 !important;
+}
+
+/* 3c. body cells: one row rhythm, no ragged heights, no squashed columns */
+.project-page .modern-table tbody td {
+  padding: 10px 12px !important;
+  height: 56px !important;
+  vertical-align: middle !important;
+  max-width: none !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  border-bottom: 1px solid #eef0f2 !important;
+}
+.project-page .modern-table tbody td.pj-td-text     { min-width: 100px !important; color: #4b5563 !important; }
+.project-page .modern-table tbody td.pj-td-ref      { min-width: 120px !important; }
+.project-page .modern-table tbody td.pj-td-project  { min-width: 180px !important; font-weight: 600 !important; color: var(--lilac-ink) !important; }
+.project-page .modern-table tbody td.pj-td-person   { min-width: 140px !important; }
+.project-page .modern-table tbody tr:hover td { background: #fafbfc !important; }
+
+/* 3d. the person cell itself - this is what was breaking the last tabs */
+.project-page .modern-table .manager-cell {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  line-height: 1.3 !important;
+}
+.project-page .modern-table .manager-name {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: #323130 !important;
+  overflow-wrap: anywhere !important;
+}
+.project-page .modern-table .manager-email {
+  font-size: 11px !important;
+  color: #7a8391 !important;
+  /* was word-break:break-all -> emails were split letter by letter */
+  word-break: normal !important;
+  overflow-wrap: anywhere !important;
+  line-height: 1.25 !important;
+}
+/* unassigned person cells keep their structure instead of collapsing */
+.project-page .modern-table .pj-empty {
+  display: inline-block !important;
+  color: #b9c0c9 !important;
+  font-size: 13px !important;
+  line-height: 1.3 !important;
+  user-select: none !important;
+  cursor: default !important;
+}
+.project-page .modern-table .project-ref-link { font-weight: 600 !important; }
+
+/* 3e. the last column must never be clipped against the card edge */
+.project-page .modern-table tbody td:last-child,
+.project-page .modern-table thead th:last-child { padding-right: 16px !important; }
+
+/* ===================================================================== */
+/* 4. RESPONSIVE GUARD - the pager stacks instead of overflowing, and    */
+/*    the table keeps its horizontal pan (his ≤768 inner scroll stays)   */
+/* ===================================================================== */
+@media (max-width: 768px) {
+  .project-page .pagination-controls {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+  }
+  .project-page .pagination-left,
+  .project-page .pagination-right { width: 100% !important; justify-content: flex-start !important; }
+  .project-page .modern-table thead th,
+  .project-page .modern-table tbody td { padding: 7px 8px !important; }
+  .project-page .modern-table tbody td { height: auto !important; }
+  .project-page .modern-table .manager-name { font-size: 12px !important; }
+  .project-page .modern-table .manager-email { font-size: 10.5px !important; }
+  .project-page .modern-table col.pj-col-person    { width: 135px; }
+  .project-page .modern-table col.pj-col-person-lg { width: 150px; }
+  .project-page .modern-table col.pj-col-project   { width: 200px; }
+}
+
+@media (max-width: 480px) {
+  .project-page .pagination-controls { padding: 10px 12px !important; }
+  .project-page .pagination .pj-page-number,
+  .project-page .pj-page-btn { min-width: 28px !important; width: 28px !important; height: 28px !important; font-size: 11.5px !important; }
+  .project-page .pagination .pj-page-number { padding: 0 6px !important; }
+}

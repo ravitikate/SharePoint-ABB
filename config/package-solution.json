@@ -1,9 +1,9 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "digital-transformation-app-1-client-side-solution",
+    "name": "kriya-client-side-solution",
     "id": "f3a0dffc-7c0a-4c77-9f27-ca89c0c171ae",
-    "version": "1.0.0.5",
+    "version": "2.0.0.1",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": false,
     "isDomainIsolated": false,
@@ -16,10 +16,10 @@
     },
     "metadata": {
       "shortDescription": {
-        "default": "digital-transformation-app-1 description"
+        "default": "kriya-client-side-solution description"
       },
       "longDescription": {
-        "default": "digital-transformation-app-1 description"
+        "default": "kriya-client-side-solution description"
       },
       "screenshotPaths": [],
       "videoUrl": "",
@@ -27,14 +27,14 @@
     },
     "features": [
       {
-        "title": "digital-transformation-app-1 Feature",
-        "description": "The feature that activates elements of the digital-transformation-app-1 solution.",
+        "title": "kriya-client-side-solution Feature",
+        "description": "The feature that activates elements of the kriya-client-side-solution solution.",
         "id": "64024826-cc18-4870-bbcd-b0274ea3dd0d",
-        "version": "1.0.0.0"
+        "version": "2.0.0.0"
       }
     ]
   },
   "paths": {
-    "zippedPackage": "solution/digital-transformation-app-1.sppkg"
+    "zippedPackage": "solution/kriya-client-side-solution.sppkg"
   }
 }

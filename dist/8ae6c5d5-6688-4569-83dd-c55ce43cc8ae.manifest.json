@@ -1,6 +1,6 @@
 {
   "id": "8ae6c5d5-6688-4569-83dd-c55ce43cc8ae",
-  "alias": "DigitalTransformationApp1WebPart",
+  "alias": "KriyaWebPart",
   "componentType": "WebPart",
   "version": "1.0.0",
   "manifestVersion": 2,
@@ -15,10 +15,10 @@
   "preconfiguredEntries": [
     {
       "title": {
-        "default": "DigitalTransformationApp1"
+        "default": "Kriya"
       },
       "description": {
-        "default": "DigitalTransformationApp1 description"
+        "default": "Kriya description"
       },
       "officeFabricIconFontName": "Page",
       "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
@@ -34,11 +34,11 @@
     "internalModuleBaseUrls": [
       "https://localhost:4321/dist/"
     ],
-    "entryModuleId": "digital-transformation-app-1-web-part",
+    "entryModuleId": "kriya-web-part",
     "scriptResources": {
-      "digital-transformation-app-1-web-part": {
+      "kriya-web-part": {
         "type": "path",
-        "path": "digital-transformation-app-1-web-part.js"
+        "path": "kriya-web-part.js"
       },
       "@microsoft/sp-core-library": {
         "type": "component",

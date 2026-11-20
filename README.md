@@ -1,4 +1,4 @@
-# digital-transformation-app-1
+# kriya
 
 ## Summary
 
