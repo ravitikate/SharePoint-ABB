@@ -3127,4 +3127,14 @@ div#historicalForecastSection {
   color: #6c757d;
   border: 1px solid #dee2e6;
   cursor: not-allowed;
+} 
+
+.inventory-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Adjust this value to change the gap */
+}
+
+button.btn-primary-inventory.btn-save-top-inventory {
+    padding: 12px 23px !important;
 }

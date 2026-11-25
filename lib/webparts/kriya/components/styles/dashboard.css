@@ -177,9 +177,9 @@ a#dtAddUserBtn {
   display: grid;
   gap: 9px;
 }
-.kpi-dashboard .row-top { grid-template-columns: 190px minmax(0, 1.7fr) minmax(0, 1fr); }
-.kpi-dashboard .row-mid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.667fr); }
-.kpi-dashboard .row-bot { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.72fr) minmax(0, 1.05fr); }
+.kpi-dashboard .row-top { flex: 0.68 1 0; grid-template-columns: 190px minmax(0, 1.7fr) minmax(0, 1fr); }
+.kpi-dashboard .row-mid { flex: 0.7 1 0; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.667fr); }
+.kpi-dashboard .row-bot { grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.72fr) minmax(0, 0.85fr); }
 
 /* ============================================================
    CARD BASE
@@ -226,7 +226,7 @@ a#dtAddUserBtn {
 /* ============================================================
    ROW 1 · OBL
    ============================================================ */
-.kpi-dashboard .card.obl { display: flex; flex-direction: column; justify-content: center;text-align:center;}
+.kpi-dashboard .card.obl { display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 5px 8px; height: 90%; align-self: center; }
 .kpi-dashboard .obl-num { font-size: 23px; color: var(--slate); margin-top: 3px; }
 
 /* ============================================================
@@ -236,7 +236,8 @@ a#dtAddUserBtn {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 14px;
+  gap: 9px;
+  padding: 5px 8px;
 }
 .kpi-dashboard .recv-main {
   display: flex;
@@ -259,13 +260,13 @@ a#dtAddUserBtn {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
+  gap: 4px;
 }
 .kpi-dashboard .recv-cell {
   background: var(--cell);
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 5px 8px;
+  padding: 3px 6px;
   min-width: 0;
 }
 .kpi-dashboard .recv-cell .val { font-size: 13.5px; color: var(--indigo); }
@@ -461,6 +462,7 @@ a#dtAddUserBtn {
   gap: 6px;
   align-content: start;
 }
+.kpi-dashboard .card.procurement { height: 95%; align-self: center; }
 
 /* ---------- base chip look (shared by proc + doc) ---------- */
 .kpi-dashboard .list-row {
@@ -774,7 +776,7 @@ a#dtAddUserBtn {
   .kpi-dashboard .row-top .card.projects { grid-column: 1 / -1; }
   .kpi-dashboard .row-mid { grid-template-columns: 1fr 1fr; }
   .kpi-dashboard .row-mid .card.working-capital { grid-column: 1 / -1; }
-  .kpi-dashboard .row-bot { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.75fr) minmax(0, 1.15fr); }
+  .kpi-dashboard .row-bot { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.75fr) minmax(0, 0.95fr); }
 }
 @media (max-width: 1024px) {
   .kpi-dashboard .board { grid-template-columns: 1fr; }
@@ -807,11 +809,17 @@ a#dtAddUserBtn {
   .kpi-dashboard .card.filters .f-row { display: block; width: 100%; }
 }
 @media (max-height: 820px), (max-width: 1150px) {
-  .kpi-dashboard { height: auto; min-height: 100vh; overflow: visible; }
-  .kpi-dashboard .board { flex: none; }
-  .kpi-dashboard .board-main { min-height: auto; }
+  .kpi-dashboard {
+    height: calc(100vh - var(--page-offset));
+    min-height: 0;
+    overflow: hidden;
+  }
+  .kpi-dashboard .board { flex: 1 1 auto; }
+  .kpi-dashboard .board-main { min-height: 0; }
   .kpi-dashboard .row-top,
   .kpi-dashboard .row-mid,
-  .kpi-dashboard .row-bot { flex: none; }
-  .kpi-dashboard .card { height: auto; }
+  .kpi-dashboard .row-bot { flex: 1 1 0; min-height: 0; }
+  .kpi-dashboard .row-top { flex: 0.68 1 0; }
+  .kpi-dashboard .row-mid { flex: 0.7 1 0; }
+  .kpi-dashboard .card { height: 100%; }
 }

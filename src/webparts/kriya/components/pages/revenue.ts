@@ -6681,490 +6681,476 @@ const propagateYearlyValues = (forecastData: ForecastData, isNewMonth: boolean =
     return updatedData;
 };
 
-      const importActualDatas = (): void => { 
-        const modalHTMLRev = `
-          <div class="revenue-import-modal" style="display: none;">
-            <div class="revenue-import-modal-content">
-              <div class="revenue-import-modal-header">
-                <h3>Import Monthly Actual Revenue Data</h3>
-                <button class="revenue-close-modal">&times;</button>
-              </div>
+     const importActualDatas = (): void => { 
+  const modalHTMLRev = `
+    <div class="revenue-import-modal" style="display: none;">
+      <div class="revenue-import-modal-content">
+        <div class="revenue-import-modal-header">
+          <h3>Import Monthly Actual Revenue Data</h3>
+          <button class="revenue-close-modal">&times;</button>
+        </div>
 
-              <div class="revenue-import-section">
-                <h4>Step 1: Download Template</h4>
-                <button class="revenue-btn-primary" id="downloadTemplate">⬇️ Download Template</button>
-              </div>
+        <div class="revenue-import-section">
+          <h4>Step 1: Download Template</h4>
+          <button class="revenue-btn-primary" id="downloadTemplate">⬇️ Download Template</button>
+        </div>
 
-              <div class="revenue-import-section">
-                <h4>Step 2: Upload Excel File</h4>
-                <div class="revenue-file-upload-area" id="fileUploadArea">
-                  <div class="revenue-upload-icon">📁</div>
-                  <p>Click to upload or drag & drop Excel file</p>
-                  <p><small>Supported format: Excel with Project Reference, Month, and Actual Revenue columns</small></p>
-                  <input type="file" id="excelFile" class="revenue-file-input" accept=".xlsx,.xls">
-                  <div class="revenue-file-info" id="fileInfo"></div>
-                </div>
-              </div>
-
-              <div class="revenue-import-section" id="previewSection" style="display:none;">
-                <h4>Step 3: Preview & Import</h4>
-                <div class="revenue-import-preview" id="importPreview"></div>
-                <div class="revenue-import-actions">
-                  <button class="revenue-btn-secondary" id="cancelImport">Cancel</button>
-                  <button class="revenue-btn-primary" id="confirmImport">Import Data</button>
-                </div>
-                <div class="revenue-import-status" id="importStatus"></div>
-              </div>
-            </div>
+        <div class="revenue-import-section">
+          <h4>Step 2: Upload Excel File</h4>
+          <div class="revenue-file-upload-area" id="fileUploadArea">
+            <div class="revenue-upload-icon">📁</div>
+            <p>Click to upload or drag & drop Excel file</p>
+            <p><small>Supported format: Excel with Project Reference, Month, and Actual Revenue columns</small></p>
+            <input type="file" id="excelFile" class="revenue-file-input" accept=".xlsx,.xls">
+            <div class="revenue-file-info" id="fileInfo"></div>
           </div>
-        `;
+        </div>
 
-        const existingModal = document.querySelector('.revenue-import-modal');
-        if (existingModal) {
-            existingModal.remove();
+        <div class="revenue-import-section" id="previewSection" style="display:none;">
+          <h4>Step 3: Preview & Import</h4>
+          <div class="revenue-import-preview" id="importPreview"></div>
+          <div class="revenue-import-actions">
+            <button class="revenue-btn-secondary" id="cancelImport">Cancel</button>
+            <button class="revenue-btn-primary" id="confirmImport">Import Data</button>
+          </div>
+          <div class="revenue-import-status" id="importStatus"></div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const existingModal = document.querySelector('.revenue-import-modal');
+  if (existingModal) {
+    existingModal.remove();
+  }
+  
+  document.body.insertAdjacentHTML("beforeend", modalHTMLRev);
+  const modal = document.querySelector(".revenue-import-modal") as HTMLElement;
+  
+  setTimeout(() => {
+    modal.style.display = "flex";
+  }, 10);
+
+  const fileUploadArea = document.querySelector("#fileUploadArea") as HTMLElement;
+  const excelFileInput = document.querySelector("#excelFile") as HTMLInputElement;
+  const fileInfo = document.querySelector("#fileInfo") as HTMLElement;
+  const previewSection = document.querySelector("#previewSection") as HTMLElement;
+  const importPreview = document.querySelector("#importPreview") as HTMLElement;
+  const confirmImport = document.querySelector("#confirmImport") as HTMLButtonElement;
+  const cancelImport = document.querySelector("#cancelImport") as HTMLButtonElement;
+  const closeModal = document.querySelector(".revenue-close-modal") as HTMLButtonElement;
+  const importStatus = document.querySelector("#importStatus") as HTMLElement;
+  const downloadTemplateBtn = document.querySelector("#downloadTemplate") as HTMLButtonElement;
+
+  let importData: any[] = [];
+  let listEntityType: string = "";
+
+  const monthMap: { [key: string]: number } = {
+    jan: 1, january: 1, "jan-": 1,
+    feb: 2, february: 2, "feb-": 2,
+    mar: 3, march: 3, "mar-": 3,
+    apr: 4, april: 4, "apr-": 4,
+    may: 5, "may-": 5,
+    jun: 6, june: 6, "jun-": 6,
+    jul: 7, july: 7, "jul-": 7,
+    aug: 8, august: 8, "aug-": 8,
+    sep: 9, september: 9, "sep-": 9,
+    oct: 10, october: 10, "oct-": 10,
+    nov: 11, november: 11, "nov-": 11,
+    dec: 12, december: 12, "dec-": 12,
+  };
+
+  const parseMonth = (monthStr: string): string => {
+    if (!monthStr) return "";
+    if (/^\d{4}-\d{2}$/.test(monthStr)) return monthStr;
+
+    const match = monthStr.toLowerCase().match(/([a-z]+)[-\s]*'?(\d{2,4})?/);
+    if (match) {
+      const monthName = match[1];
+      let year = match[2];
+
+      const monthNum = monthMap[monthName];
+      if (monthNum) {
+        if (!year) {
+          year = new Date().getFullYear().toString();
+        } else if (year.length === 2) {
+          const currentYear = new Date().getFullYear();
+          const century = Math.floor(currentYear / 100) * 100;
+          const yearNum = parseInt(year);
+          year = (century + yearNum).toString();
         }
-        
-        document.body.insertAdjacentHTML("beforeend", modalHTMLRev);
-        const modal = document.querySelector(".revenue-import-modal") as HTMLElement;
-        
-        setTimeout(() => {
-            modal.style.display = "flex";
-        }, 10);
+        return `${year}-${monthNum.toString().padStart(2, "0")}`;
+      }
+    }
+    return "";
+  };
 
-        const fileUploadArea = document.querySelector("#fileUploadArea") as HTMLElement;
-        const excelFileInput = document.querySelector("#excelFile") as HTMLInputElement;
-        const fileInfo = document.querySelector("#fileInfo") as HTMLElement;
-        const previewSection = document.querySelector("#previewSection") as HTMLElement;
-        const importPreview = document.querySelector("#importPreview") as HTMLElement;
-        const confirmImport = document.querySelector("#confirmImport") as HTMLButtonElement;
-        const cancelImport = document.querySelector("#cancelImport") as HTMLButtonElement;
-        const closeModal = document.querySelector(".revenue-close-modal") as HTMLButtonElement;
-        const importStatus = document.querySelector("#importStatus") as HTMLElement;
-        const downloadTemplateBtn = document.querySelector("#downloadTemplate") as HTMLButtonElement;
+  const getListEntityTypeForImport = async (): Promise<string> => {
+    if (listEntityType) return listEntityType;
+    const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')?$select=ListItemEntityTypeFullName`, {
+      headers: { Accept: "application/json;odata=verbose" },
+    });
+    const data = await res.json();
+    listEntityType = data.d.ListItemEntityTypeFullName; 
+    return listEntityType;
+  };
 
-        let importData: any[] = [];
-        let listEntityType: string = "";
+  fileUploadArea.addEventListener("click", () => excelFileInput.click());
+  fileUploadArea.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    fileUploadArea.classList.add("revenue-dragover");
+  });
+  fileUploadArea.addEventListener("dragleave", () => fileUploadArea.classList.remove("revenue-dragover"));
+  fileUploadArea.addEventListener("drop", (e) => {
+    e.preventDefault();
+    fileUploadArea.classList.remove("revenue-dragover");
+    const files = e.dataTransfer?.files;
+    if (files && files[0]) {
+      excelFileInput.files = files;
+      handleFileSelection(files[0]);
+    }
+  });
+  excelFileInput.addEventListener("change", (e) => {
+    const files = (e.target as HTMLInputElement).files;
+    if (files && files[0]) handleFileSelection(files[0]);
+  });
 
-        const monthMap: { [key: string]: number } = {
-            jan: 1, january: 1, "jan-": 1,
-            feb: 2, february: 2, "feb-": 2,
-            mar: 3, march: 3, "mar-": 3,
-            apr: 4, april: 4, "apr-": 4,
-            may: 5, "may-": 5,
-            jun: 6, june: 6, "jun-": 6,
-            jul: 7, july: 7, "jul-": 7,
-            aug: 8, august: 8, "aug-": 8,
-            sep: 9, september: 9, "sep-": 9,
-            oct: 10, october: 10, "oct-": 10,
-            nov: 11, november: 11, "nov-": 11,
-            dec: 12, december: 12, "dec-": 12,
-        };
+  const handleFileSelection = async (file: File) => { 
+    if (!file.name.toLowerCase().match(/\.(xlsx|xls)$/)) {
+      toast("error", "Please select an Excel file (.xlsx or .xls)");
+      return;
+    }
 
-        const parseMonth = (monthStr: string): string => {
-            if (!monthStr) return "";
+    fileInfo.textContent = `Selected: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
 
-            if (/^\d{4}-\d{2}$/.test(monthStr)) {
-                return monthStr;
-            }
+    try {
+      const parsedData = await parseExcelFile(file); 
+      const validation = validateImportData(parsedData);
+      if (validation.valid) { 
+        importData = parsedData;
+        showImportPreview(parsedData);
+        previewSection.style.display = "block";
+        previewSection.style.opacity = "1"; 
+      } else { 
+        toast("error", `Invalid Excel format. Missing required column(s): ${validation.missing.join(", ")}. Expected columns: Project Reference, Month, Actual Revenue.`);
+      }
+    } catch (error) { 
+      toast("error", "Error reading Excel file");
+    }
+  };
 
-            const match = monthStr.toLowerCase().match(/([a-z]+)[-\s]*'?(\d{2,4})?/);
-            if (match) {
-                const monthName = match[1];
-                let year = match[2];
-
-                const monthNum = monthMap[monthName];
-                if (monthNum) {
-                    if (!year) {
-                        year = new Date().getFullYear().toString();
-                    } else if (year.length === 2) {
-                        const currentYear = new Date().getFullYear();
-                        const century = Math.floor(currentYear / 100) * 100;
-                        const yearNum = parseInt(year);
-                        year = (century + yearNum).toString();
-                    }
-
-                    return `${year}-${monthNum.toString().padStart(2, "0")}`;
-                }
-            }
-
-            return "";
-        };
-
-        const getListEntityTypeForImport = async (): Promise<string> => {
-            if (listEntityType) return listEntityType;
-            const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')?$select=ListItemEntityTypeFullName`, {
-                headers: { Accept: "application/json;odata=verbose" },
-            });
-            const data = await res.json();
-            listEntityType = data.d.ListItemEntityTypeFullName; 
-            return listEntityType;
-        };
-
-const updateRevenueData = (existingData: string, month: string, actualRevenue: number): string => {
-    let finalData: { [key: string]: number } = {};
-
-    if (existingData && existingData.trim() !== "" && existingData !== "{}" && existingData !== "null" && existingData !== "undefined") {
+  const parseExcelFile = (file: File): Promise<any[]> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
         try {
-            const parsed = JSON.parse(existingData);
-            finalData = { ...parsed };
-        } catch (parseError) {
-            finalData = {};
-        }
-    } else {
-        finalData = {};
-    }
+          const data = new Uint8Array(e.target?.result as ArrayBuffer);
+          const workbook = XLSX.read(data, { type: "array" });
+          const sheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[sheetName];
 
-    if (actualRevenue > 0) {
-        finalData[month] = actualRevenue;
-    } else {
-        delete finalData[month];
-    }
+          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }); 
+          if (jsonData.length < 2) return resolve([]);
 
-    const result: { [key: string]: number } = {};
-    Object.keys(finalData).forEach(key => {
-        if (finalData[key] > 0) {
-            result[key] = finalData[key];
+          const headers = jsonData[0] as string[];  
+          const rows: any[] = [];
+
+          for (let i = 1; i < jsonData.length; i++) {
+            const rowData = jsonData[i] as any[];
+            if (!rowData || rowData.length === 0) continue;
+
+            const row: any = {};
+            headers.forEach((header, idx) => {
+              if (header && rowData[idx] !== undefined && rowData[idx] !== null) {
+                row[header.trim()] = rowData[idx];
+              }
+            });
+
+            if (row["Month"] || row["month"]) {
+              let monthValue = row["Month"] || row["month"];
+              if (typeof monthValue === "number") {
+                const excelDate = new Date(Math.round((monthValue - 25569) * 86400 * 1000));
+                const yyyy = excelDate.getFullYear();
+                const mm = String(excelDate.getMonth() + 1).padStart(2, '0');
+                monthValue = `${yyyy}-${mm}`;
+              }
+              row.parsedMonth = parseMonth(monthValue.toString()); 
+            }
+
+            const hasProjectRef = row["Project Reference"] || row["project_reference"];
+            const hasMonth = row.parsedMonth;
+
+            if (hasProjectRef && hasMonth) {
+              rows.push(row); 
+            }
+          } 
+          resolve(rows);
+        } catch (err) { 
+          reject(err);
         }
+      };
+      reader.onerror = (error) => reject(new Error("Failed to read file"));
+      reader.readAsArrayBuffer(file);
+    });  
+  };
+
+  const validateImportData = (data: any[]): { valid: boolean; missing: string[] } => { 
+    if (data.length === 0) return { valid: false, missing: ["No data rows found"] };
+
+    const first = data[0];
+    const keys = Object.keys(first).map((k) => k.toLowerCase()); 
+    const hasProjectRef = keys.some((k) => k.includes("project") && k.includes("reference"));
+    const hasMonth = keys.some((k) => k.includes("month"));
+    const hasRevenue = keys.some((k) => k.includes("actual") && (k.includes("revenue") || k.includes("rev")));
+
+    const missing: string[] = [];
+    if (!hasProjectRef) missing.push("Project Reference");
+    if (!hasMonth) missing.push("Month");
+    if (!hasRevenue) missing.push("Actual Revenue");
+
+    return { valid: missing.length === 0, missing };
+  }; 
+
+  const showImportPreview = (data: any[]) => { 
+    const monthSummary: { [key: string]: number } = {};
+    data.forEach((row) => {
+      const month = row.parsedMonth;
+      if (month) {
+        monthSummary[month] = (monthSummary[month] || 0) + 1;
+      }
     });
 
-    return JSON.stringify(result);
-};
+    const monthSummaryText = Object.keys(monthSummary)
+      .map((month) => `${month}: ${monthSummary[month]} records`)
+      .join(", ");
 
-        fileUploadArea.addEventListener("click", () => excelFileInput.click());
-        fileUploadArea.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            fileUploadArea.classList.add("revenue-dragover");
+    const previewHTML = `
+      <div style="padding: 20px; background: #f8f9fa; border-radius: 8px;">
+        <h4 style="color: #28a745; margin-bottom: 15px;">✅ File Ready for Import</h4>
+        <p><strong>Found ${data.length} records to import:</strong></p>
+        <p><strong>Month Summary:</strong> ${monthSummaryText || "No months found"}</p>
+        <div class="revenue-preview-table-container" style="max-height: 400px; overflow-y: auto;">
+          <table class="revenue-preview-table" style="width: 100%; border-collapse: collapse;">
+            <thead style="background: #007bff; color: white;">
+              <tr>
+                <th style="padding: 10px; border: 1px solid #ddd;">Project Reference</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Month</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Actual Revenue</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Project Match</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.slice(0, 10).map((row, index) => {
+                const projectRef = row["Project Reference"] || row["project_reference"] || "N/A";
+                const month = row["Month"] || row["month"] || "N/A";
+                const actualRevenue = row["Actual Revenue"] || row["actual_revenue"] || row["Actual"] || row["actual"] || "0";
+                const project = projects.find((p) => p.ProjectReference === projectRef);
+
+                return `
+                  <tr style="${index % 2 === 0 ? "background: #f8f9fa;" : "background: white;"}">
+                    <td style="padding: 8px; border: 1px solid #ddd;">${projectRef}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${month} (${row.parsedMonth || "Invalid"})</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${actualRevenue}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${project ? "✅" : "❌"}</td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
+          </table>
+        </div>
+        ${data.length > 10 ? `<p style="margin-top: 10px; font-style: italic;">... and ${data.length - 10} more records</p>` : ""}
+        <div style="margin-top: 20px; padding: 15px; background: #e7f3ff; border-radius: 5px;">
+          <p style="margin: 0; color: #0056b3;"><strong>Ready to import?</strong> Click the "Import Data" button below.</p>
+          <p style="margin: 5px 0 0 0; font-size: 12px;"><strong>Note:</strong> Both the RevenueActual column and ForecastData JSON will be updated.</p>
+        </div>
+      </div>`;
+
+    importPreview.innerHTML = previewHTML; 
+  };
+
+  const performImport = async () => {
+    confirmImport.disabled = true;
+    confirmImport.textContent = "Importing...";
+    importStatus.style.display = "block";
+    importStatus.textContent = "Updating Revenue Data...";
+
+    showRevenueLoader('Importing Data', `Please wait... updating ${importData.length} record(s)`);
+
+    let success = 0, error = 0, notFound = 0, invalidMonth = 0, skipped = 0;
+    const entityType = await getListEntityTypeForImport(); 
+
+    for (const row of importData) {
+      const projectRef = row["Project Reference"] || row["project_reference"];
+      const month = row.parsedMonth;
+      const actualRevenue = parseFloat(row["Actual Revenue"] || row["actual_revenue"] || row["Actual"] || row["actual"] || "0");
+
+      if (!month) { 
+        invalidMonth++;
+        continue;
+      }
+
+      const project = projects.find((p) => p.ProjectReference === projectRef);
+      if (!project) { 
+        notFound++;
+        continue;
+      }
+
+      const forecast = forecasts.find((f) => f.Project?.Title === project.Title);
+      if (!forecast?.Id) { 
+        notFound++;
+        continue;
+      }
+
+      try {
+        const digest = await getDigest(); 
+        
+        // ✅ FETCH BOTH COLUMNS TO PRESERVE EXISTING DATA
+        const currentForecastResponse = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items(${forecast.Id})?$select=Id,RevenueActual,ForecastData`, {
+          method: "GET",
+          headers: { Accept: "application/json;odata=verbose" },
         });
-        fileUploadArea.addEventListener("dragleave", () => fileUploadArea.classList.remove("revenue-dragover"));
-        fileUploadArea.addEventListener("drop", (e) => {
-            e.preventDefault();
-            fileUploadArea.classList.remove("revenue-dragover");
-            const files = e.dataTransfer?.files;
-            if (files && files[0]) {
-                excelFileInput.files = files;
-                handleFileSelection(files[0]);
-            }
-        });
-        excelFileInput.addEventListener("change", (e) => {
-            const files = (e.target as HTMLInputElement).files;
-            if (files && files[0]) handleFileSelection(files[0]);
-        });
 
-        const handleFileSelection = async (file: File) => { 
-            if (!file.name.toLowerCase().match(/\.(xlsx|xls)$/)) {
-                toast("error", "Please select an Excel file (.xlsx or .xls)");
-                return;
-            }
+        if (!currentForecastResponse.ok) {
+          throw new Error(`Failed to fetch current data: ${currentForecastResponse.status}`);
+        }
 
-            fileInfo.textContent = `Selected: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+        const currentData = await currentForecastResponse.json();
+        
+        // 1. Update RevenueActual column
+        const currentRevenueData = currentData.d.RevenueActual || "{}"; 
+        const updatedRevenueData = updateRevenueData(currentRevenueData, month, actualRevenue); 
 
-            try {
-                const parsedData = await parseExcelFile(file); 
-                const validation = validateImportData(parsedData);
-                if (validation.valid) { 
-                    importData = parsedData;
-                    showImportPreview(parsedData);
-                    previewSection.style.display = "block";
-                    previewSection.style.opacity = "1"; 
-                } else { 
-                    toast("error", `Invalid Excel format. Missing required column(s): ${validation.missing.join(", ")}. Expected columns: Project Reference, Month, Actual Revenue.`);
-                }
-            } catch (error) { 
-                toast("error", "Error reading Excel file");
-            }
-        };
+        // 2. Update ForecastData JSON (monthActual)
+        const currentForecastDataStr = currentData.d.ForecastData || "{}";
+        let currentForecastData: any = {};
+        try {
+          currentForecastData = JSON.parse(currentForecastDataStr);
+        } catch(e) { currentForecastData = {}; }
 
-        const parseExcelFile = (file: File): Promise<any[]> => {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    try {
-                        const data = new Uint8Array(e.target?.result as ArrayBuffer);
-                        const workbook = XLSX.read(data, { type: "array" });
-                        const sheetName = workbook.SheetNames[0];
-                        const worksheet = workbook.Sheets[sheetName];
+        if (!currentForecastData[month]) {
+          currentForecastData[month] = { plan: 0, actual: 0, forecast: 0, monthActual: 0, items: {} };
+        }
+        
+        // ✅ Sync the monthActual inside the JSON
+        currentForecastData[month].monthActual = actualRevenue;
 
-                        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }); 
-                        if (jsonData.length < 2) { 
-                            return resolve([]);
-                        }
-
-                        const headers = jsonData[0] as string[];  
-                        const rows: any[] = [];
-
-                        for (let i = 1; i < jsonData.length; i++) {
-                            const rowData = jsonData[i] as any[];
-                            if (!rowData || rowData.length === 0) continue;
-
-                            const row: any = {};
-
-                            headers.forEach((header, idx) => {
-                                if (header && rowData[idx] !== undefined && rowData[idx] !== null) {
-                                    row[header.trim()] = rowData[idx];
-                                }
-                            });
-
-                            if (row["Month"] || row["month"]) {
-                                let monthValue = row["Month"] || row["month"];
-
-                                if (typeof monthValue === "number") {
-                                    const excelDate = new Date(Math.round((monthValue - 25569) * 86400 * 1000));
-                                    const yyyy = excelDate.getFullYear();
-                                    const mm = String(excelDate.getMonth() + 1).padStart(2, '0');
-                                    monthValue = `${yyyy}-${mm}`;
-                                }
-
-                                const monthStr = monthValue.toString();
-                                row.parsedMonth = parseMonth(monthStr); 
-                            }
-
-                            const hasProjectRef = row["Project Reference"] || row["project_reference"];
-                            const hasMonth = row.parsedMonth;
-
-                            if (hasProjectRef && hasMonth) {
-                                rows.push(row); 
-                            }
-                        } 
-                        resolve(rows);
-                    } catch (err) { 
-                        reject(err);
-                    }
-                };
-                reader.onerror = (error) => {
-                    reject(new Error("Failed to read file"));
-                };
-                reader.readAsArrayBuffer(file);
-            });  
-        };
-
-        const validateImportData = (data: any[]): { valid: boolean; missing: string[] } => { 
-            if (data.length === 0) { 
-                return { valid: false, missing: ["No data rows found"] };
-            } 
-            const first = data[0];
-            const keys = Object.keys(first).map((k) => k.toLowerCase()); 
-            const hasProjectRef = keys.some((k) => k.includes("project") && k.includes("reference"));
-            const hasMonth = keys.some((k) => k.includes("month"));
-            const hasRevenue = keys.some((k) => k.includes("actual") && (k.includes("revenue") || k.includes("rev")));
-
-            const missing: string[] = [];
-            if (!hasProjectRef) missing.push("Project Reference");
-            if (!hasMonth) missing.push("Month");
-            if (!hasRevenue) missing.push("Actual Revenue");
-
-            return { valid: missing.length === 0, missing };
+        // ✅ PREPARE PAYLOAD
+        const payload = {
+          __metadata: { type: entityType },
+          RevenueActual: updatedRevenueData,
+          ForecastData: JSON.stringify(currentForecastData),
+          UpdatedDate: new Date().toISOString(),
         }; 
 
-        const showImportPreview = (data: any[]) => { 
-            const monthSummary: { [key: string]: number } = {};
+        const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items(${forecast.Id})`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json;odata=verbose",
+            "Content-Type": "application/json;odata=verbose",
+            "X-RequestDigest": digest,
+            "IF-MATCH": "*",
+            "X-HTTP-Method": "MERGE",
+          },
+          body: JSON.stringify(payload),
+        });
 
-            data.forEach((row) => {
-                const month = row.parsedMonth;
-                if (month) {
-                    monthSummary[month] = (monthSummary[month] || 0) + 1;
-                }
-            });
+        if (res.ok) {
+          success++; 
+        } else {
+          error++;
+          const text = await res.text();
+          console.warn(`⚠️ Failed for ${projectRef} (${month}):`, text);
+        }
 
-            const monthSummaryText = Object.keys(monthSummary)
-                .map((month) => {
-                    return `${month}: ${monthSummary[month]} records`;
-                })
-                .join(", ");
+        await new Promise((r) => setTimeout(r, 100));
+      } catch (err) {
+        error++;
+        console.error(`❌ Error updating ${projectRef} (${month}):`, err);
+      }
+    }
 
-            const previewHTML = `
-                <div style="padding: 20px; background: #f8f9fa; border-radius: 8px;">
-                    <h4 style="color: #28a745; margin-bottom: 15px;">✅ File Ready for Import</h4>
-                    <p><strong>Found ${data.length} records to import:</strong></p>
-                    <p><strong>Month Summary:</strong> ${monthSummaryText || "No months found"}</p>
-                    <div class="revenue-preview-table-container" style="max-height: 400px; overflow-y: auto;">
-                        <table class="revenue-preview-table" style="width: 100%; border-collapse: collapse;">
-                            <thead style="background: #007bff; color: white;">
-                                <tr>
-                                    <th style="padding: 10px; border: 1px solid #ddd;">Project Reference</th>
-                                    <th style="padding: 10px; border: 1px solid #ddd;">Month</th>
-                                    <th style="padding: 10px; border: 1px solid #ddd;">Actual Revenue</th>
-                                    <th style="padding: 10px; border: 1px solid #ddd;">Project Match</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${data.slice(0, 10).map((row, index) => {
-                                    const projectRef = row["Project Reference"] || row["project_reference"] || "N/A";
-                                    const month = row["Month"] || row["month"] || "N/A";
-                                    const actualRevenue = row["Actual Revenue"] || row["actual_revenue"] || row["Actual"] || row["actual"] || "0";
-                                    const project = projects.find((p) => p.ProjectReference === projectRef);
+    skipped = importData.length - (success + error + notFound + invalidMonth);
 
-                                    return `
-                                            <tr style="${index % 2 === 0 ? "background: #f8f9fa;" : "background: white;"}">
-                                                <td style="padding: 8px; border: 1px solid #ddd;">${projectRef}</td>
-                                                <td style="padding: 8px; border: 1px solid #ddd;">${month} (${row.parsedMonth || "Invalid"})</td>
-                                                <td style="padding: 8px; border: 1px solid #ddd;">${actualRevenue}</td>
-                                                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${project ? "✅" : "❌"}</td>
-                                            </tr>
-                                        `;
-                                }).join("")}
-                            </tbody>
-                        </table>
-                    </div>
-                    ${data.length > 10 ? `<p style="margin-top: 10px; font-style: italic;">... and ${data.length - 10} more records</p>` : ""}
-                    <div style="margin-top: 20px; padding: 15px; background: #e7f3ff; border-radius: 5px;">
-                        <p style="margin: 0; color: #0056b3;"><strong>Ready to import?</strong> Click the "Import Data" button below.</p>
-                        <p style="margin: 5px 0 0 0; font-size: 12px;"><strong>Note:</strong> Only the imported month will be updated, all other data preserved</p>
-                    </div>
-                </div>`;
+    importStatus.className = "revenue-import-status success";
+    importStatus.innerHTML = `
+      <strong>Import Complete!</strong>
+      ✅ Success: ${success} records imported
+      ❌ Errors: ${error} records
+      🔍 Project Not Found: ${notFound} records
+      📅 Invalid Month: ${invalidMonth} records
+      ⏭️ Skipped: ${skipped} records
+      <small>Only the imported month was updated, all other data preserved</small>
+    `;
 
-            importPreview.innerHTML = previewHTML; 
-        };
+    await loadForecasts();
+    initializePagination(forecasts);
 
-        const performImport = async () => {
-            confirmImport.disabled = true;
-            confirmImport.textContent = "Importing...";
-            importStatus.style.display = "block";
-            importStatus.textContent = "Updating Revenue Data...";
+    hideRevenueLoader();
 
-            // block the SECTION (sidebar stays visible) while the import runs
-            showRevenueLoader(
-              'Importing Data',
-              `Please wait... updating ${importData.length} record(s)`
-            );
+    confirmImport.disabled = false;
+    confirmImport.textContent = "Import Data";
+  };
 
-            let success = 0,
-                error = 0,
-                notFound = 0,
-                invalidMonth = 0,
-                skipped = 0;
-            const entityType = await getListEntityTypeForImport(); 
-            for (const row of importData) {
-                const projectRef = row["Project Reference"] || row["project_reference"];
-                const month = row.parsedMonth;
-                const actualRevenue = parseFloat(row["Actual Revenue"] || row["actual_revenue"] || row["Actual"] || row["actual"] || "0");
-                if (!month) { 
-                    invalidMonth++;
-                    continue;
-                }
+  downloadTemplateBtn.addEventListener("click", () => {
+    if (!projects || projects.length === 0) {
+      toast("error", "No projects available to create template");
+      return;
+    }
 
-                const project = projects.find((p) => p.ProjectReference === projectRef);
-                if (!project) { 
-                    notFound++;
-                    continue;
-                }
+    const wsData = [["Project Reference", "Month", "Actual Revenue"]];
+    projects.forEach((p) => {
+      wsData.push([p.ProjectReference || "", "", ""]);
+    });
 
-                const forecast = forecasts.find((f) => f.Project?.Title === project.Title);
-                if (!forecast?.Id) { 
-                    notFound++;
-                    continue;
-                }
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Revenue Template");
 
+    const fileName = `Revenue_Import_Template.xlsx`;
+    XLSX.writeFile(wb, fileName);
+  });
+
+  const closeModalHandler = () => {
+    hideRevenueLoader();
+    modal.remove();
+  };
+  closeModal.addEventListener("click", closeModalHandler);
+  cancelImport.addEventListener("click", closeModalHandler);
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModalHandler();
+  });
+
+  confirmImport.addEventListener("click", performImport);
+};
+        const updateRevenueData = (existingData: string, month: string, actualRevenue: number): string => {
+            let finalData: { [key: string]: number } = {};
+
+            if (existingData && existingData.trim() !== "" && existingData !== "{}" && existingData !== "null" && existingData !== "undefined") {
                 try {
-                    const digest = await getDigest(); 
-                    const currentForecastResponse = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items(${forecast.Id})?$select=Id,RevenueActual`, {
-                        method: "GET",
-                        headers: {
-                            Accept: "application/json;odata=verbose",
-                        },
-                    });
-
-                    if (!currentForecastResponse.ok) {
-                        throw new Error(`Failed to fetch current data: ${currentForecastResponse.status}`);
-                    }
-
-                    const currentData = await currentForecastResponse.json();
-                    const currentRevenueData = currentData.d.RevenueActual || "{}"; 
-                    const updatedRevenueData = updateRevenueData(currentRevenueData, month, actualRevenue); 
-
-                    const payload = {
-                        __metadata: { type: entityType },
-                        RevenueActual: updatedRevenueData,
-                        UpdatedDate: new Date().toISOString(),
-                    }; 
-                    const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items(${forecast.Id})`, {
-                        method: "POST",
-                        headers: {
-                            Accept: "application/json;odata=verbose",
-                            "Content-Type": "application/json;odata=verbose",
-                            "X-RequestDigest": digest,
-                            "IF-MATCH": "*",
-                            "X-HTTP-Method": "MERGE",
-                        },
-                        body: JSON.stringify(payload),
-                    });
-
-                    if (res.ok) {
-                        success++; 
-                    } else {
-                        error++;
-                        const text = await res.text();
-                        console.warn(`⚠️ Failed for ${projectRef} (${month}):`, text);
-                    }
-
-                    await new Promise((r) => setTimeout(r, 100));
-                } catch (err) {
-                    error++;
-                    console.error(`❌ Error updating ${projectRef} (${month}):`, err);
+                    const parsed = JSON.parse(existingData);
+                    finalData = { ...parsed };
+                } catch (parseError) {
+                    finalData = {};
                 }
+            } else {
+                finalData = {};
             }
 
-            skipped = importData.length - (success + error + notFound + invalidMonth);
-
-            importStatus.className = "revenue-import-status success";
-            importStatus.innerHTML = `
-            <strong>Import Complete!</strong>
-
-            ✅ Success: ${success} records imported
-
-            ❌ Errors: ${error} records
-
-            🔍 Project Not Found: ${notFound} records
-
-            📅 Invalid Month: ${invalidMonth} records
-
-            ⏭️ Skipped: ${skipped} records
-
-            <small>Only the imported month was updated, all other data preserved</small>
-        `;
-
-            await loadForecasts();
-            initializePagination(forecasts);
-
-            hideRevenueLoader();
-
-            confirmImport.disabled = false;
-            confirmImport.textContent = "Import Data";
-        };
-
-        downloadTemplateBtn.addEventListener("click", () => {
-            if (!projects || projects.length === 0) {
-                toast("error", "No projects available to create template");
-                return;
+            if (actualRevenue > 0) {
+                finalData[month] = actualRevenue;
+            } else {
+                delete finalData[month];
             }
 
-            const wsData = [["Project Reference", "Month", "Actual Revenue"]];
-
-            projects.forEach((p) => {
-                wsData.push([p.ProjectReference || "", "", ""]);
+            const result: { [key: string]: number } = {};
+            Object.keys(finalData).forEach(key => {
+                if (finalData[key] > 0) {
+                    result[key] = finalData[key];
+                }
             });
 
-            const ws = XLSX.utils.aoa_to_sheet(wsData);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Revenue Template");
-
-            const fileName = `Revenue_Import_Template.xlsx`;
-
-            XLSX.writeFile(wb, fileName);
-        });
-
-        const closeModalHandler = () => {
-            // never leave the loader hanging if the modal is closed mid-import
-            hideRevenueLoader();
-            modal.remove();
+            return JSON.stringify(result);
         };
-        closeModal.addEventListener("click", closeModalHandler);
-        cancelImport.addEventListener("click", closeModalHandler);
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) closeModalHandler();
-        });
-
-        confirmImport.addEventListener("click", performImport);
-      };
 const initialize = async (): Promise<void> => {
     try {
         await authManager.initialize({ siteUrl });

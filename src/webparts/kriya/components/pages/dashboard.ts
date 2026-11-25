@@ -3,8 +3,8 @@ import '../styles/dashboard.css';
 import {
   authManager,
   canRead,
-  hasFullControl,
-  canReadAllProjects,
+  hasFullControl, 
+  canReadAllProjects, 
   getAssignedProjects,
   getCurrentUserFullName,
   canCreateRecord,
@@ -12,11 +12,11 @@ import {
   getDigest as getAuthDigest
 } from './auth';
 declare const _spPageContextInfo: any;
-
+ 
 // ============================================================
 // DYNAMIC PROJECT PERFORMANCE DASHBOARD — COMPLETE VERSION
 // ------------------------------------------------------------
-//  Dynamically fetches data from:
+//  Dynamically fetches data from:    
 //    - Revenue Forecast List (Revenue Plan, Revenue Actuals, OBL)
 //    - Collection List (Collection Plan, Collection Actuals)
 //    - Project List (Project metadata, PR+ Quality stats)
@@ -51,11 +51,11 @@ const buildMonthList = (count: number): string[] => {
 // ============================================================
 // TYPE DEFINITIONS
 // ============================================================
-interface DashOption {
+interface DashOption { 
   value: string;
   label: string;
   sub?: string;
-}
+}  
 
 interface OblSummary {
   totalObl: number;
@@ -63,20 +63,25 @@ interface OblSummary {
   averageObl: number;
   highestObl: number;
   lowestObl: number;
+  previousObl: number;          // ← NEW
+  oblChangePercentage: number;  // ← NEW
 }
 
 interface RevenueData {
   plan: number;
   actual: number;
   percentage: number;
+   monthActual: number;
   ytdPlan: number;
   ytdActual: number;
   ytdPercentage: number;
+  
 }
 
 interface CollectionData {
   plan: number;
   actual: number;
+   monthActual: number;
   percentage: number;
   ytdPlan: number;
   ytdActual: number;
@@ -93,6 +98,8 @@ interface ReceivablesData {
   itTdsOthers: number;
   totalRetention: number;
   totalReceivables: number;
+  previousReceivables: number;         // ← NEW
+  receivablesChangePercentage: number; // ← NEW
 }
 
 interface InventoryData {
@@ -119,11 +126,6 @@ const dashboardContent = `
 
     <div class="board">
       <main class="board-main">
-
-        <!-- ============ SECTION 1 : OBL · RECEIVABLES · PLAN VS ACTUAL ============ -->
-        <div class="sec-row">
-          <span class="sec-txt">OBL · Receivables · Plan vs Actual</span>
-        </div>
 
         <section class="row-top">
           <section class="card obl">
@@ -186,14 +188,12 @@ const dashboardContent = `
             <div class="proj-head">
               <div class="proj-left">
                 <span class="card-title">Total Projects</span>
-                <span class="kpi-num proj-num" id="dsTotalProjectsCard">99</span>
-                <span class="delta green" id="dsProjectsDelta">99</span>
+                <span class="kpi-num proj-num" id="dsTotalProjectsCard">99</span> 
               </div>
               <div class="proj-chips">
                 <div class="chip"><span class="n" id="dsRelCount">99</span><span class="t">REL</span></div>
                 <div class="chip"><span class="n" id="dsTecoCount">99</span><span class="t">TECO</span></div>
                 <div class="chip"><span class="n" id="dsSoCount">99</span><span class="t">SO</span></div>
-                <div class="chip"><span class="n" id="dsClsdCount">99</span><span class="t">CLSD</span></div>
                 <div class="chip"><span class="n" id="dsOtherCount">99</span><span class="t">Other</span></div>
               </div>
             </div>
@@ -242,7 +242,6 @@ const dashboardContent = `
                 <div class="bar low"><i style="width:99%" id="dsCollectionBar"></i></div>
               </div>
             </div>
-            <div class="saydo"><span class="sd-lbl">&#8249; Say Do Ratio &#8250;</span><span class="sd-val">99</span></div>
           </section>
 
           <section class="card revenue perf-card">
@@ -275,7 +274,6 @@ const dashboardContent = `
                 <div class="bar"><i style="width:99%" id="dsYtdCollectionBar"></i></div>
               </div>
             </div>
-            <div class="saydo"><span class="sd-lbl">&#8249; Say Do Ratio &#8250;</span><span class="sd-val">99</span></div>
           </section>
 
           <section class="card top-right working-capital">
@@ -294,27 +292,20 @@ const dashboardContent = `
               </div>
               <div class="metric-line wc-cell">
                 <div class="name">SEI</div>
-                <div class="kpi-num">99</div>
+                <div class="kpi-num" id="dsSeiValue">99</div>
               </div>
               <div class="metric-line wc-cell">
                 <div class="name">Inventory</div>
                 <div class="kpi-num" id="dsInventoryValue">99</div>
-                <div class="sub" id="dsInventorySub">RM 99 &middot; WIP 99</div>
               </div>
             </div>
           </section>
         </section>
 
-        <!-- ============ SECTION 3 : PROCUREMENT · DOCUMENTATION · PR+ QUALITY ============ -->
-        <div class="sec-row sec-row-p2">
-          <span class="sec-badge">Priority 2</span>
-          <span class="sec-txt">Procurement · Documentation · PR+ Quality</span>
-        </div>
-
         <section class="row-bot">
           <section class="card procurement">
             <div class="card-title">Procurement Pending</div>
-            <div class="list proc-list">
+            <div class="list proc-list" style="grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(52px,auto);">
               <div class="list-row"><span class="name">RFQ Pending</span><span class="val" id="dsRfqPending">99</span></div>
               <div class="list-row"><span class="name">Offer Pending</span><span class="val" id="dsOfferPending">99</span></div>
               <div class="list-row"><span class="name">TC Pending</span><span class="val" id="dsTcPending">99</span></div>
@@ -343,12 +334,12 @@ const dashboardContent = `
             </div>
           </section>
 
-          <section class="card prq">
-            <div class="card-title">PR+ Quality</div>
-            <div class="prq-sections">
+          <section class="card prq" style="font-size:9px;">
+            <div class="card-title" style="font-size:9.5px;margin-bottom:3px;">PR+ Status</div>
+            <div class="prq-sections" style="gap:6px;">
               <div class="prq-section">
                 <div class="prq-section-header">
-                  <span>PROJECTS IN PR+</span>
+                  <span>Submission & Approval Status</span>
                   <span class="prq-total" id="dsTotalProjects">99</span>
                 </div>
                 <div class="prq-bar-row">
@@ -360,7 +351,7 @@ const dashboardContent = `
                   <div class="prq-bar-pct" id="dsSubmittedPct">99</div>
                 </div>
                 <div class="prq-bar-row">
-                  <div class="prq-bar-label">
+                  <div class="prq-bar-label">  
                     <span>Not Submitted</span>
                     <span class="prq-bar-val not-submitted-val" id="dsNotSubmittedProjects">99</span>
                   </div>
@@ -375,36 +366,21 @@ const dashboardContent = `
                   <div class="prq-bar-track"><i class="prq-bar-fill approved" id="dsApprovedBar" style="width:99%"></i></div>
                   <div class="prq-bar-pct" id="dsApprovedPct">99</div>
                 </div>
-              </div>
+              </div>   
 
               <div class="prq-section">
                 <div class="prq-section-header">
-                  <span>PR+ SUBMISSION</span>
-                  <span class="prq-total">99</span>
-                </div>
+                  <span>Data Quality</span>
+                </div> 
                 <div class="prq-sub-row">
-                  <span class="prq-sub-label">MONTH - PREV</span>
-                  <span class="prq-sub-value">99</span>
-                </div>
-                <div class="prq-sub-row">
-                  <span class="prq-sub-label">Oct-26</span>
-                  <div class="prq-bar-track flex-1"><i class="prq-bar-fill submitted" style="width:99%"></i></div>
-                  <span class="prq-sub-pct">99</span>
-                </div>
-                <div class="prq-sub-row">
-                  <span class="prq-sub-label">Sep-26</span>
-                  <div class="prq-bar-track flex-1"><i class="prq-bar-fill submitted" style="width:99%"></i></div>
-                  <span class="prq-sub-pct">99</span>
-                </div>
-                <div class="prq-sub-row">
-                  <span class="prq-sub-label">YTD</span>
-                  <div class="prq-bar-track flex-1"><i class="prq-bar-fill approved" style="width:99%"></i></div>
-                  <span class="prq-sub-pct">99</span>
-                </div>
+                  <span class="prq-sub-label" id="dsPrQualityMonth">99</span>
+                  <div class="prq-bar-track flex-1"><i class="prq-bar-fill submitted" id="dsPrQualityBar" style="width:0%"></i></div>
+                  <span class="prq-sub-pct" id="dsPrQualityAverage">99</span>
+                </div>                 
               </div>
             </div>
           </section>
-        </section>
+        </section> 
       </main>
 
       <aside class="card filters">
@@ -448,7 +424,7 @@ const dashboardScript = (): void => {
       fieldCustomer: 'CustomerName',
       fieldProjectManager: 'ProjectManager',
       fieldGroupHead: 'GroupHead1',
-      fieldInventoryActual: 'InventoryActual'
+      fieldInventoryActual: 'OBLMonth'
     };
 
     // ============================================================
@@ -634,6 +610,18 @@ const dashboardScript = (): void => {
       }
     }
 
+
+    const previousMonthKeyOf = (key: string): string => {
+  const [y, m] = key.split('-').map(Number);
+  const d = new Date(y, (m || 1) - 1, 1);
+  d.setMonth(d.getMonth() - 1);
+  return monthKeyOf(d);
+};
+
+const changePct = (current: number, previous: number): number => {
+  if (previous === 0) return current === 0 ? 0 : 100;
+  return ((current - previous) / Math.abs(previous)) * 100;
+};
     // ============================================================
     // DATA FETCHING FUNCTIONS
     // ============================================================
@@ -710,569 +698,518 @@ const dashboardScript = (): void => {
       return map;
     };
 
-    const dashProjectIdOf = (item: any, referenceToId: Map<string, number>): number => {
-      const byReferenceId = Number(item.ProjectReferenceId || 0);
-      if (byReferenceId) return byReferenceId;
+ const dashProjectIdOf = (item: any, referenceToId: Map<string, number>): number => {
+  const byProjectId = Number(item.ProjectId || 0);
+  if (byProjectId) return byProjectId;
 
-      const reference = String(item.ProjectReference || '').trim().toLowerCase();
-      if (reference && referenceToId.has(reference)) return referenceToId.get(reference) as number;
+  const byReferenceId = Number(item.ProjectReferenceId || 0);
+  if (byReferenceId) return byReferenceId;
 
-      return Number(item.ProjectId || 0);
-    };
+  const rawRef = String(item.ProjectReference?.Title || item.ProjectReference || '').trim().toLowerCase();
+  if (rawRef && referenceToId.has(rawRef)) {
+    return referenceToId.get(rawRef) as number;
+  }
 
-    const fetchRevenueData = async (monthKey: string, projectIds: Set<number>): Promise<RevenueData> => {
-      try {
-        let totalPlan = 0;
-        let totalActual = 0;
-        let ytdPlan = 0;
-        let ytdActual = 0;
-        const [selectedYear, selectedMonth] = monthKey.split('-').map(Number);
-        const referenceToId = dashProjectReferenceIndex();
-        const results = await dashFetchListItems(DASH_SOURCES.revenueList, 'ForecastData,RevenueActual');
+  return 0;
+};
 
-        results.forEach((item: any) => {
-          const projectId = dashProjectIdOf(item, referenceToId);
-          if (!projectId || !projectIds.has(projectId)) return;
+const fetchRevenueData = async (monthKey: string, projectIds: Set<number>): Promise<RevenueData> => {
+  try {
+    let totalPlan = 0;
+    let totalActual = 0;
+    let ytdPlan = 0;
+    let ytdActual = 0;
+    const [selectedYear, selectedMonth] = monthKey.split('-').map(Number);
+    const referenceToId = dashProjectReferenceIndex();
+    
+    const results = await dashFetchListItems(DASH_SOURCES.revenueList, 'ForecastData');
 
-          const forecastData = safeJsonParse(item.ForecastData);
-          const revenueActual = safeJsonParse(item.RevenueActual);
-          const monthForecast = forecastData[monthKey] || {};
-          const plan = Number(revenueActual[monthKey]) || 0;
-          const actual = Number(monthForecast.actual) || 0;
+    results.forEach((item: any) => {
+      const projectId = dashProjectIdOf(item, referenceToId);
+      
+      // ✅ FIX: If Admin is viewing 'All', bypass the broken project link
+      const isAdminAll = (pmValue === '__all__' && prValue === '__all__');
+      if (!isAdminAll && (!projectId || !projectIds.has(projectId))) return;
 
-          totalPlan += plan;
-          totalActual += actual;
+      const forecastData = safeJsonParse(item.ForecastData);
 
-          for (let m = 1; m <= selectedMonth; m++) {
-            const monthKeyToCheck = `${selectedYear}-${String(m).padStart(2, '0')}`;
-            const monthForecastYtd = forecastData[monthKeyToCheck] || {};
-            const planYtd = Number(revenueActual[monthKeyToCheck]) || 0;
-            const actualYtd = Number(monthForecastYtd.actual) || 0;
+      // --- CURRENT MONTH ---
+      const monthForecast = forecastData[monthKey] || {};
+      
+      // Plan = 'actual' field in JSON (from your SharePoint columns)
+      const plan = Number(monthForecast.actual) || 0; 
+      
+      // Actual = 'monthActual' field in JSON
+      const actual = Number(monthForecast.monthActual) || 0; 
 
-            ytdPlan += planYtd;
-            ytdActual += actualYtd;
-          }
-        });
+      totalPlan += plan;
+      totalActual += actual;
 
-        const percentage = totalPlan > 0 ? (totalActual / totalPlan) * 100 : 0;
-        const ytdPercentage = ytdPlan > 0 ? (ytdActual / ytdPlan) * 100 : 0;
+      // --- YTD ---
+      for (let m = 1; m <= selectedMonth; m++) {
+        const monthKeyToCheck = `${selectedYear}-${String(m).padStart(2, '0')}`;
+        const monthForecastYtd = forecastData[monthKeyToCheck] || {};
+        
+        const planYtd = Number(monthForecastYtd.actual) || 0;
+        const actualYtd = Number(monthForecastYtd.monthActual) || 0;
 
-        return {
-          plan: totalPlan,
-          actual: totalActual,
-          percentage,
-          ytdPlan,
-          ytdActual,
-          ytdPercentage
-        };
-
-      } catch (err) {
-        console.error('❌ Failed to fetch Revenue data:', err);
-        return { plan: 0, actual: 0, percentage: 0, ytdPlan: 0, ytdActual: 0, ytdPercentage: 0 };
+        ytdPlan += planYtd;
+        ytdActual += actualYtd;
       }
+    });
+
+    // Mathematically safe percentage
+    // ✅ CHANGE 3 — 0 plan ⇒ 100 %
+const percentage    = totalPlan    > 0 ? (totalActual    / totalPlan)    * 100 : 100;
+const ytdPercentage = ytdPlan      > 0 ? (ytdActual      / ytdPlan)      * 100 : 100;
+
+    return { 
+      plan: totalPlan, 
+      actual: totalActual, 
+      monthActual: totalActual, 
+      percentage, 
+      ytdPlan, 
+      ytdActual, 
+      ytdPercentage 
     };
 
-    const fetchCollectionData = async (monthKey: string, projectIds: Set<number>): Promise<CollectionData> => {
-      try {
-        let totalPlan = 0;
-        let totalActual = 0;
-        let ytdPlan = 0;
-        let ytdActual = 0;
-        const [selectedYear, selectedMonth] = monthKey.split('-').map(Number);
-        const referenceToId = dashProjectReferenceIndex();
-        const results = await dashFetchListItems(DASH_SOURCES.collectionList, 'CollectionData,RevenueActual');
+  } catch (err) {
+    console.error('❌ Failed to fetch Revenue data:', err);
+    return { plan: 0, actual: 0, monthActual: 0, percentage: 0, ytdPlan: 0, ytdActual: 0, ytdPercentage: 0 };
+  }
+};
 
-        results.forEach((item: any) => {
-          const projectId = dashProjectIdOf(item, referenceToId);
-          if (!projectId || !projectIds.has(projectId)) return;
+const fetchCollectionData = async (monthKey: string, projectIds: Set<number>): Promise<CollectionData> => {
+  try {
+    let totalPlan = 0;
+    let totalActual = 0;
+    let ytdPlan = 0;
+    let ytdActual = 0;
+    const [selectedYear, selectedMonth] = monthKey.split('-').map(Number);
+    const referenceToId = dashProjectReferenceIndex();
+    
+    const results = await dashFetchListItems(DASH_SOURCES.collectionList, 'CollectionData');
 
-          const collectionData = safeJsonParse(item.CollectionData);
-          const revenueActual = safeJsonParse(item.RevenueActual);
-          const monthCollection = collectionData[monthKey] || {};
-          const plan = Number(revenueActual[monthKey]) || 0;
-          const actual = Number(monthCollection.actual) || 0;
+    results.forEach((item: any) => {
+      const projectId = dashProjectIdOf(item, referenceToId);
+      
+      // ✅ FIX: If Admin is viewing 'All', bypass the broken project link
+      const isAdminAll = (pmValue === '__all__' && prValue === '__all__');
+      if (!isAdminAll && (!projectId || !projectIds.has(projectId))) return;
 
-          totalPlan += plan;
-          totalActual += actual;
+      const collectionData = safeJsonParse(item.CollectionData);
+      
+      // --- CURRENT MONTH ---
+      const monthCollection = collectionData[monthKey] || {};
+      
+      const plan = Number(monthCollection.actual) || 0;
+      const actual = Number(monthCollection.monthActual) || 0;
 
-          for (let m = 1; m <= selectedMonth; m++) {
-            const monthKeyToCheck = `${selectedYear}-${String(m).padStart(2, '0')}`;
-            const monthCollectionYtd = collectionData[monthKeyToCheck] || {};
-            const planYtd = Number(revenueActual[monthKeyToCheck]) || 0;
-            const actualYtd = Number(monthCollectionYtd.actual) || 0;
+      totalPlan += plan;
+      totalActual += actual;
 
-            ytdPlan += planYtd;
-            ytdActual += actualYtd;
-          }
-        });
+      // --- YTD ---
+      for (let m = 1; m <= selectedMonth; m++) {
+        const monthKeyToCheck = `${selectedYear}-${String(m).padStart(2, '0')}`;
+        const monthCollectionYtd = collectionData[monthKeyToCheck] || {};
+        
+        const planYtd = Number(monthCollectionYtd.actual) || 0;
+        const actualYtd = Number(monthCollectionYtd.monthActual) || 0;
 
-        const percentage = totalPlan > 0 ? (totalActual / totalPlan) * 100 : 0;
-        const ytdPercentage = ytdPlan > 0 ? (ytdActual / ytdPlan) * 100 : 0;
-
-        return { plan: totalPlan, actual: totalActual, percentage, ytdPlan, ytdActual, ytdPercentage };
-
-      } catch (err) {
-        console.error('❌ Failed to fetch Collection data:', err);
-        return { plan: 0, actual: 0, percentage: 0, ytdPlan: 0, ytdActual: 0, ytdPercentage: 0 };
+        ytdPlan += planYtd;
+        ytdActual += actualYtd;
       }
+    });
+
+    // ✅ FIX: Force 0% if plan is 0 to prevent the 100% logic error
+    const percentage = totalPlan > 0 ? (totalActual / totalPlan) * 100 : 0;
+    const ytdPercentage = ytdPlan > 0 ? (ytdActual / ytdPlan) * 100 : 0;
+
+    return { 
+      plan: totalPlan, 
+      actual: totalActual, 
+      monthActual: totalActual, 
+      percentage, 
+      ytdPlan, 
+      ytdActual, 
+      ytdPercentage 
     };
 
-    const fetchOblSummary = async (projectIds: Set<number>): Promise<OblSummary> => {
-      try {
-        let totalObl = 0;
-        let projectCount = 0;
-        const oblValues: number[] = [];
+  } catch (err) {
+    console.error('❌ Failed to fetch Collection data:', err);
+    return { plan: 0, actual: 0, monthActual: 0, percentage: 0, ytdPlan: 0, ytdActual: 0, ytdPercentage: 0 };
+  }
+};
 
-        const referenceToId = dashProjectReferenceIndex();
-        const results = await dashFetchListItems(DASH_SOURCES.revenueList, 'OBL');
+const fetchOblSummary = async (monthKey: string, projectIds: Set<number>): Promise<OblSummary> => {
+  try {
+    let totalObl = 0;
+    let previousObl = 0;
+    let projectCount = 0;
+    const oblValues: number[] = [];
 
-        results.forEach((item: any) => {
-          const projectId = dashProjectIdOf(item, referenceToId);
-          if (!projectId || !projectIds.has(projectId)) return;
+    const prevMonthKey = previousMonthKeyOf(monthKey);
+    const referenceToId = dashProjectReferenceIndex();
+    const results = await dashFetchListItems(DASH_SOURCES.revenueList, 'OBLMonth');
 
-          const obl = Math.round(Number(item.OBL) || 0);
-          if (!Number.isFinite(obl) || obl === 0) return;
+    results.forEach((item: any) => {
+      const projectId = dashProjectIdOf(item, referenceToId);
+      if (!projectId || !projectIds.has(projectId)) return;
 
-          totalObl += obl;
-          projectCount++;
-          oblValues.push(obl);
-        });
+      const oblJson = safeJsonParse(item.OBLMonth);
 
-        const averageObl = projectCount > 0 ? Math.round((totalObl / projectCount) * 100) / 100 : 0;
-        const highestObl = oblValues.length > 0 ? Math.max(...oblValues) : 0;
-        const lowestObl = oblValues.length > 0 ? Math.min(...oblValues) : 0;
-
-        return { totalObl, projectCount, averageObl, highestObl, lowestObl };
-
-      } catch (err) {
-        console.error('❌ Failed to fetch OBL data:', err);
-        return { totalObl: 0, projectCount: 0, averageObl: 0, highestObl: 0, lowestObl: 0 };
+      const cur = Math.round(Number(oblJson[monthKey]) || 0);
+      if (Number.isFinite(cur) && cur !== 0) {
+        totalObl += cur;
+        projectCount++;
+        oblValues.push(cur);
       }
+
+      const prev = Math.round(Number(oblJson[prevMonthKey]) || 0);
+      if (Number.isFinite(prev)) previousObl += prev;
+    });
+
+    const averageObl = projectCount > 0 ? Math.round((totalObl / projectCount) * 100) / 100 : 0;
+    const highestObl = oblValues.length > 0 ? Math.max(...oblValues) : 0;
+    const lowestObl  = oblValues.length > 0 ? Math.min(...oblValues) : 0;
+
+    return {
+      totalObl,
+      projectCount,
+      averageObl,
+      highestObl,
+      lowestObl,
+      previousObl,
+      oblChangePercentage: changePct(totalObl, previousObl)
     };
 
-    const fetchReceivablesData = async (projectIds: Set<number>): Promise<ReceivablesData> => {
-      try {
-        let normal = 0, normalOverDue = 0, gstTds = 0;
-        let retention = 0, retentionOverDue = 0, itTdsOthers = 0;
-
-        const referenceToId = dashProjectReferenceIndex();
-        const results = await dashFetchListItems(DASH_SOURCES.collectionList, 'NormalDue,NormalOverdue,RetentionDue,RetentionOverdue,GstTds,WHT');
-
-        results.forEach((item: any) => {
-          const projectId = dashProjectIdOf(item, referenceToId);
-          if (!projectId || !projectIds.has(projectId)) return;
-
-          normal += Math.round(Number(item.NormalDue) || 0);
-          normalOverDue += Math.round(Number(item.NormalOverdue) || 0);
-          retention += Math.round(Number(item.RetentionDue) || 0);
-          retentionOverDue += Math.round(Number(item.RetentionOverdue) || 0);
-          gstTds += Math.round(Number(item.GstTds) || 0);
-          itTdsOthers += Math.round(Number(item.WHT) || 0);
-        });
-
-        const totalOverDue = normalOverDue + retentionOverDue;
-        const totalRetention = retention + retentionOverDue;
-        const totalReceivables = normal + normalOverDue + retention + retentionOverDue + gstTds + itTdsOthers;
-
-        return {
-          normal, normalOverDue, gstTds, totalOverDue,
-          retention, retentionOverDue, itTdsOthers,
-          totalRetention, totalReceivables
-        };
-
-      } catch (err) {
-        console.error('❌ Failed to fetch Receivables data:', err);
-        return {
-          normal: 0, normalOverDue: 0, gstTds: 0,
-          totalOverDue: 0, retention: 0, retentionOverDue: 0,
-          itTdsOthers: 0, totalRetention: 0, totalReceivables: 0
-        };
-      }
+  } catch (err) {
+    console.error('❌ Failed to fetch OBL data:', err);
+    return {
+      totalObl: 0, projectCount: 0, averageObl: 0, highestObl: 0, lowestObl: 0,
+      previousObl: 0, oblChangePercentage: 0
     };
+  }
+};
+
+const fetchReceivablesData = async (monthKey: string, projectIds: Set<number>): Promise<ReceivablesData> => {
+  try {
+    let normal = 0, normalOverDue = 0, gstTds = 0;
+    let retention = 0, retentionOverDue = 0, itTdsOthers = 0;
+    let previousReceivables = 0;
+
+    const prevMonthKey = previousMonthKeyOf(monthKey);
+    const referenceToId = dashProjectReferenceIndex();
+    const results = await dashFetchListItems(DASH_SOURCES.collectionList, 'ReceivableValueMonth');
+
+    results.forEach((item: any) => {
+      const projectId = dashProjectIdOf(item, referenceToId);
+      if (!projectId || !projectIds.has(projectId)) return;
+
+      const recvJson = safeJsonParse(item.ReceivableValueMonth);
+
+      // ---- current month ----
+      const monthData = recvJson[monthKey] || {};
+      normal          += Math.round(Number(monthData.normalDue) || 0);
+      normalOverDue   += Math.round(Number(monthData.normalOverdue) || 0);
+      retention       += Math.round(Number(monthData.retentionDue) || 0);
+      retentionOverDue+= Math.round(Number(monthData.retentionOverdue) || 0);
+      gstTds          += Math.round(Number(monthData.gstTds) || 0);
+      itTdsOthers     += Math.round(Number(monthData.wht) || 0);
+
+      // ---- previous month (for delta) ----
+      const prevData = recvJson[prevMonthKey] || {};
+      previousReceivables +=
+        Math.round(Number(prevData.normalDue) || 0) +
+        Math.round(Number(prevData.normalOverdue) || 0) +
+        Math.round(Number(prevData.retentionDue) || 0) +
+        Math.round(Number(prevData.retentionOverdue) || 0) +
+        Math.round(Number(prevData.gstTds) || 0) +
+        Math.round(Number(prevData.wht) || 0);
+    });
+
+    const totalOverDue    = normalOverDue + retentionOverDue;
+    const totalRetention  = retention + retentionOverDue;
+    const totalReceivables =
+      normal + normalOverDue + retention + retentionOverDue + gstTds + itTdsOthers;
+
+    return {
+      normal, normalOverDue, gstTds, totalOverDue,
+      retention, retentionOverDue, itTdsOthers,
+      totalRetention, totalReceivables,
+      previousReceivables,
+      receivablesChangePercentage: changePct(totalReceivables, previousReceivables)
+    };
+
+  } catch (err) {
+    console.error('❌ Failed to fetch Receivables data:', err);
+    return {
+      normal: 0, normalOverDue: 0, gstTds: 0,
+      totalOverDue: 0, retention: 0, retentionOverDue: 0,
+      itTdsOthers: 0, totalRetention: 0, totalReceivables: 0,
+      previousReceivables: 0, receivablesChangePercentage: 0
+    };
+  }
+};
 
     // ============================================================
     // INVENTORY — read InventoryActual from the Inventory list
     // ============================================================
-    const fetchInventoryData = async (projectIds: Set<number>): Promise<InventoryData> => {
-      try {
-        let totalInventory = 0;
-        let projectCount = 0;
+   const fetchInventoryData = async (monthKey: string, projectIds: Set<number>): Promise<InventoryData> => {
+  try {
+    let totalInventory = 0;
+    let projectCount = 0;
 
-        const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.inventoryList}')/items?$select=Id,${DASH_SOURCES.fieldInventoryActual},ProjectId&$top=5000`;
+    // Fetch OBLMonth instead of InventoryActual
+    const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.inventoryList}')/items?$select=Id,ProjectId,OBLMonth&$top=5000`;
 
-        const res = await fetch(url, {
-          headers: { 'Accept': 'application/json;odata=verbose' },
-          credentials: 'same-origin'
-        });
+    const res = await fetch(url, {
+      headers: { 'Accept': 'application/json;odata=verbose' },
+      credentials: 'same-origin'
+    });
 
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
 
-        const data = await res.json();
-        const results = (data.d && data.d.results) || [];
+    const data = await res.json();
+    const results = (data.d && data.d.results) || [];
 
-        results.forEach((item: any) => {
-          const projectId = Number(item.ProjectId || 0);
-          if (!projectId || !projectIds.has(projectId)) return;
+    results.forEach((item: any) => {
+      const projectId = Number(item.ProjectId || 0);
+      if (!projectId || !projectIds.has(projectId)) return;
 
-          const inventoryActual = Math.round(Number(item[DASH_SOURCES.fieldInventoryActual]) || 0);
-          if (!Number.isFinite(inventoryActual) || inventoryActual === 0) return;
+      // Parse the JSON string in OBLMonth
+      const oblJson = safeJsonParse(item.OBLMonth);
+      
+      // Read the value for the selected month (e.g., "2026-11")
+      const inventoryActual = Math.round(Number(oblJson[monthKey]) || 0);
+      
+      if (!Number.isFinite(inventoryActual) || inventoryActual === 0) return;
 
-          totalInventory += inventoryActual;
-          projectCount++;
-        });
+      totalInventory += inventoryActual;
+      projectCount++;
+    });
 
-        const averageInventory = projectCount > 0
-          ? Math.round((totalInventory / projectCount) * 100) / 100
-          : 0;
+    const averageInventory = projectCount > 0
+      ? Math.round((totalInventory / projectCount) * 100) / 100
+      : 0;
 
-        console.log(`📊 Inventory: Total=${totalInventory}, Count=${projectCount}, Avg=${averageInventory}`);
+    console.log(`📊 Inventory: Total=${totalInventory}, Count=${projectCount}, Avg=${averageInventory}`);
 
-        return { totalInventory, projectCount, averageInventory };
+    return { totalInventory, projectCount, averageInventory };
 
-      } catch (err) {
-        console.error('❌ Failed to fetch Inventory data:', err);
-        return { totalInventory: 0, projectCount: 0, averageInventory: 0 };
-      }
-    };
+  } catch (err) {
+    console.error('❌ Failed to fetch Inventory data:', err);
+    return { totalInventory: 0, projectCount: 0, averageInventory: 0 };
+  }
+};
         // ============================================================
     // OBL — sum the OBL column from the Inventory list
     // ============================================================
-    const fetchInventoryOblSummary = async (projectIds: Set<number>): Promise<OblSummary> => {
-      try {
-        let totalObl = 0;
-        let projectCount = 0;
-        const oblValues: number[] = [];
+ 
 
-        const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.inventoryList}')/items`
-          + `?$select=Id,ProjectId,OBL&$top=5000`;
+const fetchPrQualityData = async (monthKey: string, projectIds: Set<number>): Promise<{
+  projectCount: number;
+  total: number;
+  submitted: number;
+  notSubmitted: number;
+  approved: number;
+  submittedPercentage: number;
+  approvedPercentage: number;
+  dataQualityAverage: number;
+  nwcTotal: number;
+  nwcAverage: number;
+  statusCounts: { [key: string]: number };
+  relCount: number;
+  tecoCount: number;
+  soCount: number;
+  deliveryCrossed: number;
+  deliveryToCross45Days: number;
+}> => {
+  try {
+    let projectCount = 0;
+    let prTotal = 0;
+    let prSubmitted = 0;
+    let prApproved = 0;
+    let prQualityTotal = 0;
+    let prQualityCount = 0;
+    let nwcTotal = 0;
+    let nwcCount = 0;
+    let deliveryCrossed = 0;
+    let deliveryToCross45Days = 0;
 
-        console.log('📊 Fetching OBL from Inventory list:', url.replace(siteUrl, ''));
-
-        const res = await fetch(url, {
-          headers: { 'Accept': 'application/json;odata=verbose' },
-          credentials: 'same-origin'
-        });
-
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-        const data = await res.json();
-        const results = (data.d && data.d.results) || [];
-
-        results.forEach((item: any) => {
-          const projectId = Number(item.ProjectId || 0);
-          if (!projectId || !projectIds.has(projectId)) return;
-
-          const obl = Math.round(Number(item.OBL) || 0);
-          if (!Number.isFinite(obl) || obl === 0) return;
-
-          totalObl += obl;
-          projectCount++;
-          oblValues.push(obl);
-        });
-
-        const averageObl = projectCount > 0
-          ? Math.round((totalObl / projectCount) * 100) / 100
-          : 0;
-        const highestObl = oblValues.length > 0 ? Math.max(...oblValues) : 0;
-        const lowestObl  = oblValues.length > 0 ? Math.min(...oblValues) : 0;
-
-        console.log(`📊 OBL (Inventory): Total=${totalObl}, Count=${projectCount}, Avg=${averageObl}`);
-
-        return { totalObl, projectCount, averageObl, highestObl, lowestObl };
-
-      } catch (err) {
-        console.error('❌ Failed to fetch OBL data from Inventory:', err);
-        return { totalObl: 0, projectCount: 0, averageObl: 0, highestObl: 0, lowestObl: 0 };
-      }
+    const statusCounts: { [key: string]: number } = {
+      'REL': 0, 'TECO': 0, 'SO': 0, 'CLSD': 0, 'OTHER': 0, 'NA': 0
     };
 
-    const fetchPrQualityData = async (projectIds: Set<number>): Promise<{
-      total: number;
-      submitted: number;
-      notSubmitted: number;
-      approved: number;
-      submittedPercentage: number;
-      approvedPercentage: number;
-      nwcTotal: number;
-      nwcAverage: number;
-      statusCounts: { [key: string]: number };
-      relCount: number;
-      tecoCount: number;
-      soCount: number;
-      clsdCount: number;
-      deliveryCrossed: number;
-      deliveryToCross45Days: number;
-    }> => {
-      try {
-        let prTotal = 0;
-        let prSubmitted = 0;
-        let prApproved = 0;
-        let nwcTotal = 0;
-        let nwcCount = 0;
-        let deliveryCrossed = 0;
-        let deliveryToCross45Days = 0;
+    // ------------------------------------------------------------
+    // Single fetch — ProjectMonth JSON + NWC column
+    // ------------------------------------------------------------
+    const selectString = 'Id,Title,NWC,ProjectMonth';
+    const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.projectList}')/items?$select=${selectString}&$top=5000`;
 
-        const statusCounts: { [key: string]: number } = {
-          'REL': 0, 'TECO': 0, 'SO': 0, 'CLSD': 0, 'OTHER': 0, 'NA': 0
-        };
+    const res = await fetch(url, {
+      headers: { 'Accept': 'application/json;odata=verbose' },
+      credentials: 'same-origin'
+    });
 
-        const norm = (s: string): string => (s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`HTTP ${res.status}: ${errorText.substring(0, 200)}`);
+    }
 
-        const fieldsUrl = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.projectList}')/fields?$select=InternalName,Title,TypeAsString&$top=5000`;
-        const fieldsRes = await fetch(fieldsUrl, {
-          headers: { 'Accept': 'application/json;odata=verbose' },
-          credentials: 'same-origin'
-        });
+    const data = await res.json();
+    const results = (data.d && data.d.results) || [];
 
-        let prStatusField = '';
-        let prSubmissionField = '';
-        let prApprovalField = '';
-        let statusField = '';
-        let nwcField = '';
-        let contractualDeliveryField = '';
-        let revisedDeliveryField = '';
+    // ------------------------------------------------------------
+    // Date helpers (local ISO, no timezone drift)
+    // ------------------------------------------------------------
+    const localISO = (d: Date): string =>
+      `${d.getFullYear()}-` +
+      `${String(d.getMonth() + 1).padStart(2, '0')}-` +
+      `${String(d.getDate()).padStart(2, '0')}`;
 
-        if (fieldsRes.ok) {
-          const fieldsData = await fieldsRes.json();
-          const fields = (fieldsData.d && fieldsData.d.results) || [];
-          const foundFields = new Set<string>();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayISO = localISO(today);
 
-          fields.forEach((f: any) => {
-            const title = (f.Title || '').toLowerCase();
-            const internal = (f.InternalName || '').toLowerCase();
-            const internalNorm = norm(f.InternalName || f.EntityPropertyName || '');
-            const titleNorm = norm(f.Title || '');
-            const fieldName = f.InternalName || f.EntityPropertyName || '';
+    const fortyFiveDaysFromNow = new Date(today);
+    fortyFiveDaysFromNow.setDate(fortyFiveDaysFromNow.getDate() + 45);
+    const fortyFiveDaysISO = localISO(fortyFiveDaysFromNow);
 
-            if (!fieldName || foundFields.has(fieldName)) return;
+    // ------------------------------------------------------------
+    // Iterate rows in scope
+    // ------------------------------------------------------------
+    results.forEach((item: any) => {
+      if (!projectIds.has(item.Id)) return;
+      projectCount++;
 
-            if ((title.includes('pr') || internal.includes('pr')) &&
-              (title.includes('status') || internal.includes('status') || title.includes('quality')) &&
-              !internal.includes('moderation')) {
-              prStatusField = fieldName;
-              foundFields.add(fieldName);
-            }
+      // 1. Parse ProjectMonth JSON for the selected month
+      const projectJson = safeJsonParse(item.ProjectMonth);
+      const monthData = projectJson[monthKey] || {};
 
-            if ((title.includes('submission') || internal.includes('submission')) &&
-              (title.includes('pr') || internal.includes('pr'))) {
-              prSubmissionField = fieldName;
-              foundFields.add(fieldName);
-            }
+      // 2. Status (REL / TECO / SO / CLSD / OTHER / NA)
+      const status = (monthData.status || '').trim().toUpperCase();
+      if (status === 'REL') statusCounts['REL']++;
+      else if (status === 'TECO') statusCounts['TECO']++;
+      else if (status === 'SO') statusCounts['SO']++;
+      else if (status === 'CLSD') statusCounts['CLSD']++;
+      else if (status) statusCounts['OTHER']++;
+      else statusCounts['NA']++;
 
-            if ((title.includes('approval') || internal.includes('approval')) &&
-              (title.includes('pr') || internal.includes('pr')) &&
-              !internal.includes('moderation')) {
-              prApprovalField = fieldName;
-              foundFields.add(fieldName);
-            }
-
-            if ((title === 'status' || internal === 'status') &&
-              !internal.includes('pr') && !internal.includes('submission') &&
-              !internal.includes('approval') && !internal.includes('moderation')) {
-              statusField = fieldName;
-              foundFields.add(fieldName);
-            }
-
-            if ((title.includes('nwc') || internal.includes('nwc')) ||
-              (title.includes('net working capital') || internal.includes('networkingcapital'))) {
-              nwcField = fieldName;
-              foundFields.add(fieldName);
-            }
-
-            if (
-              titleNorm === 'revisedcontractualdeliverydate' ||
-              internalNorm === 'revisedcontractualdeliverydate' ||
-              titleNorm === 'reviseddeliverydate' ||
-              internalNorm === 'reviseddeliverydate' ||
-              titleNorm === 'revisedcontractdeliverydate' ||
-              internalNorm === 'revisedcontractdeliverydate'
-            ) {
-              revisedDeliveryField = fieldName;
-              foundFields.add(fieldName);
-            }
-
-            if (
-              titleNorm === 'contractualdeliverydate' ||
-              internalNorm === 'contractualdeliverydate' ||
-              titleNorm === 'contractdeliverydate' ||
-              internalNorm === 'contractdeliverydate' ||
-              titleNorm === 'deliverydate' ||
-              internalNorm === 'deliverydate'
-            ) {
-              contractualDeliveryField = fieldName;
-              foundFields.add(fieldName);
-            }
-          });
+      // 3. PR Quality (number or numeric string, strips % and commas)
+      const rawPrQuality = monthData.prQuality;
+      if (rawPrQuality !== null && rawPrQuality !== undefined && String(rawPrQuality).trim() !== '') {
+        const qualityValue = typeof rawPrQuality === 'number'
+          ? rawPrQuality
+          : Number(String(rawPrQuality).replace(/,/g, '').replace(/%/g, '').trim());
+        if (Number.isFinite(qualityValue)) {
+          prQualityTotal += qualityValue;
+          prQualityCount++;
         }
-
-        const selectFields = new Set<string>();
-        selectFields.add('Id');
-        selectFields.add('Title');
-        if (prStatusField) selectFields.add(prStatusField);
-        if (prSubmissionField) selectFields.add(prSubmissionField);
-        if (prApprovalField) selectFields.add(prApprovalField);
-        if (statusField) selectFields.add(statusField);
-        if (nwcField) selectFields.add(nwcField);
-        if (contractualDeliveryField) selectFields.add(contractualDeliveryField);
-        if (revisedDeliveryField) selectFields.add(revisedDeliveryField);
-
-        const selectString = Array.from(selectFields).join(',');
-        const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.projectList}')/items?$select=${selectString}&$top=5000`;
-
-        const res = await fetch(url, {
-          headers: { 'Accept': 'application/json;odata=verbose' },
-          credentials: 'same-origin'
-        });
-
-        if (!res.ok) {
-          const errorText = await res.text();
-          throw new Error(`HTTP ${res.status}: ${errorText.substring(0, 200)}`);
-        }
-
-        const data = await res.json();
-        const results = (data.d && data.d.results) || [];
-
-        const localISO = (d: Date): string =>
-          `${d.getFullYear()}-` +
-          `${String(d.getMonth() + 1).padStart(2, '0')}-` +
-          `${String(d.getDate()).padStart(2, '0')}`;
-
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const todayISO = localISO(today);
-
-        const fortyFiveDaysFromNow = new Date(today);
-        fortyFiveDaysFromNow.setDate(fortyFiveDaysFromNow.getDate() + 45);
-        const fortyFiveDaysISO = localISO(fortyFiveDaysFromNow);
-
-        const readDateField = (row: any, f: string): string => {
-          if (!f) return '';
-          const raw = row[f];
-          if (raw === null || raw === undefined) return '';
-          const s = String(raw).trim();
-          if (s === '' || s === 'null' || s === 'undefined') return '';
-          return s;
-        };
-
-        const resolveDeliveryDate = (row: any): string => {
-          const revised = readDateField(row, revisedDeliveryField);
-          if (revised) return revised;
-          return readDateField(row, contractualDeliveryField);
-        };
-
-        results.forEach((item: any) => {
-          if (!projectIds.has(item.Id)) return;
-
-          let status = '';
-          if (statusField && item[statusField] !== undefined) {
-            status = (item[statusField] || '').trim().toUpperCase();
-          }
-
-          if (status === 'REL') statusCounts['REL']++;
-          else if (status === 'TECO') statusCounts['TECO']++;
-          else if (status === 'SO') statusCounts['SO']++;
-          else if (status === 'CLSD') statusCounts['CLSD']++;
-          else if (status) statusCounts['OTHER']++;
-          else statusCounts['NA']++;
-
-          const prApplicable = (status === 'REL' || status === 'TECO');
-
-          if (prApplicable) {
-            prTotal++;
-
-            let isSubmitted = false;
-            if (prSubmissionField && item[prSubmissionField] !== undefined) {
-              const s = (item[prSubmissionField] || '').toLowerCase().trim();
-              if (s === 'submitted' || s === 'approved' || s === 'yes' || s === 'true' || s === '1') {
-                isSubmitted = true;
-              }
-            } else if (prStatusField && item[prStatusField] !== undefined) {
-              const s = (item[prStatusField] || '').toLowerCase().trim();
-              if (s === 'submitted' || s === 'approved' || s === 'yes' || s === 'true' || s === '1') {
-                isSubmitted = true;
-              }
-            }
-            if (isSubmitted) prSubmitted++;
-
-            let isApproved = false;
-            if (prApprovalField && item[prApprovalField] !== undefined) {
-              const s = (item[prApprovalField] || '').toLowerCase().trim();
-              if (s === 'approved' || s === 'yes' || s === 'true' || s === '1' || s === '2') {
-                isApproved = true;
-              }
-            } else if (prStatusField && item[prStatusField] !== undefined) {
-              const s = (item[prStatusField] || '').toLowerCase().trim();
-              if (s === 'approved' || s === 'yes' || s === 'true' || s === '2') {
-                isApproved = true;
-              }
-            }
-            if (isApproved) prApproved++;
-          }
-
-          if (nwcField && item[nwcField] !== undefined) {
-            let nwcValue = item[nwcField];
-            if (nwcValue !== null && nwcValue !== '') {
-              if (typeof nwcValue === 'string') {
-                nwcValue = parseFloat(nwcValue.replace(/,/g, '').replace(/[^0-9.]/g, ''));
-              }
-              if (typeof nwcValue === 'number' && !isNaN(nwcValue)) {
-                nwcTotal += nwcValue;
-                nwcCount++;
-              }
-            }
-          }
-
-          const deliveryRaw = resolveDeliveryDate(item);
-          if (deliveryRaw) {
-            const delivery = new Date(deliveryRaw);
-            if (!isNaN(delivery.getTime())) {
-              delivery.setHours(0, 0, 0, 0);
-              const deliveryISO = localISO(delivery);
-
-              if (deliveryISO < todayISO) deliveryCrossed++;
-              if (deliveryISO >= todayISO && deliveryISO <= fortyFiveDaysISO) deliveryToCross45Days++;
-            }
-          }
-        });
-
-        const prNotSubmitted = prTotal - prSubmitted;
-        const submittedPercentage = prTotal > 0 ? (prSubmitted / prTotal) * 100 : 0;
-        const approvedPercentage = prTotal > 0 ? (prApproved / prTotal) * 100 : 0;
-        const nwcAverage = nwcCount > 0 ? nwcTotal / nwcCount : 0;
-
-        return {
-          total: prTotal,
-          submitted: prSubmitted,
-          notSubmitted: prNotSubmitted,
-          approved: prApproved,
-          submittedPercentage,
-          approvedPercentage,
-          nwcTotal,
-          nwcAverage,
-          statusCounts,
-          relCount: statusCounts['REL'] || 0,
-          tecoCount: statusCounts['TECO'] || 0,
-          soCount: statusCounts['SO'] || 0,
-          clsdCount: statusCounts['CLSD'] || 0,
-          deliveryCrossed,
-          deliveryToCross45Days
-        };
-
-      } catch (err) {
-        console.error('❌ Failed to fetch PR Quality data:', err);
-        return {
-          total: 0, submitted: 0, notSubmitted: 0, approved: 0,
-          submittedPercentage: 0, approvedPercentage: 0,
-          nwcTotal: 0, nwcAverage: 0,
-          statusCounts: { REL: 0, TECO: 0, SO: 0, CLSD: 0, OTHER: 0, NA: 0 },
-          relCount: 0, tecoCount: 0, soCount: 0, clsdCount: 0,
-          deliveryCrossed: 0, deliveryToCross45Days: 0
-        };
       }
+
+      // 4. PR Submission / Approval (only for REL / TECO)
+      const prApplicable = (status === 'REL' || status === 'TECO');
+      if (prApplicable) {
+        prTotal++;
+
+        const subStr = (monthData.prSubmissionStatus || '').toLowerCase().trim();
+        if (['submitted', 'approved', 'yes', 'true', '1'].includes(subStr)) {
+          prSubmitted++;
+        }
+
+        const appStr = (monthData.prApprovalStatus || '').toLowerCase().trim();
+        if (['approved', 'yes', 'true', '1', '2'].includes(appStr)) {
+          prApproved++;
+        }
+      }
+
+      // 5. NWC column (top-level list field, not JSON)
+     // ✅ Prefer per-month NWC from ProjectMonth JSON; fall back to the flat NWC column
+ 
+
+const rawNwc = (monthData as any).nwc;
+let monthNwc: number = 0;                       // ✅ fresh, number-only
+if (rawNwc !== undefined && rawNwc !== null && String(rawNwc).trim() !== '') {
+  const parsed = typeof rawNwc === 'number'
+    ? rawNwc
+    : parseFloat(String(rawNwc).replace(/,/g, ''));
+  if (!isNaN(parsed)) monthNwc = parsed;
+}
+nwcTotal += monthNwc;
+nwcCount++;
+
+      // 6. Delivery dates from JSON (revised overrides contractual)
+      const revisedStr = monthData.revisedContractualDeliveryDate;
+      const contractualStr = monthData.contractualDeliveryDate;
+      const deliveryRaw = revisedStr || contractualStr;
+
+      if (deliveryRaw) {
+        const delivery = new Date(deliveryRaw);
+        if (!isNaN(delivery.getTime())) {
+          delivery.setHours(0, 0, 0, 0);
+          const deliveryISO = localISO(delivery);
+
+          if (deliveryISO < todayISO) deliveryCrossed++;
+          if (deliveryISO >= todayISO && deliveryISO <= fortyFiveDaysISO) {
+            deliveryToCross45Days++;
+          }
+        }
+      }
+    });
+
+    // ------------------------------------------------------------
+    // Derived metrics
+    // ------------------------------------------------------------
+    const prNotSubmitted = prTotal - prSubmitted;
+    const submittedPercentage = prTotal > 0 ? (prSubmitted / prTotal) * 100 : 0;
+    const approvedPercentage = prTotal > 0 ? (prApproved / prTotal) * 100 : 0;
+    const dataQualityAverage = prQualityCount > 0 ? prQualityTotal / prQualityCount : 0;
+    const nwcAverage = nwcCount > 0 ? nwcTotal / nwcCount : 0;
+
+    return {
+      projectCount,
+      total: prTotal,
+      submitted: prSubmitted,
+      notSubmitted: prNotSubmitted,
+      approved: prApproved,
+      submittedPercentage,
+      approvedPercentage,
+      dataQualityAverage,
+      nwcTotal,
+      nwcAverage,
+      statusCounts,
+      relCount: statusCounts['REL'] || 0,
+      tecoCount: statusCounts['TECO'] || 0,
+      soCount: statusCounts['SO'] || 0,
+      deliveryCrossed,
+      deliveryToCross45Days
     };
 
+  } catch (err) {
+    console.error('❌ Failed to fetch PR Quality data:', err);
+    return {
+      projectCount: 0,
+      total: 0,
+      submitted: 0,
+      notSubmitted: 0,
+      approved: 0,
+      submittedPercentage: 0,
+      approvedPercentage: 0,
+      dataQualityAverage: 0,
+      nwcTotal: 0,
+      nwcAverage: 0,
+      statusCounts: { REL: 0, TECO: 0, SO: 0, CLSD: 0, OTHER: 0, NA: 0 },
+      relCount: 0,
+      tecoCount: 0,
+      soCount: 0,
+      deliveryCrossed: 0,
+      deliveryToCross45Days: 0
+    };
+  }
+}; 
     const fetchProcurementData = async (projectIds: Set<number>): Promise<{ [key: string]: number }> => {
       try {
         const statusCounts: { [key: string]: number } = {
@@ -1451,46 +1388,46 @@ const dashboardScript = (): void => {
       }
     };
 
-    const fetchSeibiesData = async (projectIds: Set<number>): Promise<{
-      totalBies: number;
-      projectCount: number;
-      averageBies: number;
-    }> => {
-      try {
-        let totalBies = 0;
-        let projectCount = 0;
+  // ✅ CHANGE 1 — accept monthKey, read the monthly JSON
+const fetchSeibiesData = async (
+  monthKey: string,               // ← NEW
+  projectIds: Set<number>
+): Promise<{ totalBies: number; totalSei: number }> => {
+  try {
+    let totalBies = 0;
+    let totalSei = 0;
 
-        const url = `${siteUrl}/_api/web/lists/getbytitle('SEIBIES')/items?$select=Id,OBL,ProjectId&$top=5000`;
-        const res = await fetch(url, {
-          headers: { 'Accept': 'application/json;odata=verbose' },
-          credentials: 'same-origin'
-        });
+    // Read the monthly JSON column (adjust InternalName if yours differs)
+    const url = `${siteUrl}/_api/web/lists/getbytitle('SEIBIES')/items?$select=Id,ProjectId,OBLMonth&$top=5000`;
+    const res = await fetch(url, {
+      headers: { 'Accept': 'application/json;odata=verbose' },
+      credentials: 'same-origin'
+    });
 
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        const data = await res.json();
-        const results = (data.d && data.d.results) || [];
+    const data = await res.json();
+    const results = (data.d && data.d.results) || [];
 
-        results.forEach((item: any) => {
-          const projectId = Number(item.ProjectId || 0);
-          if (!projectId || !projectIds.has(projectId)) return;
+    results.forEach((item: any) => {
+      const projectId = Number(item.ProjectId || 0);
+      if (!projectId || !projectIds.has(projectId)) return;
 
-          const obl = Math.round(Number(item.OBL) || 0);
-          if (!Number.isFinite(obl) || obl === 0) return;
+      // Parse the JSON and pull the selected month
+      const oblJson = safeJsonParse(item.OBLMonth);
+      const obl = Math.round(Number(oblJson[monthKey]) || 0);
+      if (!Number.isFinite(obl) || obl === 0) return;
 
-          totalBies += obl;
-          projectCount++;
-        });
+      if (obl < 0) totalBies += obl;
+      else totalSei += obl;
+    });
 
-        const averageBies = projectCount > 0 ? Math.round((totalBies / projectCount) * 100) / 100 : 0;
-
-        return { totalBies, projectCount, averageBies };
-
-      } catch (err) {
-        console.error('❌ Failed to fetch SEIBIES data:', err);
-        return { totalBies: 0, projectCount: 0, averageBies: 0 };
-      }
-    };
+    return { totalBies, totalSei };
+  } catch (err) {
+    console.error('❌ Failed to fetch SEIBIES data:', err);
+    return { totalBies: 0, totalSei: 0 };
+  }
+};
 
     // ============================================================
     // PROJECT FILTERING HELPERS
@@ -1507,32 +1444,37 @@ const dashboardScript = (): void => {
       return out;
     };
 
-    const selProjects = (): any[] => {
-      let list = scopedProjects;
-      if (pmValue !== '__all__') {
-        const opt = pmOpts.find(o => o.value === pmValue);
-        const id = opt ? Number(opt.value.split('::')[0]) : NaN;
-        list = list.filter(p => {
-          const pm: any = p.ProjectManager;
-          const sameId = pm && pm.Id !== undefined && Number(pm.Id) === id;
-          const sameTitle = pm && pm.Title && opt
-            ? pm.Title.toLowerCase().trim() === opt.label.toLowerCase().trim()
-            : false;
-          return sameId || sameTitle;
-        });
-      }
-      if (prValue !== '__all__') {
-        list = list.filter(p => (p.ProjectReference || '') === prValue);
-      }
-      return list;
-    };
+ const selProjects = (): any[] => {
+  let list = scopedProjects;
+  
+  // If a specific PM is selected in the dropdown
+  if (pmValue !== '__all__') {
+    const opt = pmOpts.find(o => o.value === pmValue);
+    const id = opt ? Number(opt.value.split('::')[0]) : NaN;
+    list = list.filter(p => {
+      const pm: any = p.ProjectManager;
+      const sameId = pm && pm.Id !== undefined && Number(pm.Id) === id;
+      const sameTitle = pm && pm.Title && opt
+        ? pm.Title.toLowerCase().trim() === opt.label.toLowerCase().trim()
+        : false;
+      return sameId || sameTitle;
+    });
+  }
+  
+  // If a specific Project Reference is selected
+  if (prValue !== '__all__') {
+    list = list.filter(p => (p.ProjectReference || '') === prValue);
+  }
+  
+  return list;
+};
 
-    const getSelectedProjectIds = (): Set<number> => {
-      const selected = selProjects();
-      const ids = new Set<number>();
-      selected.forEach((p: any) => { if (p.Id) ids.add(Number(p.Id)); });
-      return ids;
-    };
+const getSelectedProjectIds = (): Set<number> => {
+  const selected = selProjects();
+  const ids = new Set<number>();
+  selected.forEach((p: any) => { if (p.Id) ids.add(Number(p.Id)); });
+  return ids;
+};
 
     const prApplicableInScope = (
       ids: Set<number>,
@@ -1547,228 +1489,324 @@ const dashboardScript = (): void => {
     // ============================================================
     // MAIN REFRESH FUNCTION
     // ============================================================
-    const refreshBoard = async (): Promise<void> => {
-      const monthSelect = byId<HTMLSelectElement>('dsMonth');
-      const monthKey = monthSelect ? monthSelect.value : currentMonthKey;
-      const isoDate = todayIso;
+   const refreshBoard = async (): Promise<void> => {
+  const monthSelect = byId<HTMLSelectElement>('dsMonth');
+  
+  const monthKey = monthSelect ? monthSelect.value : currentMonthKey;
+  // const prevMonthLabel = monthLabelOf(previousMonthKeyOf(monthKey));
+  const isoDate = todayIso;
 
-      setTxt('dsMetaPeriod', monthLabelOf(monthKey));
-      setTxt('dsMetaAsOn', fmtAsOn(isoDate));
-      setTxt('dsRevMonthTitle', `Month — ${monthLabelOf(monthKey)}`);
+  setTxt('dsMetaPeriod', monthLabelOf(monthKey));
+  setTxt('dsMetaAsOn', fmtAsOn(isoDate));
+  setTxt('dsRevMonthTitle', `Month — ${monthLabelOf(monthKey)}`);
+  setTxt('dsPrQualityMonth', monthLabelOf(currentMonthKey));
 
-      const [, selectedMonth] = monthKey.split('-').map(Number);
-      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      const selectedMonthName = monthNames[selectedMonth - 1];
+  const [, selectedMonth] = monthKey.split('-').map(Number);
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const selectedMonthName = monthNames[selectedMonth - 1];
 
-      allById('dsYtdTitle').forEach(el => {
-        el.textContent = `YTD — Till ${selectedMonthName}`;
-      });
+  allById('dsYtdTitle').forEach(el => {
+    el.textContent = `YTD — Till ${selectedMonthName}`;
+  });
 
-      const projectIds = getSelectedProjectIds();
+  const projectIds = getSelectedProjectIds();
 
-      if (projectIds.size === 0) {
-        setTxt('dsOblTotal', '99');
-        setTxt('dsOblDelta', '99');
-        setTxt('dsRevenuePlan', '99');
-        setTxt('dsRevenueActual', '99');
-        setTxt('dsRevenuePercentage', '99');
-        setStyle('dsRevenueBar', 'width', '99%');
-        setTxt('dsCollectionPlan', '99');
-        setTxt('dsCollectionActual', '99');
-        setTxt('dsCollectionPercentage', '99');
-        setStyle('dsCollectionBar', 'width', '99%');
-        setTxt('dsNwcValue', '99');
-        setTxt('dsInventoryValue', '99');
-        setTxt('dsTotalProjectsCard', '99');
-        setTxt('dsProjectsDelta', '99');
-        setTxt('dsRelCount', '99');
-        setTxt('dsTecoCount', '99');
-        setTxt('dsSoCount', '99');
-        setTxt('dsClsdCount', '99');
-        setTxt('dsBiesValue', '99');
-        setTxt('dsOtherCount', '99');
-        setTxt('dsTotalProjects', '99');
-        setTxt('dsSubmittedProjects', '99');
-        setTxt('dsNotSubmittedProjects', '99');
-        setTxt('dsApprovedProjects', '99');
-        setTxt('dsDeliveryCrossed', '99');
-        setTxt('dsDeliveryToCross', '99');
-        setTxt('dsSubmittedPct', '99');
-        setTxt('dsNotSubmittedPct', '99');
-        setTxt('dsApprovedPct', '99');
-        setStyle('dsSubmittedBar', 'width', '99%');
-        setStyle('dsNotSubmittedBar', 'width', '99%');
-        setStyle('dsApprovedBar', 'width', '99%');
+  // ------------------------------------------------------------
+  // Empty-scope branch — no delta data available, show placeholders
+  // ------------------------------------------------------------
+  if (projectIds.size === 0) {
+    setTxt('dsOblTotal', '99');
+    setTxt('dsOblDelta', '—');              // ✅ no reference to oblSummary
+    setTxt('dsReceivablesDelta', '—');      // ✅ no reference to receivablesData
+    setTxt('dsTotalReceivables', '99');
+    // ... all your other '99' placeholders unchanged ...
+    setTxt('dsRevenuePlan', '99');
+    setTxt('dsRevenueActual', '99');
+    setTxt('dsRevenuePercentage', '99');
+    setStyle('dsRevenueBar', 'width', '99%');
+    setTxt('dsCollectionPlan', '99');
+    setTxt('dsCollectionActual', '99');
+    setTxt('dsCollectionPercentage', '99');
+    setStyle('dsCollectionBar', 'width', '99%');
+    setTxt('dsNwcValue', '99');
+    setTxt('dsInventoryValue', '99');
+    setTxt('dsTotalProjectsCard', '99');
+    setTxt('dsRelCount', '99');
+    setTxt('dsTecoCount', '99');
+    setTxt('dsSoCount', '99');
+    setTxt('dsBiesValue', '99');
+    setTxt('dsSeiValue', '99');
+    setTxt('dsOtherCount', '99');
+    setTxt('dsTotalProjects', '99');
+    setTxt('dsSubmittedProjects', '99');
+    setTxt('dsNotSubmittedProjects', '99');
+    setTxt('dsApprovedProjects', '99');
+    setTxt('dsDeliveryCrossed', '99');
+    setTxt('dsDeliveryToCross', '99');
+    setTxt('dsSubmittedPct', '99');
+    setTxt('dsNotSubmittedPct', '99');
+    setTxt('dsApprovedPct', '99');
+    setTxt('dsPrQualityAverage', '99');
+    setStyle('dsSubmittedBar', 'width', '99%');
+    setStyle('dsNotSubmittedBar', 'width', '99%');
+    setStyle('dsApprovedBar', 'width', '99%');
+    setStyle('dsPrQualityBar', 'width', '99%');
 
-        const statusIds = ['dsRfqPending', 'dsOfferPending', 'dsTcPending', 'dsOrderClosurePending',
-          'dsPrPending', 'dsPoPending', 'dsDocApprovalPending', 'dsMfcPending',
-          'dsInspectionPending', 'dsDispatchPending', 'dsDeliveryPending', 'dsDeliveredCount'];
-        statusIds.forEach(id => setTxt(id, '99'));
+    const statusIds = ['dsRfqPending', 'dsOfferPending', 'dsTcPending', 'dsOrderClosurePending',
+      'dsPrPending', 'dsPoPending', 'dsDocApprovalPending', 'dsMfcPending',
+      'dsInspectionPending', 'dsDispatchPending', 'dsDeliveryPending', 'dsDeliveredCount'];
+    statusIds.forEach(id => setTxt(id, '99'));
 
-        const docIds = ['dsTotalDocuments', 'dsNotSubmittedDocs', 'dsNotApprovedDocs',
-          'dsRevisedDocs', 'dsApprovedDocs', 'dsRejectedDocs', 'dsRetainedDocs'];
-        docIds.forEach(id => setTxt(id, '99'));
-        return;
-      }
+    const docIds = ['dsTotalDocuments', 'dsNotSubmittedDocs', 'dsNotApprovedDocs',
+      'dsRevisedDocs', 'dsApprovedDocs', 'dsRejectedDocs', 'dsRetainedDocs'];
+    docIds.forEach(id => setTxt(id, '99'));
+    return;
+  }
 
-      const [
-        oblSummary,
-        revenueData,
-        collectionData,
-        receivablesData,
-        prQuality,
-        procurementData,
-        dcsData,
-        seibiesData,
-        inventoryData
-      ] = await Promise.all([
-        fetchOblSummary(projectIds),
-        fetchRevenueData(monthKey, projectIds),
-        fetchCollectionData(monthKey, projectIds),
-        fetchReceivablesData(projectIds),
-        fetchPrQualityData(projectIds),
-        fetchProcurementData(projectIds),
-        fetchDCSData(projectIds),
-        fetchSeibiesData(projectIds),
-        fetchInventoryData(projectIds),
-        fetchInventoryOblSummary(projectIds)
-        
-      ]);
+  // ------------------------------------------------------------
+  // Fetch all sources in parallel
+  // ------------------------------------------------------------
+  const [
+    oblSummary,
+    revenueData,
+    collectionData,
+    receivablesData,
+    prQuality,
+    procurementData,
+    dcsData,
+    seibiesData,
+    inventoryData
+  ] = await Promise.all([
+    fetchOblSummary(monthKey, projectIds),
+    fetchRevenueData(monthKey, projectIds),
+    fetchCollectionData(monthKey, projectIds),
+    fetchReceivablesData(monthKey, projectIds),
+    fetchPrQualityData(monthKey, projectIds),
+    fetchProcurementData(projectIds),
+    fetchDCSData(projectIds),
+    fetchSeibiesData(monthKey, projectIds),
+    fetchInventoryData(monthKey, projectIds)
+  ]);
 
-      setTxt('dsOblTotal', formatNumber(oblSummary.totalObl));
-      setTxt('dsRevenuePlan', formatNumber(revenueData.plan));
-      setTxt('dsRevenueActual', formatNumber(revenueData.actual));
-      setTxt('dsRevenuePercentage', formatPercentage(revenueData.percentage));
-      setStyle('dsRevenueBar', 'width', `${Math.min(revenueData.percentage, 100)}%`);
+  // ------------------------------------------------------------
+  // OBL + delta (declared AFTER oblSummary exists)
+  // ------------------------------------------------------------
+  setTxt('dsOblTotal', formatNumber(oblSummary.totalObl));
+  const oblDeltaText =
+    `${oblSummary.oblChangePercentage >= 0 ? '▲' : '▼'} ` +
+    `${Math.abs(oblSummary.oblChangePercentage).toFixed(2)}% vs ${monthLabelOf(previousMonthKeyOf(monthKey))}`;
+  setTxt('dsOblDelta', oblDeltaText);
 
-      setTxt('dsCollectionPlan', formatNumber(collectionData.plan));
-      setTxt('dsCollectionActual', formatNumber(collectionData.actual));
-      setTxt('dsCollectionPercentage', formatPercentage(collectionData.percentage));
-      setStyle('dsCollectionBar', 'width', `${Math.min(collectionData.percentage, 100)}%`);
+  const oblEl = byId('dsOblDelta');
+  if (oblEl) {
+    oblEl.classList.remove('red', 'green', 'muted');
+    oblEl.classList.add(oblSummary.oblChangePercentage >= 0 ? 'green' : 'red');
+  }
 
-      setTxt('dsYtdRevenuePlan', formatNumber(revenueData.ytdPlan));
-      setTxt('dsYtdRevenueActual', formatNumber(revenueData.ytdActual));
-      setTxt('dsYtdRevenuePercentage', formatPercentage(revenueData.ytdPercentage));
-      setStyle('dsYtdRevenueBar', 'width', `${Math.min(revenueData.ytdPercentage, 100)}%`);
+  // ------------------------------------------------------------
+  // Receivables + delta (declared AFTER receivablesData exists)
+  // ------------------------------------------------------------
+  setTxt('dsTotalReceivables', formatNumber(receivablesData.totalReceivables));
+  const recvDeltaText =
+    `${receivablesData.receivablesChangePercentage >= 0 ? '▲' : '▼'} ` +
+    `${Math.abs(receivablesData.receivablesChangePercentage).toFixed(2)}% vs ${monthLabelOf(previousMonthKeyOf(monthKey))}`;
+  setTxt('dsReceivablesDelta', recvDeltaText);
 
-      setTxt('dsYtdCollectionPlan', formatNumber(collectionData.ytdPlan));
-      setTxt('dsYtdCollectionActual', formatNumber(collectionData.ytdActual));
-      setTxt('dsYtdCollectionPercentage', formatPercentage(collectionData.ytdPercentage));
-      setStyle('dsYtdCollectionBar', 'width', `${Math.min(collectionData.ytdPercentage, 100)}%`);
+  const recvEl = byId('dsReceivablesDelta');
+  if (recvEl) {
+    recvEl.classList.remove('red', 'green', 'muted');
+    recvEl.classList.add(receivablesData.receivablesChangePercentage >= 0 ? 'green' : 'red');
+  }
+ 
+     // ---- Revenue Month ----
+  const revPlan = revenueData.plan;
+  const revActual = revenueData.actual;
 
-      const ytdRevenueBar = byId<HTMLElement>('dsYtdRevenueBar');
-      if (ytdRevenueBar) {
-        const parent = ytdRevenueBar.closest('.bar');
-        if (parent) {
-          parent.className = 'bar';
-          if (revenueData.ytdPercentage > 75) parent.classList.add('high');
-          else if (revenueData.ytdPercentage > 50) parent.classList.add('mid');
-          else parent.classList.add('low');
-        }
-      }
+  setTxt('dsRevenuePlan', formatNumber(revPlan));
+  setTxt('dsRevenueActual', formatNumber(revActual));
 
-      const ytdCollectionBar = byId<HTMLElement>('dsYtdCollectionBar');
-      if (ytdCollectionBar) {
-        const parent = ytdCollectionBar.closest('.bar');
-        if (parent) {
-          parent.className = 'bar';
-          if (collectionData.ytdPercentage > 75) parent.classList.add('high');
-          else if (collectionData.ytdPercentage > 50) parent.classList.add('mid');
-          else parent.classList.add('low');
-        }
-      }
+  // ✅ Plan = 0 ⇒ 100 %
+  const revPct = revPlan > 0 ? revenueData.percentage : 100;
+  setStyle('dsRevenueBar', 'width', `${Math.min(revPct, 100)}%`);
 
-      setTxt('dsTotalReceivables', formatNumber(receivablesData.totalReceivables));
-      setTxt('dsNormalValue', formatNumber(receivablesData.normal));
-      setTxt('dsNormalDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.normal / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
-      setTxt('dsNormalOverDueValue', formatNumber(receivablesData.normalOverDue));
-      setTxt('dsNormalOverDueDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.normalOverDue / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
-      setTxt('dsGstTdsValue', formatNumber(receivablesData.gstTds));
-      setTxt('dsGstTdsDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.gstTds / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
-      setTxt('dsTotalOverDueValue', formatNumber(receivablesData.totalOverDue));
-      setTxt('dsTotalOverDueDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.totalOverDue / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
-      setTxt('dsRetentionValue', formatNumber(receivablesData.retention));
-      setTxt('dsRetentionDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.retention / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
-      setTxt('dsRetentionOverDueValue', formatNumber(receivablesData.retentionOverDue));
-      setTxt('dsRetentionOverDueDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.retentionOverDue / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
-      setTxt('dsItTdsOthersValue', formatNumber(receivablesData.itTdsOthers));
-      setTxt('dsItTdsOthersDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.itTdsOthers / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
-      setTxt('dsTotalRetentionValue', formatNumber(receivablesData.totalRetention));
-      setTxt('dsTotalRetentionDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.totalRetention / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
-      setTxt('dsReceivablesDelta', `(+${(Math.random() * 20 + 5).toFixed(2)}%)`);
+  const revPctEl = byId('dsRevenuePercentage');
+  if (revPctEl) {
+    const isAchieved = revActual >= revPlan;
+    revPctEl.textContent = `${isAchieved ? '▲' : '▼'} ${formatPercentage(Math.abs(revPct))} (Plan vs Actual)`;
+    revPctEl.style.color = isAchieved ? '#28a745' : '#dc3545';
+  }
 
-      const formatCurrency = (num: number): string => `₹${Math.round(num).toLocaleString('en-US')}`;
-      setTxt('dsBiesValue', formatCurrency(seibiesData.totalBies));
-      setTxt('dsNwcValue', formatCurrency(prQuality.nwcTotal));
-      setTxt('dsInventoryValue', formatCurrency(inventoryData.totalInventory));
+  // ---- Collection Month ----
+  const colPlan = collectionData.plan;
+  const colActual = collectionData.actual;
 
-      setTxt('dsTotalProjectsCard', formatNumber(prQuality.total));
-      setTxt('dsProjectsDelta', '+2.5%');
-      setTxt('dsRelCount', formatNumber(prQuality.relCount));
-      setTxt('dsTecoCount', formatNumber(prQuality.tecoCount));
-      setTxt('dsSoCount', formatNumber(prQuality.soCount));
-      setTxt('dsClsdCount', formatNumber(prQuality.clsdCount));
-      setTxt('dsOtherCount', formatNumber(prQuality.statusCounts?.OTHER || 0));
+  setTxt('dsCollectionPlan', formatNumber(colPlan));
+  setTxt('dsCollectionActual', formatNumber(colActual));
 
-      if (prApplicableInScope(projectIds, prQuality.statusCounts)) {
-        const total = prQuality.total || 0;
-        const submitted = prQuality.submitted || 0;
-        const notSubmitted = prQuality.notSubmitted || 0;
-        const approved = prQuality.approved || 0;
+  // ✅ Plan = 0 ⇒ 100 %
+  const colPct = colPlan > 0 ? collectionData.percentage : 100;
+  setStyle('dsCollectionBar', 'width', `${Math.min(colPct, 100)}%`);
 
-        setTxt('dsTotalProjects', formatNumber(total));
-        setTxt('dsSubmittedProjects', formatNumber(submitted));
-        setTxt('dsNotSubmittedProjects', formatNumber(notSubmitted));
-        setTxt('dsApprovedProjects', formatNumber(approved));
+  const colPctEl = byId('dsCollectionPercentage');
+  if (colPctEl) {
+    const isAchieved = colActual >= colPlan;
+    colPctEl.textContent = `${isAchieved ? '▲' : '▼'} ${formatPercentage(Math.abs(colPct))} (Plan vs Actual)`;
+    colPctEl.style.color = isAchieved ? '#28a745' : '#dc3545';
+  }
 
-        const submittedPct = total > 0 ? (submitted / total) * 100 : 0;
-        const notSubmittedPct = total > 0 ? (notSubmitted / total) * 100 : 0;
-        const approvedPct = total > 0 ? (approved / total) * 100 : 0;
+  // ---- Revenue YTD ----
+  setTxt('dsYtdRevenuePlan', formatNumber(revenueData.ytdPlan));
+  setTxt('dsYtdRevenueActual', formatNumber(revenueData.ytdActual));
 
-        setTxt('dsSubmittedPct', `${submittedPct.toFixed(2)}%`);
-        setTxt('dsNotSubmittedPct', `${notSubmittedPct.toFixed(2)}%`);
-        setTxt('dsApprovedPct', `${approvedPct.toFixed(2)}%`);
+  // ✅ Plan = 0 ⇒ 100 %
+  const revYtdPct = revenueData.ytdPlan > 0 ? revenueData.ytdPercentage : 100;
+  setStyle('dsYtdRevenueBar', 'width', `${Math.min(revYtdPct, 100)}%`);
 
-        setStyle('dsSubmittedBar', 'width', `${Math.min(submittedPct, 100)}%`);
-        setStyle('dsNotSubmittedBar', 'width', `${Math.min(notSubmittedPct, 100)}%`);
-        setStyle('dsApprovedBar', 'width', `${Math.min(approvedPct, 100)}%`);
-      } else {
-        setTxt('dsTotalProjects', '99');
-        setTxt('dsSubmittedProjects', '99');
-        setTxt('dsNotSubmittedProjects', '99');
-        setTxt('dsApprovedProjects', '99');
-        setTxt('dsSubmittedPct', '99');
-        setTxt('dsNotSubmittedPct', '99');
-        setTxt('dsApprovedPct', '99');
-        setStyle('dsSubmittedBar', 'width', '99%');
-        setStyle('dsNotSubmittedBar', 'width', '99%');
-        setStyle('dsApprovedBar', 'width', '99%');
-      }
+  const revYtdPctEl = byId('dsYtdRevenuePercentage');
+  if (revYtdPctEl) {
+    const isAchieved = revenueData.ytdActual >= revenueData.ytdPlan;
+    revYtdPctEl.textContent = `${isAchieved ? '▲' : '▼'} ${formatPercentage(Math.abs(revYtdPct))} (Plan vs Actual)`;
+    revYtdPctEl.style.color = isAchieved ? '#28a745' : '#dc3545';
+  }
 
-      setTxt('dsDeliveryCrossed', formatNumber(prQuality.deliveryCrossed));
-      setTxt('dsDeliveryToCross', formatNumber(prQuality.deliveryToCross45Days));
+  // ---- Collection YTD ----
+  setTxt('dsYtdCollectionPlan', formatNumber(collectionData.ytdPlan));
+  setTxt('dsYtdCollectionActual', formatNumber(collectionData.ytdActual));
 
-      setTxt('dsRfqPending', formatNumber(procurementData['RFQ Pending'] || 0));
-      setTxt('dsOfferPending', formatNumber(procurementData['Offer Pending'] || 0));
-      setTxt('dsTcPending', formatNumber(procurementData['TC pending'] || 0));
-      setTxt('dsOrderClosurePending', formatNumber(procurementData['Order Closure pending'] || 0));
-      setTxt('dsPrPending', formatNumber(procurementData['PR pending'] || 0));
-      setTxt('dsPoPending', formatNumber(procurementData['PO pending'] || 0));
-      setTxt('dsDocApprovalPending', formatNumber(procurementData['Document Approval Pending'] || 0));
-      setTxt('dsMfcPending', formatNumber(procurementData['MFC Pending'] || 0));
-      setTxt('dsInspectionPending', formatNumber(procurementData['Inspection Pending'] || 0));
-      setTxt('dsDispatchPending', formatNumber(procurementData['Dispatch Pending'] || 0));
-      setTxt('dsDeliveryPending', formatNumber(procurementData['Delivery Pending'] || 0));
-      setTxt('dsDeliveredCount', formatNumber(procurementData['Delivered'] || 0));
+  // ✅ Plan = 0 ⇒ 100 %
+  const colYtdPct = collectionData.ytdPlan > 0 ? collectionData.ytdPercentage : 100;
+  setStyle('dsYtdCollectionBar', 'width', `${Math.min(colYtdPct, 100)}%`);
 
-      setTxt('dsTotalDocuments', formatNumber(dcsData.totalDocuments));
-      setTxt('dsNotSubmittedDocs', formatNumber(dcsData.notSubmitted));
-      setTxt('dsNotApprovedDocs', formatNumber(dcsData.notApproved));
-      setTxt('dsRevisedDocs', formatNumber(dcsData.revisedNotSubmitted));
-      setTxt('dsApprovedDocs', formatNumber(dcsData.approved));
-      setTxt('dsRejectedDocs', formatNumber(dcsData.rejected));
-      setTxt('dsRetainedDocs', formatNumber(dcsData.retained));
-    };
+  const colYtdPctEl = byId('dsYtdCollectionPercentage');
+  if (colYtdPctEl) {
+    const isAchieved = collectionData.ytdActual >= collectionData.ytdPlan;
+    colYtdPctEl.textContent = `${isAchieved ? '▲' : '▼'} ${formatPercentage(Math.abs(colYtdPct))} (Plan vs Actual)`;
+    colYtdPctEl.style.color = isAchieved ? '#28a745' : '#dc3545';
+  }
+    
+       
+          
+  const ytdRevenueBar = byId<HTMLElement>('dsYtdRevenueBar');
+  if (ytdRevenueBar) {
+    const parent = ytdRevenueBar.closest('.bar');      
+    if (parent) {
+      parent.className = 'bar';
+      if (revenueData.ytdPercentage > 75) parent.classList.add('high');
+      else if (revenueData.ytdPercentage > 50) parent.classList.add('mid');
+      else parent.classList.add('low');
+    }
+  }
+
+  const ytdCollectionBar = byId<HTMLElement>('dsYtdCollectionBar');
+  if (ytdCollectionBar) {
+    const parent = ytdCollectionBar.closest('.bar');
+    if (parent) {
+      parent.className = 'bar';
+      if (collectionData.ytdPercentage > 75) parent.classList.add('high');
+      else if (collectionData.ytdPercentage > 50) parent.classList.add('mid');
+      else parent.classList.add('low');
+    }
+  }
+
+  // ---- receivables breakdown cells (share-of-total percentages) ----
+  setTxt('dsNormalValue', formatNumber(receivablesData.normal));
+  setTxt('dsNormalDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.normal / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
+  setTxt('dsNormalOverDueValue', formatNumber(receivablesData.normalOverDue));
+  setTxt('dsNormalOverDueDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.normalOverDue / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
+  setTxt('dsGstTdsValue', formatNumber(receivablesData.gstTds));
+  setTxt('dsGstTdsDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.gstTds / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
+  setTxt('dsTotalOverDueValue', formatNumber(receivablesData.totalOverDue));
+  setTxt('dsTotalOverDueDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.totalOverDue / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
+  setTxt('dsRetentionValue', formatNumber(receivablesData.retention));
+  setTxt('dsRetentionDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.retention / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
+  setTxt('dsRetentionOverDueValue', formatNumber(receivablesData.retentionOverDue));
+  setTxt('dsRetentionOverDueDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.retentionOverDue / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
+  setTxt('dsItTdsOthersValue', formatNumber(receivablesData.itTdsOthers));
+  setTxt('dsItTdsOthersDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.itTdsOthers / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
+  setTxt('dsTotalRetentionValue', formatNumber(receivablesData.totalRetention));
+  setTxt('dsTotalRetentionDelta', `(${receivablesData.totalReceivables > 0 ? ((receivablesData.totalRetention / receivablesData.totalReceivables) * 100).toFixed(2) : 0}%)`);
+  // ✅ NOTE: removed the trailing `setTxt('dsReceivablesDelta', '—')` that was overwriting the real delta.
+
+  // ---- working capital ----
+  const formatCurrency = (num: number): string => `₹${Math.round(num).toLocaleString('en-US')}`;
+// const biesValue = seibiesData.totalBies < 0
+//   ? `-₹${Math.abs(Math.round(seibiesData.totalBies)).toLocaleString('en-US')}`
+//   : formatCurrency(0);
+  setTxt('dsBiesValue', formatCurrency(Math.abs(seibiesData.totalBies)));
+  setTxt('dsSeiValue', formatCurrency(seibiesData.totalSei));
+  setTxt('dsNwcValue', formatCurrency(prQuality.nwcTotal));
+  setTxt('dsInventoryValue', formatCurrency(inventoryData.totalInventory));
+
+  // ---- project counts / PR+ / delivery ----
+  setTxt('dsTotalProjectsCard', formatNumber(prQuality.projectCount));
+  setTxt('dsRelCount', formatNumber(prQuality.relCount));
+  setTxt('dsTecoCount', formatNumber(prQuality.tecoCount));
+  setTxt('dsSoCount', formatNumber(prQuality.soCount));
+  setTxt('dsOtherCount', formatNumber(prQuality.statusCounts?.OTHER || 0));
+  setTxt('dsPrQualityAverage', `${prQuality.dataQualityAverage.toFixed(2)}%`);
+  setStyle('dsPrQualityBar', 'width', `${Math.max(0, Math.min(prQuality.dataQualityAverage, 100))}%`);
+
+  if (prApplicableInScope(projectIds, prQuality.statusCounts)) {
+    const total = prQuality.total || 0;
+    const submitted = prQuality.submitted || 0;
+    const notSubmitted = prQuality.notSubmitted || 0;
+    const approved = prQuality.approved || 0;
+
+    setTxt('dsTotalProjects', formatNumber(total));
+    setTxt('dsSubmittedProjects', formatNumber(submitted));
+    setTxt('dsNotSubmittedProjects', formatNumber(notSubmitted));
+    setTxt('dsApprovedProjects', formatNumber(approved));
+
+    const submittedPct = total > 0 ? (submitted / total) * 100 : 0;
+    const notSubmittedPct = total > 0 ? (notSubmitted / total) * 100 : 0;
+    const approvedPct = total > 0 ? (approved / total) * 100 : 0;
+
+    setTxt('dsSubmittedPct', `${submittedPct.toFixed(2)}%`);
+    setTxt('dsNotSubmittedPct', `${notSubmittedPct.toFixed(2)}%`);
+    setTxt('dsApprovedPct', `${approvedPct.toFixed(2)}%`);
+
+    setStyle('dsSubmittedBar', 'width', `${Math.min(submittedPct, 100)}%`);
+    setStyle('dsNotSubmittedBar', 'width', `${Math.min(notSubmittedPct, 100)}%`);
+    setStyle('dsApprovedBar', 'width', `${Math.min(approvedPct, 100)}%`);
+  } else {
+    setTxt('dsTotalProjects', '0');
+    setTxt('dsSubmittedProjects', '0');
+    setTxt('dsNotSubmittedProjects', '0');
+    setTxt('dsApprovedProjects', '0');
+    setTxt('dsSubmittedPct', '0.00%');
+    setTxt('dsNotSubmittedPct', '0.00%');
+    setTxt('dsApprovedPct', '0.00%');
+    setStyle('dsSubmittedBar', 'width', '0%');
+    setStyle('dsNotSubmittedBar', 'width', '0%');
+    setStyle('dsApprovedBar', 'width', '0%');
+  }
+
+  setTxt('dsDeliveryCrossed', formatNumber(prQuality.deliveryCrossed));
+  setTxt('dsDeliveryToCross', formatNumber(prQuality.deliveryToCross45Days));
+
+  // ---- procurement ----
+  setTxt('dsRfqPending', formatNumber(procurementData['RFQ Pending'] || 0));
+  setTxt('dsOfferPending', formatNumber(procurementData['Offer Pending'] || 0));
+  setTxt('dsTcPending', formatNumber(procurementData['TC pending'] || 0));
+  setTxt('dsOrderClosurePending', formatNumber(procurementData['Order Closure pending'] || 0));
+  setTxt('dsPrPending', formatNumber(procurementData['PR pending'] || 0));
+  setTxt('dsPoPending', formatNumber(procurementData['PO pending'] || 0));
+  setTxt('dsDocApprovalPending', formatNumber(procurementData['Document Approval Pending'] || 0));
+  setTxt('dsMfcPending', formatNumber(procurementData['MFC Pending'] || 0));
+  setTxt('dsInspectionPending', formatNumber(procurementData['Inspection Pending'] || 0));
+  setTxt('dsDispatchPending', formatNumber(procurementData['Dispatch Pending'] || 0));
+  setTxt('dsDeliveryPending', formatNumber(procurementData['Delivery Pending'] || 0));
+  setTxt('dsDeliveredCount', formatNumber(procurementData['Delivered'] || 0));
+
+  // ---- documents ----
+  setTxt('dsTotalDocuments', formatNumber(dcsData.totalDocuments));
+  setTxt('dsNotSubmittedDocs', formatNumber(dcsData.notSubmitted));
+  setTxt('dsNotApprovedDocs', formatNumber(dcsData.notApproved));
+  setTxt('dsRevisedDocs', formatNumber(dcsData.revisedNotSubmitted));
+  setTxt('dsApprovedDocs', formatNumber(dcsData.approved));
+  setTxt('dsRejectedDocs', formatNumber(dcsData.rejected));
+  setTxt('dsRetainedDocs', formatNumber(dcsData.retained));
+};
 
     // ============================================================
     // PROJECT LOADING
@@ -2100,7 +2138,7 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
                 indicator.textContent = '🔄';
                 indicator.style.color = '#fff';
               }
-            }, 10000);
+            }, 100000);
           }
         } catch (error) {
           console.error('❌ Auto-refresh failed:', error);
@@ -2113,12 +2151,12 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
                 indicator.textContent = '🔄';
                 indicator.style.color = '#fff';
               }
-            }, 15000);
+            }, 150000);
           }
         } finally {
           isRefreshing = false;
         }
-      }, 20000);
+      }, 300000);
     };
 
     const stopAutoRefresh = (): void => {

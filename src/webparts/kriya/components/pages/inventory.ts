@@ -276,18 +276,17 @@ export default {
 <section class="form-section-inventory card" style="display:none;">
  <form id="inventoryForm">
   <div class="page-header">
-    <h1 id="formTitleInventory">Inventory Liquidation 5QRF</h1>
-    <!-- ✅ TOP SAVE BUTTON - same type="submit" + .btn-primary-inventory
-         as the bottom button, so both trigger the same submit handler
-         and stay in sync (visibility, saving state). The header is
-         position:sticky, so this button stays visible while scrolling
-         through the long forecast form. -->
+  <h1 id="formTitleInventory">Inventory Liquidation 5QRF</h1>
+  
+  <!-- ✅ Wrap the buttons here -->
+  <div class="inventory-header-actions">
     <button type="submit"
             form="inventoryForm"
             class="btn-primary-inventory btn-save-top-inventory"
             title="Save Inventory Forecast">💾 Save</button>
-             <button type="button" class="btn-secondary-inventory back-to-table-inventory">⬅ Back</button>
+    <button type="button" class="btn-secondary-inventory back-to-table-inventory">⬅ Back</button>
   </div>
+</div>
  
       
       <!-- Project Selection (hidden in edit mode) -->
@@ -4247,6 +4246,65 @@ form.addEventListener("submit", async (e: Event) => {
 //    • Only shown when the form is actually open
 //    • z-index bumped so the loader cannot cover the dialog
 // ============================================================
+const backBtns = document.querySelectorAll(".back-to-table-inventory");
+if (backBtns && backBtns.length > 0) {
+  backBtns.forEach(btn => {
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (isLeavingInventoryForm) {
+        console.log("⛔ back blocked: already leaving");
+        return;
+      }
+
+      // Nothing to confirm when the form is already hidden
+      const formVisible = formSection && formSection.style.display !== "none";
+      if (!formVisible) {
+        editingId = null;
+        hideForm();
+        // reloadInventoryData();
+        return;
+      }
+
+      isLeavingInventoryForm = true;
+      try {
+        const confirmResult = await Swal.fire({
+          title: "Leave this page?",
+          html:
+            "Any <strong>unsaved changes</strong> will be lost.<br>" +
+            "Do you want to go back to the Inventory list?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, Go Back",
+          cancelButtonText: "Cancel",
+          confirmButtonColor: "#605eee",
+          cancelButtonColor: "#6c757d",
+          reverseButtons: true,
+          focusCancel: true,
+          allowOutsideClick: false,
+          customClass: { popup: "proc-confirm-popup" },
+          didOpen: bumpSwalZIndex,
+        });
+
+        if (!confirmResult.isConfirmed) {
+          console.log("🔵 back cancelled by user");
+          return;
+        }
+
+        editingId = null;
+        hideForm();
+        // reloadInventoryData();
+      } catch (err) {
+        console.error("Error while leaving the Inventory form:", err);
+        const message = err instanceof Error ? err.message : String(err);
+        toast("error", `Unexpected error: ${message}`);
+      } finally {
+        isLeavingInventoryForm = false;
+      }
+    });
+  });
+}
 if (backBtn) {
   backBtn.addEventListener("click", async (e) => {
     e.preventDefault();

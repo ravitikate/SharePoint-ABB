@@ -277,30 +277,7 @@ const projectContent = `
   <section class="table-section card">
     
     <!-- Top Pagination -->
-    <div class="pagination-controls top-pagination" style="margin-top: 0; margin-bottom: 16px; border-top: none; border-bottom: 1px solid #eee; padding-top: 0; padding-bottom: 15px;">
-      <div class="pagination-left">
-        <div class="pagination-size">
-          <label for="pjPageSizeTop">Items per page:</label>
-          <select class="page-size-select top-page-size" id="pjPageSizeTop">
-            <option value="10">10</option>
-            <option value="25" selected>25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-        </div>
-        <div class="pagination-info">
-          Showing <span class="pj-pg-range"><span class="record-start">0</span> - <span class="record-end">0</span></span> of <span class="pj-pg-count record-count">0</span> items
-        </div>
-      </div>
-      <div class="pagination-right">
-        <button type="button" class="pj-page-btn pj-pg-icon first-page" title="First page" disabled>«</button>
-        <button type="button" class="pj-page-btn pj-pg-icon prev-page" title="Previous page" disabled>‹</button>
-        <div class="pagination pj-page-numbers page-numbers"></div>
-        <span class="pj-pg-of">of <span class="total-pages">1</span></span>
-        <button type="button" class="pj-page-btn pj-pg-icon next-page" title="Next page" disabled>›</button>
-        <button type="button" class="pj-page-btn pj-pg-icon last-page" title="Last page" disabled>»</button>
-      </div>
-    </div>
+    
 
     <div class="pj-table-scroll">
       <table class="modern-table">
@@ -1430,6 +1407,10 @@ export default {
     box-shadow: none !important;
   }
 }
+
+.pagination-controls.top-pagination {
+    display: none !important;
+}
 `,
   script: () => {
     setTimeout(async () => {
@@ -1998,6 +1979,7 @@ export default {
         const trashIcon = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 3v1H4v2h1v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1V4h-5V3H9zm0 5h2v11H9V8zm4 0h2v11h-2V8z"/></svg>`;
 
         tableBody.innerHTML = paginatedData.map(p => {
+          
           const gh = getManagerDisplayName(p, 'GroupHead1');
           const pm = getManagerDisplayName(p, 'ProjectManager');
           const enggLead = getManagerDisplayName(p, 'EnggLead');
@@ -2007,13 +1989,12 @@ export default {
           const scm = getManagerDisplayName(p, 'SCM');
           const controlling = getManagerDisplayName(p, 'Controlling');
 
-          const canEdit = hasEditPermission(p);
+          const canEdit = hasEditPermission(p);         
 
           const renderManagerCell = (manager: { name: string, email: string }) => {
             if (!manager.name && !manager.email) return '<span class="pj-empty" title="Not assigned">—</span>';
             return `<div class="manager-cell">
-                <span class="manager-name">${manager.name}</span>
-                ${manager.email ? `<span class="manager-email">${manager.email}</span>` : ''}
+                <span class="manager-name">${manager.name}</span> 
               </div>`;
           };
 
@@ -2028,7 +2009,11 @@ export default {
                    ${canEdit ? '' : 'aria-disabled="true"'}>${p.ProjectReference || '<span class="pj-empty">—</span>'}</a>
               </td>
               <td class="pj-td pj-td-text">${p.CustomerName || '<span class="pj-empty">—</span>'}</td>
-              <td class="pj-td pj-td-project">${p.Title || '<span class="pj-empty">—</span>'}</td>
+              <td class="pj-td pj-td-project">
+              ${(p.Title !== undefined && p.Title !== null && String(p.Title).trim() !== '') 
+                ? p.Title 
+                : '<span class="pj-empty">—</span>'}
+            </td>
               <td class="pj-td pj-td-person">${renderManagerCell(gh)}</td>
               <td class="pj-td pj-td-person">${renderManagerCell(pm)}</td>
               <td class="pj-td pj-td-person">${renderManagerCell(enggLead)}</td>

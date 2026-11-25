@@ -1,8 +1,8 @@
  // src/webparts/Kriya/components/pages/knowledge.ts
 const knowledgeContent = `
   <div class="knowledge-page">
-    <h1>knowledge</h1>
-    <p>Welcome to the knowledge page.</p>
+    <h1>Knowledge Base</h1>
+    <p>Under development.</p>
   </div>
 `;
 

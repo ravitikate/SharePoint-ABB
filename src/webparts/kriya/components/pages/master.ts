@@ -608,7 +608,7 @@ const pageContent = `
 <div class="project-page fade-in master-page">
   <section class="table-section card master-dashboard">
     <div class="page-header">
-      <h1 style="color:#ffffff !important;-webkit-text-fill-color:#ffffff;">Master Excel</h1>
+      <h1 style="color:#ffffff !important;-webkit-text-fill-color:#ffffff;">Master Data</h1>
     </div>
 
     <div class="header-actions">
@@ -1278,7 +1278,7 @@ export default {
           masterData = projects.map((p: any): MasterRow => {
             const ref = String(p.ProjectReference ?? p.Title ?? "").trim();
             const title = String(p.Title ?? "").trim();
-            const projectName = (!title || /^#\s*(?:N\/A)?\s*$/i.test(title)) ? "-" : title;
+           const projectName = title === "" ? "-" : title;
             const collRow = findIn(coll, ref, title, p.Id);
             const revRow = findIn(rev, ref, title, p.Id);
             const invRow = findIn(inv, ref, title, p.Id);
@@ -1741,18 +1741,18 @@ export default {
       let impUpdated = 0, impCreated = 0, impErrors = 0;
       let importErrorRows: ImportErrorRow[] = [];
 
-      const MANDATORY_FIELDS: Array<{ key: string; label: string }> = [
-        { key: "profitCentre",     label: "Profit Centre" },
-        { key: "projectReference", label: "Project Ref" },
-        { key: "customerName",     label: "Customer name" },
-        { key: "projectName",      label: "Project Name" },
-        { key: "groupHead",        label: "GH" }
-      ];
+     const MANDATORY_FIELDS: Array<{ key: string; label: string }> = [
+            { key: "profitCentre",     label: "Profit Centre" },
+            { key: "projectReference", label: "Project definition(Reference)" },
+            { key: "customerName",     label: "Customer Name" },
+            { key: "projectName",      label: "Description (Project Name)" },
+            { key: "groupHead",        label: "GH" },
+            { key: "projectManager",   label: "PM" } // Added PM
+          ];
 
-      const isBlank = (v: any): boolean => {
-        const s = String(v ?? "").trim();
-        return s === "" || /^#\s*(?:N\/A)?\s*$/i.test(s);
-      };
+     const isBlank = (v: any): boolean => {
+      return String(v ?? "").trim() === "";
+    };
 
       const missingMandatory = (row: ParsedRow): string[] => {
         const missing: string[] = [];
@@ -1934,7 +1934,7 @@ export default {
   }
 };
 
-const doImport = async (file: File): Promise<void> => {
+ const doImport = async (file: File): Promise<void> => {
   if (importing) { showToast("Import already running — please wait for it to finish", "warning"); return; }
   importing = true;
   const setUiBusy = (busy: boolean): void => {
@@ -1948,10 +1948,58 @@ const doImport = async (file: File): Promise<void> => {
   importErrorRows = [];
   bumpChips();
 
-  // Guarantees exactly ONE create per unique ref in this upload,
-  // and skips redundant SharePoint lookups for refs already resolved here.
   const seenRefs = new Set<string>();
   const resolvedProjectCache = new Map<string, { id: number; title: string }>();
+
+  const fixSPDate = (dateStr: any): string | null => {
+    if (!dateStr || String(dateStr).trim() === "" || dateStr === "-") return null;
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? null : d.toISOString();
+  };
+
+  const getCurrentMonthKey = (): string => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+  };
+
+  const cleanOldMonths = (data: Record<string, any>): Record<string, any> => {
+    const current = new Date();
+    const cutoffDate = new Date(current.getFullYear(), current.getMonth() - 36, 1);
+    const cleaned: Record<string, any> = {};
+    const sortedKeys = Object.keys(data).sort();
+
+    for (const key of sortedKeys) {
+      const parts = key.split("-");
+      if (parts.length === 2) {
+        const year = Number(parts[0]);
+        const month = Number(parts[1]);
+        if (year && month) {
+          const d = new Date(year, month - 1, 1);
+          if (d >= cutoffDate) {
+            cleaned[key] = data[key];
+          }
+        }
+      }
+    }
+    return cleaned;
+  };
+
+  // Reusable helper to safely fetch existing JSON from a SharePoint item
+  const fetchExistingMonthJson = async (listName: string, itemId: number, fieldName: string): Promise<Record<string, any>> => {
+    try {
+      const res = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items(${itemId})?$select=${fieldName}`, {
+        headers: { Accept: "application/json;odata=verbose" }
+      });
+      if (res.ok) {
+        const j = await res.json();
+        const rawJson = j.d[fieldName];
+        if (rawJson) return JSON.parse(rawJson);
+      }
+    } catch (e) {
+      console.warn(`Could not parse existing ${fieldName} JSON for item ${itemId} in ${listName}`, e);
+    }
+    return {};
+  };
 
   try {
     const buf = await file.arrayBuffer();
@@ -1961,6 +2009,8 @@ const doImport = async (file: File): Promise<void> => {
     if (!rows.length) throw new Error("No rows with a Project Reference found. Check the header row (Project definition(Reference)).");
 
     const total = rows.length;
+    const currentMonthKey = getCurrentMonthKey();
+
     if (impTotalEl) impTotalEl.textContent = String(total);
     if (popupResults) popupResults.style.display = "none";
     if (downloadErrorsBtn) downloadErrorsBtn.style.display = "none";
@@ -1970,14 +2020,16 @@ const doImport = async (file: File): Promise<void> => {
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
       const refRaw = String(row.projectReference ?? "").trim();
-      if (!refRaw) continue; // parseSheet already filters, but be safe
+      if (!refRaw) continue;
 
-      // Normalize so "PRJ   001" == "PRJ 001" for lookup and dedupe
       const ref = refRaw.replace(/\s+/g, " ");
       const refKey = ref.toLowerCase();
 
+      // ✅ Excel Description is used verbatim — "-", "#", "#N/A", numbers, symbols all kept.
+      //    No fallback to the reference. Only truly-empty stays empty.
       const excelName = String(row.projectName ?? "").trim();
-      if (!excelName || /^#\s*(?:N\/A)?\s*$/i.test(excelName)) row.projectName = ref;
+      row.projectName = excelName;
+
       console.log(`⏳ Processing ${i + 1} of ${total} — ${ref}`);
 
       const missing = missingMandatory(row);
@@ -1996,10 +2048,6 @@ const doImport = async (file: File): Promise<void> => {
       }
 
       try {
-        // ---------------------------------------------------------------
-        // Resolve existence: in-memory cache first, then SharePoint.
-        // NEVER create if the ref already exists.
-        // ---------------------------------------------------------------
         let projectId: number | null = null;
         let projectTitle = "";
         let isNew = false;
@@ -2013,8 +2061,15 @@ const doImport = async (file: File): Promise<void> => {
           const projData = await resolveProjectByRef(ref);
           if (projData) {
             projectId = projData.Id;
+
             const storedTitle = String(projData.Title ?? "").trim();
-            projectTitle = (!storedTitle || /^#\s*(?:N\/A)?\s*$/i.test(storedTitle)) ? ref : storedTitle;
+            const excelTitle  = String(row.projectName ?? "").trim();
+
+            // ✅ Excel Description wins (even "-", "#", numbers, symbols).
+            //    Fall back to stored SharePoint title only when Excel is truly empty.
+            //    Never fall back to the reference.
+            projectTitle = excelTitle !== "" ? excelTitle : storedTitle;
+
             isNew = false;
             resolvedProjectCache.set(refKey, { id: projectId as number, title: projectTitle });
             seenRefs.add(refKey);
@@ -2022,26 +2077,33 @@ const doImport = async (file: File): Promise<void> => {
         }
 
         if (projectId === null) {
-          // NEW ref. Create ONCE. If already seen in this run, re-resolve instead of creating again.
           if (seenRefs.has(refKey)) {
             const again = await resolveProjectByRef(ref);
             if (!again) throw new Error(`Project "${ref}" was created earlier in this import but could not be re-resolved.`);
             projectId = again.Id;
-            projectTitle = String(again.Title ?? ref).trim() || ref;
+            projectTitle = String(again.Title ?? "").trim();
             isNew = false;
             resolvedProjectCache.set(refKey, { id: projectId as number, title: projectTitle });
           } else {
             isNew = true;
-            projectTitle = String(row.projectName ?? row.customerName ?? ref).trim() || ref;
+
+            // ✅ Title = Excel Description only. No fallback to the reference.
+            projectTitle = String(row.projectName ?? "").trim();
 
             const entityType = await getListEntityType(PROJECT_LIST);
             const plPayload: any = { __metadata: { type: entityType } };
             const plFields = await getListFields(PROJECT_LIST);
-            const writePL = (desired: string, value: any): void => {
+
+            const writePL = (desired: string, value: any, isDate = false): void => {
               const f = findField(plFields, desired);
               if (!f) return;
-              if (f.type === "Lookup") return;
-              if (f.type === "User") return;
+              if (f.type === "Lookup" || f.type === "User") return;
+
+              if (isDate || f.type === "DateTime") {
+                plPayload[f.internalName] = fixSPDate(value);
+                return;
+              }
+
               if (f.type === "Number" || f.type === "Currency") {
                 const n = parseNumText(value);
                 if (n !== null) plPayload[f.internalName] = n;
@@ -2049,17 +2111,26 @@ const doImport = async (file: File): Promise<void> => {
                 plPayload[f.internalName] = String(value);
               }
             };
-            plPayload.Title = projectTitle;
+
+            // ✅ Only set Title when we actually have one (avoid blanking a new item’s required title)
+            if (projectTitle !== "") plPayload.Title = projectTitle;
+
             writePL("ProjectReference", ref);
-            writePL("ProfitCentre", row.profitCentre);
+            writePL("PC", row.profitCentre);
             writePL("CustomerName", row.customerName);
-            writePL("Status", row.status);
-            writePL("ContractualDeliveryDate", row.contractualDeliveryDate || "");
-            writePL("RevisedContractualDeliveryDate", row.revisedContractualDeliveryDate || "");
-            writePL("PRQuality", row.prQuality);
-            writePL("PRSubmissionStatus", row.prSubmissionStatus);
-            writePL("PRApprovalStatus", row.prApprovalStatus);
             writePL("NWC", row.nwc);
+
+            // Prepare current month JSON for Project List
+            const currentProjectData = {
+              status: row.status || "",
+              contractualDeliveryDate: row.contractualDeliveryDate || "",
+              revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
+              prQuality: row.prQuality || "",
+              prSubmissionStatus: row.prSubmissionStatus || "",
+              prApprovalStatus: row.prApprovalStatus || "",
+              nwc: row.nwc ?? 0
+            };
+            plPayload["ProjectMonth"] = JSON.stringify({ [currentMonthKey]: currentProjectData });
 
             {
               const byName = await getUserIdsByTitle();
@@ -2104,8 +2175,6 @@ const doImport = async (file: File): Promise<void> => {
           }
         }
 
-        // After the block above, projectId is always a number.
-        // Narrow it once so downstream code sees `number`, not `number | null`.
         if (projectId === null) {
           throw new Error(`Could not resolve or create project "${ref}".`);
         }
@@ -2113,15 +2182,22 @@ const doImport = async (file: File): Promise<void> => {
 
         const notes: string[] = [];
 
-        // ---------------------------------------------------------------
-        // EXISTING ref path → update only
-        // ---------------------------------------------------------------
+        // =====================================================================
+        // 1. UPDATE PROJECT LIST (Existing Project -> Append ProjectMonth JSON)
+        // =====================================================================
         if (!isNew) {
-          const update: Record<string, number | string> = {};
+          const update: Record<string, number | string | null> = {};
           const plFields = await getListFields(PROJECT_LIST);
-          const put = (desired: string, value: any): void => {
+
+          const put = (desired: string, value: any, isDate = false): void => {
             const f = findField(plFields, desired);
             if (!f || f.type === "Lookup" || f.type === "User") return;
+
+            if (isDate || f.type === "DateTime") {
+              update[f.internalName] = fixSPDate(value);
+              return;
+            }
+
             if (f.type === "Number" || f.type === "Currency") {
               const n = typeof value === "number" ? value : parseNumText(value);
               if (n !== null) update[f.internalName] = n;
@@ -2129,19 +2205,14 @@ const doImport = async (file: File): Promise<void> => {
               update[f.internalName] = String(value);
             }
           };
-          put("Status", row.status);
-          put("ContractualDeliveryDate", row.contractualDeliveryDate || "");
-          put("RevisedContractualDeliveryDate", row.revisedContractualDeliveryDate || "");
-          put("PRQuality", row.prQuality);
-          put("PRSubmissionStatus", row.prSubmissionStatus);
-          put("PRApprovalStatus", row.prApprovalStatus);
+
           put("NWC", row.nwc);
           put("CustomerName", row.customerName);
-          put("ProfitCentre", row.profitCentre);
+          put("PC", row.profitCentre);
 
-          // Title only if it actually changes
-          const currentTitle = resolvedProjectCache.get(refKey)?.title ?? "";
-          if (currentTitle !== projectTitle) {
+          // ✅ Write the Excel Description verbatim when present.
+          //    (projectTitle was already computed above from Excel or stored title.)
+          if (projectTitle !== "") {
             put("Title", projectTitle);
           }
 
@@ -2160,6 +2231,21 @@ const doImport = async (file: File): Promise<void> => {
               else console.warn(`Skipping ${desired} (${nm}) — not found in site users`);
             });
           }
+
+          // JSON Merge Logic for Project List
+          const existingProjJson = await fetchExistingMonthJson(PROJECT_LIST, resolvedProjectId, "ProjectMonth");
+          const currentProjectData = {
+            status: row.status || "",
+            contractualDeliveryDate: row.contractualDeliveryDate || "",
+            revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
+            prQuality: row.prQuality || "",
+            prSubmissionStatus: row.prSubmissionStatus || "",
+            prApprovalStatus: row.prApprovalStatus || "",
+            nwc: row.nwc ?? 0
+          };
+          existingProjJson[currentMonthKey] = currentProjectData;
+          update["ProjectMonth"] = JSON.stringify(cleanOldMonths(existingProjJson));
+
           if (Object.keys(update).length) {
             const f = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items(${resolvedProjectId})`, {
               method: "POST",
@@ -2176,37 +2262,94 @@ const doImport = async (file: File): Promise<void> => {
           }
         }
 
-        // ---------------------------------------------------------------
-        // Child tables — same upsert logic as before
-        // ---------------------------------------------------------------
+        // =====================================================================
+        // 2. UPDATE COLLECTION LIST (Existing/New -> Append ReceivableValueMonth JSON)
+        // =====================================================================
         const collValues: Record<string, number | string> = {};
         const cMap: Array<[string, string]> = [
           ["NormalDue", "normalDue"], ["NormalOverdue", "normalOverdue"],
           ["RetentionDue", "retentionDue"], ["RetentionOverdue", "retentionOverdue"],
           ["GstTds", "gstTds"], ["WHT", "wht"], ["ReceivableValue", "receivableValue"]
         ];
+
+        const currentReceivableData = {
+          normalDue: row.normalDue || 0,
+          normalOverdue: row.normalOverdue || 0,
+          retentionDue: row.retentionDue || 0,
+          retentionOverdue: row.retentionOverdue || 0,
+          gstTds: row.gstTds || 0,
+          wht: row.wht || 0,
+          receivableValue: row.receivableValue || 0
+        };
+
         cMap.forEach(([fieldKey, excelKey]) => {
           const v = row[excelKey];
           if (typeof v === "number" && v !== 0) collValues[fieldKey] = v;
         });
+
+        const existingCollRes = await findChildRow(COLLECTION_LIST, resolvedProjectId, ref, projectTitle);
+        let existingCollJson = existingCollRes.row
+          ? await fetchExistingMonthJson(COLLECTION_LIST, existingCollRes.row.Id, "ReceivableValueMonth")
+          : {};
+
+        existingCollJson[currentMonthKey] = currentReceivableData;
+        collValues["ReceivableValueMonth"] = JSON.stringify(cleanOldMonths(existingCollJson));
+
         const collRes = await upsertRow({
           listName: COLLECTION_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-          values: collValues, rowId: undefined
+          values: collValues, rowId: existingCollRes.row ? existingCollRes.row.Id : undefined
         });
         if (!collRes.success) notes.push("⚠ Collection List: " + describeError(collRes.error));
 
-        const single: Array<[string, string]> = [
-          [REVENUE_LIST, "obl"],
-          [INVOICING_LIST, "invoicingPlanning"],
-          [SEIBIES_LIST, "seibies"],
-          [INVENTORY_LIST, "inventory"]
+        // =====================================================================
+        // 3. UPDATE REVENUE FORECAST LIST (Existing/New -> Append OBLMonth JSON)
+        // =====================================================================
+        if (typeof row.obl === "number" || typeof row.obl === "string") {
+          const existingRevRes = await findChildRow(REVENUE_LIST, resolvedProjectId, ref, projectTitle);
+          let existingRevJson = existingRevRes.row
+            ? await fetchExistingMonthJson(REVENUE_LIST, existingRevRes.row.Id, "OBLMonth")
+            : {};
+
+          existingRevJson[currentMonthKey] = row.obl || 0;
+          const revValues: Record<string, number | string> = {
+            OBLMonth: JSON.stringify(cleanOldMonths(existingRevJson))
+          };
+          if (typeof row.obl === "number" && row.obl !== 0) revValues["OBL"] = row.obl;
+
+          const revRes = await upsertRow({
+            listName: REVENUE_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
+            values: revValues, rowId: existingRevRes.row ? existingRevRes.row.Id : undefined
+          });
+          if (!revRes.success) notes.push("⚠ Revenue Forecast List: " + describeError(revRes.error));
+        }
+
+        // =====================================================================
+        // 4. UPDATE OTHER SINGLE TABLES (Invoicing, SEIBIES, Inventory)
+        // =====================================================================
+        const singleTables: Array<{ listName: string; excelKey: string; jsonColName: string }> = [
+          { listName: INVOICING_LIST, excelKey: "invoicingPlanning", jsonColName: "OBLMonth" },
+          { listName: SEIBIES_LIST, excelKey: "seibies", jsonColName: "OBLMonth" },
+          { listName: INVENTORY_LIST, excelKey: "inventory", jsonColName: "OBLMonth" }
         ];
-        for (const [listName, excelKey] of single) {
+
+        for (const { listName, excelKey, jsonColName } of singleTables) {
           const v = row[excelKey];
-          const values: Record<string, number | string> = (typeof v === "number" && v !== 0) ? { OBL: v } : {};
+          const existingRowRes = await findChildRow(listName, resolvedProjectId, ref, projectTitle);
+
+          let existingJson = existingRowRes.row
+            ? await fetchExistingMonthJson(listName, existingRowRes.row.Id, jsonColName)
+            : {};
+
+          existingJson[currentMonthKey] = v || 0;
+
+          const values: Record<string, number | string> = {
+            [jsonColName]: JSON.stringify(cleanOldMonths(existingJson))
+          };
+          if (typeof v === "number" && v !== 0) values["OBL"] = v;
+
           const ur = await upsertRow({
             listName, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-            values, rowId: undefined
+            values, rowId: existingRowRes.row ? existingRowRes.row.Id : undefined
           });
           if (!ur.success) notes.push("⚠ " + listName + ": " + describeError(ur.error));
         }
@@ -2218,18 +2361,34 @@ const doImport = async (file: File): Promise<void> => {
           notes.length ? baseMsg + " " + notes.join(" ") : baseMsg);
       } catch (err) {
         console.error("Error processing row:", row, err);
-        addStatusRow("error", ref, String(row.projectName ?? ""),
-          describeError(err instanceof Error ? err.message : err));
+        const msg = describeError(err instanceof Error ? err.message : err);
+
+        importErrorRows.push({
+          rowNo: row.__rowNo ?? (i + 2),
+          projectReference: ref,
+          projectName: String(row.projectName ?? "").trim(),
+          missing: [],
+          message: msg,
+          raw: row.__raw ?? []
+        });
+
+        addStatusRow("error", ref, String(row.projectName ?? ""), msg);
       }
     }
 
     if (popupProgress) popupProgress.style.display = "none";
     if (popupResults) popupResults.style.display = "block";
+
     if (downloadErrorsBtn) {
-      downloadErrorsBtn.style.display = importErrorRows.length ? "inline-flex" : "none";
-      downloadErrorsBtn.textContent =
-        `⬇️ Download Error List (${importErrorRows.length} row${importErrorRows.length === 1 ? "" : "s"})`;
+      if (importErrorRows.length > 0) {
+        downloadErrorsBtn.style.display = "inline-flex";
+        downloadErrorsBtn.textContent =
+          `⬇️ Download Error List (${importErrorRows.length} row${importErrorRows.length === 1 ? "" : "s"})`;
+      } else {
+        downloadErrorsBtn.style.display = "none";
+      }
     }
+
     showToast(`✅ Import complete — ${impCreated} new project(s), ${impUpdated} updated, ${impErrors} error(s) of ${total}`,
       impErrors ? "warning" : "success", 6000);
     await loadMaster();

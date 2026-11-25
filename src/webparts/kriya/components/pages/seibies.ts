@@ -166,24 +166,28 @@ export default {
          popup below, keeping their original ids so clearFilters() / the export logic
          and every existing listener keep working. -->
     <div class="table-toolbar">
-      <div class="table-toolbar__left">
-        <button type="button" class="btn-secondary-seibies seibies-filter-trigger" id="filterTriggerSeibies"
-                aria-haspopup="dialog" aria-expanded="false" title="Filter SEI-BIES">
-          <svg class="seibies-filter-funnel" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18l-7 8v5l-4 2v-7L3 5z"/></svg>
-          <span class="seibies-filter-label">Filters</span>
-          <span class="seibies-filter-count" id="filterCountSeibies">0</span>
-          <svg class="seibies-filter-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
+  <!-- LEFT: Filters trigger -->
+  <div class="table-toolbar__left"> 
+    <button type="button" class="btn-secondary-seibies seibies-filter-trigger" id="filterTriggerSeibies"
+            aria-haspopup="dialog" aria-expanded="false" title="Filter SEI-BIES">
+      <svg class="seibies-filter-funnel" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18l-7 8v5l-4 2v-7L3 5z"/></svg>
+      <span class="seibies-filter-label">Filters</span>
+      <span class="seibies-filter-count" id="filterCountSeibies">0</span>
+      <svg class="seibies-filter-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+  </div>
+ <!-- RIGHT: Note -->
+  <div class="table-toolbar__center">
+    <span class="table-toolbar__note">Note: "Negative=BIES, Positive=SEI"</span>
+  </div>
+  <!-- MIDDLE: Apply pill + Download Excel -->
+  <div class="table-toolbar__right">
+    <button type="button" class="btn-primary-seibies seibies-filter-applypill" id="floatingFilterApplySeibies">Apply</button>
+    <button type="button" class="btn-secondary-seibies export-btn-seibies">📊 Download Excel</button>
+  </div>
 
-        <!-- compact Apply pill - shown only while the popup holds changes that
-             have not been applied yet -->
-        <button type="button" class="btn-primary-seibies seibies-filter-applypill" id="floatingFilterApplySeibies">Apply</button>
-      </div>
-
-      <div class="table-toolbar__right">
-        <button type="button" class="btn-secondary-seibies export-btn-seibies">📊 Download Excel</button>
-      </div>
-    </div>
+ 
+</div>
 
    
     <div class="table-container-seibies">
@@ -313,18 +317,17 @@ export default {
   <section class="form-section-seibies card-seibies" style="display:none;">
   <form id="seibiesForm">
   <div class="page-header"> 
-    <h1 id="formTitleSeibies">SEI BIES Liquidation 5QRF</h1>
-    <!-- ✅ TOP SAVE BUTTON - same type="submit" + .btn-primary-seibies
-         as the bottom button, so both trigger the same submit handler
-         and stay in sync (visibility, saving state). The header is
-         position:sticky, so this button stays visible while scrolling
-         through the long forecast form. -->
-    <button type="submit"
+  <h1 id="formTitleSeibies">SEI BIES Liquidation 5QRF</h1>
+  
+  <!-- Wrap the buttons here -->
+  <div class="header-actions">
+    <button type="submit"     
             form="seibiesForm"
             class="btn-primary-seibies btn-save-top-seibies"
             title="Save SEIBIES Forecast">💾 Save</button>
-            <button type="button" class="btn-secondary-seibies back-to-table-seibies">⬅ Back</button>
+    <button type="button" class="btn-secondary-seibies back-to-table-seibies">⬅ Back</button>
   </div>
+</div>
   
       
       <!-- Project Selection (hidden in edit mode) -->
@@ -396,6 +399,9 @@ export default {
             </div>
             <div class="validation-message-seibies" id="oblValidationMessageSeibies">
               ✅ All values are within SEI-BIES limit
+            </div>
+            <div class="table-toolbar__note" style="margin-top: 15px;">
+              Note: "Negative=BIES, Positive=SEI"
             </div>
           </div>
         </div>
@@ -2506,7 +2512,7 @@ const getGroupHeadDisplayName = (groupHead: string | { Title: string; Email?: st
           const oblValue = existingForecast?.OBL || 0;
           setNumericValue(oblLastMonthInput, oblValue);
 
-          oblLastMonthInput.placeholder = "OBL from database";
+          oblLastMonthInput.placeholder = "SEI BIES";
           if (fieldNote) fieldNote.textContent = "OBL value from database record";
 
           if (oblValue > 0) {
@@ -3723,6 +3729,67 @@ const setFormReadOnly = (isReadOnly: boolean): void => {
 //    • Only shown when the form is actually open
 //    • z-index bumped so the loader cannot cover the dialog
 // ============================================================
+
+const backBtns = document.querySelectorAll(".back-to-table-seibies");
+if (backBtns && backBtns.length > 0) {
+  backBtns.forEach(btn => {
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (isLeavingSeibiesForm) {
+        console.log("⛔ back blocked: already leaving");
+        return;
+      }
+
+      // Nothing to confirm when the form is already hidden
+      const formVisible = formSection && formSection.style.display !== "none";
+      if (!formVisible) {
+        editingId = null;
+        hideForm();
+        // reloadInventoryData();
+        return;
+      }
+
+      isLeavingSeibiesForm = true;
+      try {
+        const confirmResult = await Swal.fire({
+          title: "Leave this page?",
+          html:
+            "Any <strong>unsaved changes</strong> will be lost.<br>" +
+            "Do you want to go back to the SEI-BIES list?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, Go Back",
+          cancelButtonText: "Cancel",
+          confirmButtonColor: "#605eee",
+          cancelButtonColor: "#6c757d",
+          reverseButtons: true,
+          focusCancel: true,
+          allowOutsideClick: false,
+          customClass: { popup: "proc-confirm-popup" },
+          didOpen: bumpSwalZIndex,
+        });
+
+        if (!confirmResult.isConfirmed) {
+          console.log("🔵 back cancelled by user");
+          return;
+        }
+
+        editingId = null;
+        hideForm();
+        // reloadInventoryData();
+      } catch (err) {
+        console.error("Error while leaving the SEI-BIES form:", err);
+        const message = err instanceof Error ? err.message : String(err);
+        toast("error", `Unexpected error: ${message}`);
+      } finally {
+        isLeavingSeibiesForm = false;
+      }
+    });
+  });
+}
+
 backBtn.addEventListener("click", async (e) => {
   e.preventDefault();
   e.stopPropagation();

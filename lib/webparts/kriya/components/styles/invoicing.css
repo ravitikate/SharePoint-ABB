@@ -4105,4 +4105,16 @@ input.yearly-current-input-inv:not([readonly]) {
 .invoicing-form-section .invoicing-field-legend span.locked::before {
   background: #EAECF0;
   border-color: #D0D5DD;
+} 
+
+
+/* ✅ Group the buttons tightly together */
+.invoicing-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Adjust this value to make the gap wider or narrower */
+}
+
+button.invoicing-btn-primary.invoicing-btn-save-top {
+    padding: 12px 18px !important;
 }
