@@ -219,17 +219,41 @@ const listFieldsCache = new Map<string, SharePointField[]>();
 const listExistsCache = new Set<string>();
 const entityTypeCache = new Map<string, string>();
 
+// ⚡ CACHE THE DIGEST globally (outside the function)
+let cachedDigest: string | null = null;
+
 const getDigest = async (): Promise<string> => {
   try {
+    // 1. Return from memory if we already have it
+    if (cachedDigest) return cachedDigest;
+
+    // 2. Return from page context if available
     if (typeof _spPageContextInfo !== "undefined" && _spPageContextInfo.formDigestValue) {
-      return _spPageContextInfo.formDigestValue;
+      cachedDigest = String(_spPageContextInfo.formDigestValue);
+      return cachedDigest;
     }
+
+    // 3. Fetch it if we don't have it
     const res = await fetchWithTimeout(`${siteUrl}/_api/contextinfo`, {
       method: "POST",
       headers: { Accept: "application/json;odata=verbose", "Content-Type": "application/json;odata=verbose" }
     });
+    
+    // 4. Handle 429 Throttling just in case
+    if (res.status === 429) {
+      const waitSec = parseInt(res.headers.get("Retry-After") || "5", 10);
+      console.warn(`⚠️ Throttled getting digest. Waiting ${waitSec}s...`);
+      await new Promise(r => setTimeout(r, waitSec * 1000));
+      return getDigest(); // Retry
+    }
+
     const data = await res.json();
-    return data.d.GetContextWebInformation.FormDigestValue;
+    
+    // 5. Assign to the variable so TypeScript knows it's a string
+    cachedDigest = String(data.d.GetContextWebInformation.FormDigestValue);
+    
+    return cachedDigest;
+    
   } catch (error) {
     console.error("Error getting digest:", error);
     throw error;
@@ -1934,9 +1958,10 @@ export default {
   }
 };
 
- const doImport = async (file: File): Promise<void> => {
+const doImport = async (file: File): Promise<void> => {
   if (importing) { showToast("Import already running — please wait for it to finish", "warning"); return; }
   importing = true;
+  
   const setUiBusy = (busy: boolean): void => {
     if (importChooseBtn) importChooseBtn.disabled = busy;
     if (popupTemplateBtn) popupTemplateBtn.disabled = busy;
@@ -1950,6 +1975,20 @@ export default {
 
   const seenRefs = new Set<string>();
   const resolvedProjectCache = new Map<string, { id: number; title: string }>();
+
+  // ⚡ 1. SAFE FETCH: Automatically handles 429 Too Many Requests
+  const safeFetch = async (url: string, options: any): Promise<Response> => {
+    let res = await fetch(url, options);
+    let retries = 0;
+    while (res.status === 429 && retries < 5) {
+      const waitSec = parseInt(res.headers.get("Retry-After") || "5", 10);
+      console.warn(`⚠️ Throttled by SharePoint (429). Waiting ${waitSec}s before retrying...`);
+      await new Promise(r => setTimeout(r, waitSec * 1000));
+      res = await fetch(url, options);
+      retries++;
+    }
+    return res;
+  };
 
   const fixSPDate = (dateStr: any): string | null => {
     if (!dateStr || String(dateStr).trim() === "" || dateStr === "-") return null;
@@ -1975,19 +2014,16 @@ export default {
         const month = Number(parts[1]);
         if (year && month) {
           const d = new Date(year, month - 1, 1);
-          if (d >= cutoffDate) {
-            cleaned[key] = data[key];
-          }
+          if (d >= cutoffDate) cleaned[key] = data[key];
         }
       }
     }
     return cleaned;
   };
 
-  // Reusable helper to safely fetch existing JSON from a SharePoint item
   const fetchExistingMonthJson = async (listName: string, itemId: number, fieldName: string): Promise<Record<string, any>> => {
     try {
-      const res = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items(${itemId})?$select=${fieldName}`, {
+      const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items(${itemId})?$select=${fieldName}`, {
         headers: { Accept: "application/json;odata=verbose" }
       });
       if (res.ok) {
@@ -2001,9 +2037,30 @@ export default {
     return {};
   };
 
+  // ⚡ 2. BULK FETCH MAPS: Removes the need for 5,000 findChildRow queries
+  const fetchIdMap = async (listName: string): Promise<Map<number, number>> => {
+    const map = new Map<number, number>();
+    try {
+      // Use safeFetch to prevent 429
+      const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items?$select=Id,ProjectId&$top=5000`, {
+        headers: { Accept: "application/json;odata=verbose" }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const results = data.d?.results || [];
+        results.forEach((r: any) => {
+          if (r.ProjectId && r.Id) map.set(Number(r.ProjectId), Number(r.Id));
+        });
+      }
+    } catch (e) {
+      console.error(`Failed to fetch ID map for ${listName}`, e);
+    }
+    return map;
+  };
+
   try {
     const buf = await file.arrayBuffer();
-    const wb = XLSX.read(buf);
+    const wb = XLSX.read(buf, { type: 'array', raw: false }); 
     const ws = wb.Sheets[wb.SheetNames[0]];
     const rows = parseSheet(ws);
     if (!rows.length) throw new Error("No rows with a Project Reference found. Check the header row (Project definition(Reference)).");
@@ -2017,122 +2074,108 @@ export default {
     if (popupStatusList) popupStatusList.innerHTML = "";
     if (popupProgress) popupProgress.style.display = "flex";
 
-    for (let i = 0; i < rows.length; i++) {
-      const row = rows[i];
-      const refRaw = String(row.projectReference ?? "").trim();
-      if (!refRaw) continue;
+    // Pre-fetch all existing IDs in ONE bulk request per list (saves hours)
+    console.log("Fetching existing item IDs...");
+    const existingCollMap = await fetchIdMap(COLLECTION_LIST);
+    const existingRevMap  = await fetchIdMap(REVENUE_LIST);
+    const existingInvMap  = await fetchIdMap(INVOICING_LIST);
+    const existingSeiMap  = await fetchIdMap(SEIBIES_LIST);
+    const existingInvtMap = await fetchIdMap(INVENTORY_LIST);
 
-      const ref = refRaw.replace(/\s+/g, " ");
-      const refKey = ref.toLowerCase();
+    // ⚡ 3. INCREASED BATCH SIZE (Safe because we removed duplicate queries)
+    const BATCH_SIZE = 5;
 
-      // ✅ Excel Description is used verbatim — "-", "#", "#N/A", numbers, symbols all kept.
-      //    No fallback to the reference. Only truly-empty stays empty.
-      const excelName = String(row.projectName ?? "").trim();
-      row.projectName = excelName;
+    for (let i = 0; i < rows.length; i += BATCH_SIZE) {
+      const batch = rows.slice(i, i + BATCH_SIZE);
 
-      console.log(`⏳ Processing ${i + 1} of ${total} — ${ref}`);
+      await Promise.all(batch.map(async (row) => {
+        const refRaw = String(row.projectReference ?? "").trim();
+        if (!refRaw) return;
 
-      const missing = missingMandatory(row);
-      if (missing.length) {
-        const msg = "Missing mandatory field(s): " + missing.join(", ");
-        importErrorRows.push({
-          rowNo: row.__rowNo ?? (i + 2),
-          projectReference: ref,
-          projectName: String(row.projectName ?? "").trim(),
-          missing,
-          message: msg,
-          raw: row.__raw ?? []
-        });
-        addStatusRow("error", ref || "(no ref)", String(row.projectName ?? ""), msg);
-        continue;
-      }
+        const ref = refRaw.replace(/\s+/g, " ");
+        const refKey = ref.toLowerCase();
 
-      try {
-        let projectId: number | null = null;
-        let projectTitle = "";
-        let isNew = false;
+        const excelName = String(row.projectName ?? "").trim();
+        row.projectName = excelName;
 
-        const cached = resolvedProjectCache.get(refKey);
-        if (cached) {
-          projectId = cached.id;
-          projectTitle = cached.title;
-          isNew = false;
-        } else {
-          const projData = await resolveProjectByRef(ref);
-          if (projData) {
-            projectId = projData.Id;
-
-            const storedTitle = String(projData.Title ?? "").trim();
-            const excelTitle  = String(row.projectName ?? "").trim();
-
-            // ✅ Excel Description wins (even "-", "#", numbers, symbols).
-            //    Fall back to stored SharePoint title only when Excel is truly empty.
-            //    Never fall back to the reference.
-            projectTitle = excelTitle !== "" ? excelTitle : storedTitle;
-
-            isNew = false;
-            resolvedProjectCache.set(refKey, { id: projectId as number, title: projectTitle });
-            seenRefs.add(refKey);
-          }
+        const missing = missingMandatory(row);
+        if (missing.length) {
+          const msg = "Missing mandatory field(s): " + missing.join(", ");
+          importErrorRows.push({
+            rowNo: row.__rowNo ?? (i + 2),
+            projectReference: ref,
+            projectName: String(row.projectName ?? "").trim(),
+            missing, message: msg, raw: row.__raw ?? []
+          });
+          addStatusRow("error", ref || "(no ref)", String(row.projectName ?? ""), msg);
+          return;
         }
 
-        if (projectId === null) {
-          if (seenRefs.has(refKey)) {
-            const again = await resolveProjectByRef(ref);
-            if (!again) throw new Error(`Project "${ref}" was created earlier in this import but could not be re-resolved.`);
-            projectId = again.Id;
-            projectTitle = String(again.Title ?? "").trim();
-            isNew = false;
-            resolvedProjectCache.set(refKey, { id: projectId as number, title: projectTitle });
+        try {
+          let projectId: number | null = null;
+          let projectTitle = "";
+          let isNew = false;
+
+          const cached = resolvedProjectCache.get(refKey);
+          if (cached) {
+            projectId = cached.id;
+            projectTitle = cached.title;
           } else {
-            isNew = true;
+            const projData = await resolveProjectByRef(ref);
+            if (projData) {
+              projectId = projData.Id;
+              const storedTitle = String(projData.Title ?? "").trim();
+              const excelTitle  = String(row.projectName ?? "").trim();
+              projectTitle = excelTitle !== "" ? excelTitle : storedTitle;
+              resolvedProjectCache.set(refKey, { id: projectId as number, title: projectTitle });
+              seenRefs.add(refKey);
+            }
+          }
 
-            // ✅ Title = Excel Description only. No fallback to the reference.
-            projectTitle = String(row.projectName ?? "").trim();
+          if (projectId === null) {
+            if (seenRefs.has(refKey)) {
+              const again = await resolveProjectByRef(ref);
+              if (!again) throw new Error(`Project "${ref}" was created earlier in this import but could not be re-resolved.`);
+              projectId = again.Id;
+              projectTitle = String(again.Title ?? "").trim();
+              resolvedProjectCache.set(refKey, { id: projectId as number, title: projectTitle });
+            } else {
+              isNew = true;
+              projectTitle = String(row.projectName ?? "").trim();
 
-            const entityType = await getListEntityType(PROJECT_LIST);
-            const plPayload: any = { __metadata: { type: entityType } };
-            const plFields = await getListFields(PROJECT_LIST);
+              const entityType = await getListEntityType(PROJECT_LIST);
+              const plPayload: any = { __metadata: { type: entityType } };
+              const plFields = await getListFields(PROJECT_LIST);
 
-            const writePL = (desired: string, value: any, isDate = false): void => {
-              const f = findField(plFields, desired);
-              if (!f) return;
-              if (f.type === "Lookup" || f.type === "User") return;
+              const writePL = (desired: string, value: any, isDate = false): void => {
+                const f = findField(plFields, desired);
+                if (!f || f.type === "Lookup" || f.type === "User") return;
+                if (isDate || f.type === "DateTime") { plPayload[f.internalName] = fixSPDate(value); return; }
+                if (f.type === "Number" || f.type === "Currency") {
+                  const n = parseNumText(value);
+                  if (n !== null) plPayload[f.internalName] = n;
+                } else if (value !== undefined && value !== null && String(value) !== "") {
+                  plPayload[f.internalName] = String(value);
+                }
+              };
 
-              if (isDate || f.type === "DateTime") {
-                plPayload[f.internalName] = fixSPDate(value);
-                return;
-              }
+              if (projectTitle !== "") plPayload.Title = projectTitle;
+              writePL("ProjectReference", ref);
+              writePL("PC", row.profitCentre);
+              writePL("CustomerName", row.customerName);
+              writePL("NWC", row.nwc);
 
-              if (f.type === "Number" || f.type === "Currency") {
-                const n = parseNumText(value);
-                if (n !== null) plPayload[f.internalName] = n;
-              } else if (value !== undefined && value !== null && String(value) !== "") {
-                plPayload[f.internalName] = String(value);
-              }
-            };
+              const currentProjectData = {
+                status: row.status || "",
+                contractualDeliveryDate: row.contractualDeliveryDate || "",
+                revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
+                prQuality: row.prQuality || "",
+                prSubmissionStatus: row.prSubmissionStatus || "",
+                prApprovalStatus: row.prApprovalStatus || "",
+                nwc: row.nwc ?? 0
+              };
+              plPayload["ProjectMonth"] = JSON.stringify({ [currentMonthKey]: currentProjectData });
 
-            // ✅ Only set Title when we actually have one (avoid blanking a new item’s required title)
-            if (projectTitle !== "") plPayload.Title = projectTitle;
-
-            writePL("ProjectReference", ref);
-            writePL("PC", row.profitCentre);
-            writePL("CustomerName", row.customerName);
-            writePL("NWC", row.nwc);
-
-            // Prepare current month JSON for Project List
-            const currentProjectData = {
-              status: row.status || "",
-              contractualDeliveryDate: row.contractualDeliveryDate || "",
-              revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
-              prQuality: row.prQuality || "",
-              prSubmissionStatus: row.prSubmissionStatus || "",
-              prApprovalStatus: row.prApprovalStatus || "",
-              nwc: row.nwc ?? 0
-            };
-            plPayload["ProjectMonth"] = JSON.stringify({ [currentMonthKey]: currentProjectData });
-
-            {
               const byName = await getUserIdsByTitle();
               const peopleDesired: Array<[string, string]> = [
                 ["GroupHead1", "groupHead"], ["ProjectManager", "projectManager"],
@@ -2144,79 +2187,52 @@ export default {
                 if (!f || f.type !== "User" || !nm) return;
                 const uid = byName[nm.toLowerCase()];
                 if (uid) plPayload[f.internalName + "Id"] = String(uid);
-                else console.warn(`Skipping ${desired} (${nm}) — not found in site users`);
               });
-            }
 
-            const createRes = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items`, {
-              method: "POST",
-              headers: {
-                Accept: "application/json;odata=verbose",
-                "Content-Type": "application/json;odata=verbose",
-                "X-RequestDigest": await getDigest()
-              },
-              body: JSON.stringify(plPayload)
-            });
-            if (!createRes.ok) {
-              const bodyText = await createRes.text();
-              console.error("Project List create failed:", bodyText);
-              throw new Error(`Could not create project on Project List: ${describeError(bodyText)}`);
-            }
-            try {
+              const createRes = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items`, {
+                method: "POST",
+                headers: {
+                  Accept: "application/json;odata=verbose",
+                  "Content-Type": "application/json;odata=verbose",
+                  "X-RequestDigest": await getDigest()
+                },
+                body: JSON.stringify(plPayload)
+              });
+              
+              if (!createRes.ok) throw new Error(`Could not create project: ${describeError(await createRes.text())}`);
               const j = await createRes.json();
               projectId = j.d.Id;
-            } catch (e) {
-              const again = await resolveProjectByRef(ref);
-              if (!again) throw new Error(`Project "${ref}" was created but could not be re-resolved.`);
-              projectId = again.Id;
+              resolvedProjectCache.set(refKey, { id: projectId as number, title: projectTitle });
+              seenRefs.add(refKey);
             }
-            resolvedProjectCache.set(refKey, { id: projectId as number, title: projectTitle });
-            seenRefs.add(refKey);
-          }
-        }
-
-        if (projectId === null) {
-          throw new Error(`Could not resolve or create project "${ref}".`);
-        }
-        const resolvedProjectId: number = projectId;
-
-        const notes: string[] = [];
-
-        // =====================================================================
-        // 1. UPDATE PROJECT LIST (Existing Project -> Append ProjectMonth JSON)
-        // =====================================================================
-        if (!isNew) {
-          const update: Record<string, number | string | null> = {};
-          const plFields = await getListFields(PROJECT_LIST);
-
-          const put = (desired: string, value: any, isDate = false): void => {
-            const f = findField(plFields, desired);
-            if (!f || f.type === "Lookup" || f.type === "User") return;
-
-            if (isDate || f.type === "DateTime") {
-              update[f.internalName] = fixSPDate(value);
-              return;
-            }
-
-            if (f.type === "Number" || f.type === "Currency") {
-              const n = typeof value === "number" ? value : parseNumText(value);
-              if (n !== null) update[f.internalName] = n;
-            } else if (value !== undefined && String(value).trim() !== "") {
-              update[f.internalName] = String(value);
-            }
-          };
-
-          put("NWC", row.nwc);
-          put("CustomerName", row.customerName);
-          put("PC", row.profitCentre);
-
-          // ✅ Write the Excel Description verbatim when present.
-          //    (projectTitle was already computed above from Excel or stored title.)
-          if (projectTitle !== "") {
-            put("Title", projectTitle);
           }
 
-          {
+          if (projectId === null) throw new Error(`Could not resolve or create project "${ref}".`);
+          const resolvedProjectId: number = projectId;
+          const notes: string[] = [];
+
+          // 1. UPDATE PROJECT LIST
+          if (!isNew) {
+            const update: Record<string, number | string | null> = {};
+            const plFields = await getListFields(PROJECT_LIST);
+
+            const put = (desired: string, value: any, isDate = false): void => {
+              const f = findField(plFields, desired);
+              if (!f || f.type === "Lookup" || f.type === "User") return;
+              if (isDate || f.type === "DateTime") { update[f.internalName] = fixSPDate(value); return; }
+              if (f.type === "Number" || f.type === "Currency") {
+                const n = typeof value === "number" ? value : parseNumText(value);
+                if (n !== null) update[f.internalName] = n;
+              } else if (value !== undefined && String(value).trim() !== "") {
+                update[f.internalName] = String(value);
+              }
+            };
+
+            put("NWC", row.nwc);
+            put("CustomerName", row.customerName);
+            put("PC", row.profitCentre);
+            if (projectTitle !== "") put("Title", projectTitle);
+
             const byName = await getUserIdsByTitle();
             const peopleDesired: Array<[string, string]> = [
               ["GroupHead1", "groupHead"], ["ProjectManager", "projectManager"],
@@ -2228,176 +2244,138 @@ export default {
               if (!f || f.type !== "User" || !nm) return;
               const uid = byName[nm.toLowerCase()];
               if (uid) update[f.internalName + "Id"] = String(uid);
-              else console.warn(`Skipping ${desired} (${nm}) — not found in site users`);
             });
+
+            const existingProjJson = await fetchExistingMonthJson(PROJECT_LIST, resolvedProjectId, "ProjectMonth");
+            existingProjJson[currentMonthKey] = {
+              status: row.status || "",
+              contractualDeliveryDate: row.contractualDeliveryDate || "",
+              revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
+              prQuality: row.prQuality || "",
+              prSubmissionStatus: row.prSubmissionStatus || "",
+              prApprovalStatus: row.prApprovalStatus || "",
+              nwc: row.nwc ?? 0
+            };
+            update["ProjectMonth"] = JSON.stringify(cleanOldMonths(existingProjJson));
+
+            if (Object.keys(update).length) {
+              const f = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items(${resolvedProjectId})`, {
+                method: "POST",
+                headers: {
+                  Accept: "application/json;odata=verbose",
+                  "Content-Type": "application/json;odata=verbose",
+                  "X-RequestDigest": await getDigest(),
+                  "X-HTTP-Method": "MERGE",
+                  "IF-MATCH": "*"
+                },
+                body: JSON.stringify({ __metadata: { type: await getListEntityType(PROJECT_LIST) }, ...update })
+              });
+              if (!f.ok) notes.push("⚠ Project List update failed");
+            }
           }
 
-          // JSON Merge Logic for Project List
-          const existingProjJson = await fetchExistingMonthJson(PROJECT_LIST, resolvedProjectId, "ProjectMonth");
-          const currentProjectData = {
-            status: row.status || "",
-            contractualDeliveryDate: row.contractualDeliveryDate || "",
-            revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
-            prQuality: row.prQuality || "",
-            prSubmissionStatus: row.prSubmissionStatus || "",
-            prApprovalStatus: row.prApprovalStatus || "",
-            nwc: row.nwc ?? 0
+          // 2. UPDATE COLLECTION LIST (Uses ID Map, No findChildRow)
+          const collValues: Record<string, number | string> = {};
+          const cMap: Array<[string, string]> = [
+            ["NormalDue", "normalDue"], ["NormalOverdue", "normalOverdue"],
+            ["RetentionDue", "retentionDue"], ["RetentionOverdue", "retentionOverdue"],
+            ["GstTds", "gstTds"], ["WHT", "wht"], ["ReceivableValue", "receivableValue"]
+          ];
+          const currentReceivableData = {
+            normalDue: row.normalDue || 0, normalOverdue: row.normalOverdue || 0,
+            retentionDue: row.retentionDue || 0, retentionOverdue: row.retentionOverdue || 0,
+            gstTds: row.gstTds || 0, wht: row.wht || 0, receivableValue: row.receivableValue || 0
           };
-          existingProjJson[currentMonthKey] = currentProjectData;
-          update["ProjectMonth"] = JSON.stringify(cleanOldMonths(existingProjJson));
+          cMap.forEach(([fieldKey, excelKey]) => {
+            const v = row[excelKey];
+            if (typeof v === "number" && v !== 0) collValues[fieldKey] = v;
+          });
 
-          if (Object.keys(update).length) {
-            const f = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items(${resolvedProjectId})`, {
-              method: "POST",
-              headers: {
-                Accept: "application/json;odata=verbose",
-                "Content-Type": "application/json;odata=verbose",
-                "X-RequestDigest": await getDigest(),
-                "X-HTTP-Method": "MERGE",
-                "IF-MATCH": "*"
-              },
-              body: JSON.stringify({ __metadata: { type: await getListEntityType(PROJECT_LIST) }, ...update })
+          const collRowId = existingCollMap.get(resolvedProjectId);
+          let existingCollJson = collRowId ? await fetchExistingMonthJson(COLLECTION_LIST, collRowId, "ReceivableValueMonth") : {};
+          existingCollJson[currentMonthKey] = currentReceivableData;
+          collValues["ReceivableValueMonth"] = JSON.stringify(cleanOldMonths(existingCollJson));
+
+          const collRes = await upsertRow({
+            listName: COLLECTION_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
+            values: collValues, rowId: collRowId
+          });
+          if (!collRes.success) notes.push("⚠ Collection List update failed");
+
+          // 3. UPDATE REVENUE FORECAST LIST (Uses ID Map)
+          if (typeof row.obl === "number" || typeof row.obl === "string") {
+            const revRowId = existingRevMap.get(resolvedProjectId);
+            let existingRevJson = revRowId ? await fetchExistingMonthJson(REVENUE_LIST, revRowId, "OBLMonth") : {};
+            existingRevJson[currentMonthKey] = row.obl || 0;
+            const revValues: Record<string, number | string> = { OBLMonth: JSON.stringify(cleanOldMonths(existingRevJson)) };
+            if (typeof row.obl === "number" && row.obl !== 0) revValues["OBL"] = row.obl;
+
+            const revRes = await upsertRow({
+              listName: REVENUE_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
+              values: revValues, rowId: revRowId
             });
-            if (!f.ok) notes.push("⚠ Project List update failed: " + describeError(await f.text()));
+            if (!revRes.success) notes.push("⚠ Revenue Forecast List update failed");
           }
-        }
 
-        // =====================================================================
-        // 2. UPDATE COLLECTION LIST (Existing/New -> Append ReceivableValueMonth JSON)
-        // =====================================================================
-        const collValues: Record<string, number | string> = {};
-        const cMap: Array<[string, string]> = [
-          ["NormalDue", "normalDue"], ["NormalOverdue", "normalOverdue"],
-          ["RetentionDue", "retentionDue"], ["RetentionOverdue", "retentionOverdue"],
-          ["GstTds", "gstTds"], ["WHT", "wht"], ["ReceivableValue", "receivableValue"]
-        ];
+          // 4. UPDATE OTHER SINGLE TABLES (Uses ID Maps)
+          const singleTables = [
+            { listName: INVOICING_LIST, excelKey: "invoicingPlanning", jsonColName: "OBLMonth", map: existingInvMap },
+            { listName: SEIBIES_LIST, excelKey: "seibies", jsonColName: "OBLMonth", map: existingSeiMap },
+            { listName: INVENTORY_LIST, excelKey: "inventory", jsonColName: "OBLMonth", map: existingInvtMap }
+          ];
 
-        const currentReceivableData = {
-          normalDue: row.normalDue || 0,
-          normalOverdue: row.normalOverdue || 0,
-          retentionDue: row.retentionDue || 0,
-          retentionOverdue: row.retentionOverdue || 0,
-          gstTds: row.gstTds || 0,
-          wht: row.wht || 0,
-          receivableValue: row.receivableValue || 0
-        };
+          for (const { listName, excelKey, jsonColName, map } of singleTables) {
+            const v = row[excelKey];
+            const rowId = map.get(resolvedProjectId);
+            let existingJson = rowId ? await fetchExistingMonthJson(listName, rowId, jsonColName) : {};
+            existingJson[currentMonthKey] = v || 0;
 
-        cMap.forEach(([fieldKey, excelKey]) => {
-          const v = row[excelKey];
-          if (typeof v === "number" && v !== 0) collValues[fieldKey] = v;
-        });
+            const values: Record<string, number | string> = { [jsonColName]: JSON.stringify(cleanOldMonths(existingJson)) };
+            if (typeof v === "number" && v !== 0) values["OBL"] = v;
 
-        const existingCollRes = await findChildRow(COLLECTION_LIST, resolvedProjectId, ref, projectTitle);
-        let existingCollJson = existingCollRes.row
-          ? await fetchExistingMonthJson(COLLECTION_LIST, existingCollRes.row.Id, "ReceivableValueMonth")
-          : {};
+            const ur = await upsertRow({
+              listName, projectId: resolvedProjectId, projectRef: ref, projectTitle,
+              values, rowId: rowId
+            });
+            if (!ur.success) notes.push(`⚠ ${listName} update failed`);
+          }
 
-        existingCollJson[currentMonthKey] = currentReceivableData;
-        collValues["ReceivableValueMonth"] = JSON.stringify(cleanOldMonths(existingCollJson));
-
-        const collRes = await upsertRow({
-          listName: COLLECTION_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-          values: collValues, rowId: existingCollRes.row ? existingCollRes.row.Id : undefined
-        });
-        if (!collRes.success) notes.push("⚠ Collection List: " + describeError(collRes.error));
-
-        // =====================================================================
-        // 3. UPDATE REVENUE FORECAST LIST (Existing/New -> Append OBLMonth JSON)
-        // =====================================================================
-        if (typeof row.obl === "number" || typeof row.obl === "string") {
-          const existingRevRes = await findChildRow(REVENUE_LIST, resolvedProjectId, ref, projectTitle);
-          let existingRevJson = existingRevRes.row
-            ? await fetchExistingMonthJson(REVENUE_LIST, existingRevRes.row.Id, "OBLMonth")
-            : {};
-
-          existingRevJson[currentMonthKey] = row.obl || 0;
-          const revValues: Record<string, number | string> = {
-            OBLMonth: JSON.stringify(cleanOldMonths(existingRevJson))
-          };
-          if (typeof row.obl === "number" && row.obl !== 0) revValues["OBL"] = row.obl;
-
-          const revRes = await upsertRow({
-            listName: REVENUE_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-            values: revValues, rowId: existingRevRes.row ? existingRevRes.row.Id : undefined
+          const baseMsg = isNew ? "New project created." : "Existing project updated.";
+          addStatusRow(isNew ? "created" : "updated", ref, projectTitle, notes.length ? baseMsg + " " + notes.join(" ") : baseMsg);
+          
+        } catch (err) {
+          console.error("Error processing row:", row, err);
+          const msg = describeError(err instanceof Error ? err.message : err);
+          importErrorRows.push({
+            rowNo: row.__rowNo ?? (i + 2), projectReference: ref,
+            projectName: String(row.projectName ?? "").trim(), missing: [], message: msg, raw: row.__raw ?? []
           });
-          if (!revRes.success) notes.push("⚠ Revenue Forecast List: " + describeError(revRes.error));
+          addStatusRow("error", ref, String(row.projectName ?? ""), msg);
         }
+      })); 
 
-        // =====================================================================
-        // 4. UPDATE OTHER SINGLE TABLES (Invoicing, SEIBIES, Inventory)
-        // =====================================================================
-        const singleTables: Array<{ listName: string; excelKey: string; jsonColName: string }> = [
-          { listName: INVOICING_LIST, excelKey: "invoicingPlanning", jsonColName: "OBLMonth" },
-          { listName: SEIBIES_LIST, excelKey: "seibies", jsonColName: "OBLMonth" },
-          { listName: INVENTORY_LIST, excelKey: "inventory", jsonColName: "OBLMonth" }
-        ];
-
-        for (const { listName, excelKey, jsonColName } of singleTables) {
-          const v = row[excelKey];
-          const existingRowRes = await findChildRow(listName, resolvedProjectId, ref, projectTitle);
-
-          let existingJson = existingRowRes.row
-            ? await fetchExistingMonthJson(listName, existingRowRes.row.Id, jsonColName)
-            : {};
-
-          existingJson[currentMonthKey] = v || 0;
-
-          const values: Record<string, number | string> = {
-            [jsonColName]: JSON.stringify(cleanOldMonths(existingJson))
-          };
-          if (typeof v === "number" && v !== 0) values["OBL"] = v;
-
-          const ur = await upsertRow({
-            listName, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-            values, rowId: existingRowRes.row ? existingRowRes.row.Id : undefined
-          });
-          if (!ur.success) notes.push("⚠ " + listName + ": " + describeError(ur.error));
-        }
-
-        const baseMsg = isNew
-          ? "New project created on Project List, then rows ensured on all source tables."
-          : "Existing project — values updated on Project List + source tables.";
-        addStatusRow(isNew ? "created" : "updated", ref, projectTitle,
-          notes.length ? baseMsg + " " + notes.join(" ") : baseMsg);
-      } catch (err) {
-        console.error("Error processing row:", row, err);
-        const msg = describeError(err instanceof Error ? err.message : err);
-
-        importErrorRows.push({
-          rowNo: row.__rowNo ?? (i + 2),
-          projectReference: ref,
-          projectName: String(row.projectName ?? "").trim(),
-          missing: [],
-          message: msg,
-          raw: row.__raw ?? []
-        });
-
-        addStatusRow("error", ref, String(row.projectName ?? ""), msg);
-      }
+      // Let the browser UI breathe
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
 
     if (popupProgress) popupProgress.style.display = "none";
     if (popupResults) popupResults.style.display = "block";
-
+    
     if (downloadErrorsBtn) {
       if (importErrorRows.length > 0) {
         downloadErrorsBtn.style.display = "inline-flex";
-        downloadErrorsBtn.textContent =
-          `⬇️ Download Error List (${importErrorRows.length} row${importErrorRows.length === 1 ? "" : "s"})`;
+        downloadErrorsBtn.textContent = `⬇️ Download Error List (${importErrorRows.length})`;
       } else {
         downloadErrorsBtn.style.display = "none";
       }
     }
-
-    showToast(`✅ Import complete — ${impCreated} new project(s), ${impUpdated} updated, ${impErrors} error(s) of ${total}`,
-      impErrors ? "warning" : "success", 6000);
+    
+    showToast(`✅ Import complete — ${impCreated} new, ${impUpdated} updated, ${impErrors} errors.`, impErrors ? "warning" : "success", 6000);
     await loadMaster();
   } catch (error) {
     console.error("Import error:", error);
     if (popupProgress) popupProgress.style.display = "none";
     if (popupResults) popupResults.style.display = "block";
-    if (downloadErrorsBtn) downloadErrorsBtn.style.display = "none";
-    if (popupStatusList) popupStatusList.innerHTML = "";
     addStatusRow("error", "(file)", file.name, describeError(error));
     showToast("❌ Import failed: " + describeError(error), "error", 6000);
   } finally {

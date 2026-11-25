@@ -130,56 +130,56 @@ const dashboardContent = `
         <section class="row-top">
           <section class="card obl">
             <div class="card-title">Order Backlog (OBL)</div>
-            <div class="kpi-num obl-num" id="dsOblTotal">99</div>
-            <div class="delta muted" id="dsOblDelta">99</div>
+            <div class="kpi-num obl-num" id="dsOblTotal">0</div>
+            <div class="delta muted" id="dsOblDelta">0</div>
           </section>
 
           <section class="card receivables">
             <div class="recv-main">
               <span class="card-title">Total Receivables</span>
-              <span class="kpi-num recv-total-num" id="dsTotalReceivables">99</span>
-              <div class="delta red" id="dsReceivablesDelta">99</div>
+              <span class="kpi-num recv-total-num" id="dsTotalReceivables">0</span>
+              <div class="delta red" id="dsReceivablesDelta">0</div>
             </div>
             <div class="recv-grid">
               <div class="recv-cell">
-                <div class="kpi-num val" id="dsNormalValue">99</div>
+                <div class="kpi-num val" id="dsNormalValue">0</div>
                 <div class="lbl">Normal</div>
-                <div class="delta" id="dsNormalDelta">99</div>
+                <div class="delta" id="dsNormalDelta">0</div>
               </div>
               <div class="recv-cell">
-                <div class="kpi-num val" id="dsNormalOverDueValue">99</div>
+                <div class="kpi-num val" id="dsNormalOverDueValue">0</div>
                 <div class="lbl">Normal OverDue</div>
-                <div class="delta" id="dsNormalOverDueDelta">99</div>
+                <div class="delta" id="dsNormalOverDueDelta">0</div>
               </div>
               <div class="recv-cell">
-                <div class="kpi-num val" id="dsGstTdsValue">99</div>
+                <div class="kpi-num val" id="dsGstTdsValue">0</div>
                 <div class="lbl">GST TDS</div>
-                <div class="delta" id="dsGstTdsDelta">99</div>
+                <div class="delta" id="dsGstTdsDelta">0</div>
               </div>
               <div class="recv-cell danger col-total">
-                <div class="kpi-num val" id="dsTotalOverDueValue">99</div>
+                <div class="kpi-num val" id="dsTotalOverDueValue">0</div>
                 <div class="lbl">Total OverDue</div>
-                <div class="delta" id="dsTotalOverDueDelta">99</div>
+                <div class="delta" id="dsTotalOverDueDelta">0</div>
               </div>
               <div class="recv-cell">
-                <div class="kpi-num val" id="dsRetentionValue">99</div>
+                <div class="kpi-num val" id="dsRetentionValue">0</div>
                 <div class="lbl">Retention</div>
-                <div class="delta" id="dsRetentionDelta">99</div>
+                <div class="delta" id="dsRetentionDelta">0</div>
               </div>
               <div class="recv-cell">
-                <div class="kpi-num val" id="dsRetentionOverDueValue">99</div>
+                <div class="kpi-num val" id="dsRetentionOverDueValue">0</div>
                 <div class="lbl">Retention OverDue</div>
-                <div class="delta" id="dsRetentionOverDueDelta">99</div>
+                <div class="delta" id="dsRetentionOverDueDelta">0</div>
               </div>
               <div class="recv-cell">
-                <div class="kpi-num val" id="dsItTdsOthersValue">99</div>
+                <div class="kpi-num val" id="dsItTdsOthersValue">0</div>
                 <div class="lbl">IT TDS / Others</div>
-                <div class="delta" id="dsItTdsOthersDelta">99</div>
+                <div class="delta" id="dsItTdsOthersDelta">0</div>
               </div>
               <div class="recv-cell danger col-total">
-                <div class="kpi-num val" id="dsTotalRetentionValue">99</div>
+                <div class="kpi-num val" id="dsTotalRetentionValue">0</div>
                 <div class="lbl">Total Retention</div>
-                <div class="delta" id="dsTotalRetentionDelta">99</div>
+                <div class="delta" id="dsTotalRetentionDelta">0</div>
               </div>
             </div>
           </section>
@@ -188,23 +188,23 @@ const dashboardContent = `
             <div class="proj-head">
               <div class="proj-left">
                 <span class="card-title">Total Projects</span>
-                <span class="kpi-num proj-num" id="dsTotalProjectsCard">99</span> 
+                <span class="kpi-num proj-num" id="dsTotalProjectsCard">0</span> 
               </div>
               <div class="proj-chips">
-                <div class="chip"><span class="n" id="dsRelCount">99</span><span class="t">REL</span></div>
-                <div class="chip"><span class="n" id="dsTecoCount">99</span><span class="t">TECO</span></div>
-                <div class="chip"><span class="n" id="dsSoCount">99</span><span class="t">SO</span></div>
-                <div class="chip"><span class="n" id="dsOtherCount">99</span><span class="t">Other</span></div>
+                <div class="chip"><span class="n" id="dsRelCount">0</span><span class="t">REL</span></div>
+                <div class="chip"><span class="n" id="dsTecoCount">0</span><span class="t">TECO</span></div>
+                <div class="chip"><span class="n" id="dsSoCount">0</span><span class="t">SO</span></div>
+                <div class="chip"><span class="n" id="dsOtherCount">0</span><span class="t">Other</span></div>
               </div>
             </div>
             <div class="delivery-row">
               <div class="alert alert-red">
                 <div class="lbl">Delivery Date Crossed</div>
-                <div class="kpi-num" id="dsDeliveryCrossed">99</div>
+                <div class="kpi-num" id="dsDeliveryCrossed">0</div>
               </div>
               <div class="alert alert-steel">
                 <div class="lbl">To Cross In 45 Days</div>
-                <div class="kpi-num" id="dsDeliveryToCross">99</div>
+                <div class="kpi-num" id="dsDeliveryToCross">0</div>
               </div>
             </div>
           </section>
@@ -220,26 +220,26 @@ const dashboardContent = `
             <div class="pair">
               <div class="pair-box">
                 <div class="lbl">Revenue Plan</div>
-                <div class="kpi-num plan" id="dsRevenuePlan">99</div>
+                <div class="kpi-num plan" id="dsRevenuePlan">0</div>
               </div>
               <div class="pair-box">
                 <div class="lbl">Collection Plan</div>
-                <div class="kpi-num plan" id="dsCollectionPlan">99</div>
+                <div class="kpi-num plan" id="dsCollectionPlan">0</div>
               </div>
             </div>
             <div class="perf-div"></div>
             <div class="pair">
               <div class="pair-box">
                 <div class="lbl">Revenue Actual</div>
-                <div class="kpi-num green actual" id="dsRevenueActual">99</div>
-                <div class="delta" id="dsRevenuePercentage">99</div>
-                <div class="bar low"><i style="width:99%" id="dsRevenueBar"></i></div>
+                <div class="kpi-num green actual" id="dsRevenueActual">0</div>
+                <div class="delta" id="dsRevenuePercentage">0</div>
+                <div class="bar low"><i style="width:0%" id="dsRevenueBar"></i></div>
               </div>
               <div class="pair-box">
                 <div class="lbl">Collection Actual</div>
-                <div class="kpi-num green actual" id="dsCollectionActual">99</div>
-                <div class="delta" id="dsCollectionPercentage">99</div>
-                <div class="bar low"><i style="width:99%" id="dsCollectionBar"></i></div>
+                <div class="kpi-num green actual" id="dsCollectionActual">0</div>
+                <div class="delta" id="dsCollectionPercentage">0</div>
+                <div class="bar low"><i style="width:0%" id="dsCollectionBar"></i></div>
               </div>
             </div>
           </section>
@@ -252,26 +252,26 @@ const dashboardContent = `
             <div class="pair">
               <div class="pair-box">
                 <div class="lbl">YTD Revenue Plan</div>
-                <div class="kpi-num plan" id="dsYtdRevenuePlan">99</div>
+                <div class="kpi-num plan" id="dsYtdRevenuePlan">0</div>
               </div>
               <div class="pair-box">
                 <div class="lbl">YTD Collection Plan</div>
-                <div class="kpi-num plan" id="dsYtdCollectionPlan">99</div>
+                <div class="kpi-num plan" id="dsYtdCollectionPlan">0</div>
               </div>
             </div>
             <div class="perf-div"></div>
             <div class="pair">
               <div class="pair-box">
                 <div class="lbl">YTD Revenue Actual</div>
-                <div class="kpi-num green actual" id="dsYtdRevenueActual">99</div>
-                <div class="delta" id="dsYtdRevenuePercentage">99</div>
-                <div class="bar mid"><i style="width:99%" id="dsYtdRevenueBar"></i></div>
+                <div class="kpi-num green actual" id="dsYtdRevenueActual">0</div>
+                <div class="delta" id="dsYtdRevenuePercentage">0</div>
+                <div class="bar mid"><i style="width:0%" id="dsYtdRevenueBar"></i></div>
               </div>
               <div class="pair-box">
                 <div class="lbl">YTD Collection Actual</div>
-                <div class="kpi-num green actual" id="dsYtdCollectionActual">99</div>
-                <div class="delta" id="dsYtdCollectionPercentage">99</div>
-                <div class="bar"><i style="width:99%" id="dsYtdCollectionBar"></i></div>
+                <div class="kpi-num green actual" id="dsYtdCollectionActual">0</div>
+                <div class="delta" id="dsYtdCollectionPercentage">0</div>
+                <div class="bar"><i style="width:0%" id="dsYtdCollectionBar"></i></div>
               </div>
             </div>
           </section>
@@ -284,19 +284,19 @@ const dashboardContent = `
             <div class="wc-grid">
               <div class="metric-line wc-cell">
                 <div class="name">BIES</div>
-                <div class="kpi-num" id="dsBiesValue">99</div>
+                <div class="kpi-num" id="dsBiesValue">0</div>
               </div>
               <div class="metric-line wc-cell">
                 <div class="name">NWC</div>
-                <div class="kpi-num red" id="dsNwcValue">99</div>
+                <div class="kpi-num red" id="dsNwcValue">0</div>
               </div>
               <div class="metric-line wc-cell">
                 <div class="name">SEI</div>
-                <div class="kpi-num" id="dsSeiValue">99</div>
+                <div class="kpi-num" id="dsSeiValue">0</div>
               </div>
               <div class="metric-line wc-cell">
                 <div class="name">Inventory</div>
-                <div class="kpi-num" id="dsInventoryValue">99</div>
+                <div class="kpi-num" id="dsInventoryValue">0</div>
               </div>
             </div>
           </section>
@@ -306,31 +306,31 @@ const dashboardContent = `
           <section class="card procurement">
             <div class="card-title">Procurement Pending</div>
             <div class="list proc-list" style="grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(52px,auto);">
-              <div class="list-row"><span class="name">RFQ Pending</span><span class="val" id="dsRfqPending">99</span></div>
-              <div class="list-row"><span class="name">Offer Pending</span><span class="val" id="dsOfferPending">99</span></div>
-              <div class="list-row"><span class="name">TC Pending</span><span class="val" id="dsTcPending">99</span></div>
-              <div class="list-row"><span class="name">Order Closure Pending</span><span class="val" id="dsOrderClosurePending">99</span></div>
-              <div class="list-row"><span class="name">PR Pending</span><span class="val" id="dsPrPending">99</span></div>
-              <div class="list-row"><span class="name">PO Pending</span><span class="val" id="dsPoPending">99</span></div>
-              <div class="list-row"><span class="name">Document Approval Pending</span><span class="val" id="dsDocApprovalPending">99</span></div>
-              <div class="list-row"><span class="name">MFC Pending</span><span class="val" id="dsMfcPending">99</span></div>
-              <div class="list-row"><span class="name">Inspection Pending</span><span class="val" id="dsInspectionPending">99</span></div>
-              <div class="list-row"><span class="name">Dispatch Pending</span><span class="val" id="dsDispatchPending">99</span></div>
-              <div class="list-row"><span class="name">Delivery Pending</span><span class="val" id="dsDeliveryPending">99</span></div>
-              <div class="list-row ok"><span class="name">Delivered</span><span class="val" id="dsDeliveredCount">99</span></div>
+              <div class="list-row"><span class="name">RFQ Pending</span><span class="val" id="dsRfqPending">0</span></div>
+              <div class="list-row"><span class="name">Offer Pending</span><span class="val" id="dsOfferPending">0</span></div>
+              <div class="list-row"><span class="name">TC Pending</span><span class="val" id="dsTcPending">0</span></div>
+              <div class="list-row"><span class="name">Order Closure Pending</span><span class="val" id="dsOrderClosurePending">0</span></div>
+              <div class="list-row"><span class="name">PR Pending</span><span class="val" id="dsPrPending">0</span></div>
+              <div class="list-row"><span class="name">PO Pending</span><span class="val" id="dsPoPending">0</span></div>
+              <div class="list-row"><span class="name">Document Approval Pending</span><span class="val" id="dsDocApprovalPending">0</span></div>
+              <div class="list-row"><span class="name">MFC Pending</span><span class="val" id="dsMfcPending">0</span></div>
+              <div class="list-row"><span class="name">Inspection Pending</span><span class="val" id="dsInspectionPending">0</span></div>
+              <div class="list-row"><span class="name">Dispatch Pending</span><span class="val" id="dsDispatchPending">0</span></div>
+              <div class="list-row"><span class="name">Delivery Pending</span><span class="val" id="dsDeliveryPending">0</span></div>
+              <div class="list-row ok"><span class="name">Delivered</span><span class="val" id="dsDeliveredCount">0</span></div>
             </div>
           </section>
 
           <section class="card documents">
             <div class="card-title">Total Documents — DCI</div>
             <div class="list doc-list">
-              <div class="list-row"><span class="name">Total Documents</span><span class="val" id="dsTotalDocuments">99</span></div>
-              <div class="list-row"><span class="name">Not Submitted</span><span class="val" id="dsNotSubmittedDocs">99</span></div>
-              <div class="list-row"><span class="name">Not Approved</span><span class="val" id="dsNotApprovedDocs">99</span></div>
-              <div class="list-row doc-revised"><span class="name">Revised — Not Submitted / Approved with comments</span><span class="val" id="dsRevisedDocs">99</span></div>
-              <div class="list-row ok"><span class="name">Approved</span><span class="val" id="dsApprovedDocs">99</span></div>
-              <div class="list-row"><span class="name">Rejected</span><span class="val" id="dsRejectedDocs">99</span></div>
-              <div class="list-row"><span class="name">Retained for Information</span><span class="val" id="dsRetainedDocs">99</span></div>
+              <div class="list-row"><span class="name">Total Documents</span><span class="val" id="dsTotalDocuments">0</span></div>
+              <div class="list-row"><span class="name">Not Submitted</span><span class="val" id="dsNotSubmittedDocs">0</span></div>
+              <div class="list-row"><span class="name">Not Approved</span><span class="val" id="dsNotApprovedDocs">0</span></div>
+              <div class="list-row doc-revised"><span class="name">Revised — Not Submitted / Approved with comments</span><span class="val" id="dsRevisedDocs">0</span></div>
+              <div class="list-row ok"><span class="name">Approved</span><span class="val" id="dsApprovedDocs">0</span></div>
+              <div class="list-row"><span class="name">Rejected</span><span class="val" id="dsRejectedDocs">0</span></div>
+              <div class="list-row"><span class="name">Retained for Information</span><span class="val" id="dsRetainedDocs">0</span></div>
             </div>
           </section>
 
@@ -340,31 +340,31 @@ const dashboardContent = `
               <div class="prq-section">
                 <div class="prq-section-header">
                   <span>Submission & Approval Status</span>
-                  <span class="prq-total" id="dsTotalProjects">99</span>
+                  <span class="prq-total" id="dsTotalProjects">0</span>
                 </div>
                 <div class="prq-bar-row">
                   <div class="prq-bar-label">
                     <span>Submitted</span>
-                    <span class="prq-bar-val submitted-val" id="dsSubmittedProjects">99</span>
+                    <span class="prq-bar-val submitted-val" id="dsSubmittedProjects">0</span>
                   </div>
-                  <div class="prq-bar-track"><i class="prq-bar-fill submitted" id="dsSubmittedBar" style="width:99%"></i></div>
-                  <div class="prq-bar-pct" id="dsSubmittedPct">99</div>
+                  <div class="prq-bar-track"><i class="prq-bar-fill submitted" id="dsSubmittedBar" style="width:0%"></i></div>
+                  <div class="prq-bar-pct" id="dsSubmittedPct">0</div>
                 </div>
                 <div class="prq-bar-row">
                   <div class="prq-bar-label">  
                     <span>Not Submitted</span>
-                    <span class="prq-bar-val not-submitted-val" id="dsNotSubmittedProjects">99</span>
+                    <span class="prq-bar-val not-submitted-val" id="dsNotSubmittedProjects">0</span>
                   </div>
-                  <div class="prq-bar-track"><i class="prq-bar-fill not-submitted" id="dsNotSubmittedBar" style="width:99%"></i></div>
-                  <div class="prq-bar-pct" id="dsNotSubmittedPct">99</div>
+                  <div class="prq-bar-track"><i class="prq-bar-fill not-submitted" id="dsNotSubmittedBar" style="width:0%"></i></div>
+                  <div class="prq-bar-pct" id="dsNotSubmittedPct">0</div>
                 </div>
                 <div class="prq-bar-row">
                   <div class="prq-bar-label">
                     <span>Approved</span>
-                    <span class="prq-bar-val approved-val" id="dsApprovedProjects">99</span>
+                    <span class="prq-bar-val approved-val" id="dsApprovedProjects">0</span>
                   </div>
-                  <div class="prq-bar-track"><i class="prq-bar-fill approved" id="dsApprovedBar" style="width:99%"></i></div>
-                  <div class="prq-bar-pct" id="dsApprovedPct">99</div>
+                  <div class="prq-bar-track"><i class="prq-bar-fill approved" id="dsApprovedBar" style="width:0%"></i></div>
+                  <div class="prq-bar-pct" id="dsApprovedPct">0</div>
                 </div>
               </div>   
 
@@ -373,9 +373,9 @@ const dashboardContent = `
                   <span>Data Quality</span>
                 </div> 
                 <div class="prq-sub-row">
-                  <span class="prq-sub-label" id="dsPrQualityMonth">99</span>
+                  <span class="prq-sub-label" id="dsPrQualityMonth">0</span>
                   <div class="prq-bar-track flex-1"><i class="prq-bar-fill submitted" id="dsPrQualityBar" style="width:0%"></i></div>
-                  <span class="prq-sub-pct" id="dsPrQualityAverage">99</span>
+                  <span class="prq-sub-pct" id="dsPrQualityAverage">0</span>
                 </div>                 
               </div>
             </div>
@@ -454,7 +454,7 @@ const dashboardScript = (): void => {
       return `${num.toFixed(2)}%`;
     };
 
-    const safeJsonParse = (jsonString: string | undefined, fallback: any = {}): any => {
+      const safeJsonParse = (jsonString: string | undefined, fallback: any = {}): any => {
       try {
         if (!jsonString || jsonString.trim() === '' || jsonString === '""' || jsonString === 'null') {
           return fallback;
@@ -463,6 +463,39 @@ const dashboardScript = (): void => {
       } catch (_error) {
         return fallback;
       }
+    };
+
+    // ⚡ SAFE FETCH: Prevents 429 Too Many Requests from crashing the dashboard
+      // ⚡ SAFE FETCH: Prevents 429 Too Many Requests from crashing the dashboard
+    const safeFetch = async (url: string, options: any = {}): Promise<Response> => {
+      // ✅ FIX: Use native `fetch` here, NOT safeFetch!
+      let res = await fetch(url, {
+        credentials: 'same-origin',
+        ...options,
+        headers: {
+          'Accept': 'application/json;odata=verbose',
+          ...(options.headers || {})
+        }
+      });
+      
+      let retries = 0;
+      while (res.status === 429 && retries < 5) {
+        const waitSec = parseInt(res.headers.get("Retry-After") || "5", 10);
+        console.warn(`⚠️ Dashboard throttled (429). Waiting ${waitSec}s...`);
+        await new Promise(r => setTimeout(r, waitSec * 1000));
+        
+        // ✅ FIX: Use native `fetch` here too
+        res = await fetch(url, {
+          credentials: 'same-origin',
+          ...options,
+          headers: {
+            'Accept': 'application/json;odata=verbose',
+            ...(options.headers || {})
+          }
+        });
+        retries++;
+      }
+      return res;
     };
 
     // ============================================================
@@ -633,7 +666,7 @@ const changePct = (current: number, previous: number): number => {
 
       let result: { exists: boolean; type: string };
       try {
-        const res = await fetch(
+        const res = await safeFetch(
           `${siteUrl}/_api/web/lists/getbytitle('${listName}')/fields?$filter=InternalName eq 'ProjectReference'&$select=InternalName,TypeAsString,ReadOnlyField`,
           { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' }
         );
@@ -670,7 +703,7 @@ const changePct = (current: number, previous: number): number => {
       for (let i = 0; i < attempts.length; i++) {
         const url = `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=${attempts[i]}&$top=5000`;
         console.log(`📊 Fetching ${listName} data:`, url.replace(siteUrl, ''));
-        const res = await fetch(url, {
+        const res = await safeFetch(url, {
           headers: { 'Accept': 'application/json;odata=verbose' },
           credentials: 'same-origin'
         });
@@ -963,7 +996,7 @@ const fetchReceivablesData = async (monthKey: string, projectIds: Set<number>): 
     // Fetch OBLMonth instead of InventoryActual
     const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.inventoryList}')/items?$select=Id,ProjectId,OBLMonth&$top=5000`;
 
-    const res = await fetch(url, {
+    const res = await safeFetch(url, {
       headers: { 'Accept': 'application/json;odata=verbose' },
       credentials: 'same-origin'
     });
@@ -1049,7 +1082,7 @@ const fetchPrQualityData = async (monthKey: string, projectIds: Set<number>): Pr
     const selectString = 'Id,Title,NWC,ProjectMonth';
     const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.projectList}')/items?$select=${selectString}&$top=5000`;
 
-    const res = await fetch(url, {
+    const res = await safeFetch(url, {
       headers: { 'Accept': 'application/json;odata=verbose' },
       credentials: 'same-origin'
     });
@@ -1221,7 +1254,7 @@ nwcCount++;
         };
 
         const fieldsUrl = `${siteUrl}/_api/web/lists/getbytitle('ProcurementTracker')/fields?$select=InternalName,Title,TypeAsString&$top=5000`;
-        const fieldsRes = await fetch(fieldsUrl, {
+        const fieldsRes = await safeFetch(fieldsUrl, {
           headers: { 'Accept': 'application/json;odata=verbose' },
           credentials: 'same-origin'
         });
@@ -1257,7 +1290,7 @@ nwcCount++;
         const expandField = projectField ? `&$expand=${projectField}` : '';
         const url = `${siteUrl}/_api/web/lists/getbytitle('ProcurementTracker')/items?$select=${selectFields}${expandField}&$top=5000`;
 
-        const res = await fetch(url, {
+        const res = await safeFetch(url, {
           headers: { 'Accept': 'application/json;odata=verbose' },
           credentials: 'same-origin'
         });
@@ -1321,7 +1354,7 @@ nwcCount++;
         };
 
         const url = `${siteUrl}/_api/web/lists/getbytitle('DCSTracker')/items?$select=Id,DCSData,ProjectId&$top=5000`;
-        const res = await fetch(url, {
+        const res = await safeFetch(url, {
           headers: { 'Accept': 'application/json;odata=verbose' },
           credentials: 'same-origin'
         });
@@ -1399,7 +1432,7 @@ const fetchSeibiesData = async (
 
     // Read the monthly JSON column (adjust InternalName if yours differs)
     const url = `${siteUrl}/_api/web/lists/getbytitle('SEIBIES')/items?$select=Id,ProjectId,OBLMonth&$top=5000`;
-    const res = await fetch(url, {
+    const res = await safeFetch(url, {
       headers: { 'Accept': 'application/json;odata=verbose' },
       credentials: 'same-origin'
     });
@@ -1515,51 +1548,51 @@ const getSelectedProjectIds = (): Set<number> => {
   // Empty-scope branch — no delta data available, show placeholders
   // ------------------------------------------------------------
   if (projectIds.size === 0) {
-    setTxt('dsOblTotal', '99');
+    setTxt('dsOblTotal', '0');
     setTxt('dsOblDelta', '—');              // ✅ no reference to oblSummary
     setTxt('dsReceivablesDelta', '—');      // ✅ no reference to receivablesData
-    setTxt('dsTotalReceivables', '99');
-    // ... all your other '99' placeholders unchanged ...
-    setTxt('dsRevenuePlan', '99');
-    setTxt('dsRevenueActual', '99');
-    setTxt('dsRevenuePercentage', '99');
-    setStyle('dsRevenueBar', 'width', '99%');
-    setTxt('dsCollectionPlan', '99');
-    setTxt('dsCollectionActual', '99');
-    setTxt('dsCollectionPercentage', '99');
-    setStyle('dsCollectionBar', 'width', '99%');
-    setTxt('dsNwcValue', '99');
-    setTxt('dsInventoryValue', '99');
-    setTxt('dsTotalProjectsCard', '99');
-    setTxt('dsRelCount', '99');
-    setTxt('dsTecoCount', '99');
-    setTxt('dsSoCount', '99');
-    setTxt('dsBiesValue', '99');
-    setTxt('dsSeiValue', '99');
-    setTxt('dsOtherCount', '99');
-    setTxt('dsTotalProjects', '99');
-    setTxt('dsSubmittedProjects', '99');
-    setTxt('dsNotSubmittedProjects', '99');
-    setTxt('dsApprovedProjects', '99');
-    setTxt('dsDeliveryCrossed', '99');
-    setTxt('dsDeliveryToCross', '99');
-    setTxt('dsSubmittedPct', '99');
-    setTxt('dsNotSubmittedPct', '99');
-    setTxt('dsApprovedPct', '99');
-    setTxt('dsPrQualityAverage', '99');
-    setStyle('dsSubmittedBar', 'width', '99%');
-    setStyle('dsNotSubmittedBar', 'width', '99%');
-    setStyle('dsApprovedBar', 'width', '99%');
-    setStyle('dsPrQualityBar', 'width', '99%');
+    setTxt('dsTotalReceivables', '0');
+    // ... all your other '0' placeholders unchanged ...
+    setTxt('dsRevenuePlan', '0');
+    setTxt('dsRevenueActual', '0');
+    setTxt('dsRevenuePercentage', '0');
+    setStyle('dsRevenueBar', 'width', '0%');
+    setTxt('dsCollectionPlan', '0');
+    setTxt('dsCollectionActual', '0');
+    setTxt('dsCollectionPercentage', '0');
+    setStyle('dsCollectionBar', 'width', '0%');
+    setTxt('dsNwcValue', '0');
+    setTxt('dsInventoryValue', '0');
+    setTxt('dsTotalProjectsCard', '0');
+    setTxt('dsRelCount', '0');
+    setTxt('dsTecoCount', '0');
+    setTxt('dsSoCount', '0');
+    setTxt('dsBiesValue', '0');
+    setTxt('dsSeiValue', '0');
+    setTxt('dsOtherCount', '0');
+    setTxt('dsTotalProjects', '0');
+    setTxt('dsSubmittedProjects', '0');
+    setTxt('dsNotSubmittedProjects', '0');
+    setTxt('dsApprovedProjects', '0');
+    setTxt('dsDeliveryCrossed', '0');
+    setTxt('dsDeliveryToCross', '0');
+    setTxt('dsSubmittedPct', '0');
+    setTxt('dsNotSubmittedPct', '0');
+    setTxt('dsApprovedPct', '0');
+    setTxt('dsPrQualityAverage', '0');
+    setStyle('dsSubmittedBar', 'width', '0%');
+    setStyle('dsNotSubmittedBar', 'width', '0%');
+    setStyle('dsApprovedBar', 'width', '0%');
+    setStyle('dsPrQualityBar', 'width', '0%');
 
     const statusIds = ['dsRfqPending', 'dsOfferPending', 'dsTcPending', 'dsOrderClosurePending',
       'dsPrPending', 'dsPoPending', 'dsDocApprovalPending', 'dsMfcPending',
       'dsInspectionPending', 'dsDispatchPending', 'dsDeliveryPending', 'dsDeliveredCount'];
-    statusIds.forEach(id => setTxt(id, '99'));
+    statusIds.forEach(id => setTxt(id, '0'));
 
     const docIds = ['dsTotalDocuments', 'dsNotSubmittedDocs', 'dsNotApprovedDocs',
       'dsRevisedDocs', 'dsApprovedDocs', 'dsRejectedDocs', 'dsRetainedDocs'];
-    docIds.forEach(id => setTxt(id, '99'));
+    docIds.forEach(id => setTxt(id, '0'));
     return;
   }
 
@@ -1819,7 +1852,7 @@ const getSelectedProjectIds = (): Set<number> => {
 
     const fetchFieldMap = async (): Promise<Array<{ Title: string; InternalName: string; TypeAsString: string }>> => {
       const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.projectList}')/fields`;
-      const res = await fetch(url, {
+      const res = await safeFetch(url, {
         headers: { 'Accept': 'application/json;odata=verbose' },
         credentials: 'same-origin'
       });
@@ -1845,7 +1878,7 @@ const getSelectedProjectIds = (): Set<number> => {
         + `?$select=${select}`
         + (expand ? `&$expand=${expand}` : '')
         + `&$orderby=Title`;
-      const res = await fetch(url, {
+      const res = await safeFetch(url, {
         headers: { 'Accept': 'application/json;odata=verbose' },
         credentials: 'same-origin'
       });
@@ -1857,22 +1890,22 @@ const getSelectedProjectIds = (): Set<number> => {
       return (data.d && data.d.results) || [];
     };
 
-    const loadScope = async (): Promise<void> => {
+      const loadScope = async (): Promise<void> => {
       const canView = canRead();
       if (!canView) return;
 
       const isFullAccess = hasFullControl() || canReadAllProjects();
       const wanted = [
-  { key: 'reference',         label: DASH_SOURCES.fieldProjectReference },
-  { key: 'customer',          label: DASH_SOURCES.fieldCustomer },
-  { key: 'pm',                label: DASH_SOURCES.fieldProjectManager },
-  { key: 'gh',                label: DASH_SOURCES.fieldGroupHead },
-  // ✅ Engineering role fields (used by ROLE_OWN_FIELDS in auth.ts)
-  { key: 'enggLead',          label: 'EnggLead' },
-  { key: 'enggSubLead1',      label: 'EnggSubLead1' },
-  { key: 'enggSubLead2',      label: 'EnggSubLead2' },
-  { key: 'enggManagers',      label: 'EngineeringManagers' }
-];
+        { key: 'reference',         label: DASH_SOURCES.fieldProjectReference },
+        { key: 'customer',          label: DASH_SOURCES.fieldCustomer },
+        { key: 'pm',                label: DASH_SOURCES.fieldProjectManager },
+        { key: 'gh',                label: DASH_SOURCES.fieldGroupHead },
+        // ✅ Engineering role fields (used by ROLE_OWN_FIELDS in auth.ts)
+        { key: 'enggLead',          label: 'EnggLead' },
+        { key: 'enggSubLead1',      label: 'EnggSubLead1' },
+        { key: 'enggSubLead2',      label: 'EnggSubLead2' },
+        { key: 'enggManagers',      label: 'EngineeringManagers' }
+      ];
 
       try {
         const resolved = new Map<string, { internal: string; type: string }>();
@@ -1900,33 +1933,33 @@ const getSelectedProjectIds = (): Set<number> => {
         };
 
         const refF  = pickF('reference', DASH_SOURCES.fieldProjectReference);
-const custF = pickF('customer',  DASH_SOURCES.fieldCustomer);
-const pmF   = pickF('pm',        DASH_SOURCES.fieldProjectManager);
-const ghF   = pickF('gh',        DASH_SOURCES.fieldGroupHead);
-// ✅ Engineering role fields
-const elF   = pickF('enggLead',      'EnggLead');
-const es1F  = pickF('enggSubLead1',  'EnggSubLead1');
-const es2F  = pickF('enggSubLead2',  'EnggSubLead2');
-const emF   = pickF('enggManagers',  'EngineeringManagers');
+        const custF = pickF('customer',  DASH_SOURCES.fieldCustomer);
+        const pmF   = pickF('pm',        DASH_SOURCES.fieldProjectManager);
+        const ghF   = pickF('gh',        DASH_SOURCES.fieldGroupHead);
+        // ✅ Engineering role fields
+        const elF   = pickF('enggLead',      'EnggLead');
+        const es1F  = pickF('enggSubLead1',  'EnggSubLead1');
+        const es2F  = pickF('enggSubLead2',  'EnggSubLead2');
+        const emF   = pickF('enggManagers',  'EngineeringManagers');
 
-const pmKind  = kindOf('pm',        DASH_SOURCES.fieldProjectManager);
-const ghKind  = kindOf('gh',        DASH_SOURCES.fieldGroupHead);
-const elKind  = kindOf('enggLead',  'EnggLead');
-const es1Kind = kindOf('enggSubLead1', 'EnggSubLead1');
-const es2Kind = kindOf('enggSubLead2', 'EnggSubLead2');
-const emKind  = kindOf('enggManagers', 'EngineeringManagers');
+        const pmKind  = kindOf('pm',        DASH_SOURCES.fieldProjectManager);
+        const ghKind  = kindOf('gh',        DASH_SOURCES.fieldGroupHead);
+        const elKind  = kindOf('enggLead',  'EnggLead');
+        const es1Kind = kindOf('enggSubLead1', 'EnggSubLead1');
+        const es2Kind = kindOf('enggSubLead2', 'EnggSubLead2');
+        const emKind  = kindOf('enggManagers', 'EngineeringManagers');
 
-let rows: any[] = [];
-const sel: string[] = ['Id', 'Title'];
-const pushSel = (f: string): void => { if (f && !sel.includes(f)) sel.push(f); };
-pushSel(refF);
-pushSel(custF);
-if (pmF)  pushSel(pmKind  === 'text' ? pmF  : `${pmF}Id`);
-if (ghF)  pushSel(ghKind  === 'text' ? ghF  : `${ghF}Id`);
-if (elF)  pushSel(elKind  === 'text' ? elF  : `${elF}Id`);
-if (es1F) pushSel(es1Kind === 'text' ? es1F : `${es1F}Id`);
-if (es2F) pushSel(es2Kind === 'text' ? es2F : `${es2F}Id`);
-if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
+        let rows: any[] = [];
+        const sel: string[] = ['Id', 'Title'];
+        const pushSel = (f: string): void => { if (f && !sel.includes(f)) sel.push(f); };
+        pushSel(refF);
+        pushSel(custF);
+        if (pmF)  pushSel(pmKind  === 'text' ? pmF  : `${pmF}Id`);
+        if (ghF)  pushSel(ghKind  === 'text' ? ghF  : `${ghF}Id`);
+        if (elF)  pushSel(elKind  === 'text' ? elF  : `${elF}Id`);
+        if (es1F) pushSel(es1Kind === 'text' ? es1F : `${es1F}Id`);
+        if (es2F) pushSel(es2Kind === 'text' ? es2F : `${es2F}Id`);
+        if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
 
         try {
           rows = await tryFetchRows(sel.join(','));
@@ -1939,24 +1972,21 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
         const personIdOf = (r: any, f: string): number | undefined =>
           r && typeof r[f] !== 'object' ? (Number(r[`${f}Id`]) || undefined) : undefined;
         const wantedIds = new Set<number>();
-(rows || []).forEach((r: any) => {
-  if (pmF  && pmKind  !== 'text' && personIdOf(r, pmF))  wantedIds.add(personIdOf(r, pmF)  as number);
-  if (ghF  && ghKind  !== 'text' && personIdOf(r, ghF))  wantedIds.add(personIdOf(r, ghF)  as number);
-  if (elF  && elKind  !== 'text' && personIdOf(r, elF))  wantedIds.add(personIdOf(r, elF)  as number);
-  if (es1F && es1Kind !== 'text' && personIdOf(r, es1F)) wantedIds.add(personIdOf(r, es1F) as number);
-  if (es2F && es2Kind !== 'text' && personIdOf(r, es2F)) wantedIds.add(personIdOf(r, es2F) as number);
-  if (emF  && emKind  !== 'text' && personIdOf(r, emF))  wantedIds.add(personIdOf(r, emF)  as number);
-});
-
- 
+        
+        (rows || []).forEach((r: any) => {
+          if (pmF  && pmKind  !== 'text' && personIdOf(r, pmF))  wantedIds.add(personIdOf(r, pmF)  as number);
+          if (ghF  && ghKind  !== 'text' && personIdOf(r, ghF))  wantedIds.add(personIdOf(r, ghF)  as number);
+          if (elF  && elKind  !== 'text' && personIdOf(r, elF))  wantedIds.add(personIdOf(r, elF)  as number);
+          if (es1F && es1Kind !== 'text' && personIdOf(r, es1F)) wantedIds.add(personIdOf(r, es1F) as number);
+          if (es2F && es2Kind !== 'text' && personIdOf(r, es2F)) wantedIds.add(personIdOf(r, es2F) as number);
+          if (emF  && emKind  !== 'text' && personIdOf(r, emF))  wantedIds.add(personIdOf(r, emF)  as number);
+        });
 
         if (wantedIds.size) {
           await Promise.all([...wantedIds].map(async (id) => {
             try {
-              const res = await fetch(`${siteUrl}/_api/web/getuserbyid(${id})?$select=Id,Title,Email`, {
-                headers: { 'Accept': 'application/json;odata=verbose' },
-                credentials: 'same-origin'
-              });
+              // ⚡ Cleaned up: safeFetch already handles headers and credentials!
+              const res = await safeFetch(`${siteUrl}/_api/web/getuserbyid(${id})?$select=Id,Title,Email`);
               if (!res.ok) return;
               const j = await res.json();
               const d = j.d || {};
@@ -1974,19 +2004,19 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
           return (id && userMap.get(id)) || undefined;
         };
 
-       const allProjects = (rows || []).map((r: any) => ({
-  Id: r.Id,
-  Title: r.Title || '',
-  ProjectReference: r[refF]  ?? '',
-  CustomerName:     r[custF] ?? '',
-  ProjectManager:   pmKind  === 'text' ? (r[pmF]  ?? undefined) : personValue(r, pmF),
-  GroupHead1:       ghKind  === 'text' ? (r[ghF]  ?? undefined) : personValue(r, ghF),
-  // ✅ Engineering role fields
-  EnggLead:           elKind  === 'text' ? (r[elF]  ?? undefined) : personValue(r, elF),
-  EnggSubLead1:       es1Kind === 'text' ? (r[es1F] ?? undefined) : personValue(r, es1F),
-  EnggSubLead2:       es2Kind === 'text' ? (r[es2F] ?? undefined) : personValue(r, es2F),
-  EngineeringManagers: emKind === 'text' ? (r[emF]  ?? undefined) : personValue(r, emF)
-}));
+        const allProjects = (rows || []).map((r: any) => ({
+          Id: r.Id,
+          Title: r.Title || '',
+          ProjectReference: r[refF]  ?? '',
+          CustomerName:     r[custF] ?? '',
+          ProjectManager:   pmKind  === 'text' ? (r[pmF]  ?? undefined) : personValue(r, pmF),
+          GroupHead1:       ghKind  === 'text' ? (r[ghF]  ?? undefined) : personValue(r, ghF),
+          // ✅ Engineering role fields
+          EnggLead:           elKind  === 'text' ? (r[elF]  ?? undefined) : personValue(r, elF),
+          EnggSubLead1:       es1Kind === 'text' ? (r[es1F] ?? undefined) : personValue(r, es1F),
+          EnggSubLead2:       es2Kind === 'text' ? (r[es2F] ?? undefined) : personValue(r, es2F),
+          EngineeringManagers: emKind === 'text' ? (r[emF]  ?? undefined) : personValue(r, emF)
+        }));
 
         scopedProjects = getAssignedProjects(allProjects);
 
@@ -2156,7 +2186,7 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
         } finally {
           isRefreshing = false;
         }
-      }, 300000);
+      }, 900000);
     };
 
     const stopAutoRefresh = (): void => {
@@ -2456,7 +2486,7 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
 
     const dashListEntityType = async (listName: string, fallback: string): Promise<string> => {
       try {
-        const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')?$select=ListItemEntityTypeFullName`, {
+        const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')?$select=ListItemEntityTypeFullName`, {
           headers: { 'Accept': 'application/json;odata=verbose' },
           credentials: 'same-origin'
         });
@@ -2480,7 +2510,7 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
 
       const map = new Map<number, string>();
       try {
-        const res = await fetch(
+        const res = await safeFetch(
           `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.projectList}')/items?$select=Id,PC&$top=5000`,
           { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' }
         );
@@ -2502,7 +2532,7 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
 
     const dashExistingProjectIds = async (target: DashSyncTarget, projects: any[]): Promise<Set<number> | null> => {
       try {
-        const res = await fetch(
+        const res = await safeFetch(
           `${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items?$select=Id,ProjectId,Title&$top=5000`,
           { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' }
         );
@@ -2521,7 +2551,7 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
 
       for (const project of projects) {
         try {
-          const res = await fetch(
+          const res = await safeFetch(
             `${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items?$filter=ProjectId eq ${Number(project.Id)}&$select=Id&$top=1`,
             { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' }
           );
@@ -2563,7 +2593,7 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
       if (dashFieldNamesByList.has(listName)) return;
 
       try {
-        const res = await fetch(
+        const res = await safeFetch(
           `${siteUrl}/_api/web/lists/getbytitle('${listName}')/fields?$select=InternalName&$top=5000`,
           { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' }
         );
@@ -2662,7 +2692,7 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
             const payload = target.buildPayload(projectWithPc, fresh, entityType, attempt, refField);
             dashNormalizeOblField(payload, target.listName);
 
-            const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items`, {
+            const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items`, {
               method: 'POST',
               headers: {
                 'Accept': 'application/json;odata=verbose',
@@ -2711,7 +2741,7 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
 
       let rows: any[] = [];
       try {
-        const res = await fetch(
+        const res = await safeFetch(
           `${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items?$select=Id,ProjectId,${target.jsonField}&$top=5000`,
           { headers: { 'Accept': 'application/json;odata=verbose' } as any, credentials: 'same-origin' }
         );
@@ -2784,7 +2814,7 @@ if (emF)  pushSel(emKind  === 'text' ? emF  : `${emF}Id`);
           };
           payload[target.jsonField] = JSON.stringify(progressedData);
 
-          const response = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items(${row.Id})`, {
+          const response = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items(${row.Id})`, {
             method: 'POST',
             headers: {
               'Accept': 'application/json;odata=verbose',

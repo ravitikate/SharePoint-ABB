@@ -12265,56 +12265,56 @@ const dashboardContent = `
         <section class="row-top">
           <section class="card obl">
             <div class="card-title">Order Backlog (OBL)</div>
-            <div class="kpi-num obl-num" id="dsOblTotal">99</div>
-            <div class="delta muted" id="dsOblDelta">99</div>
+            <div class="kpi-num obl-num" id="dsOblTotal">0</div>
+            <div class="delta muted" id="dsOblDelta">0</div>
           </section>
 
           <section class="card receivables">
             <div class="recv-main">
               <span class="card-title">Total Receivables</span>
-              <span class="kpi-num recv-total-num" id="dsTotalReceivables">99</span>
-              <div class="delta red" id="dsReceivablesDelta">99</div>
+              <span class="kpi-num recv-total-num" id="dsTotalReceivables">0</span>
+              <div class="delta red" id="dsReceivablesDelta">0</div>
             </div>
             <div class="recv-grid">
               <div class="recv-cell">
-                <div class="kpi-num val" id="dsNormalValue">99</div>
+                <div class="kpi-num val" id="dsNormalValue">0</div>
                 <div class="lbl">Normal</div>
-                <div class="delta" id="dsNormalDelta">99</div>
+                <div class="delta" id="dsNormalDelta">0</div>
               </div>
               <div class="recv-cell">
-                <div class="kpi-num val" id="dsNormalOverDueValue">99</div>
+                <div class="kpi-num val" id="dsNormalOverDueValue">0</div>
                 <div class="lbl">Normal OverDue</div>
-                <div class="delta" id="dsNormalOverDueDelta">99</div>
+                <div class="delta" id="dsNormalOverDueDelta">0</div>
               </div>
               <div class="recv-cell">
-                <div class="kpi-num val" id="dsGstTdsValue">99</div>
+                <div class="kpi-num val" id="dsGstTdsValue">0</div>
                 <div class="lbl">GST TDS</div>
-                <div class="delta" id="dsGstTdsDelta">99</div>
+                <div class="delta" id="dsGstTdsDelta">0</div>
               </div>
               <div class="recv-cell danger col-total">
-                <div class="kpi-num val" id="dsTotalOverDueValue">99</div>
+                <div class="kpi-num val" id="dsTotalOverDueValue">0</div>
                 <div class="lbl">Total OverDue</div>
-                <div class="delta" id="dsTotalOverDueDelta">99</div>
+                <div class="delta" id="dsTotalOverDueDelta">0</div>
               </div>
               <div class="recv-cell">
-                <div class="kpi-num val" id="dsRetentionValue">99</div>
+                <div class="kpi-num val" id="dsRetentionValue">0</div>
                 <div class="lbl">Retention</div>
-                <div class="delta" id="dsRetentionDelta">99</div>
+                <div class="delta" id="dsRetentionDelta">0</div>
               </div>
               <div class="recv-cell">
-                <div class="kpi-num val" id="dsRetentionOverDueValue">99</div>
+                <div class="kpi-num val" id="dsRetentionOverDueValue">0</div>
                 <div class="lbl">Retention OverDue</div>
-                <div class="delta" id="dsRetentionOverDueDelta">99</div>
+                <div class="delta" id="dsRetentionOverDueDelta">0</div>
               </div>
               <div class="recv-cell">
-                <div class="kpi-num val" id="dsItTdsOthersValue">99</div>
+                <div class="kpi-num val" id="dsItTdsOthersValue">0</div>
                 <div class="lbl">IT TDS / Others</div>
-                <div class="delta" id="dsItTdsOthersDelta">99</div>
+                <div class="delta" id="dsItTdsOthersDelta">0</div>
               </div>
               <div class="recv-cell danger col-total">
-                <div class="kpi-num val" id="dsTotalRetentionValue">99</div>
+                <div class="kpi-num val" id="dsTotalRetentionValue">0</div>
                 <div class="lbl">Total Retention</div>
-                <div class="delta" id="dsTotalRetentionDelta">99</div>
+                <div class="delta" id="dsTotalRetentionDelta">0</div>
               </div>
             </div>
           </section>
@@ -12323,23 +12323,23 @@ const dashboardContent = `
             <div class="proj-head">
               <div class="proj-left">
                 <span class="card-title">Total Projects</span>
-                <span class="kpi-num proj-num" id="dsTotalProjectsCard">99</span> 
+                <span class="kpi-num proj-num" id="dsTotalProjectsCard">0</span> 
               </div>
               <div class="proj-chips">
-                <div class="chip"><span class="n" id="dsRelCount">99</span><span class="t">REL</span></div>
-                <div class="chip"><span class="n" id="dsTecoCount">99</span><span class="t">TECO</span></div>
-                <div class="chip"><span class="n" id="dsSoCount">99</span><span class="t">SO</span></div>
-                <div class="chip"><span class="n" id="dsOtherCount">99</span><span class="t">Other</span></div>
+                <div class="chip"><span class="n" id="dsRelCount">0</span><span class="t">REL</span></div>
+                <div class="chip"><span class="n" id="dsTecoCount">0</span><span class="t">TECO</span></div>
+                <div class="chip"><span class="n" id="dsSoCount">0</span><span class="t">SO</span></div>
+                <div class="chip"><span class="n" id="dsOtherCount">0</span><span class="t">Other</span></div>
               </div>
             </div>
             <div class="delivery-row">
               <div class="alert alert-red">
                 <div class="lbl">Delivery Date Crossed</div>
-                <div class="kpi-num" id="dsDeliveryCrossed">99</div>
+                <div class="kpi-num" id="dsDeliveryCrossed">0</div>
               </div>
               <div class="alert alert-steel">
                 <div class="lbl">To Cross In 45 Days</div>
-                <div class="kpi-num" id="dsDeliveryToCross">99</div>
+                <div class="kpi-num" id="dsDeliveryToCross">0</div>
               </div>
             </div>
           </section>
@@ -12355,26 +12355,26 @@ const dashboardContent = `
             <div class="pair">
               <div class="pair-box">
                 <div class="lbl">Revenue Plan</div>
-                <div class="kpi-num plan" id="dsRevenuePlan">99</div>
+                <div class="kpi-num plan" id="dsRevenuePlan">0</div>
               </div>
               <div class="pair-box">
                 <div class="lbl">Collection Plan</div>
-                <div class="kpi-num plan" id="dsCollectionPlan">99</div>
+                <div class="kpi-num plan" id="dsCollectionPlan">0</div>
               </div>
             </div>
             <div class="perf-div"></div>
             <div class="pair">
               <div class="pair-box">
                 <div class="lbl">Revenue Actual</div>
-                <div class="kpi-num green actual" id="dsRevenueActual">99</div>
-                <div class="delta" id="dsRevenuePercentage">99</div>
-                <div class="bar low"><i style="width:99%" id="dsRevenueBar"></i></div>
+                <div class="kpi-num green actual" id="dsRevenueActual">0</div>
+                <div class="delta" id="dsRevenuePercentage">0</div>
+                <div class="bar low"><i style="width:0%" id="dsRevenueBar"></i></div>
               </div>
               <div class="pair-box">
                 <div class="lbl">Collection Actual</div>
-                <div class="kpi-num green actual" id="dsCollectionActual">99</div>
-                <div class="delta" id="dsCollectionPercentage">99</div>
-                <div class="bar low"><i style="width:99%" id="dsCollectionBar"></i></div>
+                <div class="kpi-num green actual" id="dsCollectionActual">0</div>
+                <div class="delta" id="dsCollectionPercentage">0</div>
+                <div class="bar low"><i style="width:0%" id="dsCollectionBar"></i></div>
               </div>
             </div>
           </section>
@@ -12387,26 +12387,26 @@ const dashboardContent = `
             <div class="pair">
               <div class="pair-box">
                 <div class="lbl">YTD Revenue Plan</div>
-                <div class="kpi-num plan" id="dsYtdRevenuePlan">99</div>
+                <div class="kpi-num plan" id="dsYtdRevenuePlan">0</div>
               </div>
               <div class="pair-box">
                 <div class="lbl">YTD Collection Plan</div>
-                <div class="kpi-num plan" id="dsYtdCollectionPlan">99</div>
+                <div class="kpi-num plan" id="dsYtdCollectionPlan">0</div>
               </div>
             </div>
             <div class="perf-div"></div>
             <div class="pair">
               <div class="pair-box">
                 <div class="lbl">YTD Revenue Actual</div>
-                <div class="kpi-num green actual" id="dsYtdRevenueActual">99</div>
-                <div class="delta" id="dsYtdRevenuePercentage">99</div>
-                <div class="bar mid"><i style="width:99%" id="dsYtdRevenueBar"></i></div>
+                <div class="kpi-num green actual" id="dsYtdRevenueActual">0</div>
+                <div class="delta" id="dsYtdRevenuePercentage">0</div>
+                <div class="bar mid"><i style="width:0%" id="dsYtdRevenueBar"></i></div>
               </div>
               <div class="pair-box">
                 <div class="lbl">YTD Collection Actual</div>
-                <div class="kpi-num green actual" id="dsYtdCollectionActual">99</div>
-                <div class="delta" id="dsYtdCollectionPercentage">99</div>
-                <div class="bar"><i style="width:99%" id="dsYtdCollectionBar"></i></div>
+                <div class="kpi-num green actual" id="dsYtdCollectionActual">0</div>
+                <div class="delta" id="dsYtdCollectionPercentage">0</div>
+                <div class="bar"><i style="width:0%" id="dsYtdCollectionBar"></i></div>
               </div>
             </div>
           </section>
@@ -12419,19 +12419,19 @@ const dashboardContent = `
             <div class="wc-grid">
               <div class="metric-line wc-cell">
                 <div class="name">BIES</div>
-                <div class="kpi-num" id="dsBiesValue">99</div>
+                <div class="kpi-num" id="dsBiesValue">0</div>
               </div>
               <div class="metric-line wc-cell">
                 <div class="name">NWC</div>
-                <div class="kpi-num red" id="dsNwcValue">99</div>
+                <div class="kpi-num red" id="dsNwcValue">0</div>
               </div>
               <div class="metric-line wc-cell">
                 <div class="name">SEI</div>
-                <div class="kpi-num" id="dsSeiValue">99</div>
+                <div class="kpi-num" id="dsSeiValue">0</div>
               </div>
               <div class="metric-line wc-cell">
                 <div class="name">Inventory</div>
-                <div class="kpi-num" id="dsInventoryValue">99</div>
+                <div class="kpi-num" id="dsInventoryValue">0</div>
               </div>
             </div>
           </section>
@@ -12441,31 +12441,31 @@ const dashboardContent = `
           <section class="card procurement">
             <div class="card-title">Procurement Pending</div>
             <div class="list proc-list" style="grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(52px,auto);">
-              <div class="list-row"><span class="name">RFQ Pending</span><span class="val" id="dsRfqPending">99</span></div>
-              <div class="list-row"><span class="name">Offer Pending</span><span class="val" id="dsOfferPending">99</span></div>
-              <div class="list-row"><span class="name">TC Pending</span><span class="val" id="dsTcPending">99</span></div>
-              <div class="list-row"><span class="name">Order Closure Pending</span><span class="val" id="dsOrderClosurePending">99</span></div>
-              <div class="list-row"><span class="name">PR Pending</span><span class="val" id="dsPrPending">99</span></div>
-              <div class="list-row"><span class="name">PO Pending</span><span class="val" id="dsPoPending">99</span></div>
-              <div class="list-row"><span class="name">Document Approval Pending</span><span class="val" id="dsDocApprovalPending">99</span></div>
-              <div class="list-row"><span class="name">MFC Pending</span><span class="val" id="dsMfcPending">99</span></div>
-              <div class="list-row"><span class="name">Inspection Pending</span><span class="val" id="dsInspectionPending">99</span></div>
-              <div class="list-row"><span class="name">Dispatch Pending</span><span class="val" id="dsDispatchPending">99</span></div>
-              <div class="list-row"><span class="name">Delivery Pending</span><span class="val" id="dsDeliveryPending">99</span></div>
-              <div class="list-row ok"><span class="name">Delivered</span><span class="val" id="dsDeliveredCount">99</span></div>
+              <div class="list-row"><span class="name">RFQ Pending</span><span class="val" id="dsRfqPending">0</span></div>
+              <div class="list-row"><span class="name">Offer Pending</span><span class="val" id="dsOfferPending">0</span></div>
+              <div class="list-row"><span class="name">TC Pending</span><span class="val" id="dsTcPending">0</span></div>
+              <div class="list-row"><span class="name">Order Closure Pending</span><span class="val" id="dsOrderClosurePending">0</span></div>
+              <div class="list-row"><span class="name">PR Pending</span><span class="val" id="dsPrPending">0</span></div>
+              <div class="list-row"><span class="name">PO Pending</span><span class="val" id="dsPoPending">0</span></div>
+              <div class="list-row"><span class="name">Document Approval Pending</span><span class="val" id="dsDocApprovalPending">0</span></div>
+              <div class="list-row"><span class="name">MFC Pending</span><span class="val" id="dsMfcPending">0</span></div>
+              <div class="list-row"><span class="name">Inspection Pending</span><span class="val" id="dsInspectionPending">0</span></div>
+              <div class="list-row"><span class="name">Dispatch Pending</span><span class="val" id="dsDispatchPending">0</span></div>
+              <div class="list-row"><span class="name">Delivery Pending</span><span class="val" id="dsDeliveryPending">0</span></div>
+              <div class="list-row ok"><span class="name">Delivered</span><span class="val" id="dsDeliveredCount">0</span></div>
             </div>
           </section>
 
           <section class="card documents">
             <div class="card-title">Total Documents — DCI</div>
             <div class="list doc-list">
-              <div class="list-row"><span class="name">Total Documents</span><span class="val" id="dsTotalDocuments">99</span></div>
-              <div class="list-row"><span class="name">Not Submitted</span><span class="val" id="dsNotSubmittedDocs">99</span></div>
-              <div class="list-row"><span class="name">Not Approved</span><span class="val" id="dsNotApprovedDocs">99</span></div>
-              <div class="list-row doc-revised"><span class="name">Revised — Not Submitted / Approved with comments</span><span class="val" id="dsRevisedDocs">99</span></div>
-              <div class="list-row ok"><span class="name">Approved</span><span class="val" id="dsApprovedDocs">99</span></div>
-              <div class="list-row"><span class="name">Rejected</span><span class="val" id="dsRejectedDocs">99</span></div>
-              <div class="list-row"><span class="name">Retained for Information</span><span class="val" id="dsRetainedDocs">99</span></div>
+              <div class="list-row"><span class="name">Total Documents</span><span class="val" id="dsTotalDocuments">0</span></div>
+              <div class="list-row"><span class="name">Not Submitted</span><span class="val" id="dsNotSubmittedDocs">0</span></div>
+              <div class="list-row"><span class="name">Not Approved</span><span class="val" id="dsNotApprovedDocs">0</span></div>
+              <div class="list-row doc-revised"><span class="name">Revised — Not Submitted / Approved with comments</span><span class="val" id="dsRevisedDocs">0</span></div>
+              <div class="list-row ok"><span class="name">Approved</span><span class="val" id="dsApprovedDocs">0</span></div>
+              <div class="list-row"><span class="name">Rejected</span><span class="val" id="dsRejectedDocs">0</span></div>
+              <div class="list-row"><span class="name">Retained for Information</span><span class="val" id="dsRetainedDocs">0</span></div>
             </div>
           </section>
 
@@ -12475,31 +12475,31 @@ const dashboardContent = `
               <div class="prq-section">
                 <div class="prq-section-header">
                   <span>Submission & Approval Status</span>
-                  <span class="prq-total" id="dsTotalProjects">99</span>
+                  <span class="prq-total" id="dsTotalProjects">0</span>
                 </div>
                 <div class="prq-bar-row">
                   <div class="prq-bar-label">
                     <span>Submitted</span>
-                    <span class="prq-bar-val submitted-val" id="dsSubmittedProjects">99</span>
+                    <span class="prq-bar-val submitted-val" id="dsSubmittedProjects">0</span>
                   </div>
-                  <div class="prq-bar-track"><i class="prq-bar-fill submitted" id="dsSubmittedBar" style="width:99%"></i></div>
-                  <div class="prq-bar-pct" id="dsSubmittedPct">99</div>
+                  <div class="prq-bar-track"><i class="prq-bar-fill submitted" id="dsSubmittedBar" style="width:0%"></i></div>
+                  <div class="prq-bar-pct" id="dsSubmittedPct">0</div>
                 </div>
                 <div class="prq-bar-row">
                   <div class="prq-bar-label">  
                     <span>Not Submitted</span>
-                    <span class="prq-bar-val not-submitted-val" id="dsNotSubmittedProjects">99</span>
+                    <span class="prq-bar-val not-submitted-val" id="dsNotSubmittedProjects">0</span>
                   </div>
-                  <div class="prq-bar-track"><i class="prq-bar-fill not-submitted" id="dsNotSubmittedBar" style="width:99%"></i></div>
-                  <div class="prq-bar-pct" id="dsNotSubmittedPct">99</div>
+                  <div class="prq-bar-track"><i class="prq-bar-fill not-submitted" id="dsNotSubmittedBar" style="width:0%"></i></div>
+                  <div class="prq-bar-pct" id="dsNotSubmittedPct">0</div>
                 </div>
                 <div class="prq-bar-row">
                   <div class="prq-bar-label">
                     <span>Approved</span>
-                    <span class="prq-bar-val approved-val" id="dsApprovedProjects">99</span>
+                    <span class="prq-bar-val approved-val" id="dsApprovedProjects">0</span>
                   </div>
-                  <div class="prq-bar-track"><i class="prq-bar-fill approved" id="dsApprovedBar" style="width:99%"></i></div>
-                  <div class="prq-bar-pct" id="dsApprovedPct">99</div>
+                  <div class="prq-bar-track"><i class="prq-bar-fill approved" id="dsApprovedBar" style="width:0%"></i></div>
+                  <div class="prq-bar-pct" id="dsApprovedPct">0</div>
                 </div>
               </div>   
 
@@ -12508,9 +12508,9 @@ const dashboardContent = `
                   <span>Data Quality</span>
                 </div> 
                 <div class="prq-sub-row">
-                  <span class="prq-sub-label" id="dsPrQualityMonth">99</span>
+                  <span class="prq-sub-label" id="dsPrQualityMonth">0</span>
                   <div class="prq-bar-track flex-1"><i class="prq-bar-fill submitted" id="dsPrQualityBar" style="width:0%"></i></div>
-                  <span class="prq-sub-pct" id="dsPrQualityAverage">99</span>
+                  <span class="prq-sub-pct" id="dsPrQualityAverage">0</span>
                 </div>                 
               </div>
             </div>
@@ -12589,6 +12589,22 @@ const dashboardScript = () => {
             catch (_error) {
                 return fallback;
             }
+        };
+        // ⚡ SAFE FETCH: Prevents 429 Too Many Requests from crashing the dashboard
+        // ⚡ SAFE FETCH: Prevents 429 Too Many Requests from crashing the dashboard
+        const safeFetch = async (url, options = {}) => {
+            // ✅ FIX: Use native `fetch` here, NOT safeFetch!
+            let res = await fetch(url, Object.assign(Object.assign({ credentials: 'same-origin' }, options), { headers: Object.assign({ 'Accept': 'application/json;odata=verbose' }, (options.headers || {})) }));
+            let retries = 0;
+            while (res.status === 429 && retries < 5) {
+                const waitSec = parseInt(res.headers.get("Retry-After") || "5", 10);
+                console.warn(`⚠️ Dashboard throttled (429). Waiting ${waitSec}s...`);
+                await new Promise(r => setTimeout(r, waitSec * 1000));
+                // ✅ FIX: Use native `fetch` here too
+                res = await fetch(url, Object.assign(Object.assign({ credentials: 'same-origin' }, options), { headers: Object.assign({ 'Accept': 'application/json;odata=verbose' }, (options.headers || {})) }));
+                retries++;
+            }
+            return res;
         };
         // ============================================================
         // DASHBOARD FILTER STATE
@@ -12750,7 +12766,7 @@ const dashboardScript = () => {
                 return cached;
             let result;
             try {
-                const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/fields?$filter=InternalName eq 'ProjectReference'&$select=InternalName,TypeAsString,ReadOnlyField`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
+                const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/fields?$filter=InternalName eq 'ProjectReference'&$select=InternalName,TypeAsString,ReadOnlyField`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
                 const data = await res.json();
                 const results = ((_a = data === null || data === void 0 ? void 0 : data.d) === null || _a === void 0 ? void 0 : _a.results) || [];
                 if (results.length > 0) {
@@ -12782,7 +12798,7 @@ const dashboardScript = () => {
             for (let i = 0; i < attempts.length; i++) {
                 const url = `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=${attempts[i]}&$top=5000`;
                 console.log(`📊 Fetching ${listName} data:`, url.replace(siteUrl, ''));
-                const res = await fetch(url, {
+                const res = await safeFetch(url, {
                     headers: { 'Accept': 'application/json;odata=verbose' },
                     credentials: 'same-origin'
                 });
@@ -13029,7 +13045,7 @@ const dashboardScript = () => {
                 let projectCount = 0;
                 // Fetch OBLMonth instead of InventoryActual
                 const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.inventoryList}')/items?$select=Id,ProjectId,OBLMonth&$top=5000`;
-                const res = await fetch(url, {
+                const res = await safeFetch(url, {
                     headers: { 'Accept': 'application/json;odata=verbose' },
                     credentials: 'same-origin'
                 });
@@ -13085,7 +13101,7 @@ const dashboardScript = () => {
                 // ------------------------------------------------------------
                 const selectString = 'Id,Title,NWC,ProjectMonth';
                 const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.projectList}')/items?$select=${selectString}&$top=5000`;
-                const res = await fetch(url, {
+                const res = await safeFetch(url, {
                     headers: { 'Accept': 'application/json;odata=verbose' },
                     credentials: 'same-origin'
                 });
@@ -13244,7 +13260,7 @@ const dashboardScript = () => {
                     'Delivery Pending': 0, 'Delivered': 0
                 };
                 const fieldsUrl = `${siteUrl}/_api/web/lists/getbytitle('ProcurementTracker')/fields?$select=InternalName,Title,TypeAsString&$top=5000`;
-                const fieldsRes = await fetch(fieldsUrl, {
+                const fieldsRes = await safeFetch(fieldsUrl, {
                     headers: { 'Accept': 'application/json;odata=verbose' },
                     credentials: 'same-origin'
                 });
@@ -13277,7 +13293,7 @@ const dashboardScript = () => {
                     selectFields += `,${forecastField}`;
                 const expandField = projectField ? `&$expand=${projectField}` : '';
                 const url = `${siteUrl}/_api/web/lists/getbytitle('ProcurementTracker')/items?$select=${selectFields}${expandField}&$top=5000`;
-                const res = await fetch(url, {
+                const res = await safeFetch(url, {
                     headers: { 'Accept': 'application/json;odata=verbose' },
                     credentials: 'same-origin'
                 });
@@ -13332,7 +13348,7 @@ const dashboardScript = () => {
                     revisedNotSubmitted: 0, approved: 0, rejected: 0, retained: 0
                 };
                 const url = `${siteUrl}/_api/web/lists/getbytitle('DCSTracker')/items?$select=Id,DCSData,ProjectId&$top=5000`;
-                const res = await fetch(url, {
+                const res = await safeFetch(url, {
                     headers: { 'Accept': 'application/json;odata=verbose' },
                     credentials: 'same-origin'
                 });
@@ -13406,7 +13422,7 @@ const dashboardScript = () => {
                 let totalSei = 0;
                 // Read the monthly JSON column (adjust InternalName if yours differs)
                 const url = `${siteUrl}/_api/web/lists/getbytitle('SEIBIES')/items?$select=Id,ProjectId,OBLMonth&$top=5000`;
-                const res = await fetch(url, {
+                const res = await safeFetch(url, {
                     headers: { 'Accept': 'application/json;odata=verbose' },
                     credentials: 'same-origin'
                 });
@@ -13509,49 +13525,49 @@ const dashboardScript = () => {
             // Empty-scope branch — no delta data available, show placeholders
             // ------------------------------------------------------------
             if (projectIds.size === 0) {
-                setTxt('dsOblTotal', '99');
+                setTxt('dsOblTotal', '0');
                 setTxt('dsOblDelta', '—'); // ✅ no reference to oblSummary
                 setTxt('dsReceivablesDelta', '—'); // ✅ no reference to receivablesData
-                setTxt('dsTotalReceivables', '99');
-                // ... all your other '99' placeholders unchanged ...
-                setTxt('dsRevenuePlan', '99');
-                setTxt('dsRevenueActual', '99');
-                setTxt('dsRevenuePercentage', '99');
-                setStyle('dsRevenueBar', 'width', '99%');
-                setTxt('dsCollectionPlan', '99');
-                setTxt('dsCollectionActual', '99');
-                setTxt('dsCollectionPercentage', '99');
-                setStyle('dsCollectionBar', 'width', '99%');
-                setTxt('dsNwcValue', '99');
-                setTxt('dsInventoryValue', '99');
-                setTxt('dsTotalProjectsCard', '99');
-                setTxt('dsRelCount', '99');
-                setTxt('dsTecoCount', '99');
-                setTxt('dsSoCount', '99');
-                setTxt('dsBiesValue', '99');
-                setTxt('dsSeiValue', '99');
-                setTxt('dsOtherCount', '99');
-                setTxt('dsTotalProjects', '99');
-                setTxt('dsSubmittedProjects', '99');
-                setTxt('dsNotSubmittedProjects', '99');
-                setTxt('dsApprovedProjects', '99');
-                setTxt('dsDeliveryCrossed', '99');
-                setTxt('dsDeliveryToCross', '99');
-                setTxt('dsSubmittedPct', '99');
-                setTxt('dsNotSubmittedPct', '99');
-                setTxt('dsApprovedPct', '99');
-                setTxt('dsPrQualityAverage', '99');
-                setStyle('dsSubmittedBar', 'width', '99%');
-                setStyle('dsNotSubmittedBar', 'width', '99%');
-                setStyle('dsApprovedBar', 'width', '99%');
-                setStyle('dsPrQualityBar', 'width', '99%');
+                setTxt('dsTotalReceivables', '0');
+                // ... all your other '0' placeholders unchanged ...
+                setTxt('dsRevenuePlan', '0');
+                setTxt('dsRevenueActual', '0');
+                setTxt('dsRevenuePercentage', '0');
+                setStyle('dsRevenueBar', 'width', '0%');
+                setTxt('dsCollectionPlan', '0');
+                setTxt('dsCollectionActual', '0');
+                setTxt('dsCollectionPercentage', '0');
+                setStyle('dsCollectionBar', 'width', '0%');
+                setTxt('dsNwcValue', '0');
+                setTxt('dsInventoryValue', '0');
+                setTxt('dsTotalProjectsCard', '0');
+                setTxt('dsRelCount', '0');
+                setTxt('dsTecoCount', '0');
+                setTxt('dsSoCount', '0');
+                setTxt('dsBiesValue', '0');
+                setTxt('dsSeiValue', '0');
+                setTxt('dsOtherCount', '0');
+                setTxt('dsTotalProjects', '0');
+                setTxt('dsSubmittedProjects', '0');
+                setTxt('dsNotSubmittedProjects', '0');
+                setTxt('dsApprovedProjects', '0');
+                setTxt('dsDeliveryCrossed', '0');
+                setTxt('dsDeliveryToCross', '0');
+                setTxt('dsSubmittedPct', '0');
+                setTxt('dsNotSubmittedPct', '0');
+                setTxt('dsApprovedPct', '0');
+                setTxt('dsPrQualityAverage', '0');
+                setStyle('dsSubmittedBar', 'width', '0%');
+                setStyle('dsNotSubmittedBar', 'width', '0%');
+                setStyle('dsApprovedBar', 'width', '0%');
+                setStyle('dsPrQualityBar', 'width', '0%');
                 const statusIds = ['dsRfqPending', 'dsOfferPending', 'dsTcPending', 'dsOrderClosurePending',
                     'dsPrPending', 'dsPoPending', 'dsDocApprovalPending', 'dsMfcPending',
                     'dsInspectionPending', 'dsDispatchPending', 'dsDeliveryPending', 'dsDeliveredCount'];
-                statusIds.forEach(id => setTxt(id, '99'));
+                statusIds.forEach(id => setTxt(id, '0'));
                 const docIds = ['dsTotalDocuments', 'dsNotSubmittedDocs', 'dsNotApprovedDocs',
                     'dsRevisedDocs', 'dsApprovedDocs', 'dsRejectedDocs', 'dsRetainedDocs'];
-                docIds.forEach(id => setTxt(id, '99'));
+                docIds.forEach(id => setTxt(id, '0'));
                 return;
             }
             // ------------------------------------------------------------
@@ -13774,7 +13790,7 @@ const dashboardScript = () => {
         const normField = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
         const fetchFieldMap = async () => {
             const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.projectList}')/fields`;
-            const res = await fetch(url, {
+            const res = await safeFetch(url, {
                 headers: { 'Accept': 'application/json;odata=verbose' },
                 credentials: 'same-origin'
             });
@@ -13799,7 +13815,7 @@ const dashboardScript = () => {
                 + `?$select=${select}`
                 + (expand ? `&$expand=${expand}` : '')
                 + `&$orderby=Title`;
-            const res = await fetch(url, {
+            const res = await safeFetch(url, {
                 headers: { 'Accept': 'application/json;odata=verbose' },
                 credentials: 'same-origin'
             });
@@ -13913,10 +13929,8 @@ const dashboardScript = () => {
                 if (wantedIds.size) {
                     await Promise.all([...wantedIds].map(async (id) => {
                         try {
-                            const res = await fetch(`${siteUrl}/_api/web/getuserbyid(${id})?$select=Id,Title,Email`, {
-                                headers: { 'Accept': 'application/json;odata=verbose' },
-                                credentials: 'same-origin'
-                            });
+                            // ⚡ Cleaned up: safeFetch already handles headers and credentials!
+                            const res = await safeFetch(`${siteUrl}/_api/web/getuserbyid(${id})?$select=Id,Title,Email`);
                             if (!res.ok)
                                 return;
                             const j = await res.json();
@@ -14101,7 +14115,7 @@ const dashboardScript = () => {
                 finally {
                     isRefreshing = false;
                 }
-            }, 300000);
+            }, 900000);
         };
         const stopAutoRefresh = () => {
             if (refreshInterval) {
@@ -14373,7 +14387,7 @@ const dashboardScript = () => {
         const dashListEntityType = async (listName, fallback) => {
             var _a;
             try {
-                const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')?$select=ListItemEntityTypeFullName`, {
+                const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')?$select=ListItemEntityTypeFullName`, {
                     headers: { 'Accept': 'application/json;odata=verbose' },
                     credentials: 'same-origin'
                 });
@@ -14397,7 +14411,7 @@ const dashboardScript = () => {
                 return dashPcMap;
             const map = new Map();
             try {
-                const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.projectList}')/items?$select=Id,PC&$top=5000`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
+                const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.projectList}')/items?$select=Id,PC&$top=5000`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
                 if (res.ok) {
                     const rows = ((_b = (_a = (await res.json())) === null || _a === void 0 ? void 0 : _a.d) === null || _b === void 0 ? void 0 : _b.results) || [];
                     rows.forEach((row) => {
@@ -14418,7 +14432,7 @@ const dashboardScript = () => {
         const dashExistingProjectIds = async (target, projects) => {
             var _a, _b, _c, _d;
             try {
-                const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items?$select=Id,ProjectId,Title&$top=5000`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
+                const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items?$select=Id,ProjectId,Title&$top=5000`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
                 if (res.ok) {
                     const rows = ((_b = (_a = (await res.json())) === null || _a === void 0 ? void 0 : _a.d) === null || _b === void 0 ? void 0 : _b.results) || [];
                     dashLog(`'${target.label}': ${rows.length} row(s) already on SharePoint`);
@@ -14433,7 +14447,7 @@ const dashboardScript = () => {
             let probeFailed = 0;
             for (const project of projects) {
                 try {
-                    const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items?$filter=ProjectId eq ${Number(project.Id)}&$select=Id&$top=1`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
+                    const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items?$filter=ProjectId eq ${Number(project.Id)}&$select=Id&$top=1`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
                     if (res.ok) {
                         const rows = ((_d = (_c = (await res.json())) === null || _c === void 0 ? void 0 : _c.d) === null || _d === void 0 ? void 0 : _d.results) || [];
                         if (rows.length > 0)
@@ -14470,7 +14484,7 @@ const dashboardScript = () => {
             if (dashFieldNamesByList.has(listName))
                 return;
             try {
-                const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/fields?$select=InternalName&$top=5000`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
+                const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/fields?$select=InternalName&$top=5000`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
                 if (!res.ok) {
                     dashFieldNamesByList.set(listName, null);
                     dashLog(`⚠️ '${listName}': field list HTTP ${res.status}`);
@@ -14551,7 +14565,7 @@ const dashboardScript = () => {
                         const fresh = target.fresh();
                         const payload = target.buildPayload(projectWithPc, fresh, entityType, attempt, refField);
                         dashNormalizeOblField(payload, target.listName);
-                        const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items`, {
+                        const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items`, {
                             method: 'POST',
                             headers: {
                                 'Accept': 'application/json;odata=verbose',
@@ -14601,7 +14615,7 @@ const dashboardScript = () => {
                 return 0;
             let rows = [];
             try {
-                const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items?$select=Id,ProjectId,${target.jsonField}&$top=5000`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
+                const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items?$select=Id,ProjectId,${target.jsonField}&$top=5000`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
                 if (!res.ok) {
                     dashLog(`⚠️ '${target.label}': progression read HTTP ${res.status} - skipped`);
                     return 0;
@@ -14661,7 +14675,7 @@ const dashboardScript = () => {
                         UpdatedDate: new Date().toISOString()
                     };
                     payload[target.jsonField] = JSON.stringify(progressedData);
-                    const response = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items(${row.Id})`, {
+                    const response = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items(${row.Id})`, {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json;odata=verbose',
@@ -27879,17 +27893,34 @@ const fetchWithTimeout = async (url, options = {}, ms = 45000) => {
 const listFieldsCache = new Map();
 const listExistsCache = new Set();
 const entityTypeCache = new Map();
+// ⚡ CACHE THE DIGEST globally (outside the function)
+let cachedDigest = null;
 const getDigest = async () => {
     try {
+        // 1. Return from memory if we already have it
+        if (cachedDigest)
+            return cachedDigest;
+        // 2. Return from page context if available
         if (typeof _spPageContextInfo !== "undefined" && _spPageContextInfo.formDigestValue) {
-            return _spPageContextInfo.formDigestValue;
+            cachedDigest = String(_spPageContextInfo.formDigestValue);
+            return cachedDigest;
         }
+        // 3. Fetch it if we don't have it
         const res = await fetchWithTimeout(`${siteUrl}/_api/contextinfo`, {
             method: "POST",
             headers: { Accept: "application/json;odata=verbose", "Content-Type": "application/json;odata=verbose" }
         });
+        // 4. Handle 429 Throttling just in case
+        if (res.status === 429) {
+            const waitSec = parseInt(res.headers.get("Retry-After") || "5", 10);
+            console.warn(`⚠️ Throttled getting digest. Waiting ${waitSec}s...`);
+            await new Promise(r => setTimeout(r, waitSec * 1000));
+            return getDigest(); // Retry
+        }
         const data = await res.json();
-        return data.d.GetContextWebInformation.FormDigestValue;
+        // 5. Assign to the variable so TypeScript knows it's a string
+        cachedDigest = String(data.d.GetContextWebInformation.FormDigestValue);
+        return cachedDigest;
     }
     catch (error) {
         console.error("Error getting digest:", error);
@@ -29561,7 +29592,6 @@ const pageStyle = `
                 }
             };
             const doImport = async (file) => {
-                var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
                 if (importing) {
                     showToast("Import already running — please wait for it to finish", "warning");
                     return;
@@ -29583,6 +29613,19 @@ const pageStyle = `
                 bumpChips();
                 const seenRefs = new Set();
                 const resolvedProjectCache = new Map();
+                // ⚡ 1. SAFE FETCH: Automatically handles 429 Too Many Requests
+                const safeFetch = async (url, options) => {
+                    let res = await fetch(url, options);
+                    let retries = 0;
+                    while (res.status === 429 && retries < 5) {
+                        const waitSec = parseInt(res.headers.get("Retry-After") || "5", 10);
+                        console.warn(`⚠️ Throttled by SharePoint (429). Waiting ${waitSec}s before retrying...`);
+                        await new Promise(r => setTimeout(r, waitSec * 1000));
+                        res = await fetch(url, options);
+                        retries++;
+                    }
+                    return res;
+                };
                 const fixSPDate = (dateStr) => {
                     if (!dateStr || String(dateStr).trim() === "" || dateStr === "-")
                         return null;
@@ -29605,18 +29648,16 @@ const pageStyle = `
                             const month = Number(parts[1]);
                             if (year && month) {
                                 const d = new Date(year, month - 1, 1);
-                                if (d >= cutoffDate) {
+                                if (d >= cutoffDate)
                                     cleaned[key] = data[key];
-                                }
                             }
                         }
                     }
                     return cleaned;
                 };
-                // Reusable helper to safely fetch existing JSON from a SharePoint item
                 const fetchExistingMonthJson = async (listName, itemId, fieldName) => {
                     try {
-                        const res = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items(${itemId})?$select=${fieldName}`, {
+                        const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items(${itemId})?$select=${fieldName}`, {
                             headers: { Accept: "application/json;odata=verbose" }
                         });
                         if (res.ok) {
@@ -29631,9 +29672,32 @@ const pageStyle = `
                     }
                     return {};
                 };
+                // ⚡ 2. BULK FETCH MAPS: Removes the need for 5,000 findChildRow queries
+                const fetchIdMap = async (listName) => {
+                    var _a;
+                    const map = new Map();
+                    try {
+                        // Use safeFetch to prevent 429
+                        const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items?$select=Id,ProjectId&$top=5000`, {
+                            headers: { Accept: "application/json;odata=verbose" }
+                        });
+                        if (res.ok) {
+                            const data = await res.json();
+                            const results = ((_a = data.d) === null || _a === void 0 ? void 0 : _a.results) || [];
+                            results.forEach((r) => {
+                                if (r.ProjectId && r.Id)
+                                    map.set(Number(r.ProjectId), Number(r.Id));
+                            });
+                        }
+                    }
+                    catch (e) {
+                        console.error(`Failed to fetch ID map for ${listName}`, e);
+                    }
+                    return map;
+                };
                 try {
                     const buf = await file.arrayBuffer();
-                    const wb = xlsx__WEBPACK_IMPORTED_MODULE_2__.read(buf);
+                    const wb = xlsx__WEBPACK_IMPORTED_MODULE_2__.read(buf, { type: 'array', raw: false });
                     const ws = wb.Sheets[wb.SheetNames[0]];
                     const rows = parseSheet(ws);
                     if (!rows.length)
@@ -29650,112 +29714,106 @@ const pageStyle = `
                         popupStatusList.innerHTML = "";
                     if (popupProgress)
                         popupProgress.style.display = "flex";
-                    for (let i = 0; i < rows.length; i++) {
-                        const row = rows[i];
-                        const refRaw = String((_a = row.projectReference) !== null && _a !== void 0 ? _a : "").trim();
-                        if (!refRaw)
-                            continue;
-                        const ref = refRaw.replace(/\s+/g, " ");
-                        const refKey = ref.toLowerCase();
-                        // ✅ Excel Description is used verbatim — "-", "#", "#N/A", numbers, symbols all kept.
-                        //    No fallback to the reference. Only truly-empty stays empty.
-                        const excelName = String((_b = row.projectName) !== null && _b !== void 0 ? _b : "").trim();
-                        row.projectName = excelName;
-                        console.log(`⏳ Processing ${i + 1} of ${total} — ${ref}`);
-                        const missing = missingMandatory(row);
-                        if (missing.length) {
-                            const msg = "Missing mandatory field(s): " + missing.join(", ");
-                            importErrorRows.push({
-                                rowNo: (_c = row.__rowNo) !== null && _c !== void 0 ? _c : (i + 2),
-                                projectReference: ref,
-                                projectName: String((_d = row.projectName) !== null && _d !== void 0 ? _d : "").trim(),
-                                missing,
-                                message: msg,
-                                raw: (_e = row.__raw) !== null && _e !== void 0 ? _e : []
-                            });
-                            addStatusRow("error", ref || "(no ref)", String((_f = row.projectName) !== null && _f !== void 0 ? _f : ""), msg);
-                            continue;
-                        }
-                        try {
-                            let projectId = null;
-                            let projectTitle = "";
-                            let isNew = false;
-                            const cached = resolvedProjectCache.get(refKey);
-                            if (cached) {
-                                projectId = cached.id;
-                                projectTitle = cached.title;
-                                isNew = false;
+                    // Pre-fetch all existing IDs in ONE bulk request per list (saves hours)
+                    console.log("Fetching existing item IDs...");
+                    const existingCollMap = await fetchIdMap(COLLECTION_LIST);
+                    const existingRevMap = await fetchIdMap(REVENUE_LIST);
+                    const existingInvMap = await fetchIdMap(INVOICING_LIST);
+                    const existingSeiMap = await fetchIdMap(SEIBIES_LIST);
+                    const existingInvtMap = await fetchIdMap(INVENTORY_LIST);
+                    // ⚡ 3. INCREASED BATCH SIZE (Safe because we removed duplicate queries)
+                    const BATCH_SIZE = 5;
+                    for (let i = 0; i < rows.length; i += BATCH_SIZE) {
+                        const batch = rows.slice(i, i + BATCH_SIZE);
+                        await Promise.all(batch.map(async (row) => {
+                            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+                            const refRaw = String((_a = row.projectReference) !== null && _a !== void 0 ? _a : "").trim();
+                            if (!refRaw)
+                                return;
+                            const ref = refRaw.replace(/\s+/g, " ");
+                            const refKey = ref.toLowerCase();
+                            const excelName = String((_b = row.projectName) !== null && _b !== void 0 ? _b : "").trim();
+                            row.projectName = excelName;
+                            const missing = missingMandatory(row);
+                            if (missing.length) {
+                                const msg = "Missing mandatory field(s): " + missing.join(", ");
+                                importErrorRows.push({
+                                    rowNo: (_c = row.__rowNo) !== null && _c !== void 0 ? _c : (i + 2),
+                                    projectReference: ref,
+                                    projectName: String((_d = row.projectName) !== null && _d !== void 0 ? _d : "").trim(),
+                                    missing, message: msg, raw: (_e = row.__raw) !== null && _e !== void 0 ? _e : []
+                                });
+                                addStatusRow("error", ref || "(no ref)", String((_f = row.projectName) !== null && _f !== void 0 ? _f : ""), msg);
+                                return;
                             }
-                            else {
-                                const projData = await resolveProjectByRef(ref);
-                                if (projData) {
-                                    projectId = projData.Id;
-                                    const storedTitle = String((_g = projData.Title) !== null && _g !== void 0 ? _g : "").trim();
-                                    const excelTitle = String((_h = row.projectName) !== null && _h !== void 0 ? _h : "").trim();
-                                    // ✅ Excel Description wins (even "-", "#", numbers, symbols).
-                                    //    Fall back to stored SharePoint title only when Excel is truly empty.
-                                    //    Never fall back to the reference.
-                                    projectTitle = excelTitle !== "" ? excelTitle : storedTitle;
-                                    isNew = false;
-                                    resolvedProjectCache.set(refKey, { id: projectId, title: projectTitle });
-                                    seenRefs.add(refKey);
-                                }
-                            }
-                            if (projectId === null) {
-                                if (seenRefs.has(refKey)) {
-                                    const again = await resolveProjectByRef(ref);
-                                    if (!again)
-                                        throw new Error(`Project "${ref}" was created earlier in this import but could not be re-resolved.`);
-                                    projectId = again.Id;
-                                    projectTitle = String((_j = again.Title) !== null && _j !== void 0 ? _j : "").trim();
-                                    isNew = false;
-                                    resolvedProjectCache.set(refKey, { id: projectId, title: projectTitle });
+                            try {
+                                let projectId = null;
+                                let projectTitle = "";
+                                let isNew = false;
+                                const cached = resolvedProjectCache.get(refKey);
+                                if (cached) {
+                                    projectId = cached.id;
+                                    projectTitle = cached.title;
                                 }
                                 else {
-                                    isNew = true;
-                                    // ✅ Title = Excel Description only. No fallback to the reference.
-                                    projectTitle = String((_k = row.projectName) !== null && _k !== void 0 ? _k : "").trim();
-                                    const entityType = await getListEntityType(PROJECT_LIST);
-                                    const plPayload = { __metadata: { type: entityType } };
-                                    const plFields = await getListFields(PROJECT_LIST);
-                                    const writePL = (desired, value, isDate = false) => {
-                                        const f = findField(plFields, desired);
-                                        if (!f)
-                                            return;
-                                        if (f.type === "Lookup" || f.type === "User")
-                                            return;
-                                        if (isDate || f.type === "DateTime") {
-                                            plPayload[f.internalName] = fixSPDate(value);
-                                            return;
-                                        }
-                                        if (f.type === "Number" || f.type === "Currency") {
-                                            const n = parseNumText(value);
-                                            if (n !== null)
-                                                plPayload[f.internalName] = n;
-                                        }
-                                        else if (value !== undefined && value !== null && String(value) !== "") {
-                                            plPayload[f.internalName] = String(value);
-                                        }
-                                    };
-                                    // ✅ Only set Title when we actually have one (avoid blanking a new item’s required title)
-                                    if (projectTitle !== "")
-                                        plPayload.Title = projectTitle;
-                                    writePL("ProjectReference", ref);
-                                    writePL("PC", row.profitCentre);
-                                    writePL("CustomerName", row.customerName);
-                                    writePL("NWC", row.nwc);
-                                    // Prepare current month JSON for Project List
-                                    const currentProjectData = {
-                                        status: row.status || "",
-                                        contractualDeliveryDate: row.contractualDeliveryDate || "",
-                                        revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
-                                        prQuality: row.prQuality || "",
-                                        prSubmissionStatus: row.prSubmissionStatus || "",
-                                        prApprovalStatus: row.prApprovalStatus || "",
-                                        nwc: (_l = row.nwc) !== null && _l !== void 0 ? _l : 0
-                                    };
-                                    plPayload["ProjectMonth"] = JSON.stringify({ [currentMonthKey]: currentProjectData });
-                                    {
+                                    const projData = await resolveProjectByRef(ref);
+                                    if (projData) {
+                                        projectId = projData.Id;
+                                        const storedTitle = String((_g = projData.Title) !== null && _g !== void 0 ? _g : "").trim();
+                                        const excelTitle = String((_h = row.projectName) !== null && _h !== void 0 ? _h : "").trim();
+                                        projectTitle = excelTitle !== "" ? excelTitle : storedTitle;
+                                        resolvedProjectCache.set(refKey, { id: projectId, title: projectTitle });
+                                        seenRefs.add(refKey);
+                                    }
+                                }
+                                if (projectId === null) {
+                                    if (seenRefs.has(refKey)) {
+                                        const again = await resolveProjectByRef(ref);
+                                        if (!again)
+                                            throw new Error(`Project "${ref}" was created earlier in this import but could not be re-resolved.`);
+                                        projectId = again.Id;
+                                        projectTitle = String((_j = again.Title) !== null && _j !== void 0 ? _j : "").trim();
+                                        resolvedProjectCache.set(refKey, { id: projectId, title: projectTitle });
+                                    }
+                                    else {
+                                        isNew = true;
+                                        projectTitle = String((_k = row.projectName) !== null && _k !== void 0 ? _k : "").trim();
+                                        const entityType = await getListEntityType(PROJECT_LIST);
+                                        const plPayload = { __metadata: { type: entityType } };
+                                        const plFields = await getListFields(PROJECT_LIST);
+                                        const writePL = (desired, value, isDate = false) => {
+                                            const f = findField(plFields, desired);
+                                            if (!f || f.type === "Lookup" || f.type === "User")
+                                                return;
+                                            if (isDate || f.type === "DateTime") {
+                                                plPayload[f.internalName] = fixSPDate(value);
+                                                return;
+                                            }
+                                            if (f.type === "Number" || f.type === "Currency") {
+                                                const n = parseNumText(value);
+                                                if (n !== null)
+                                                    plPayload[f.internalName] = n;
+                                            }
+                                            else if (value !== undefined && value !== null && String(value) !== "") {
+                                                plPayload[f.internalName] = String(value);
+                                            }
+                                        };
+                                        if (projectTitle !== "")
+                                            plPayload.Title = projectTitle;
+                                        writePL("ProjectReference", ref);
+                                        writePL("PC", row.profitCentre);
+                                        writePL("CustomerName", row.customerName);
+                                        writePL("NWC", row.nwc);
+                                        const currentProjectData = {
+                                            status: row.status || "",
+                                            contractualDeliveryDate: row.contractualDeliveryDate || "",
+                                            revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
+                                            prQuality: row.prQuality || "",
+                                            prSubmissionStatus: row.prSubmissionStatus || "",
+                                            prApprovalStatus: row.prApprovalStatus || "",
+                                            nwc: (_l = row.nwc) !== null && _l !== void 0 ? _l : 0
+                                        };
+                                        plPayload["ProjectMonth"] = JSON.stringify({ [currentMonthKey]: currentProjectData });
                                         const byName = await getUserIdsByTitle();
                                         const peopleDesired = [
                                             ["GroupHead1", "groupHead"], ["ProjectManager", "projectManager"],
@@ -29770,75 +29828,54 @@ const pageStyle = `
                                             const uid = byName[nm.toLowerCase()];
                                             if (uid)
                                                 plPayload[f.internalName + "Id"] = String(uid);
-                                            else
-                                                console.warn(`Skipping ${desired} (${nm}) — not found in site users`);
                                         });
-                                    }
-                                    const createRes = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items`, {
-                                        method: "POST",
-                                        headers: {
-                                            Accept: "application/json;odata=verbose",
-                                            "Content-Type": "application/json;odata=verbose",
-                                            "X-RequestDigest": await getDigest()
-                                        },
-                                        body: JSON.stringify(plPayload)
-                                    });
-                                    if (!createRes.ok) {
-                                        const bodyText = await createRes.text();
-                                        console.error("Project List create failed:", bodyText);
-                                        throw new Error(`Could not create project on Project List: ${describeError(bodyText)}`);
-                                    }
-                                    try {
+                                        const createRes = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items`, {
+                                            method: "POST",
+                                            headers: {
+                                                Accept: "application/json;odata=verbose",
+                                                "Content-Type": "application/json;odata=verbose",
+                                                "X-RequestDigest": await getDigest()
+                                            },
+                                            body: JSON.stringify(plPayload)
+                                        });
+                                        if (!createRes.ok)
+                                            throw new Error(`Could not create project: ${describeError(await createRes.text())}`);
                                         const j = await createRes.json();
                                         projectId = j.d.Id;
+                                        resolvedProjectCache.set(refKey, { id: projectId, title: projectTitle });
+                                        seenRefs.add(refKey);
                                     }
-                                    catch (e) {
-                                        const again = await resolveProjectByRef(ref);
-                                        if (!again)
-                                            throw new Error(`Project "${ref}" was created but could not be re-resolved.`);
-                                        projectId = again.Id;
-                                    }
-                                    resolvedProjectCache.set(refKey, { id: projectId, title: projectTitle });
-                                    seenRefs.add(refKey);
                                 }
-                            }
-                            if (projectId === null) {
-                                throw new Error(`Could not resolve or create project "${ref}".`);
-                            }
-                            const resolvedProjectId = projectId;
-                            const notes = [];
-                            // =====================================================================
-                            // 1. UPDATE PROJECT LIST (Existing Project -> Append ProjectMonth JSON)
-                            // =====================================================================
-                            if (!isNew) {
-                                const update = {};
-                                const plFields = await getListFields(PROJECT_LIST);
-                                const put = (desired, value, isDate = false) => {
-                                    const f = findField(plFields, desired);
-                                    if (!f || f.type === "Lookup" || f.type === "User")
-                                        return;
-                                    if (isDate || f.type === "DateTime") {
-                                        update[f.internalName] = fixSPDate(value);
-                                        return;
-                                    }
-                                    if (f.type === "Number" || f.type === "Currency") {
-                                        const n = typeof value === "number" ? value : parseNumText(value);
-                                        if (n !== null)
-                                            update[f.internalName] = n;
-                                    }
-                                    else if (value !== undefined && String(value).trim() !== "") {
-                                        update[f.internalName] = String(value);
-                                    }
-                                };
-                                put("NWC", row.nwc);
-                                put("CustomerName", row.customerName);
-                                put("PC", row.profitCentre);
-                                // ✅ Write the Excel Description verbatim when present.
-                                //    (projectTitle was already computed above from Excel or stored title.)
-                                if (projectTitle !== "") {
-                                    put("Title", projectTitle);
-                                }
-                                {
+                                if (projectId === null)
+                                    throw new Error(`Could not resolve or create project "${ref}".`);
+                                const resolvedProjectId = projectId;
+                                const notes = [];
+                                // 1. UPDATE PROJECT LIST
+                                if (!isNew) {
+                                    const update = {};
+                                    const plFields = await getListFields(PROJECT_LIST);
+                                    const put = (desired, value, isDate = false) => {
+                                        const f = findField(plFields, desired);
+                                        if (!f || f.type === "Lookup" || f.type === "User")
+                                            return;
+                                        if (isDate || f.type === "DateTime") {
+                                            update[f.internalName] = fixSPDate(value);
+                                            return;
+                                        }
+                                        if (f.type === "Number" || f.type === "Currency") {
+                                            const n = typeof value === "number" ? value : parseNumText(value);
+                                            if (n !== null)
+                                                update[f.internalName] = n;
+                                        }
+                                        else if (value !== undefined && String(value).trim() !== "") {
+                                            update[f.internalName] = String(value);
+                                        }
+                                    };
+                                    put("NWC", row.nwc);
+                                    put("CustomerName", row.customerName);
+                                    put("PC", row.profitCentre);
+                                    if (projectTitle !== "")
+                                        put("Title", projectTitle);
                                     const byName = await getUserIdsByTitle();
                                     const peopleDesired = [
                                         ["GroupHead1", "groupHead"], ["ProjectManager", "projectManager"],
@@ -29853,140 +29890,112 @@ const pageStyle = `
                                         const uid = byName[nm.toLowerCase()];
                                         if (uid)
                                             update[f.internalName + "Id"] = String(uid);
-                                        else
-                                            console.warn(`Skipping ${desired} (${nm}) — not found in site users`);
                                     });
+                                    const existingProjJson = await fetchExistingMonthJson(PROJECT_LIST, resolvedProjectId, "ProjectMonth");
+                                    existingProjJson[currentMonthKey] = {
+                                        status: row.status || "",
+                                        contractualDeliveryDate: row.contractualDeliveryDate || "",
+                                        revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
+                                        prQuality: row.prQuality || "",
+                                        prSubmissionStatus: row.prSubmissionStatus || "",
+                                        prApprovalStatus: row.prApprovalStatus || "",
+                                        nwc: (_m = row.nwc) !== null && _m !== void 0 ? _m : 0
+                                    };
+                                    update["ProjectMonth"] = JSON.stringify(cleanOldMonths(existingProjJson));
+                                    if (Object.keys(update).length) {
+                                        const f = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items(${resolvedProjectId})`, {
+                                            method: "POST",
+                                            headers: {
+                                                Accept: "application/json;odata=verbose",
+                                                "Content-Type": "application/json;odata=verbose",
+                                                "X-RequestDigest": await getDigest(),
+                                                "X-HTTP-Method": "MERGE",
+                                                "IF-MATCH": "*"
+                                            },
+                                            body: JSON.stringify(Object.assign({ __metadata: { type: await getListEntityType(PROJECT_LIST) } }, update))
+                                        });
+                                        if (!f.ok)
+                                            notes.push("⚠ Project List update failed");
+                                    }
                                 }
-                                // JSON Merge Logic for Project List
-                                const existingProjJson = await fetchExistingMonthJson(PROJECT_LIST, resolvedProjectId, "ProjectMonth");
-                                const currentProjectData = {
-                                    status: row.status || "",
-                                    contractualDeliveryDate: row.contractualDeliveryDate || "",
-                                    revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
-                                    prQuality: row.prQuality || "",
-                                    prSubmissionStatus: row.prSubmissionStatus || "",
-                                    prApprovalStatus: row.prApprovalStatus || "",
-                                    nwc: (_m = row.nwc) !== null && _m !== void 0 ? _m : 0
+                                // 2. UPDATE COLLECTION LIST (Uses ID Map, No findChildRow)
+                                const collValues = {};
+                                const cMap = [
+                                    ["NormalDue", "normalDue"], ["NormalOverdue", "normalOverdue"],
+                                    ["RetentionDue", "retentionDue"], ["RetentionOverdue", "retentionOverdue"],
+                                    ["GstTds", "gstTds"], ["WHT", "wht"], ["ReceivableValue", "receivableValue"]
+                                ];
+                                const currentReceivableData = {
+                                    normalDue: row.normalDue || 0, normalOverdue: row.normalOverdue || 0,
+                                    retentionDue: row.retentionDue || 0, retentionOverdue: row.retentionOverdue || 0,
+                                    gstTds: row.gstTds || 0, wht: row.wht || 0, receivableValue: row.receivableValue || 0
                                 };
-                                existingProjJson[currentMonthKey] = currentProjectData;
-                                update["ProjectMonth"] = JSON.stringify(cleanOldMonths(existingProjJson));
-                                if (Object.keys(update).length) {
-                                    const f = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items(${resolvedProjectId})`, {
-                                        method: "POST",
-                                        headers: {
-                                            Accept: "application/json;odata=verbose",
-                                            "Content-Type": "application/json;odata=verbose",
-                                            "X-RequestDigest": await getDigest(),
-                                            "X-HTTP-Method": "MERGE",
-                                            "IF-MATCH": "*"
-                                        },
-                                        body: JSON.stringify(Object.assign({ __metadata: { type: await getListEntityType(PROJECT_LIST) } }, update))
+                                cMap.forEach(([fieldKey, excelKey]) => {
+                                    const v = row[excelKey];
+                                    if (typeof v === "number" && v !== 0)
+                                        collValues[fieldKey] = v;
+                                });
+                                const collRowId = existingCollMap.get(resolvedProjectId);
+                                let existingCollJson = collRowId ? await fetchExistingMonthJson(COLLECTION_LIST, collRowId, "ReceivableValueMonth") : {};
+                                existingCollJson[currentMonthKey] = currentReceivableData;
+                                collValues["ReceivableValueMonth"] = JSON.stringify(cleanOldMonths(existingCollJson));
+                                const collRes = await upsertRow({
+                                    listName: COLLECTION_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
+                                    values: collValues, rowId: collRowId
+                                });
+                                if (!collRes.success)
+                                    notes.push("⚠ Collection List update failed");
+                                // 3. UPDATE REVENUE FORECAST LIST (Uses ID Map)
+                                if (typeof row.obl === "number" || typeof row.obl === "string") {
+                                    const revRowId = existingRevMap.get(resolvedProjectId);
+                                    let existingRevJson = revRowId ? await fetchExistingMonthJson(REVENUE_LIST, revRowId, "OBLMonth") : {};
+                                    existingRevJson[currentMonthKey] = row.obl || 0;
+                                    const revValues = { OBLMonth: JSON.stringify(cleanOldMonths(existingRevJson)) };
+                                    if (typeof row.obl === "number" && row.obl !== 0)
+                                        revValues["OBL"] = row.obl;
+                                    const revRes = await upsertRow({
+                                        listName: REVENUE_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
+                                        values: revValues, rowId: revRowId
                                     });
-                                    if (!f.ok)
-                                        notes.push("⚠ Project List update failed: " + describeError(await f.text()));
+                                    if (!revRes.success)
+                                        notes.push("⚠ Revenue Forecast List update failed");
                                 }
+                                // 4. UPDATE OTHER SINGLE TABLES (Uses ID Maps)
+                                const singleTables = [
+                                    { listName: INVOICING_LIST, excelKey: "invoicingPlanning", jsonColName: "OBLMonth", map: existingInvMap },
+                                    { listName: SEIBIES_LIST, excelKey: "seibies", jsonColName: "OBLMonth", map: existingSeiMap },
+                                    { listName: INVENTORY_LIST, excelKey: "inventory", jsonColName: "OBLMonth", map: existingInvtMap }
+                                ];
+                                for (const { listName, excelKey, jsonColName, map } of singleTables) {
+                                    const v = row[excelKey];
+                                    const rowId = map.get(resolvedProjectId);
+                                    let existingJson = rowId ? await fetchExistingMonthJson(listName, rowId, jsonColName) : {};
+                                    existingJson[currentMonthKey] = v || 0;
+                                    const values = { [jsonColName]: JSON.stringify(cleanOldMonths(existingJson)) };
+                                    if (typeof v === "number" && v !== 0)
+                                        values["OBL"] = v;
+                                    const ur = await upsertRow({
+                                        listName, projectId: resolvedProjectId, projectRef: ref, projectTitle,
+                                        values, rowId: rowId
+                                    });
+                                    if (!ur.success)
+                                        notes.push(`⚠ ${listName} update failed`);
+                                }
+                                const baseMsg = isNew ? "New project created." : "Existing project updated.";
+                                addStatusRow(isNew ? "created" : "updated", ref, projectTitle, notes.length ? baseMsg + " " + notes.join(" ") : baseMsg);
                             }
-                            // =====================================================================
-                            // 2. UPDATE COLLECTION LIST (Existing/New -> Append ReceivableValueMonth JSON)
-                            // =====================================================================
-                            const collValues = {};
-                            const cMap = [
-                                ["NormalDue", "normalDue"], ["NormalOverdue", "normalOverdue"],
-                                ["RetentionDue", "retentionDue"], ["RetentionOverdue", "retentionOverdue"],
-                                ["GstTds", "gstTds"], ["WHT", "wht"], ["ReceivableValue", "receivableValue"]
-                            ];
-                            const currentReceivableData = {
-                                normalDue: row.normalDue || 0,
-                                normalOverdue: row.normalOverdue || 0,
-                                retentionDue: row.retentionDue || 0,
-                                retentionOverdue: row.retentionOverdue || 0,
-                                gstTds: row.gstTds || 0,
-                                wht: row.wht || 0,
-                                receivableValue: row.receivableValue || 0
-                            };
-                            cMap.forEach(([fieldKey, excelKey]) => {
-                                const v = row[excelKey];
-                                if (typeof v === "number" && v !== 0)
-                                    collValues[fieldKey] = v;
-                            });
-                            const existingCollRes = await findChildRow(COLLECTION_LIST, resolvedProjectId, ref, projectTitle);
-                            let existingCollJson = existingCollRes.row
-                                ? await fetchExistingMonthJson(COLLECTION_LIST, existingCollRes.row.Id, "ReceivableValueMonth")
-                                : {};
-                            existingCollJson[currentMonthKey] = currentReceivableData;
-                            collValues["ReceivableValueMonth"] = JSON.stringify(cleanOldMonths(existingCollJson));
-                            const collRes = await upsertRow({
-                                listName: COLLECTION_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-                                values: collValues, rowId: existingCollRes.row ? existingCollRes.row.Id : undefined
-                            });
-                            if (!collRes.success)
-                                notes.push("⚠ Collection List: " + describeError(collRes.error));
-                            // =====================================================================
-                            // 3. UPDATE REVENUE FORECAST LIST (Existing/New -> Append OBLMonth JSON)
-                            // =====================================================================
-                            if (typeof row.obl === "number" || typeof row.obl === "string") {
-                                const existingRevRes = await findChildRow(REVENUE_LIST, resolvedProjectId, ref, projectTitle);
-                                let existingRevJson = existingRevRes.row
-                                    ? await fetchExistingMonthJson(REVENUE_LIST, existingRevRes.row.Id, "OBLMonth")
-                                    : {};
-                                existingRevJson[currentMonthKey] = row.obl || 0;
-                                const revValues = {
-                                    OBLMonth: JSON.stringify(cleanOldMonths(existingRevJson))
-                                };
-                                if (typeof row.obl === "number" && row.obl !== 0)
-                                    revValues["OBL"] = row.obl;
-                                const revRes = await upsertRow({
-                                    listName: REVENUE_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-                                    values: revValues, rowId: existingRevRes.row ? existingRevRes.row.Id : undefined
+                            catch (err) {
+                                console.error("Error processing row:", row, err);
+                                const msg = describeError(err instanceof Error ? err.message : err);
+                                importErrorRows.push({
+                                    rowNo: (_o = row.__rowNo) !== null && _o !== void 0 ? _o : (i + 2), projectReference: ref,
+                                    projectName: String((_p = row.projectName) !== null && _p !== void 0 ? _p : "").trim(), missing: [], message: msg, raw: (_q = row.__raw) !== null && _q !== void 0 ? _q : []
                                 });
-                                if (!revRes.success)
-                                    notes.push("⚠ Revenue Forecast List: " + describeError(revRes.error));
+                                addStatusRow("error", ref, String((_r = row.projectName) !== null && _r !== void 0 ? _r : ""), msg);
                             }
-                            // =====================================================================
-                            // 4. UPDATE OTHER SINGLE TABLES (Invoicing, SEIBIES, Inventory)
-                            // =====================================================================
-                            const singleTables = [
-                                { listName: INVOICING_LIST, excelKey: "invoicingPlanning", jsonColName: "OBLMonth" },
-                                { listName: SEIBIES_LIST, excelKey: "seibies", jsonColName: "OBLMonth" },
-                                { listName: INVENTORY_LIST, excelKey: "inventory", jsonColName: "OBLMonth" }
-                            ];
-                            for (const { listName, excelKey, jsonColName } of singleTables) {
-                                const v = row[excelKey];
-                                const existingRowRes = await findChildRow(listName, resolvedProjectId, ref, projectTitle);
-                                let existingJson = existingRowRes.row
-                                    ? await fetchExistingMonthJson(listName, existingRowRes.row.Id, jsonColName)
-                                    : {};
-                                existingJson[currentMonthKey] = v || 0;
-                                const values = {
-                                    [jsonColName]: JSON.stringify(cleanOldMonths(existingJson))
-                                };
-                                if (typeof v === "number" && v !== 0)
-                                    values["OBL"] = v;
-                                const ur = await upsertRow({
-                                    listName, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-                                    values, rowId: existingRowRes.row ? existingRowRes.row.Id : undefined
-                                });
-                                if (!ur.success)
-                                    notes.push("⚠ " + listName + ": " + describeError(ur.error));
-                            }
-                            const baseMsg = isNew
-                                ? "New project created on Project List, then rows ensured on all source tables."
-                                : "Existing project — values updated on Project List + source tables.";
-                            addStatusRow(isNew ? "created" : "updated", ref, projectTitle, notes.length ? baseMsg + " " + notes.join(" ") : baseMsg);
-                        }
-                        catch (err) {
-                            console.error("Error processing row:", row, err);
-                            const msg = describeError(err instanceof Error ? err.message : err);
-                            importErrorRows.push({
-                                rowNo: (_o = row.__rowNo) !== null && _o !== void 0 ? _o : (i + 2),
-                                projectReference: ref,
-                                projectName: String((_p = row.projectName) !== null && _p !== void 0 ? _p : "").trim(),
-                                missing: [],
-                                message: msg,
-                                raw: (_q = row.__raw) !== null && _q !== void 0 ? _q : []
-                            });
-                            addStatusRow("error", ref, String((_r = row.projectName) !== null && _r !== void 0 ? _r : ""), msg);
-                        }
+                        }));
+                        // Let the browser UI breathe
+                        await new Promise(resolve => setTimeout(resolve, 100));
                     }
                     if (popupProgress)
                         popupProgress.style.display = "none";
@@ -29995,14 +30004,13 @@ const pageStyle = `
                     if (downloadErrorsBtn) {
                         if (importErrorRows.length > 0) {
                             downloadErrorsBtn.style.display = "inline-flex";
-                            downloadErrorsBtn.textContent =
-                                `⬇️ Download Error List (${importErrorRows.length} row${importErrorRows.length === 1 ? "" : "s"})`;
+                            downloadErrorsBtn.textContent = `⬇️ Download Error List (${importErrorRows.length})`;
                         }
                         else {
                             downloadErrorsBtn.style.display = "none";
                         }
                     }
-                    showToast(`✅ Import complete — ${impCreated} new project(s), ${impUpdated} updated, ${impErrors} error(s) of ${total}`, impErrors ? "warning" : "success", 6000);
+                    showToast(`✅ Import complete — ${impCreated} new, ${impUpdated} updated, ${impErrors} errors.`, impErrors ? "warning" : "success", 6000);
                     await loadMaster();
                 }
                 catch (error) {
@@ -30011,10 +30019,6 @@ const pageStyle = `
                         popupProgress.style.display = "none";
                     if (popupResults)
                         popupResults.style.display = "block";
-                    if (downloadErrorsBtn)
-                        downloadErrorsBtn.style.display = "none";
-                    if (popupStatusList)
-                        popupStatusList.innerHTML = "";
                     addStatusRow("error", "(file)", file.name, describeError(error));
                     showToast("❌ Import failed: " + describeError(error), "error", 6000);
                 }
