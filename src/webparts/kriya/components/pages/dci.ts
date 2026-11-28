@@ -604,6 +604,7 @@ const DCSModule = {
 
   script: () => {
     setTimeout(async () => {
+      if ((window as any).__dtActivePageKey !== 'dci') return;
       // Configuration
       const siteUrl =
         typeof _spPageContextInfo !== "undefined"

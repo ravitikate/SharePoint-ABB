@@ -19,7 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_assets_ABBvoiceOffice_Rg_ttf__WEBPACK_IMPORTED_MODULE_2__)
-_node_modules_microsoft_sp_css_loader_node_modules_microsoft_load_themed_styles_lib_es6_index_js__WEBPACK_IMPORTED_MODULE_0__.loadStyles("@font-face{font-display:swap;font-family:ABBvoiceOffice;font-style:normal;font-weight:600;src:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") format(\"truetype\")}.collection-page,.collection-page *,body,html{font-family:ABBvoiceOffice}.collection-month-columns-table{min-width:1800px}@media (max-width:1400px){.collection-month-columns-table{min-width:1600px}.collection-table-actions-row{grid-template-columns:repeat(3,1fr)}.collection-pagination-controls{flex-direction:column;gap:15px}}@media (max-width:1024px){.collection-month-columns-table{min-width:1400px}.collection-table-actions-row{grid-template-columns:repeat(2,1fr)}.collection-table-container{overflow-x:auto}.collection-pagination-navigation{flex-wrap:wrap;justify-content:center}.collection-pagination-info{margin:5px}}@media (max-width:768px){.collection-month-columns-table{font-size:10px;min-width:1200px}.collection-table-actions-row{grid-template-columns:1fr}.collection-table-actions{padding:10px}.collection-pagination-controls{align-items:stretch;flex-direction:column}.collection-pagination-navigation{flex-direction:column;gap:10px}.collection-pagination-pages{margin:10px 0;order:-1}.collection-control-btn{font-size:9px;height:18px;width:18px}.collection-value-display{font-size:10px}.collection-form-row{flex-direction:column}.collection-form-group{flex:1 1 100%}.collection-detailed-months-row{flex-direction:column}.collection-current-month-container,.collection-next-months-container{max-width:100%}}@media (max-width:480px){.collection-month-columns-table{min-width:1000px}.collection-page-header{align-items:flex-start;flex-direction:column;gap:10px}.collection-btn-primary,.collection-btn-secondary{text-align:center;width:100%}.collection-pagination-btn{font-size:12px;min-width:60px;padding:6px 8px}.collection-page-number{font-size:12px;min-width:30px;padding:6px 8px}}.collection-sort-header-container{align-items:center;display:flex;gap:10px;justify-content:center;padding:0}.collection-header-label{font-size:10px;font-weight:600;line-height:1.25;overflow-wrap:anywhere;vertical-align:middle;white-space:normal!important;word-break:break-word}.collection-sort-buttons-container{display:flex;flex-direction:column;gap:1px;margin-left:4px}.collection-sort-btn{align-items:center;background:hsla(0,4%,75%,.15);border:1px solid hsla(0,0%,100%,.3);border-radius:1px;color:#768912fa;cursor:pointer;display:flex;font-size:6px;height:10px;justify-content:center;line-height:1;padding:0;transition:all .2s ease;width:12px}.collection-form-actions{margin:14px 16px}.collection-month-subheader .collection-sort-btn{background:rgba(0,120,212,.1);border:1px solid rgba(0,120,212,.3);color:#0078d4}.collection-sort-btn:hover{background:hsla(0,0%,100%,.3);transform:scale(1.1)}.collection-month-subheader .collection-sort-btn:hover{background:rgba(0,120,212,.2)}.collection-sort-btn.collection-sort-asc.active,.collection-sort-btn.collection-sort-desc.active{background:#28a745;border-color:#28a745;color:#fff}.collection-sort-btn:active{transform:scale(.95)}.collection-table-container{-webkit-overflow-scrolling:touch;background:#fff;border:1px solid #cfd8dc;border-radius:6px;max-height:70vh;overflow:auto;position:relative}.collection-table-scroll{border:1px solid #cfd8dc;max-height:70vh;overflow:auto}.collection-month-columns-table thead td,.collection-month-columns-table thead th{background-clip:padding-box;position:sticky;top:0;z-index:10}.collection-month-columns-table thead .collection-customer-col,.collection-month-columns-table thead .collection-freeze-col,.collection-month-columns-table thead .collection-gh-col,.collection-month-columns-table thead .collection-obl-col,.collection-month-columns-table thead .collection-pm-col,.collection-month-columns-table thead .collection-project-col,.collection-month-columns-table thead .collection-project-ref-col{z-index:15!important}.collection-month-columns-table tbody .collection-customer-col,.collection-month-columns-table tbody .collection-freeze-col,.collection-month-columns-table tbody .collection-gh-col,.collection-month-columns-table tbody .collection-obl-col,.collection-month-columns-table tbody .collection-pm-col,.collection-month-columns-table tbody .collection-project-col,.collection-month-columns-table tbody .collection-project-ref-col{z-index:2}button.collection-show-form-btn{display:none}.collection-toggle-historical-btn{align-items:center;background-color:#f8f9fa!important;border:1px solid #dee2e6!important;border-radius:4px!important;color:#495057!important;cursor:pointer;display:inline-flex;height:30px!important;justify-content:center;min-width:34px!important;padding:0!important;transition:all .25s ease;width:34px!important}.collection-toggle-historical-btn:hover{background-color:#e9ecef!important;border-color:#adb5bd!important}.collection-toggle-arrow{display:inline-block;font-size:16px;line-height:1;transition:transform .3s ease}.collection-toggle-historical-btn.expanded .collection-toggle-arrow{transform:rotate(180deg)}.collection-clear-filters-btn,.collection-export-btn,.collection-export-historical-btn,.collection-import-actual-btn{align-items:center!important;background:#605eee!important;border:1px solid #605eee!important;border-radius:999px!important;box-shadow:0 1px 2px rgba(16,24,40,.08)!important;box-sizing:border-box!important;color:#fff!important;cursor:pointer!important;display:inline-flex!important;font-family:inherit!important;font-size:13.5px!important;font-weight:700!important;gap:8px!important;justify-content:center!important;line-height:1!important;min-height:38px!important;min-width:160px!important;padding:10px 20px!important;transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease,transform .15s ease!important;white-space:nowrap!important}.collection-clear-filters-btn:hover:not(:disabled),.collection-export-btn:hover:not(:disabled),.collection-export-historical-btn:hover:not(:disabled),.collection-import-actual-btn:hover:not(:disabled){background:#4c49e0!important;border-color:#4c49e0!important;box-shadow:0 4px 10px rgba(96,94,238,.22)!important;transform:translateY(-1px)!important}@media (max-width:1400px){.collection-month-columns-table{min-width:1600px}.collection-header-label{font-size:9px}.collection-sort-btn{font-size:5px;height:9px;width:11px}}@media (max-width:1200px){.collection-month-columns-table{min-width:1400px}.collection-sort-header-container{flex-direction:column;gap:2px}.collection-sort-buttons-container{flex-direction:row;margin-left:0}}@media (max-width:768px){.collection-month-columns-table{min-width:1200px}.collection-header-label{font-size:8px}.collection-sort-btn{font-size:4px;height:8px;width:10px}}.collection-table-controls{align-items:center;display:flex;flex-direction:column;gap:1px;margin-top:2px}.collection-control-btn.collection-sort-btn{align-items:center;background:#f8f9fa;border:1px solid #ccc;border-radius:2px;cursor:pointer;display:flex;font-size:7px;height:12px;justify-content:center;line-height:1;padding:0;transition:all .2s ease;width:14px}.collection-control-btn.collection-sort-btn:hover{background:#0078d4;border-color:#0078d4;color:#fff;transform:scale(1.1)}.collection-control-btn.collection-sort-btn.collection-sort-asc.active{background:#28a745;border-color:#28a745;color:#fff}.collection-control-btn.collection-sort-btn.collection-sort-desc.active{background:#dc3545;border-color:#dc3545;color:#fff}.collection-control-btn.collection-sort-btn:active{transform:scale(.95)}.collection-month-columns-table td{font-size:10px;line-height:1.3;padding:3px 4px!important}.collection-value-with-controls{align-items:center;display:flex;flex-direction:column;justify-content:center;min-height:45px}.collection-value-display{color:#fff;font-size:10px;font-weight:600;margin-bottom:2px;text-align:center}.collection-month-column-header,.collection-project-info-cell{background:#0078d4;border:1px solid #ddd!important;color:#fff;font-size:12px;font-weight:600;padding:6px 3px;position:relative}.collection-month-subheader{background:#e3f2fd;border:1px solid #ddd!important;color:#0078d4;font-size:12px;font-weight:600;padding:5px 2px}.collection-collection-cell,.collection-receivable-cell{background:#f8f9fa!important;color:#2c3e50;font-weight:700}.collection-total-cell{background:#e8f4fd!important;font-weight:600}.collection-month-data-cell{background:#fff;transition:background-color .2s ease}.collection-month-data-cell:hover{background:#f0f7ff!important}@keyframes collectionSortPulse{0%{transform:scale(1)}50%{transform:scale(1.1)}to{transform:scale(1)}}.collection-control-btn.collection-sort-btn.active{animation:collectionSortPulse .3s ease}.collection-action-buttons-container{align-items:center;display:flex;flex-direction:column;gap:4px;justify-content:center;min-height:100%;padding:3px}.collection-edit-action-btn{align-items:center;background:linear-gradient(135deg,#0078d4,#106ebe);border:none;border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.1);color:#fff;cursor:pointer;display:flex;font-size:9px;font-weight:600;gap:3px;justify-content:center;line-height:1.1;min-width:50px;padding:4px 6px;transition:all .2s ease}.collection-edit-action-btn:hover{background:linear-gradient(135deg,#106ebe,#005a9e);box-shadow:0 2px 4px rgba(0,0,0,.15);transform:translateY(-1px)}.collection-edit-icon{flex-shrink:0;font-size:10px}.collection-edit-text{font-size:8px;white-space:nowrap}.collection-month-columns-table tbody tr:nth-child(2n){background:#fafafa}.collection-month-columns-table tbody tr:nth-child(odd){background:#fff}.collection-month-columns-table tbody tr:hover{background:#f0f7ff!important}.collection-hidden-section{display:none!important}.collection-visible-section{display:block!important}.collection-collection-section.collection-visible-section,.collection-obl-section-container.collection-visible-section{display:block}.collection-obl-breakdown-section{background:#fff;border:1px solid #e9ecef;border-radius:8px;margin-top:20px;padding:15px}.collection-obl-breakdown-section h4{color:#0078d4;font-size:14px;font-weight:600;margin:0 0 15px;text-align:center}.collection-obl-breakdown-grid{display:grid;gap:12px;grid-template-columns:repeat(6,1fr)}.collection-obl-breakdown-item{display:flex;flex-direction:column}.collection-obl-breakdown-item label{color:#495057;font-size:11px;font-weight:600;margin-bottom:4px;text-align:center}.collection-obl-breakdown-input{background:#f8f9fa!important;border:1px solid #ddd;border-radius:4px;color:#6c757d!important;cursor:not-allowed;font-size:12px;padding:6px 8px;text-align:center}.collection-month-columns-table thead th.collection-freeze-col{color:#495057!important;font-size:10px!important;font-weight:600!important;line-height:1.2!important;padding:2px!important;text-align:center!important;vertical-align:middle!important;white-space:normal!important}.collection-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);margin-bottom:20px;padding:20px;position:relative}.collection-table-actions{background:#f8f9fa;border:1px solid #e9ecef;border-radius:8px;display:flex;flex-wrap:wrap;gap:15px;margin-bottom:20px;padding:15px}.collection-table-actions-row{align-items:end;display:grid;gap:15px;grid-template-columns:repeat(6,1fr)}.collection-tableColp4{display:flex;flex-direction:column;gap:8px}.collection-tableColp4 label{color:#495057;font-size:12px;font-weight:600;margin-bottom:4px}.collection-tableColp4 select{background:#fff;border:1px solid #ddd;border-radius:5px;font-size:14px;padding:8px 12px;width:100%}.collection-btn-primary{background:#0078d4;border:none;border-radius:5px;color:#fff;cursor:pointer;font-size:14px;padding:8px 12px;transition:all .2s ease}.collection-btn-primary:hover:not(:disabled){background:#106ebe;transform:translateY(-1px)}.collection-btn-primary:disabled{background:#a19f9d;cursor:not-allowed}.collection-btn-secondary{background:#6c757d;border:none;border-radius:5px;color:#fff;cursor:pointer;font-size:14px;padding:8px 12px;transition:all .2s ease}.collection-btn-secondary:hover{background:#5a6268;transform:translateY(-1px)}.collection-clear-filters-btn{background:#dc3545!important}.collection-clear-filters-btn:hover{background:#c82333!important}.collection-import-actual-btn{background:#28a745!important}.collection-import-actual-btn:hover{background:#218838!important}.collection-export-btn{background:#17a2b8!important}.collection-export-btn:hover{background:#138496!important}.collection-form-row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}.collection-form-group{display:flex;flex:1 1 250px;flex-direction:column}.collection-form-group label{color:#333;font-weight:600;margin-bottom:5px}.collection-form-group input,.collection-form-group select{border:1px solid #ddd;border-radius:5px;font-size:14px;padding:8px 12px}.collection-project-main-wrapper{background:#f8f9fa!important;border:1px solid #e9ecef!important;border-radius:6px!important;display:grid!important;gap:0!important;grid-template-columns:1fr 1fr!important;margin:4px 0 8px!important;min-height:234px!important;overflow:hidden!important}.collection-project-left-side{align-items:flex-start!important;background:#fff!important;border-right:1px solid #e9ecef!important;display:flex!important;flex-direction:column!important;gap:0!important;justify-content:flex-start!important;padding:8px 16px!important}.collection-project-left-side .collection-detail-item{align-items:center!important;border-bottom:1px solid #f0f0f0!important;display:flex!important;flex-direction:row!important;font-size:12px!important;gap:10px!important;justify-content:flex-start!important;padding:8px 0!important;text-align:left!important;width:100%!important}.collection-project-left-side .collection-detail-label{color:#495057!important;font-weight:700!important;min-width:100px!important;white-space:nowrap!important}.collection-project-left-side .collection-detail-value{color:#1a1a2e!important;white-space:nowrap!important}.collection-project-right-side{background:#fff!important;display:flex!important;flex-direction:column!important;gap:6px!important;justify-content:flex-start!important;padding:8px 16px!important}.collection-remarks-group{display:flex!important;flex-direction:column!important;width:100%!important}.collection-remarks-group label{color:#495057!important;font-size:11px!important;font-weight:700!important;letter-spacing:.5px!important;margin-bottom:2px!important;text-align:left!important}.collection-remarks-textarea{background-color:#fff!important;border:1px solid #ced4da!important;border-radius:4px!important;font-family:inherit!important;font-size:12px!important;line-height:1.4!important;max-height:50px!important;min-height:32px!important;padding:4px 8px!important;resize:vertical!important;text-align:left!important;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out!important;width:100%!important}.collection-remarks-textarea:focus{border-color:#80bdff!important;box-shadow:0 0 0 .15rem rgba(0,123,255,.15)!important;outline:0!important}.collection-receivable-breakdown-section{background:linear-gradient(135deg,#f8f9fa,#e9ecef)!important;border:1px solid #dee2e6!important;border-radius:8px!important;margin:4px 0 12px!important;padding:12px 20px!important;width:100%!important}.collection-breakdown-header-title h4{color:#495057!important;font-size:14px!important;font-weight:700!important;letter-spacing:.5px!important;margin:0 0 10px!important}.collection-breakdown-grid{display:grid!important;gap:8px 12px!important;grid-template-columns:repeat(6,1fr)!important}.collection-breakdown-field{display:flex!important;flex-direction:column!important}.collection-breakdown-field label{color:#6c757d!important;font-size:10px!important;font-weight:600!important;letter-spacing:.3px!important;margin-bottom:2px!important;text-transform:uppercase!important}.collection-breakdown-input{background:#fff!important;border:1px solid #ced4da!important;border-radius:4px!important;color:#1a1a2e!important;font-size:14px!important;font-weight:600!important;height:34px!important;padding:4px 8px!important;text-align:center!important;transition:all .2s ease!important}.collection-breakdown-input:focus{border-color:#007bff!important;box-shadow:0 0 0 2px rgba(0,123,255,.15)!important;outline:none!important}.collection-breakdown-input.collection-input-with-value{background:#fff!important;border-color:#0078d4!important;color:#0078d4!important;font-weight:700!important}.collection-obl-section-container{background:#f8f9fa!important;border:1px solid #e9ecef!important;border-radius:4px!important;margin:2px 0 0!important;padding:6px 12px!important}.collection-obl-content{align-items:start!important;display:grid!important;gap:12px!important;grid-template-columns:1fr 1.5fr!important}.collection-obl-left{display:flex!important;flex-direction:column!important}.collection-obl-label-group{align-items:center!important;display:flex!important;gap:4px!important;margin-bottom:2px!important;text-align:left!important}.collection-obl-label-group label{color:#495057!important;font-size:11px!important;font-weight:700!important;margin:0!important}.collection-obl-value-display{display:flex!important;flex-direction:column!important}.collection-obl-input{background:#fff!important;border:1px solid #ddd!important;border-radius:4px!important;color:#0078d4!important;font-size:18px!important;font-weight:700!important;height:36px!important;max-width:140px!important;padding:2px 8px!important;text-align:center!important;width:100%!important}.collection-obl-right{align-items:center!important;display:flex!important}.collection-validation-summary{background:#fff!important;border:1px solid #e9ecef!important;border-radius:4px!important;padding:4px 12px!important;width:100%!important}.collection-validation-item{display:flex!important;font-size:11px!important;justify-content:space-between!important;margin-bottom:1px!important;text-align:left!important}.collection-validation-label{color:#666!important;font-size:10px!important;font-weight:600!important;text-align:left!important}.collection-validation-value{color:#333!important;font-size:11px!important;font-weight:700!important;text-align:right!important}.collection-validation-line{background:#e9ecef!important;border-radius:2px!important;height:4px!important;margin-top:3px!important;overflow:hidden!important}.collection-line-fill{background:#28a745!important;border-radius:2px!important;height:100%!important;transition:all .3s ease!important;width:0!important}.collection-line-fill.collection-warning{background:#ffc107!important}.collection-line-fill.collection-danger{background:#dc3545!important}.collection-validation-message{border-radius:4px;display:block!important;font-size:12px;font-weight:500;margin-top:5px;padding:8px 12px}.collection-validation-message.collection-danger{background-color:#f8d7da;border:1px solid #f5c6cb;color:#721c24}.collection-validation-message.collection-warning{background-color:#fff3cd;border:1px solid #ffc106;color:#856404}.collection-validation-message.collection-success{background-color:#d4edda;border:1px solid #c3e6cb;color:#155724}.collection-next-month-box{flex:1;min-width:0}.collection-detailed-month-box{background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1);height:fit-content;padding:15px;position:relative}.collection-current-month-box{background:linear-gradient(135deg,#fff,#f0f8ff);border:2px solid #0078d4}.collection-next-month-box .collection-detailed-month-box{background:linear-gradient(135deg,#fff,#f9f9f9);border:1px solid #ddd}.collection-current-month-indicator{backdrop-filter:blur(5px)!important;background:hsla(0,0%,100%,.2)!important;border:1px solid hsla(0,0%,100%,.3)!important;border-radius:12px!important;color:#fff!important;font-size:10px!important;font-weight:600!important;padding:4px 10px!important;position:absolute!important;right:12px!important;top:50%!important;transform:translateY(-50%)!important}.collection-detailed-month-box .collection-month-header{background:linear-gradient(135deg,#0078d4,#005a9e)!important;border-bottom:2px solid #004578!important;border-radius:8px 8px 0 0!important;box-shadow:0 2px 4px rgba(0,0,0,.1)!important;color:#fff!important;font-size:14px!important;font-weight:700!important;margin:-15px -15px 20px!important;padding:12px 15px!important;position:relative!important;text-align:center!important;z-index:10!important}.collection-current-month-box .collection-month-header{background:linear-gradient(135deg,#28a745,#1e7e34)!important;border-bottom:2px solid #155724!important}.collection-enhanced-inputs-container{display:grid;gap:12px;grid-template-columns:1fr 1fr 1fr 1fr;margin-bottom:15px}.collection-enhanced-input-group{align-items:center;display:flex;flex-direction:column}.collection-enhanced-input-group label{color:#666;font-size:11px;font-weight:600;margin-bottom:4px;text-align:center}.collection-enhanced-input-group input,.collection-enhanced-input-group select{background:#fff;border:1px solid #ddd;border-radius:4px;font-size:12px;padding:6px 8px;text-align:center;transition:all .2s ease;width:100%}.collection-enhanced-input-group input:focus,.collection-enhanced-input-group select:focus{border-color:#0078d4;box-shadow:0 0 0 2px rgba(0,120,212,.2);outline:none}.collection-forecast-date-input{background:#fff!important;border:1px solid #ddd!important;color:#333!important}.collection-categories-section{border-top:2px solid #e0e0e0;margin-top:15px;padding-top:15px}.collection-categories-header{border-bottom:1px solid #eee;color:#666;display:grid;font-size:11px;font-weight:600;gap:8px;grid-template-columns:2fr 1fr 1fr 1fr 2fr;margin-bottom:8px;padding-bottom:4px;text-align:center}.collection-category-row{align-items:center;display:grid;gap:8px;grid-template-columns:2fr 1fr 1fr 1fr 1fr;margin-bottom:6px}.collection-category-row input{background:#fff;border:1px solid #ddd;border-radius:3px;font-size:12px;padding:5px 8px;transition:all .2s ease}.collection-category-row input[type=text]{text-align:left}.collection-category-row input[type=number]{text-align:right}.collection-category-row input[type=date]{text-align:center}.collection-category-row input:focus{border-color:#0078d4;box-shadow:0 0 0 1px rgba(0,120,212,.2);outline:none}.collection-month-actual-badge,.collection-month-date-badge{align-items:center;border-radius:4px;display:inline-flex;font-size:13px;font-weight:600;gap:6px;padding:2px 12px;white-space:nowrap}.collection-month-actual-badge{background-color:#f5f5f5;border:1px solid #ddd;color:#999}.collection-month-actual-badge.collection-has-value{background-color:#c8e6c9;border-color:#4caf50;color:#1b5e20}.collection-month-date-badge{background-color:#f5f5f5;border:1px solid #ddd;color:#999}.collection-month-date-badge.collection-has-value{background-color:#e3f2fd;border-color:#007bff;color:#0c5460}.collection-detailed-month-box .collection-month-header{flex-wrap:wrap;row-gap:6px}.collection-historical-month{background:linear-gradient(135deg,#f5f5f5,#e8e8e8)!important;border:1px solid #d0d0d0!important;opacity:.8;position:relative}.collection-historical-month,.collection-historical-month *{pointer-events:none!important;-webkit-user-select:none!important;-ms-user-select:none!important;user-select:none!important}.collection-historical-month *{cursor:not-allowed!important}.collection-historical-month:before{color:hsla(208,7%,46%,.2);content:\"READ ONLY\";font-size:24px;font-weight:700;left:50%;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%) rotate(-45deg);z-index:1}.collection-historical-month .collection-month-header{background:linear-gradient(135deg,#6c757d,#495057)!important;border-bottom:2px solid #343a40!important;border-radius:8px 8px 0 0!important;color:#fff!important;font-size:13px!important;font-weight:600!important;margin:-15px -15px 15px!important;opacity:.9!important;padding:10px 15px!important;text-align:center!important}.collection-historical-month input{background-color:#f8f9fa!important;border-color:#ced4da!important;color:#6c757d!important;cursor:not-allowed!important}.collection-pagination-size-selector label{font-weight:600;margin:0}.collection-page-number:hover{background:#e9ecef;border-color:#0078d4}.collection-yearly-container{display:grid;gap:15px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:15px}.collection-yearly-box{background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1);min-height:200px;padding:15px;position:relative}.collection-yearly-header{border-bottom:1px solid #eee;color:#0078d4;font-size:14px;font-weight:600;margin-bottom:15px;padding-bottom:8px;text-align:center}.collection-yearly-inputs-container{display:grid;gap:15px;grid-template-columns:1fr 1fr;margin-bottom:15px}.collection-yearly-input-group{align-items:center;display:flex;flex-direction:column}.collection-yearly-input-group label{color:#666;font-size:12px;font-weight:600;margin-bottom:6px}.collection-yearly-input-group input{background:#fff;border:1px solid #ddd;border-radius:4px;font-size:14px;padding:8px 10px;text-align:center;transition:all .2s ease;width:100%}.collection-yearly-input-group input:focus{border-color:#0078d4;box-shadow:0 0 0 2px rgba(0,120,212,.2);outline:none}.collection-yearly-plan-input{background-color:#f8f9fa!important;border-color:#ced4da!important;color:#6c757d!important}.collection-historical-container{overflow:hidden;transition:opacity .4s ease,max-height .4s ease,padding .3s ease}.collection-historical-container.visible{display:block!important;max-height:2000px;opacity:1;overflow:visible;padding:5px 0}.collection-historical-container.hidden{display:none!important;max-height:0;opacity:0;overflow:hidden;padding:0}.collection-section-header{align-items:center;border-radius:4px;cursor:pointer;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-bottom:15px;padding:8px 12px;transition:background-color .2s ease;-webkit-user-select:none;-ms-user-select:none;user-select:none}.collection-section-header:hover{background-color:#f8f9fa}.collection-section-header h3{border-bottom:2px solid #007bff;color:#495057;flex:1;margin:0;padding-bottom:8px;pointer-events:none}.collection-toggle-historical-btn:active{transform:scale(.98)}@media (max-width:768px){.collection-enhanced-inputs-container{grid-template-columns:1fr 1fr}.collection-categories-header,.collection-category-row{gap:4px;grid-template-columns:1fr}.collection-categories-header div:nth-child(n+4),.collection-category-row input:nth-child(n+4){display:none}.collection-section-header{align-items:flex-start;flex-direction:column}.collection-yearly-container,.collection-yearly-inputs-container{grid-template-columns:1fr}}.collection-month-total-validation{border-radius:4px;box-sizing:border-box;clear:both;font-size:11px;margin-top:8px;padding:4px 8px;text-align:center;width:100%}.collection-month-total-valid{background-color:#d4edda;border:1px solid #c3e6cb;color:#155724}.collection-month-total-warning{background-color:#fff3cd;border:1px solid #ffeeba;color:#856404}.collection-month-total-invalid{background-color:#f8d7da;border:1px solid #f5c6cb;color:#721c24}.collection-month-total-validation:not(:last-child){display:none}.collection-month-total-validation:last-child{display:block}tr.collection-frozen-row{background-color:#fff8e1!important;border-left:4px solid #ffc107!important}tr.collection-frozen-row:hover{background-color:#fff3cd!important}.collection-frozen-project{background-color:#fff8e1!important;border-left:4px solid #ffc107!important}.collection-frozen-input{background-color:#f5f5f5!important;color:#6c757d!important;cursor:not-allowed!important;opacity:.7!important;pointer-events:none!important}.collection-freeze-badge{background-color:#ffc107;border-radius:4px;color:#856404;display:inline-block;font-size:11px;font-weight:700;margin-left:8px;padding:2px 8px}.collection-freeze-checkbox{accent-color:#0078d4;cursor:pointer;height:18px;pointer-events:auto!important;position:relative;width:18px;z-index:10}.collection-freeze-checkbox:disabled{cursor:not-allowed;opacity:.6;pointer-events:auto!important}.collection-input-with-value{background:#fff!important;color:#333!important}.collection-input-empty{background:#f8f9fa!important;color:transparent!important}.collection-edit-mode .collection-project-select-container select{background-color:#f8f9fa!important;border-color:#d0d0d0!important;color:#666!important;cursor:not-allowed!important}.collection-readonly-field{background-color:#f5f5f5!important;border-color:#ddd!important;color:#666!important}.collection-historical-month input,input[readonly]{cursor:not-allowed!important}.collection-category-plan-input,.collection-historical-month input,.collection-main-plan-input,input[readonly]{background-color:#f8f9fa!important;border-color:#ced4da!important;color:#6c757d!important}input:read-only,select:disabled{background-color:#f8f9fa!important;border-color:#ced4da!important;color:#6c757d!important;cursor:not-allowed!important}.collection-next-months-container .collection-enhanced-inputs-container{grid-template-columns:1fr 1fr}.collection-next-months-container .collection-enhanced-input-group:nth-child(3),.collection-next-months-container .collection-enhanced-input-group:nth-child(4){display:none}.collection-next-months-container .collection-categories-header,.collection-next-months-container .collection-category-row{grid-template-columns:2fr 1fr 1fr}.collection-next-months-container .collection-categories-header div:nth-child(4),.collection-next-months-container .collection-categories-header div:nth-child(5),.collection-next-months-container .collection-category-row input:nth-child(4),.collection-next-months-container .collection-category-row input:nth-child(5){display:none}.collection-historical-month .collection-categories-header{border-bottom:1px solid #eee;color:#666;display:grid;font-size:11px;font-weight:600;gap:8px;grid-template-columns:2fr 1fr 1fr!important;margin-bottom:8px;padding-bottom:4px;text-align:center}.collection-historical-month .collection-category-row{align-items:center;display:grid;gap:8px;grid-template-columns:2fr 1fr 1fr!important;margin-bottom:6px}.collection-historical-month .collection-category-row input{background-color:#f8f9fa!important;border-color:#ced4da!important;color:#6c757d!important;cursor:not-allowed!important}.collection-historical-month .collection-categories-header div:nth-child(4),.collection-historical-month .collection-categories-header div:nth-child(5),.collection-historical-month .collection-category-row input:nth-child(4),.collection-historical-month .collection-category-row input:nth-child(5){display:none!important}.collection-yearly-box .collection-categories-section{border-top:1px solid #e0e0e0;margin-top:15px;padding-top:15px}.collection-yearly-box .collection-categories-header{border-bottom:1px solid #eee;color:#666;display:grid;font-size:11px;font-weight:600;gap:8px;grid-template-columns:2fr 1fr 1fr;margin-bottom:8px;padding-bottom:4px;text-align:center}.collection-yearly-box .collection-category-row{align-items:center;display:grid;gap:8px;grid-template-columns:2fr 1fr 1fr;margin-bottom:6px}.collection-yearly-box .collection-category-row input[type=text]{text-align:left}.collection-yearly-box .collection-category-row input[type=number]{text-align:right}.collection-yearly-box .collection-category-row input:focus{border-color:#0078d4;box-shadow:0 0 0 1px rgba(0,120,212,.2);outline:none}.collection-forecast-validation,.collection-yearly-total-validation{display:none}.collection-obl-error-toast{animation:collectionSlideInRight .3s ease;background:#dc3545;border-radius:8px;bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,.15);color:#fff;max-width:300px;padding:15px 20px;position:fixed;right:20px;z-index:10000}.collection-obl-error-toast.collection-warning{background:#ffc107;color:#856404}@keyframes collectionSlideInRight{0%{opacity:0;transform:translateX(100%)}to{opacity:1;transform:translateX(0)}}.collection-toast-close{background:none;border:none;color:inherit;cursor:pointer;float:right;font-size:18px;margin-left:10px}.collection-freeze-col{padding:4px 2px!important;text-align:center!important;vertical-align:middle!important;white-space:nowrap!important}.collection-month-columns-table th{box-sizing:border-box}.collection-freeze-col{left:0;max-width:40px;min-width:40px;width:40px}.collection-project-ref-col{left:40px;max-width:95px;min-width:95px;width:95px}.collection-customer-col{left:135px;max-width:115px;min-width:115px;width:115px}.collection-project-col{left:250px;max-width:155px;min-width:155px;width:155px}.collection-gh-col{left:405px;max-width:60px;min-width:60px;text-align:center;width:60px}.collection-pm-col{left:465px}.collection-obl-col,.collection-pm-col{max-width:90px;min-width:90px;width:90px}.collection-obl-col{left:555px}.collection-month-scroll-col{min-width:60px}.collection-month-columns-table .collection-customer-col,.collection-month-columns-table .collection-freeze-col,.collection-month-columns-table .collection-gh-col,.collection-month-columns-table .collection-obl-col,.collection-month-columns-table .collection-pm-col,.collection-month-columns-table .collection-project-col,.collection-month-columns-table .collection-project-ref-col{background:#fff;position:sticky;z-index:2}.collection-month-columns-table thead th.collection-month-column-header{background:#0078d4!important;color:#fff!important;font-size:12px;font-weight:700;padding:4px!important;text-align:center}.collection-month-columns-table thead th.collection-month-column-header .collection-header-label{color:#fff!important}.collection-month-columns-table thead th.collection-month-group-header{font-size:11px;font-weight:700;padding:3px!important;text-align:center}.collection-month-columns-table thead th.collection-prev-group{background:#e3f2fd!important;color:#0d47a1!important}.collection-month-columns-table thead th.collection-curr-group{background:#e8f5e9!important;color:#1b5e20!important}.collection-month-columns-table thead th.collection-month-subheader{background:#f1f8e9!important;color:#33691e!important;font-size:10px;font-weight:600;padding:3px 2px!important;text-align:center}@media (max-width:768px){.collection-freeze-col{left:0;max-width:30px;min-width:30px;width:30px}.collection-project-ref-col{left:30px;max-width:80px;min-width:80px;width:80px}.collection-customer-col{left:110px;max-width:80px;min-width:80px;width:80px}.collection-project-col{left:190px;max-width:100px;min-width:100px;width:100px}.collection-gh-col{left:290px}.collection-gh-col,.collection-pm-col{max-width:70px;min-width:70px;width:70px}.collection-pm-col{left:360px}.collection-obl-col{left:430px;max-width:90px;min-width:90px;width:90px}}.collection-actions-cell{background:#f8f9fa;border:1px solid #ddd!important;max-width:80px!important;min-width:80px;min-width:80px!important;text-align:center!important;vertical-align:middle!important;width:80px!important}.collection-actions-cell:hover{background:#f0f7ff!important}.collection-month-columns-table tr:has(.collection-action-buttons-container) td.collection-actions-cell{vertical-align:middle!important}.collection-remaining-container{display:flex;flex-direction:column;gap:15px;width:100%}.collection-remaining-row{display:grid;gap:15px;grid-template-columns:repeat(4,1fr);width:100%}.collection-simple-month{background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1);min-height:180px;padding:15px;position:relative}.collection-simple-month .collection-month-header{background:linear-gradient(135deg,#17a2b8,#138496)!important;border-bottom:2px solid #0c5460!important;border-radius:8px 8px 0 0!important;color:#fff!important;font-size:13px!important;font-weight:600!important;margin:-15px -15px 15px!important;padding:10px 12px!important;text-align:center!important}.collection-simple-month .collection-main-inputs-container{display:grid;gap:12px;grid-template-columns:1fr 1fr;margin-bottom:10px}.collection-simple-month .collection-main-input-group{align-items:center;display:flex;flex-direction:column}.collection-simple-month .collection-main-input-group label{color:#6c757d;font-size:10px;font-weight:600;letter-spacing:.3px;margin-bottom:3px;text-align:center}.collection-simple-month .collection-main-input-group input{background:#f8f9fa;border:1px solid #ddd;border-radius:4px;cursor:not-allowed;font-size:13px;padding:5px 8px;text-align:center;transition:all .2s ease;width:100%}.collection-simple-month .collection-main-input-group input:focus{border-color:#0078d4;box-shadow:0 0 0 2px rgba(0,120,212,.2);outline:none}.collection-simple-month .collection-categories-section{border-top:1px solid #e0e0e0;margin-top:8px;padding-top:8px}.collection-simple-month .collection-categories-header{border-bottom:1px solid #eee;color:#6c757d;display:grid;font-size:10px;font-weight:600;gap:6px;grid-template-columns:2fr 1fr 1fr;margin-bottom:4px;padding-bottom:3px;text-align:center}.collection-simple-month .collection-category-row{align-items:center;display:grid;gap:6px;grid-template-columns:2fr 1fr 1fr;margin-bottom:3px}.collection-simple-month .collection-category-row input{background:#f8f9fa;border:1px solid #ddd;border-radius:3px;cursor:not-allowed;font-size:11px;padding:4px 6px;transition:all .2s ease}.collection-simple-month .collection-category-row input[type=text]{background:transparent;color:#495057;cursor:default;font-size:10px;font-weight:500;text-align:left}.collection-simple-month .collection-category-row input[type=number]{text-align:right}.collection-simple-month .collection-category-row input:focus{border-color:#0078d4;box-shadow:0 0 0 1px rgba(0,120,212,.2);outline:none}.collection-simple-month .collection-month-total-validation{background:#f8f9fa;border:1px solid #e9ecef;border-radius:3px;display:none;font-size:9px;line-height:1.2;margin-top:4px;padding:3px;text-align:center}.collection-simple-month .collection-month-total-validation.collection-month-total-invalid{background:#f8d7da;border-color:#f5c6cb;color:#721c24;display:block}.collection-simple-month .collection-month-total-validation.collection-month-total-warning{background:#fff3cd;border-color:#ffeaa7;color:#856404;display:block}.collection-simple-month .collection-month-total-validation.collection-month-total-valid{background:#d4edda;border-color:#c3e6cb;color:#155724;display:block}@media (max-width:1400px){.collection-remaining-row{grid-template-columns:repeat(4,1fr)}}@media (max-width:1200px){.collection-remaining-row{grid-template-columns:repeat(3,1fr)}}@media (max-width:992px){.collection-remaining-row{grid-template-columns:repeat(2,1fr)}}@media (max-width:768px){.collection-remaining-row{grid-template-columns:1fr}.collection-simple-month .collection-main-inputs-container{grid-template-columns:1fr 1fr}.collection-simple-month .collection-categories-header,.collection-simple-month .collection-category-row{gap:4px;grid-template-columns:1fr 1fr 1fr}}.collection-form-section .collection-page-header{align-items:center!important;box-sizing:border-box!important;display:flex!important;flex-direction:row!important;gap:16px!important;justify-content:space-between!important;margin:0 0 12px!important;position:sticky!important;top:0!important;width:100%!important;z-index:1000!important}.collection-form-section .collection-page-header h1{color:#fff!important;flex:1 1 auto!important;line-height:1.3!important;margin:0!important;min-width:0!important;overflow:hidden!important;text-align:left!important;text-overflow:ellipsis!important;white-space:nowrap!important}.collection-btn-save-top{align-self:center!important;box-shadow:0 1px 2px rgba(0,0,0,.1)!important;flex:0 0 auto!important;font-size:13px!important;margin:0!important;max-height:40px!important;min-height:36px!important;padding:8px 16px!important;white-space:nowrap!important}button#collectionSyncProjectsBtn{display:none}.collection-pagination-row{align-items:center!important;display:flex!important;flex:0 1 auto!important;width:auto!important}.collection-pagination-top-row{justify-content:flex-start!important}.collection-pagination-bottom-row{justify-content:flex-end!important}@media (max-width:768px){.collection-pagination-bottom-row,.collection-pagination-top-row{justify-content:center!important;width:100%!important}}#oblLastMonth.collection-obl-input,#oblLastMonth.collection-obl-input:read-only{background:#f5f5f5!important;color:#6c757d!important;cursor:not-allowed!important;pointer-events:none!important}.collection-form-section input:not([readonly]),.collection-form-section select:not(:disabled),.collection-form-section textarea:not([readonly]){background-color:#fff!important;color:#333!important}.collection-form-section input[readonly],.collection-form-section select:disabled,.collection-form-section textarea[readonly]{background-color:#f1f3f5!important;border-color:#d9dde1!important;color:#6c757d!important;cursor:not-allowed!important}.collection-detailed-month-box .collection-category-date-input,.collection-detailed-month-box .collection-category-forecast-input,.collection-detailed-month-box .collection-main-forecast-input,.collection-detailed-month-box .collection-month-actual-input{border-color:#ced4da!important}.collection-detailed-month-box .collection-category-date-input,.collection-detailed-month-box .collection-category-forecast-input,.collection-detailed-month-box .collection-main-forecast-input{background-color:#fff!important}.collection-detailed-month-box .collection-month-actual-input{background-color:#f1f3f5!important;color:#6c757d!important}.collection-simple-month .collection-main-current-input,.collection-simple-month .collection-main-plan-input{border:1px solid #e1e5e8!important;border-radius:4px!important}.collection-table-loading-row>td{border:1px solid #dee2e6!important;height:220px!important;padding:0!important;text-align:center!important;vertical-align:middle!important}@keyframes collectionLoadingSpin{to{transform:rotate(1turn)}}.collection-table-loading-error-row>td{color:#6c757d!important}input.collection-main-current-input.collection-number-input,input.collection-yearly-current-input.collection-number-input{background-color:#f1f3f5!important}.collection-filter-trigger:hover:not(:disabled){background:#f9fafb!important;border-color:#d0d5dd!important;box-shadow:0 2px 6px rgba(16,24,40,.08);color:#1f2937!important;transform:translateY(-1px)}.collection-filter-modal .collection-table-actions-row{background:transparent!important;border:0!important;display:grid!important;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr));margin:0!important;padding:20px 20px 0!important}.collection-filter-modal .collection-table-actions-row+.collection-table-actions-row{padding-bottom:20px!important;padding-top:16px!important}.collection-filter-modal .collection-tableColp4{min-width:0}.collection-filter-modal .collection-tableColp4 label{color:#475569;display:block;font-size:12px;font-weight:600;margin-bottom:6px}.collection-filter-modal .collection-filter-select{width:100%}.collection-filter-modal .collection-tableColp4:has(.collection-clear-filters-btn),.collection-filter-modal .collection-tableColp4:has(.collection-export-btn),.collection-filter-modal .collection-tableColp4:has(.collection-export-historical-btn),.collection-filter-modal .collection-tableColp4:has(.collection-import-actual-btn){display:none}@media (max-width:700px){.collection-filter-modal .collection-table-actions-row{grid-template-columns:1fr}}:root{--lilac-primary:#605eee;--lilac-primary-dark:#4c49e0;--lilac-primary-soft:#eeeefe;--lilac-blue:#356bff;--lilac-blue-dark:#2a5ce8;--lilac-ink:#1f2430;--lilac-muted:#667085;--lilac-line:#e4e7ec;--lilac-pill:999px;--lilac-danger:#d92d20;--lilac-ring:0 0 0 3px rgba(96,94,238,.22);--lilac-shadow-sm:0 1px 2px rgba(16,24,40,.06);--lilac-shadow-md:0 4px 12px rgba(96,94,238,.28)}.collection-btn-primary,.collection-btn-secondary,.collection-clear-filters-btn,.collection-edit-trigger-btn,.collection-export-btn,.collection-export-historical-btn,.collection-filter-btn-apply,.collection-filter-btn-clear,.collection-filter-trigger,.collection-import-actual-btn,.collection-show-form-btn,.collection-toggle-historical-btn{align-items:center!important;border:1px solid transparent!important;border-radius:var(--lilac-pill)!important;box-shadow:var(--lilac-shadow-sm)!important;cursor:pointer!important;display:inline-flex!important;font-family:inherit!important;font-size:13.5px!important;font-weight:700!important;gap:8px!important;justify-content:center!important;line-height:1!important;margin:0!important;min-height:38px!important;padding:10px 20px!important;text-decoration:none!important;transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease,transform .15s ease!important;white-space:nowrap!important}.collection-btn-primary,.collection-filter-btn-apply,.collection-show-form-btn{background:var(--lilac-primary)!important;border-color:var(--lilac-primary)!important;color:#fff!important}.collection-btn-primary:hover:not(:disabled),.collection-filter-btn-apply:hover:not(:disabled),.collection-show-form-btn:hover:not(:disabled){background:var(--lilac-primary-dark)!important;border-color:var(--lilac-primary-dark)!important;box-shadow:var(--lilac-shadow-md)!important;transform:translateY(-1px)!important}.collection-btn-secondary,.collection-clear-filters-btn,.collection-edit-trigger-btn,.collection-filter-btn-clear,.collection-filter-trigger{background:#fff!important;border-color:var(--lilac-line)!important;color:#344054!important}.collection-btn-secondary:hover:not(:disabled),.collection-clear-filters-btn:hover:not(:disabled),.collection-filter-btn-clear:hover:not(:disabled),.collection-filter-trigger:hover{background:#f9fafb!important;border-color:#d0d5dd!important;box-shadow:0 2px 6px rgba(16,24,40,.08)!important;color:#1f2937!important;transform:translateY(-1px)!important}.collection-export-btn,.collection-export-historical-btn{background:var(--lilac-blue)!important;border-color:var(--lilac-blue)!important;color:#fff!important}.collection-export-btn:hover:not(:disabled),.collection-export-historical-btn:hover:not(:disabled){background:var(--lilac-blue-dark)!important;border-color:var(--lilac-blue-dark)!important;box-shadow:0 4px 12px rgba(53,107,255,.3)!important;transform:translateY(-1px)!important}.collection-btn-primary:focus-visible,.collection-btn-secondary:focus-visible,.collection-export-btn:focus-visible,.collection-export-historical-btn:focus-visible,.collection-filter-btn-apply:focus-visible,.collection-filter-btn-clear:focus-visible,.collection-filter-trigger:focus-visible,.collection-import-actual-btn:focus-visible{box-shadow:var(--lilac-ring)!important;outline:none!important}.collection-btn-primary:disabled,.collection-btn-secondary:disabled,.collection-clear-filters-btn:disabled,.collection-filter-btn-apply:disabled,.collection-filter-btn-clear:disabled{background:#fff!important;border-color:var(--lilac-line)!important;box-shadow:none!important;color:#b4bac6!important;cursor:not-allowed!important;opacity:.75!important;transform:none!important}.collection-filter-btn-apply:disabled{background:var(--lilac-primary-soft)!important;border-color:#dddcfb!important;color:#a5a3f3!important}.collection-clear-filters-btn.is-enabled,.collection-filter-btn-clear.is-enabled{border-color:var(--lilac-line)!important;color:#344054!important;cursor:pointer!important;opacity:1!important}.collection-table-toolbar{align-items:center!important;background:#f8f9fa!important;border:1px solid #e5e7eb!important;border-radius:10px!important;box-sizing:border-box!important;display:flex!important;flex-wrap:wrap!important;gap:12px!important;justify-content:space-between!important;margin:0 0 12px!important;padding:12px 16px!important;width:100%!important}.collection-table-toolbar-actions,.collection-toolbar-left{align-items:center!important;display:flex!important;flex-wrap:wrap!important;gap:10px!important}.collection-filter-trigger{position:relative!important}.collection-filter-funnel{fill:none!important;stroke:currentColor!important;stroke-width:1.9!important;stroke-linecap:round!important;stroke-linejoin:round!important;flex:0 0 16px!important;height:16px!important;width:16px!important}.collection-filter-chev{fill:none!important;stroke:currentColor!important;stroke-width:2.6!important;stroke-linecap:round!important;stroke-linejoin:round!important;flex:0 0 11px!important;height:11px!important;transition:transform .18s ease!important;width:11px!important}.collection-filter-trigger[aria-expanded=true] .collection-filter-chev{transform:rotate(180deg)!important}.collection-filter-count{align-items:center!important;background:#fff!important;border-radius:var(--lilac-pill)!important;color:var(--lilac-primary)!important;display:none!important;font-size:11.5px!important;font-weight:800!important;height:20px!important;justify-content:center!important;line-height:1!important;min-width:20px!important;padding:0 6px!important}.collection-filter-trigger.is-active{background:var(--lilac-primary)!important;border-color:var(--lilac-primary)!important;color:#fff!important}.collection-filter-trigger.is-active:hover:not(:disabled){background:#4c49e0!important;border-color:#4c49e0!important;color:#fff!important}.collection-filter-trigger.is-active .collection-filter-count{background:#fff!important;color:var(--lilac-primary)!important;display:inline-flex!important}.collection-filter-applypill{display:none!important;font-size:12.5px!important;min-height:34px!important;padding:8px 16px!important}.collection-filter-applypill.is-visible{display:inline-flex!important}.collection-filter-summary{align-items:center!important;display:flex!important;flex-wrap:wrap!important;gap:8px!important;margin:0 0 12px!important}.collection-filter-summary[hidden]{display:none!important}.collection-filter-summary__label{color:var(--lilac-muted)!important;font-size:12.5px!important;font-weight:700!important}.collection-filter-chip{background:var(--lilac-primary-soft)!important;border:1px solid #dcdcfb!important;border-radius:var(--lilac-pill)!important;font-size:12.5px!important;font-weight:600!important;gap:6px!important;line-height:1.2!important;padding:5px 6px 5px 12px!important}.collection-filter-chip,.collection-filter-chip button{align-items:center!important;color:#3a38b8!important;display:inline-flex!important}.collection-filter-chip button{background:#d9d8fa!important;border:0!important;border-radius:50%!important;cursor:pointer!important;font-size:13px!important;font-weight:800!important;height:18px!important;justify-content:center!important;line-height:1!important;padding:0!important;width:18px!important}.collection-filter-chip button:hover{background:var(--lilac-primary)!important;color:#fff!important}.collection-filter-chip__all{background:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:var(--lilac-pill)!important;color:#475467!important;cursor:pointer!important;font-size:12.5px!important;font-weight:700!important;padding:5px 12px!important}.collection-filter-chip__all:hover{border-color:#c9c8f8!important;color:var(--lilac-primary)!important}.collection-filter-overlay{align-items:flex-start!important;backdrop-filter:blur(2px)!important;background:rgba(16,24,40,.45)!important;box-sizing:border-box!important;display:none!important;inset:0!important;justify-content:center!important;overflow-y:auto!important;padding:48px 16px 24px!important;position:fixed!important;z-index:99998!important}.collection-filter-overlay.is-open{display:flex!important}.collection-filter-modal{background:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:16px!important;box-shadow:0 24px 60px rgba(16,24,40,.22)!important;box-sizing:border-box!important;margin:0 auto!important;padding:18px 20px 16px!important;width:min(1040px,100%)!important}.collection-filter-modal-head{align-items:center!important;border-bottom:1px solid var(--lilac-line)!important;display:flex!important;gap:12px!important;justify-content:space-between!important;margin-bottom:14px!important;padding-bottom:12px!important}.collection-filter-modal-head h2{color:var(--lilac-ink)!important;font-size:16px!important;font-weight:800!important;margin:0!important}.collection-filter-modal-head button{align-items:center!important;background:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:50%!important;color:#475467!important;cursor:pointer!important;display:inline-flex!important;font-size:18px!important;height:32px!important;justify-content:center!important;line-height:1!important;padding:0!important;width:32px!important}.collection-filter-modal-head button:hover{background:#f9fafb!important;color:var(--lilac-ink)!important}.collection-filter-overlay .collection-table-actions-row{align-items:end!important;display:grid!important;gap:14px 16px!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;margin:0 0 12px!important}.collection-filter-overlay .collection-tableColp4{display:flex!important;flex-direction:column!important;gap:6px!important;min-width:0!important}.collection-filter-overlay .collection-tableColp4>label{color:var(--lilac-muted)!important;font-size:12px!important;font-weight:700!important;letter-spacing:.01em!important;text-transform:none!important}.collection-filter-select{background-color:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:10px!important;box-shadow:none!important;box-sizing:border-box!important;color:var(--lilac-ink)!important;cursor:pointer!important;font-size:13.5px!important;font-weight:600!important;height:40px!important;min-height:40px!important;padding:0 34px 0 12px!important;width:100%!important}.collection-filter-select:hover{border-color:#d0d5dd!important}.collection-filter-select:focus{border-color:var(--lilac-primary)!important;box-shadow:var(--lilac-ring)!important;outline:none!important}.collection-filter-select.is-set{background-color:#fbfbff!important;border-color:#c9c8f8!important}.collection-filter-dupe-actions,.collection-filter-overlay .collection-tableColp4.collection-filter-dupe-actions{display:none!important}.collection-filter-modal-foot{align-items:center!important;border-top:1px solid var(--lilac-line)!important;display:flex!important;gap:10px!important;justify-content:flex-end!important;margin-top:16px!important;padding-top:14px!important}.collection-filter-modal-foot .collection-filter-btn-apply{margin-left:4px!important}.collection-clear-filters-btn{white-space:nowrap!important}.collection-month-columns-table th.collection-sortable-th{cursor:pointer!important}.collection-month-columns-table th.collection-sortable-th:hover{background-color:#f7f8ff!important}.collection-sort-header-container{gap:4px!important}.collection-sort-arrows,.collection-sort-header-container{align-items:center!important;display:inline-flex!important;justify-content:center!important}.collection-sort-arrows{background:transparent!important;border:none!important;border-radius:50%!important;box-shadow:none!important;flex:0 0 22px!important;flex-direction:column!important;gap:0!important;height:22px!important;min-width:22px!important;transition:background-color .15s ease!important;width:22px!important}.collection-sort-arrows .collection-arrow-down,.collection-sort-arrows .collection-arrow-up{align-items:center!important;background:none!important;color:#374151!important;display:flex!important;font-family:Arial,Helvetica,sans-serif!important;font-size:9px!important;height:9px!important;justify-content:center!important;letter-spacing:0!important;line-height:0!important;opacity:1!important;transition:color .15s ease,opacity .15s ease!important;width:14px!important}.collection-month-columns-table th.collection-sortable-th:hover .collection-sort-arrows{background:rgba(17,24,39,.08)!important}.collection-month-columns-table th.collection-sortable-th:hover .collection-arrow-down,.collection-month-columns-table th.collection-sortable-th:hover .collection-arrow-up{color:#111827!important}.collection-month-columns-table th.collection-sorted-asc .collection-sort-arrows,.collection-month-columns-table th.collection-sorted-desc .collection-sort-arrows{background:rgba(0,120,212,.12)!important}.collection-month-columns-table th.collection-sorted-asc:hover .collection-sort-arrows,.collection-month-columns-table th.collection-sorted-desc:hover .collection-sort-arrows{background:rgba(0,120,212,.2)!important}.collection-month-columns-table th.collection-sorted-asc .collection-arrow-up,.collection-month-columns-table th.collection-sorted-desc .collection-arrow-down{color:#0078d4!important;opacity:1!important}.collection-month-columns-table th.collection-sorted-asc .collection-arrow-down,.collection-month-columns-table th.collection-sorted-desc .collection-arrow-up{opacity:.38!important}.collection-month-subheader .collection-sort-header-container{gap:3px!important}.collection-month-subheader .collection-sort-arrows,.collection-subheader-arrows{flex-basis:18px!important;height:18px!important;min-width:18px!important;width:18px!important}.collection-month-subheader .collection-sort-arrows .collection-arrow-down,.collection-month-subheader .collection-sort-arrows .collection-arrow-up{font-size:7.5px!important;height:8px!important;width:12px!important}.collection-page-loader{background:none!important;display:block!important;height:auto!important;padding:0!important;width:100%!important}.collection-page-loader-track{background:#dcdcdc!important;border-radius:var(--lilac-pill)!important;height:6px!important;overflow:hidden!important;position:relative!important;width:100%!important}.collection-page-loader-bar{animation:collectionPageLoaderSlide 1.25s cubic-bezier(.65,.05,.36,1) infinite!important;background:#6664ff!important;border-radius:var(--lilac-pill)!important;height:100%!important;left:0!important;position:absolute!important;top:0!important;width:50%!important}@keyframes collectionPageLoaderSlide{0%{transform:translateX(-100%)}to{transform:translateX(200%)}}.collection-table-loading-row>td{background:#fff!important;border:0!important;padding:16px 12px!important}.collection-table-loading-content{display:block!important;margin:0 auto!important;width:min(520px,100%)!important}.collection-table-loading-content>span{color:var(--lilac-muted)!important;display:block!important;font-size:13px!important;text-align:center!important}.collection-table-loading-error-row>td{padding:18px 12px!important}.collection-table-loading-error-row .collection-table-loading-content>span{color:var(--lilac-danger)!important;font-weight:600!important}.collection-loading-spinner,.collection-loading-text{display:none!important}.collection-pagination-container{background:linear-gradient(180deg,#fbfcfd,#f4f6f8)!important;border:1px solid var(--lilac-line)!important;border-radius:12px!important;box-sizing:border-box!important;gap:16px!important;justify-content:space-between!important;margin:14px 0 0!important;padding:10px 14px!important;width:100%!important}.collection-pagination-container,.collection-pagination-left{align-items:center!important;display:flex!important;flex-wrap:nowrap!important}.collection-pagination-left{gap:18px!important;white-space:nowrap!important}.collection-pagination-right{align-items:center!important;display:flex!important;flex-wrap:nowrap!important;gap:6px!important}.collection-pagination-size-selector{align-items:center!important;display:flex!important;gap:8px!important;margin:0!important}.collection-pagination-size-selector>label{color:var(--lilac-muted)!important;font-size:13px!important;font-weight:600!important;margin:0!important;white-space:nowrap!important}.collection-page-size-select{background-color:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:var(--lilac-pill)!important;box-sizing:border-box!important;color:var(--lilac-ink)!important;cursor:pointer!important;font-size:13px!important;font-weight:700!important;height:34px!important;min-height:34px!important;padding:0 30px 0 10px!important}.collection-page-size-select:focus{border-color:var(--lilac-primary)!important;box-shadow:var(--lilac-ring)!important;outline:none!important}.collection-pagination-info{color:var(--lilac-muted)!important;font-size:13px!important;font-weight:600!important;white-space:nowrap!important}.collection-pg-count,.collection-pg-range{color:var(--lilac-ink)!important;font-weight:800!important}.collection-pagination-btn{align-items:center!important;background:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:10px!important;color:#475467!important;cursor:pointer!important;display:inline-flex!important;font-size:14px!important;font-weight:700!important;height:34px!important;justify-content:center!important;line-height:1!important;min-width:34px!important;padding:0!important;transition:background-color .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease!important;width:34px!important}.collection-pagination-btn:hover:not(:disabled){background:var(--lilac-primary-soft)!important;border-color:#c9c8f8!important;color:var(--lilac-primary)!important}.collection-pagination-btn:disabled{background:#f2f4f7!important;border-color:var(--lilac-line)!important;color:#b4bac6!important;cursor:not-allowed!important}.collection-pagination-btn:focus-visible{box-shadow:var(--lilac-ring)!important;outline:none!important}.collection-pagination-pages{align-items:center!important;display:flex!important;gap:6px!important;margin:0 4px!important}.collection-page-number{align-items:center!important;background:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:10px!important;color:#475467!important;cursor:pointer!important;display:inline-flex!important;font-size:13px!important;font-weight:700!important;height:34px!important;justify-content:center!important;line-height:1!important;min-width:34px!important;padding:0 8px!important;transition:background-color .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease!important}.collection-page-number:hover:not(:disabled){background:var(--lilac-primary-soft)!important;border-color:#c9c8f8!important;color:var(--lilac-primary)!important}.collection-page-number.active{background:var(--lilac-primary)!important;border-color:var(--lilac-primary)!important;box-shadow:0 2px 8px rgba(96,94,238,.32)!important;color:#fff!important}.collection-page-number.collection-dots,.collection-page-number.collection-dots:disabled{background:transparent!important;border-color:transparent!important;color:#98a2b3!important;cursor:default!important;min-width:20px!important;padding:0!important}.collection-pg-of{color:var(--lilac-muted)!important;font-size:13px!important;font-weight:700!important;margin:0 4px!important;white-space:nowrap!important}.collection-pg-of>span{color:var(--lilac-ink)!important;font-weight:800!important}@media (max-width:768px){.collection-table-toolbar{align-items:stretch!important;flex-direction:column!important}.collection-table-toolbar-actions,.collection-toolbar-left{width:100%!important}.collection-table-toolbar-actions>button{flex:1 1 auto!important}.collection-filter-overlay .collection-table-actions-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}.collection-filter-modal{padding:16px 14px!important}.collection-pagination-container{align-items:flex-start!important;flex-direction:column!important;gap:10px!important}.collection-pagination-left,.collection-pagination-right{flex-wrap:wrap!important;white-space:normal!important}.collection-pagination-right{justify-content:flex-start!important;width:100%!important}.collection-pagination-info{font-size:12.5px!important}}.collection-pagination-btn.collection-pg-icon{align-items:center!important;background:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:10px!important;color:#475467!important;cursor:pointer!important;display:inline-flex!important;font-size:14px!important;font-weight:700!important;height:34px!important;justify-content:center!important;line-height:1!important;margin:0!important;min-width:34px!important;padding:0!important;transition:background-color .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease!important;width:34px!important}.collection-pagination-btn.collection-pg-icon:hover:not(:disabled){background:var(--lilac-primary-soft)!important;border-color:#c9c8f8!important;color:var(--lilac-primary)!important}.collection-pagination-btn.collection-pg-icon:disabled{background:#f2f4f7!important;border-color:var(--lilac-line)!important;color:#b4bac6!important;cursor:not-allowed!important}.collection-pagination-info.collection-pg-info,.collection-pagination-info.collection-pg-total,.collection-pagination-size-selector.collection-pg-size{color:var(--lilac-muted)!important;font-size:13px!important;font-weight:600!important;margin:0!important;white-space:nowrap!important}.collection-pagination-size-selector.collection-pg-size{align-items:center!important;display:inline-flex!important;gap:6px!important}.collection-pagination-size-selector.collection-pg-size label{color:var(--lilac-muted)!important;font-size:13px!important;font-weight:600!important;margin:0!important}.collection-pagination-container .collection-page-size-select{border-radius:var(--lilac-pill)!important;font-size:13px!important;height:34px!important;min-height:34px!important;padding:0 30px 0 10px!important}.collection-page-number.collection-dots,.collection-page-number.collection-dots:disabled,.collection-page-number.collection-dots:hover{background:transparent!important;border-color:transparent!important;color:#98a2b3!important;cursor:default!important;min-width:20px!important;padding:0!important}.loading-overlay{align-items:center!important;backdrop-filter:blur(3px)!important;background:hsla(0,0%,100%,.94)!important;border-radius:12px!important;box-sizing:border-box!important;display:flex!important;height:100%!important;justify-content:center!important;left:0!important;overflow:hidden!important;position:absolute!important;top:0!important;width:100%!important;z-index:99999!important}.loading-container{background:#fff!important;border:1px solid #e8e8e8!important;border-radius:12px!important;box-shadow:0 8px 32px rgba(0,0,0,.15)!important;box-sizing:border-box!important;padding:26px 30px!important;width:min(520px,85vw)!important}.collection-category-current-input,.collection-forecast-total-input{background:#fff!important;border:1px solid #ced4da!important;border-radius:3px!important;box-sizing:border-box!important;color:#333!important;font-size:12px!important;padding:5px 8px!important;text-align:right!important;width:100%!important}.collection-category-current-input:focus{border-color:#0078d4!important;box-shadow:0 0 0 1px rgba(0,120,212,.2)!important;outline:none!important}.collection-forecast-total-input{background:#f1f3f5!important;color:#6c757d!important;cursor:not-allowed!important}span.collection-month-date-badge.collection-has-value{display:none!important}.collection-section>.page-header{align-items:center!important;display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:12px!important;justify-content:space-between!important}\r\n/*      !important is REQUIRED: the ts writes an INLINE display on this  */#collectionSyncBar,.collection-show-form-btn,button#collectionSyncProjectsBtn,button.collection-show-form-btn{display:none!important}.collection-month-columns-table tbody tr:nth-child(2n) td.collection-prev-cell,.collection-month-columns-table td.collection-prev-cell{background:#f1f3f5!important}.collection-month-columns-table tbody tr:hover td.collection-prev-cell{background:#e9ecef!important}.collection-section>.page-header{background:linear-gradient(90deg,#6b0000,#8b0000 6%,#e00000 14%,red 30%,#f5002a 45%,#e81550 55%,#d1307a 63%,#b855b8 72%,#8f7ff0 82%,#7f8ff5 88%,#8a8fc0 94%,#7a7fa0)!important;border-bottom:0!important;border-radius:12px!important;box-shadow:0 4px 12px rgba(16,24,40,.18)!important;box-sizing:border-box!important;color:#fff!important;margin:0 0 14px!important;padding:7px 25px!important}.collection-section>.page-header h1{-webkit-text-fill-color:#fff!important;background-clip:border-box!important;color:#fff!important;flex:1 1 auto!important;font-size:22px!important;font-weight:600!important;line-height:normal!important;margin:0!important;min-width:0!important;overflow:hidden!important;text-align:left!important;text-overflow:ellipsis!important;white-space:nowrap!important}.collection-first-row-container .collection-detailed-months-row{align-items:stretch!important;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;gap:15px!important;width:100%!important}.collection-first-row-container .collection-current-month-container{display:flex!important;flex:0 0 calc(50% - 7.5px)!important;flex-direction:column!important;max-width:calc(50% - 7.5px)!important;min-width:0!important}.collection-first-row-container .collection-next-months-container{display:flex!important;flex:1 1 0!important;flex-direction:row!important;flex-wrap:nowrap!important;gap:15px!important;max-width:none!important;min-width:0!important}.collection-first-row-container .collection-next-month-box{display:flex!important;flex:1 1 0!important;flex-direction:column!important;min-width:0!important}.collection-first-row-container .collection-detailed-month-box{box-sizing:border-box!important;height:100%!important;width:100%!important}.collection-first-row-container .collection-detailed-month-box>div[style*=grid-template-columns]{gap:4px!important}.collection-first-row-container .collection-detailed-month-box table{table-layout:fixed!important;width:100%!important}.collection-first-row-container .collection-detailed-month-box td,.collection-first-row-container .collection-detailed-month-box th{padding:4px 2px!important;word-break:break-word!important}.collection-first-row-container .collection-category-current-input,.collection-first-row-container .collection-category-date-input,.collection-first-row-container .collection-category-forecast-input{box-sizing:border-box!important;font-size:12px!important;padding:4px!important;width:100%!important}@media (max-width:1024px){.collection-first-row-container .collection-detailed-months-row{flex-wrap:wrap!important}.collection-first-row-container .collection-current-month-container{flex:0 0 100%!important;max-width:100%!important}.collection-first-row-container .collection-next-months-container{flex:0 0 100%!important}}@media (max-width:768px){.collection-first-row-container .collection-detailed-months-row,.collection-first-row-container .collection-next-months-container{flex-direction:column!important}.collection-first-row-container .collection-current-month-container,.collection-first-row-container .collection-next-month-box{flex:1 1 auto!important;max-width:none!important}}", true);
+_node_modules_microsoft_sp_css_loader_node_modules_microsoft_load_themed_styles_lib_es6_index_js__WEBPACK_IMPORTED_MODULE_0__.loadStyles("@font-face{font-display:swap;font-family:ABBvoiceOffice;font-style:normal;font-weight:600;src:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") format(\"truetype\")}.collection-page,.collection-page *,body,html{font-family:ABBvoiceOffice}.collection-month-columns-table{min-width:1800px}@media (max-width:1400px){.collection-month-columns-table{min-width:1600px}.collection-table-actions-row{grid-template-columns:repeat(3,1fr)}.collection-pagination-controls{flex-direction:column;gap:15px}}@media (max-width:1024px){.collection-month-columns-table{min-width:1400px}.collection-table-actions-row{grid-template-columns:repeat(2,1fr)}.collection-pagination-navigation{flex-wrap:wrap;justify-content:center}.collection-pagination-info{margin:5px}}@media (max-width:768px){.collection-month-columns-table{font-size:10px;min-width:1200px}.collection-table-actions-row{grid-template-columns:1fr}.collection-table-actions{padding:10px}.collection-pagination-controls{align-items:stretch;flex-direction:column}.collection-pagination-navigation{flex-direction:column;gap:10px}.collection-pagination-pages{margin:10px 0;order:-1}.collection-control-btn{font-size:9px;height:18px;width:18px}.collection-value-display{font-size:10px}.collection-form-row{flex-direction:column}.collection-form-group{flex:1 1 100%}.collection-detailed-months-row{flex-direction:column}.collection-current-month-container,.collection-next-months-container{max-width:100%}}@media (max-width:480px){.collection-month-columns-table{min-width:1000px}.collection-page-header{align-items:flex-start;flex-direction:column;gap:10px}.collection-btn-primary,.collection-btn-secondary{text-align:center;width:100%}.collection-pagination-btn{font-size:12px;min-width:60px;padding:6px 8px}.collection-page-number{font-size:12px;min-width:30px;padding:6px 8px}}.collection-sort-header-container{align-items:center;display:flex;gap:10px;justify-content:center;padding:0}.collection-header-label{font-size:10px;font-weight:600;line-height:1.25;overflow-wrap:anywhere;vertical-align:middle;white-space:normal!important;word-break:break-word}.collection-sort-buttons-container{display:flex;flex-direction:column;gap:1px;margin-left:4px}.collection-sort-btn{align-items:center;background:hsla(0,4%,75%,.15);border:1px solid hsla(0,0%,100%,.3);border-radius:1px;color:#768912fa;cursor:pointer;display:flex;font-size:6px;height:10px;justify-content:center;line-height:1;padding:0;transition:all .2s ease;width:12px}.collection-form-actions{margin:14px 16px}.collection-month-subheader .collection-sort-btn{background:rgba(0,120,212,.1);border:1px solid rgba(0,120,212,.3);color:#0078d4}.collection-sort-btn:hover{background:hsla(0,0%,100%,.3);transform:scale(1.1)}.collection-month-subheader .collection-sort-btn:hover{background:rgba(0,120,212,.2)}.collection-sort-btn.collection-sort-asc.active,.collection-sort-btn.collection-sort-desc.active{background:#28a745;border-color:#28a745;color:#fff}.collection-sort-btn:active{transform:scale(.95)}.collection-table-container{background:#fff;border:1px solid #cfd8dc;border-radius:6px;position:relative}.collection-table-container,.collection-table-scroll{height:auto!important;max-height:none!important;overflow:visible!important}.collection-table-scroll{border:1px solid #cfd8dc}.collection-month-columns-table thead td,.collection-month-columns-table thead th{background-clip:padding-box;position:sticky;top:0;z-index:10}.collection-month-columns-table thead .collection-customer-col,.collection-month-columns-table thead .collection-freeze-col,.collection-month-columns-table thead .collection-gh-col,.collection-month-columns-table thead .collection-obl-col,.collection-month-columns-table thead .collection-pm-col,.collection-month-columns-table thead .collection-project-col,.collection-month-columns-table thead .collection-project-ref-col{z-index:15!important}.collection-month-columns-table tbody .collection-customer-col,.collection-month-columns-table tbody .collection-freeze-col,.collection-month-columns-table tbody .collection-gh-col,.collection-month-columns-table tbody .collection-obl-col,.collection-month-columns-table tbody .collection-pm-col,.collection-month-columns-table tbody .collection-project-col,.collection-month-columns-table tbody .collection-project-ref-col{z-index:2}button.collection-show-form-btn{display:none}.collection-toggle-historical-btn{align-items:center;background-color:#f8f9fa!important;border:1px solid #dee2e6!important;border-radius:4px!important;color:#495057!important;cursor:pointer;display:inline-flex;height:30px!important;justify-content:center;min-width:34px!important;padding:0!important;transition:all .25s ease;width:34px!important}.collection-toggle-historical-btn:hover{background-color:#e9ecef!important;border-color:#adb5bd!important}.collection-toggle-arrow{display:inline-block;font-size:16px;line-height:1;transition:transform .3s ease}.collection-toggle-historical-btn.expanded .collection-toggle-arrow{transform:rotate(180deg)}.collection-clear-filters-btn,.collection-export-btn,.collection-export-historical-btn,.collection-import-actual-btn{align-items:center!important;background:#605eee!important;border:1px solid #605eee!important;border-radius:999px!important;box-shadow:0 1px 2px rgba(16,24,40,.08)!important;box-sizing:border-box!important;color:#fff!important;cursor:pointer!important;display:inline-flex!important;font-family:inherit!important;font-size:13.5px!important;font-weight:700!important;gap:8px!important;justify-content:center!important;line-height:1!important;min-height:38px!important;min-width:160px!important;padding:10px 20px!important;transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease,transform .15s ease!important;white-space:nowrap!important}.collection-clear-filters-btn:hover:not(:disabled),.collection-export-btn:hover:not(:disabled),.collection-export-historical-btn:hover:not(:disabled),.collection-import-actual-btn:hover:not(:disabled){background:#4c49e0!important;border-color:#4c49e0!important;box-shadow:0 4px 10px rgba(96,94,238,.22)!important;transform:translateY(-1px)!important}@media (max-width:1400px){.collection-month-columns-table{min-width:1600px}.collection-header-label{font-size:9px}.collection-sort-btn{font-size:5px;height:9px;width:11px}}@media (max-width:1200px){.collection-month-columns-table{min-width:1400px}.collection-sort-header-container{flex-direction:column;gap:2px}.collection-sort-buttons-container{flex-direction:row;margin-left:0}}@media (max-width:768px){.collection-month-columns-table{min-width:1200px}.collection-header-label{font-size:8px}.collection-sort-btn{font-size:4px;height:8px;width:10px}}.collection-table-controls{align-items:center;display:flex;flex-direction:column;gap:1px;margin-top:2px}.collection-control-btn.collection-sort-btn{align-items:center;background:#f8f9fa;border:1px solid #ccc;border-radius:2px;cursor:pointer;display:flex;font-size:7px;height:12px;justify-content:center;line-height:1;padding:0;transition:all .2s ease;width:14px}.collection-control-btn.collection-sort-btn:hover{background:#0078d4;border-color:#0078d4;color:#fff;transform:scale(1.1)}.collection-control-btn.collection-sort-btn.collection-sort-asc.active{background:#28a745;border-color:#28a745;color:#fff}.collection-control-btn.collection-sort-btn.collection-sort-desc.active{background:#dc3545;border-color:#dc3545;color:#fff}.collection-control-btn.collection-sort-btn:active{transform:scale(.95)}.collection-month-columns-table td{font-size:10px;line-height:1.3;padding:3px 4px!important}.collection-value-with-controls{align-items:center;display:flex;flex-direction:column;justify-content:center;min-height:45px}.collection-value-display{color:#fff;font-size:10px;font-weight:600;margin-bottom:2px;text-align:center}.collection-month-column-header,.collection-project-info-cell{background:#0078d4;border:1px solid #ddd!important;color:#fff;font-size:12px;font-weight:600;padding:6px 3px;position:relative}.collection-month-subheader{background:#e3f2fd;border:1px solid #ddd!important;color:#0078d4;font-size:12px;font-weight:600;padding:5px 2px}.collection-collection-cell,.collection-receivable-cell{background:#f8f9fa!important;color:#2c3e50;font-weight:700}.collection-total-cell{background:#e8f4fd!important;font-weight:600}.collection-month-data-cell{background:#fff;transition:background-color .2s ease}.collection-month-data-cell:hover{background:#f0f7ff!important}@keyframes collectionSortPulse{0%{transform:scale(1)}50%{transform:scale(1.1)}to{transform:scale(1)}}.collection-control-btn.collection-sort-btn.active{animation:collectionSortPulse .3s ease}.collection-action-buttons-container{align-items:center;display:flex;flex-direction:column;gap:4px;justify-content:center;min-height:100%;padding:3px}.collection-edit-action-btn{align-items:center;background:linear-gradient(135deg,#0078d4,#106ebe);border:none;border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.1);color:#fff;cursor:pointer;display:flex;font-size:9px;font-weight:600;gap:3px;justify-content:center;line-height:1.1;min-width:50px;padding:4px 6px;transition:all .2s ease}.collection-edit-action-btn:hover{background:linear-gradient(135deg,#106ebe,#005a9e);box-shadow:0 2px 4px rgba(0,0,0,.15);transform:translateY(-1px)}.collection-edit-icon{flex-shrink:0;font-size:10px}.collection-edit-text{font-size:8px;white-space:nowrap}.collection-month-columns-table tbody tr:nth-child(2n){background:#fafafa}.collection-month-columns-table tbody tr:nth-child(odd){background:#fff}.collection-month-columns-table tbody tr:hover{background:#f0f7ff!important}.collection-hidden-section{display:none!important}.collection-visible-section{display:block!important}.collection-collection-section.collection-visible-section,.collection-obl-section-container.collection-visible-section{display:block}.collection-obl-breakdown-section{background:#fff;border:1px solid #e9ecef;border-radius:8px;margin-top:20px;padding:15px}.collection-obl-breakdown-section h4{color:#0078d4;font-size:14px;font-weight:600;margin:0 0 15px;text-align:center}.collection-obl-breakdown-grid{display:grid;gap:12px;grid-template-columns:repeat(6,1fr)}.collection-obl-breakdown-item{display:flex;flex-direction:column}.collection-obl-breakdown-item label{color:#495057;font-size:11px;font-weight:600;margin-bottom:4px;text-align:center}.collection-obl-breakdown-input{background:#f8f9fa!important;border:1px solid #ddd;border-radius:4px;color:#6c757d!important;cursor:not-allowed;font-size:12px;padding:6px 8px;text-align:center}.collection-month-columns-table thead th.collection-freeze-col{color:#495057!important;font-size:10px!important;font-weight:600!important;line-height:1.2!important;padding:2px!important;text-align:center!important;vertical-align:middle!important;white-space:normal!important}.collection-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);margin-bottom:20px;padding:20px;position:relative}.collection-table-actions{background:#f8f9fa;border:1px solid #e9ecef;border-radius:8px;display:flex;flex-wrap:wrap;gap:15px;margin-bottom:20px;padding:15px}.collection-table-actions-row{align-items:end;display:grid;gap:15px;grid-template-columns:repeat(6,1fr)}.collection-tableColp4{display:flex;flex-direction:column;gap:8px}.collection-tableColp4 label{color:#495057;font-size:12px;font-weight:600;margin-bottom:4px}.collection-tableColp4 select{background:#fff;border:1px solid #ddd;border-radius:5px;font-size:14px;padding:8px 12px;width:100%}.collection-btn-primary{background:#0078d4;border:none;border-radius:5px;color:#fff;cursor:pointer;font-size:14px;padding:8px 12px;transition:all .2s ease}.collection-btn-primary:hover:not(:disabled){background:#106ebe;transform:translateY(-1px)}.collection-btn-primary:disabled{background:#a19f9d;cursor:not-allowed}.collection-btn-secondary{background:#6c757d;border:none;border-radius:5px;color:#fff;cursor:pointer;font-size:14px;padding:8px 12px;transition:all .2s ease}.collection-btn-secondary:hover{background:#5a6268;transform:translateY(-1px)}.collection-clear-filters-btn{background:#dc3545!important}.collection-clear-filters-btn:hover{background:#c82333!important}.collection-import-actual-btn{background:#28a745!important}.collection-import-actual-btn:hover{background:#218838!important}.collection-export-btn{background:#17a2b8!important}.collection-export-btn:hover{background:#138496!important}.collection-form-row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}.collection-form-group{display:flex;flex:1 1 250px;flex-direction:column}.collection-form-group label{color:#333;font-weight:600;margin-bottom:5px}.collection-form-group input,.collection-form-group select{border:1px solid #ddd;border-radius:5px;font-size:14px;padding:8px 12px}.collection-project-main-wrapper{background:#f8f9fa!important;border:1px solid #e9ecef!important;border-radius:6px!important;display:grid!important;gap:0!important;grid-template-columns:1fr 1fr!important;margin:4px 0 8px!important;min-height:234px!important;overflow:hidden!important}.collection-project-left-side{align-items:flex-start!important;background:#fff!important;border-right:1px solid #e9ecef!important;display:flex!important;flex-direction:column!important;gap:0!important;justify-content:flex-start!important;padding:8px 16px!important}.collection-project-left-side .collection-detail-item{align-items:center!important;border-bottom:1px solid #f0f0f0!important;display:flex!important;flex-direction:row!important;font-size:12px!important;gap:10px!important;justify-content:flex-start!important;padding:8px 0!important;text-align:left!important;width:100%!important}.collection-project-left-side .collection-detail-label{color:#495057!important;font-weight:700!important;min-width:100px!important;white-space:nowrap!important}.collection-project-left-side .collection-detail-value{color:#1a1a2e!important;white-space:nowrap!important}.collection-project-right-side{background:#fff!important;display:flex!important;flex-direction:column!important;gap:6px!important;justify-content:flex-start!important;padding:8px 16px!important}.collection-remarks-group{display:flex!important;flex-direction:column!important;width:100%!important}.collection-remarks-group label{color:#495057!important;font-size:11px!important;font-weight:700!important;letter-spacing:.5px!important;margin-bottom:2px!important;text-align:left!important}.collection-remarks-textarea{background-color:#fff!important;border:1px solid #ced4da!important;border-radius:4px!important;font-family:inherit!important;font-size:12px!important;line-height:1.4!important;max-height:50px!important;min-height:32px!important;padding:4px 8px!important;resize:vertical!important;text-align:left!important;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out!important;width:100%!important}.collection-remarks-textarea:focus{border-color:#80bdff!important;box-shadow:0 0 0 .15rem rgba(0,123,255,.15)!important;outline:0!important}.collection-receivable-breakdown-section{background:linear-gradient(135deg,#f8f9fa,#e9ecef)!important;border:1px solid #dee2e6!important;border-radius:8px!important;margin:4px 0 12px!important;padding:12px 20px!important;width:100%!important}.collection-breakdown-header-title h4{color:#495057!important;font-size:14px!important;font-weight:700!important;letter-spacing:.5px!important;margin:0 0 10px!important}.collection-breakdown-grid{display:grid!important;gap:8px 12px!important;grid-template-columns:repeat(6,1fr)!important}.collection-breakdown-field{display:flex!important;flex-direction:column!important}.collection-breakdown-field label{color:#6c757d!important;font-size:10px!important;font-weight:600!important;letter-spacing:.3px!important;margin-bottom:2px!important;text-transform:uppercase!important}.collection-breakdown-input{background:#fff!important;border:1px solid #ced4da!important;border-radius:4px!important;color:#1a1a2e!important;font-size:14px!important;font-weight:600!important;height:34px!important;padding:4px 8px!important;text-align:center!important;transition:all .2s ease!important}.collection-breakdown-input:focus{border-color:#007bff!important;box-shadow:0 0 0 2px rgba(0,123,255,.15)!important;outline:none!important}.collection-breakdown-input.collection-input-with-value{background:#fff!important;border-color:#0078d4!important;color:#0078d4!important;font-weight:700!important}.collection-obl-section-container{background:#f8f9fa!important;border:1px solid #e9ecef!important;border-radius:4px!important;margin:2px 0 0!important;padding:6px 12px!important}.collection-obl-content{align-items:start!important;display:grid!important;gap:12px!important;grid-template-columns:1fr 1.5fr!important}.collection-obl-left{display:flex!important;flex-direction:column!important}.collection-obl-label-group{align-items:center!important;display:flex!important;gap:4px!important;margin-bottom:2px!important;text-align:left!important}.collection-obl-label-group label{color:#495057!important;font-size:11px!important;font-weight:700!important;margin:0!important}.collection-obl-value-display{display:flex!important;flex-direction:column!important}.collection-obl-input{background:#fff!important;border:1px solid #ddd!important;border-radius:4px!important;color:#0078d4!important;font-size:18px!important;font-weight:700!important;height:36px!important;max-width:140px!important;padding:2px 8px!important;text-align:center!important;width:100%!important}.collection-obl-right{align-items:center!important;display:flex!important}.collection-validation-summary{background:#fff!important;border:1px solid #e9ecef!important;border-radius:4px!important;padding:4px 12px!important;width:100%!important}.collection-validation-item{display:flex!important;font-size:11px!important;justify-content:space-between!important;margin-bottom:1px!important;text-align:left!important}.collection-validation-label{color:#666!important;font-size:10px!important;font-weight:600!important;text-align:left!important}.collection-validation-value{color:#333!important;font-size:11px!important;font-weight:700!important;text-align:right!important}.collection-validation-line{background:#e9ecef!important;border-radius:2px!important;height:4px!important;margin-top:3px!important;overflow:hidden!important}.collection-line-fill{background:#28a745!important;border-radius:2px!important;height:100%!important;transition:all .3s ease!important;width:0!important}.collection-line-fill.collection-warning{background:#ffc107!important}.collection-line-fill.collection-danger{background:#dc3545!important}.collection-validation-message{border-radius:4px;display:block!important;font-size:12px;font-weight:500;margin-top:5px;padding:8px 12px}.collection-validation-message.collection-danger{background-color:#f8d7da;border:1px solid #f5c6cb;color:#721c24}.collection-validation-message.collection-warning{background-color:#fff3cd;border:1px solid #ffc106;color:#856404}.collection-validation-message.collection-success{background-color:#d4edda;border:1px solid #c3e6cb;color:#155724}.collection-next-month-box{flex:1;min-width:0}.collection-detailed-month-box{background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1);height:fit-content;padding:15px;position:relative}.collection-current-month-box{background:linear-gradient(135deg,#fff,#f0f8ff);border:2px solid #0078d4}.collection-next-month-box .collection-detailed-month-box{background:linear-gradient(135deg,#fff,#f9f9f9);border:1px solid #ddd}.collection-current-month-indicator{backdrop-filter:blur(5px)!important;background:hsla(0,0%,100%,.2)!important;border:1px solid hsla(0,0%,100%,.3)!important;border-radius:12px!important;color:#fff!important;font-size:10px!important;font-weight:600!important;padding:4px 10px!important;position:absolute!important;right:12px!important;top:50%!important;transform:translateY(-50%)!important}.collection-detailed-month-box .collection-month-header{background:linear-gradient(135deg,#0078d4,#005a9e)!important;border-bottom:2px solid #004578!important;border-radius:8px 8px 0 0!important;box-shadow:0 2px 4px rgba(0,0,0,.1)!important;color:#fff!important;font-size:14px!important;font-weight:700!important;margin:-15px -15px 20px!important;padding:12px 15px!important;position:relative!important;text-align:center!important;z-index:10!important}.collection-current-month-box .collection-month-header{background:linear-gradient(135deg,#28a745,#1e7e34)!important;border-bottom:2px solid #155724!important}.collection-enhanced-inputs-container{display:grid;gap:12px;grid-template-columns:1fr 1fr 1fr 1fr;margin-bottom:15px}.collection-enhanced-input-group{align-items:center;display:flex;flex-direction:column}.collection-enhanced-input-group label{color:#666;font-size:11px;font-weight:600;margin-bottom:4px;text-align:center}.collection-enhanced-input-group input,.collection-enhanced-input-group select{background:#fff;border:1px solid #ddd;border-radius:4px;font-size:12px;padding:6px 8px;text-align:center;transition:all .2s ease;width:100%}.collection-enhanced-input-group input:focus,.collection-enhanced-input-group select:focus{border-color:#0078d4;box-shadow:0 0 0 2px rgba(0,120,212,.2);outline:none}.collection-forecast-date-input{background:#fff!important;border:1px solid #ddd!important;color:#333!important}.collection-categories-section{border-top:2px solid #e0e0e0;margin-top:15px;padding-top:15px}.collection-categories-header{border-bottom:1px solid #eee;color:#666;display:grid;font-size:11px;font-weight:600;gap:8px;grid-template-columns:2fr 1fr 1fr 1fr 2fr;margin-bottom:8px;padding-bottom:4px;text-align:center}.collection-category-row{align-items:center;display:grid;gap:8px;grid-template-columns:2fr 1fr 1fr 1fr 1fr;margin-bottom:6px}.collection-category-row input{background:#fff;border:1px solid #ddd;border-radius:3px;font-size:12px;padding:5px 8px;transition:all .2s ease}.collection-category-row input[type=text]{text-align:left}.collection-category-row input[type=number]{text-align:right}.collection-category-row input[type=date]{text-align:center}.collection-category-row input:focus{border-color:#0078d4;box-shadow:0 0 0 1px rgba(0,120,212,.2);outline:none}.collection-month-actual-badge,.collection-month-date-badge{align-items:center;border-radius:4px;display:inline-flex;font-size:13px;font-weight:600;gap:6px;padding:2px 12px;white-space:nowrap}.collection-month-actual-badge{background-color:#f5f5f5;border:1px solid #ddd;color:#999}.collection-month-actual-badge.collection-has-value{background-color:#c8e6c9;border-color:#4caf50;color:#1b5e20}.collection-month-date-badge{background-color:#f5f5f5;border:1px solid #ddd;color:#999}.collection-month-date-badge.collection-has-value{background-color:#e3f2fd;border-color:#007bff;color:#0c5460}.collection-detailed-month-box .collection-month-header{flex-wrap:wrap;row-gap:6px}.collection-historical-month{background:linear-gradient(135deg,#f5f5f5,#e8e8e8)!important;border:1px solid #d0d0d0!important;opacity:.8;position:relative}.collection-historical-month,.collection-historical-month *{pointer-events:none!important;-webkit-user-select:none!important;-ms-user-select:none!important;user-select:none!important}.collection-historical-month *{cursor:not-allowed!important}.collection-historical-month:before{color:hsla(208,7%,46%,.2);content:\"READ ONLY\";font-size:24px;font-weight:700;left:50%;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%) rotate(-45deg);z-index:1}.collection-historical-month .collection-month-header{background:linear-gradient(135deg,#6c757d,#495057)!important;border-bottom:2px solid #343a40!important;border-radius:8px 8px 0 0!important;color:#fff!important;font-size:13px!important;font-weight:600!important;margin:-15px -15px 15px!important;opacity:.9!important;padding:10px 15px!important;text-align:center!important}.collection-historical-month input{background-color:#f8f9fa!important;border-color:#ced4da!important;color:#6c757d!important;cursor:not-allowed!important}.collection-pagination-size-selector label{font-weight:600;margin:0}.collection-page-number:hover{background:#e9ecef;border-color:#0078d4}.collection-yearly-container{display:grid;gap:15px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:15px}.collection-yearly-box{background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1);min-height:200px;padding:15px;position:relative}.collection-yearly-header{border-bottom:1px solid #eee;color:#0078d4;font-size:14px;font-weight:600;margin-bottom:15px;padding-bottom:8px;text-align:center}.collection-yearly-inputs-container{display:grid;gap:15px;grid-template-columns:1fr 1fr;margin-bottom:15px}.collection-yearly-input-group{align-items:center;display:flex;flex-direction:column}.collection-yearly-input-group label{color:#666;font-size:12px;font-weight:600;margin-bottom:6px}.collection-yearly-input-group input{background:#fff;border:1px solid #ddd;border-radius:4px;font-size:14px;padding:8px 10px;text-align:center;transition:all .2s ease;width:100%}.collection-yearly-input-group input:focus{border-color:#0078d4;box-shadow:0 0 0 2px rgba(0,120,212,.2);outline:none}.collection-yearly-plan-input{background-color:#f8f9fa!important;border-color:#ced4da!important;color:#6c757d!important}.collection-historical-container{overflow:hidden;transition:opacity .4s ease,max-height .4s ease,padding .3s ease}.collection-historical-container.visible{display:block!important;max-height:2000px;opacity:1;overflow:visible;padding:5px 0}.collection-historical-container.hidden{display:none!important;max-height:0;opacity:0;overflow:hidden;padding:0}.collection-section-header{align-items:center;border-radius:4px;cursor:pointer;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-bottom:15px;padding:8px 12px;transition:background-color .2s ease;-webkit-user-select:none;-ms-user-select:none;user-select:none}.collection-section-header:hover{background-color:#f8f9fa}.collection-section-header h3{border-bottom:2px solid #007bff;color:#495057;flex:1;margin:0;padding-bottom:8px;pointer-events:none}.collection-toggle-historical-btn:active{transform:scale(.98)}@media (max-width:768px){.collection-enhanced-inputs-container{grid-template-columns:1fr 1fr}.collection-categories-header,.collection-category-row{gap:4px;grid-template-columns:1fr}.collection-categories-header div:nth-child(n+4),.collection-category-row input:nth-child(n+4){display:none}.collection-section-header{align-items:flex-start;flex-direction:column}.collection-yearly-container,.collection-yearly-inputs-container{grid-template-columns:1fr}}.collection-month-total-validation{border-radius:4px;box-sizing:border-box;clear:both;font-size:11px;margin-top:8px;padding:4px 8px;text-align:center;width:100%}.collection-month-total-valid{background-color:#d4edda;border:1px solid #c3e6cb;color:#155724}.collection-month-total-warning{background-color:#fff3cd;border:1px solid #ffeeba;color:#856404}.collection-month-total-invalid{background-color:#f8d7da;border:1px solid #f5c6cb;color:#721c24}.collection-month-total-validation:not(:last-child){display:none}.collection-month-total-validation:last-child{display:block}tr.collection-frozen-row{background-color:#fff8e1!important;border-left:4px solid #ffc107!important}tr.collection-frozen-row:hover{background-color:#fff3cd!important}.collection-frozen-project{background-color:#fff8e1!important;border-left:4px solid #ffc107!important}.collection-frozen-input{background-color:#f5f5f5!important;color:#6c757d!important;cursor:not-allowed!important;opacity:.7!important;pointer-events:none!important}.collection-freeze-badge{background-color:#ffc107;border-radius:4px;color:#856404;display:inline-block;font-size:11px;font-weight:700;margin-left:8px;padding:2px 8px}.collection-freeze-checkbox{accent-color:#0078d4;cursor:pointer;height:18px;pointer-events:auto!important;position:relative;width:18px;z-index:10}.collection-freeze-checkbox:disabled{cursor:not-allowed;opacity:.6;pointer-events:auto!important}.collection-input-with-value{background:#fff!important;color:#333!important}.collection-input-empty{background:#f8f9fa!important;color:transparent!important}.collection-edit-mode .collection-project-select-container select{background-color:#f8f9fa!important;border-color:#d0d0d0!important;color:#666!important;cursor:not-allowed!important}.collection-readonly-field{background-color:#f5f5f5!important;border-color:#ddd!important;color:#666!important}.collection-historical-month input,input[readonly]{cursor:not-allowed!important}.collection-category-plan-input,.collection-historical-month input,.collection-main-plan-input,input[readonly]{background-color:#f8f9fa!important;border-color:#ced4da!important;color:#6c757d!important}input:read-only,select:disabled{background-color:#f8f9fa!important;border-color:#ced4da!important;color:#6c757d!important;cursor:not-allowed!important}.collection-next-months-container .collection-enhanced-inputs-container{grid-template-columns:1fr 1fr}.collection-next-months-container .collection-enhanced-input-group:nth-child(3),.collection-next-months-container .collection-enhanced-input-group:nth-child(4){display:none}.collection-next-months-container .collection-categories-header,.collection-next-months-container .collection-category-row{grid-template-columns:2fr 1fr 1fr}.collection-next-months-container .collection-categories-header div:nth-child(4),.collection-next-months-container .collection-categories-header div:nth-child(5),.collection-next-months-container .collection-category-row input:nth-child(4),.collection-next-months-container .collection-category-row input:nth-child(5){display:none}.collection-historical-month .collection-categories-header{border-bottom:1px solid #eee;color:#666;display:grid;font-size:11px;font-weight:600;gap:8px;grid-template-columns:2fr 1fr 1fr!important;margin-bottom:8px;padding-bottom:4px;text-align:center}.collection-historical-month .collection-category-row{align-items:center;display:grid;gap:8px;grid-template-columns:2fr 1fr 1fr!important;margin-bottom:6px}.collection-historical-month .collection-category-row input{background-color:#f8f9fa!important;border-color:#ced4da!important;color:#6c757d!important;cursor:not-allowed!important}.collection-historical-month .collection-categories-header div:nth-child(4),.collection-historical-month .collection-categories-header div:nth-child(5),.collection-historical-month .collection-category-row input:nth-child(4),.collection-historical-month .collection-category-row input:nth-child(5){display:none!important}.collection-yearly-box .collection-categories-section{border-top:1px solid #e0e0e0;margin-top:15px;padding-top:15px}.collection-yearly-box .collection-categories-header{border-bottom:1px solid #eee;color:#666;display:grid;font-size:11px;font-weight:600;gap:8px;grid-template-columns:2fr 1fr 1fr;margin-bottom:8px;padding-bottom:4px;text-align:center}.collection-yearly-box .collection-category-row{align-items:center;display:grid;gap:8px;grid-template-columns:2fr 1fr 1fr;margin-bottom:6px}.collection-yearly-box .collection-category-row input[type=text]{text-align:left}.collection-yearly-box .collection-category-row input[type=number]{text-align:right}.collection-yearly-box .collection-category-row input:focus{border-color:#0078d4;box-shadow:0 0 0 1px rgba(0,120,212,.2);outline:none}.collection-forecast-validation,.collection-yearly-total-validation{display:none}.collection-obl-error-toast{animation:collectionSlideInRight .3s ease;background:#dc3545;border-radius:8px;bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,.15);color:#fff;max-width:300px;padding:15px 20px;position:fixed;right:20px;z-index:10000}.collection-obl-error-toast.collection-warning{background:#ffc107;color:#856404}@keyframes collectionSlideInRight{0%{opacity:0;transform:translateX(100%)}to{opacity:1;transform:translateX(0)}}.collection-toast-close{background:none;border:none;color:inherit;cursor:pointer;float:right;font-size:18px;margin-left:10px}.collection-freeze-col{padding:4px 2px!important;text-align:center!important;vertical-align:middle!important;white-space:nowrap!important}.collection-month-columns-table th{box-sizing:border-box}.collection-freeze-col{left:0;max-width:40px;min-width:40px;width:40px}.collection-project-ref-col{left:40px;max-width:95px;min-width:95px;width:95px}.collection-customer-col{left:135px;max-width:115px;min-width:115px;width:115px}.collection-project-col{left:250px;max-width:155px;min-width:155px;width:155px}.collection-gh-col{left:405px;max-width:60px;min-width:60px;text-align:center;width:60px}.collection-pm-col{left:465px}.collection-obl-col,.collection-pm-col{max-width:90px;min-width:90px;width:90px}.collection-obl-col{left:555px}.collection-month-scroll-col{min-width:60px}.collection-month-columns-table .collection-customer-col,.collection-month-columns-table .collection-freeze-col,.collection-month-columns-table .collection-gh-col,.collection-month-columns-table .collection-obl-col,.collection-month-columns-table .collection-pm-col,.collection-month-columns-table .collection-project-col,.collection-month-columns-table .collection-project-ref-col{background:#fff;position:sticky;z-index:2}.collection-month-columns-table thead th.collection-month-column-header{background:#0078d4!important;color:#fff!important;font-size:12px;font-weight:700;padding:4px!important;text-align:center}.collection-month-columns-table thead th.collection-month-column-header .collection-header-label{color:#fff!important}.collection-month-columns-table thead th.collection-month-group-header{font-size:11px;font-weight:700;padding:3px!important;text-align:center}.collection-month-columns-table thead th.collection-prev-group{background:#e3f2fd!important;color:#0d47a1!important}.collection-month-columns-table thead th.collection-curr-group{background:#e8f5e9!important;color:#1b5e20!important}.collection-month-columns-table thead th.collection-month-subheader{background:#f1f8e9!important;color:#33691e!important;font-size:10px;font-weight:600;padding:3px 2px!important;text-align:center}@media (max-width:768px){.collection-freeze-col{left:0;max-width:30px;min-width:30px;width:30px}.collection-project-ref-col{left:30px;max-width:80px;min-width:80px;width:80px}.collection-customer-col{left:110px;max-width:80px;min-width:80px;width:80px}.collection-project-col{left:190px;max-width:100px;min-width:100px;width:100px}.collection-gh-col{left:290px}.collection-gh-col,.collection-pm-col{max-width:70px;min-width:70px;width:70px}.collection-pm-col{left:360px}.collection-obl-col{left:430px;max-width:90px;min-width:90px;width:90px}}.collection-actions-cell{background:#f8f9fa;border:1px solid #ddd!important;max-width:80px!important;min-width:80px;min-width:80px!important;text-align:center!important;vertical-align:middle!important;width:80px!important}.collection-actions-cell:hover{background:#f0f7ff!important}.collection-month-columns-table tr:has(.collection-action-buttons-container) td.collection-actions-cell{vertical-align:middle!important}.collection-remaining-container{display:flex;flex-direction:column;gap:15px;width:100%}.collection-remaining-row{display:grid;gap:15px;grid-template-columns:repeat(4,1fr);width:100%}.collection-simple-month{background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1);min-height:180px;padding:15px;position:relative}.collection-simple-month .collection-month-header{background:linear-gradient(135deg,#17a2b8,#138496)!important;border-bottom:2px solid #0c5460!important;border-radius:8px 8px 0 0!important;color:#fff!important;font-size:13px!important;font-weight:600!important;margin:-15px -15px 15px!important;padding:10px 12px!important;text-align:center!important}.collection-simple-month .collection-main-inputs-container{display:grid;gap:12px;grid-template-columns:1fr 1fr;margin-bottom:10px}.collection-simple-month .collection-main-input-group{align-items:center;display:flex;flex-direction:column}.collection-simple-month .collection-main-input-group label{color:#6c757d;font-size:10px;font-weight:600;letter-spacing:.3px;margin-bottom:3px;text-align:center}.collection-simple-month .collection-main-input-group input{background:#f8f9fa;border:1px solid #ddd;border-radius:4px;cursor:not-allowed;font-size:13px;padding:5px 8px;text-align:center;transition:all .2s ease;width:100%}.collection-simple-month .collection-main-input-group input:focus{border-color:#0078d4;box-shadow:0 0 0 2px rgba(0,120,212,.2);outline:none}.collection-simple-month .collection-categories-section{border-top:1px solid #e0e0e0;margin-top:8px;padding-top:8px}.collection-simple-month .collection-categories-header{border-bottom:1px solid #eee;color:#6c757d;display:grid;font-size:10px;font-weight:600;gap:6px;grid-template-columns:2fr 1fr 1fr;margin-bottom:4px;padding-bottom:3px;text-align:center}.collection-simple-month .collection-category-row{align-items:center;display:grid;gap:6px;grid-template-columns:2fr 1fr 1fr;margin-bottom:3px}.collection-simple-month .collection-category-row input{background:#f8f9fa;border:1px solid #ddd;border-radius:3px;cursor:not-allowed;font-size:11px;padding:4px 6px;transition:all .2s ease}.collection-simple-month .collection-category-row input[type=text]{background:transparent;color:#495057;cursor:default;font-size:10px;font-weight:500;text-align:left}.collection-simple-month .collection-category-row input[type=number]{text-align:right}.collection-simple-month .collection-category-row input:focus{border-color:#0078d4;box-shadow:0 0 0 1px rgba(0,120,212,.2);outline:none}.collection-simple-month .collection-month-total-validation{background:#f8f9fa;border:1px solid #e9ecef;border-radius:3px;display:none;font-size:9px;line-height:1.2;margin-top:4px;padding:3px;text-align:center}.collection-simple-month .collection-month-total-validation.collection-month-total-invalid{background:#f8d7da;border-color:#f5c6cb;color:#721c24;display:block}.collection-simple-month .collection-month-total-validation.collection-month-total-warning{background:#fff3cd;border-color:#ffeaa7;color:#856404;display:block}.collection-simple-month .collection-month-total-validation.collection-month-total-valid{background:#d4edda;border-color:#c3e6cb;color:#155724;display:block}@media (max-width:1400px){.collection-remaining-row{grid-template-columns:repeat(4,1fr)}}@media (max-width:1200px){.collection-remaining-row{grid-template-columns:repeat(3,1fr)}}@media (max-width:992px){.collection-remaining-row{grid-template-columns:repeat(2,1fr)}}@media (max-width:768px){.collection-remaining-row{grid-template-columns:1fr}.collection-simple-month .collection-main-inputs-container{grid-template-columns:1fr 1fr}.collection-simple-month .collection-categories-header,.collection-simple-month .collection-category-row{gap:4px;grid-template-columns:1fr 1fr 1fr}}.collection-form-section .collection-page-header{align-items:center!important;box-sizing:border-box!important;display:flex!important;flex-direction:row!important;gap:16px!important;justify-content:space-between!important;margin:0 0 12px!important;position:sticky!important;top:0!important;width:100%!important;z-index:1000!important}.collection-form-section .collection-page-header h1{color:#fff!important;flex:1 1 auto!important;line-height:1.3!important;margin:0!important;min-width:0!important;overflow:hidden!important;text-align:left!important;text-overflow:ellipsis!important;white-space:nowrap!important}.collection-btn-save-top{align-self:center!important;box-shadow:0 1px 2px rgba(0,0,0,.1)!important;flex:0 0 auto!important;font-size:13px!important;margin:0!important;max-height:40px!important;min-height:36px!important;padding:8px 16px!important;white-space:nowrap!important}button#collectionSyncProjectsBtn{display:none}.collection-pagination-row{align-items:center!important;display:flex!important;flex:0 1 auto!important;width:auto!important}.collection-pagination-top-row{justify-content:flex-start!important}.collection-pagination-bottom-row{justify-content:flex-end!important}@media (max-width:768px){.collection-pagination-bottom-row,.collection-pagination-top-row{justify-content:center!important;width:100%!important}}#oblLastMonth.collection-obl-input,#oblLastMonth.collection-obl-input:read-only{background:#f5f5f5!important;color:#6c757d!important;cursor:not-allowed!important;pointer-events:none!important}.collection-form-section input:not([readonly]),.collection-form-section select:not(:disabled),.collection-form-section textarea:not([readonly]){background-color:#fff!important;color:#333!important}.collection-form-section input[readonly],.collection-form-section select:disabled,.collection-form-section textarea[readonly]{background-color:#f1f3f5!important;border-color:#d9dde1!important;color:#6c757d!important;cursor:not-allowed!important}.collection-detailed-month-box .collection-category-date-input,.collection-detailed-month-box .collection-category-forecast-input,.collection-detailed-month-box .collection-main-forecast-input,.collection-detailed-month-box .collection-month-actual-input{border-color:#ced4da!important}.collection-detailed-month-box .collection-category-date-input,.collection-detailed-month-box .collection-category-forecast-input,.collection-detailed-month-box .collection-main-forecast-input{background-color:#fff!important}.collection-detailed-month-box .collection-month-actual-input{background-color:#f1f3f5!important;color:#6c757d!important}.collection-simple-month .collection-main-current-input,.collection-simple-month .collection-main-plan-input{border:1px solid #e1e5e8!important;border-radius:4px!important}.collection-table-loading-row>td{border:1px solid #dee2e6!important;height:220px!important;padding:0!important;text-align:center!important;vertical-align:middle!important}@keyframes collectionLoadingSpin{to{transform:rotate(1turn)}}.collection-table-loading-error-row>td{color:#6c757d!important}input.collection-main-current-input.collection-number-input,input.collection-yearly-current-input.collection-number-input{background-color:#f1f3f5!important}.collection-filter-trigger:hover:not(:disabled){background:#f9fafb!important;border-color:#d0d5dd!important;box-shadow:0 2px 6px rgba(16,24,40,.08);color:#1f2937!important;transform:translateY(-1px)}.collection-filter-modal .collection-table-actions-row{background:transparent!important;border:0!important;display:grid!important;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr));margin:0!important;padding:20px 20px 0!important}.collection-filter-modal .collection-table-actions-row+.collection-table-actions-row{padding-bottom:20px!important;padding-top:16px!important}.collection-filter-modal .collection-tableColp4{min-width:0}.collection-filter-modal .collection-tableColp4 label{color:#475569;display:block;font-size:12px;font-weight:600;margin-bottom:6px}.collection-filter-modal .collection-filter-select{width:100%}.collection-filter-modal .collection-tableColp4:has(.collection-clear-filters-btn),.collection-filter-modal .collection-tableColp4:has(.collection-export-btn),.collection-filter-modal .collection-tableColp4:has(.collection-export-historical-btn),.collection-filter-modal .collection-tableColp4:has(.collection-import-actual-btn){display:none}@media (max-width:700px){.collection-filter-modal .collection-table-actions-row{grid-template-columns:1fr}}:root{--lilac-primary:#605eee;--lilac-primary-dark:#4c49e0;--lilac-primary-soft:#eeeefe;--lilac-blue:#356bff;--lilac-blue-dark:#2a5ce8;--lilac-ink:#1f2430;--lilac-muted:#667085;--lilac-line:#e4e7ec;--lilac-pill:999px;--lilac-danger:#d92d20;--lilac-ring:0 0 0 3px rgba(96,94,238,.22);--lilac-shadow-sm:0 1px 2px rgba(16,24,40,.06);--lilac-shadow-md:0 4px 12px rgba(96,94,238,.28)}.collection-btn-primary,.collection-btn-secondary,.collection-clear-filters-btn,.collection-edit-trigger-btn,.collection-export-btn,.collection-export-historical-btn,.collection-filter-btn-apply,.collection-filter-btn-clear,.collection-filter-trigger,.collection-import-actual-btn,.collection-show-form-btn,.collection-toggle-historical-btn{align-items:center!important;border:1px solid transparent!important;border-radius:var(--lilac-pill)!important;box-shadow:var(--lilac-shadow-sm)!important;cursor:pointer!important;display:inline-flex!important;font-family:inherit!important;font-size:13.5px!important;font-weight:700!important;gap:8px!important;justify-content:center!important;line-height:1!important;margin:0!important;min-height:38px!important;padding:10px 20px!important;text-decoration:none!important;transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease,transform .15s ease!important;white-space:nowrap!important}.collection-btn-primary,.collection-filter-btn-apply,.collection-show-form-btn{background:var(--lilac-primary)!important;border-color:var(--lilac-primary)!important;color:#fff!important}.collection-btn-primary:hover:not(:disabled),.collection-filter-btn-apply:hover:not(:disabled),.collection-show-form-btn:hover:not(:disabled){background:var(--lilac-primary-dark)!important;border-color:var(--lilac-primary-dark)!important;box-shadow:var(--lilac-shadow-md)!important;transform:translateY(-1px)!important}.collection-btn-secondary,.collection-clear-filters-btn,.collection-edit-trigger-btn,.collection-filter-btn-clear,.collection-filter-trigger{background:#fff!important;border-color:var(--lilac-line)!important;color:#344054!important}.collection-btn-secondary:hover:not(:disabled),.collection-clear-filters-btn:hover:not(:disabled),.collection-filter-btn-clear:hover:not(:disabled),.collection-filter-trigger:hover{background:#f9fafb!important;border-color:#d0d5dd!important;box-shadow:0 2px 6px rgba(16,24,40,.08)!important;color:#1f2937!important;transform:translateY(-1px)!important}.collection-export-btn,.collection-export-historical-btn{background:var(--lilac-blue)!important;border-color:var(--lilac-blue)!important;color:#fff!important}.collection-export-btn:hover:not(:disabled),.collection-export-historical-btn:hover:not(:disabled){background:var(--lilac-blue-dark)!important;border-color:var(--lilac-blue-dark)!important;box-shadow:0 4px 12px rgba(53,107,255,.3)!important;transform:translateY(-1px)!important}.collection-btn-primary:focus-visible,.collection-btn-secondary:focus-visible,.collection-export-btn:focus-visible,.collection-export-historical-btn:focus-visible,.collection-filter-btn-apply:focus-visible,.collection-filter-btn-clear:focus-visible,.collection-filter-trigger:focus-visible,.collection-import-actual-btn:focus-visible{box-shadow:var(--lilac-ring)!important;outline:none!important}.collection-btn-primary:disabled,.collection-btn-secondary:disabled,.collection-clear-filters-btn:disabled,.collection-filter-btn-apply:disabled,.collection-filter-btn-clear:disabled{background:#fff!important;border-color:var(--lilac-line)!important;box-shadow:none!important;color:#b4bac6!important;cursor:not-allowed!important;opacity:.75!important;transform:none!important}.collection-filter-btn-apply:disabled{background:var(--lilac-primary-soft)!important;border-color:#dddcfb!important;color:#a5a3f3!important}.collection-clear-filters-btn.is-enabled,.collection-filter-btn-clear.is-enabled{border-color:var(--lilac-line)!important;color:#344054!important;cursor:pointer!important;opacity:1!important}.collection-table-toolbar{align-items:center!important;background:#f8f9fa!important;border:1px solid #e5e7eb!important;border-radius:10px!important;box-sizing:border-box!important;display:flex!important;flex-wrap:wrap!important;gap:12px!important;justify-content:space-between!important;margin:0 0 12px!important;padding:12px 16px!important;width:100%!important}.collection-table-toolbar-actions,.collection-toolbar-left{align-items:center!important;display:flex!important;flex-wrap:wrap!important;gap:10px!important}.collection-filter-trigger{position:relative!important}.collection-filter-funnel{fill:none!important;stroke:currentColor!important;stroke-width:1.9!important;stroke-linecap:round!important;stroke-linejoin:round!important;flex:0 0 16px!important;height:16px!important;width:16px!important}.collection-filter-chev{fill:none!important;stroke:currentColor!important;stroke-width:2.6!important;stroke-linecap:round!important;stroke-linejoin:round!important;flex:0 0 11px!important;height:11px!important;transition:transform .18s ease!important;width:11px!important}.collection-filter-trigger[aria-expanded=true] .collection-filter-chev{transform:rotate(180deg)!important}.collection-filter-count{align-items:center!important;background:#fff!important;border-radius:var(--lilac-pill)!important;color:var(--lilac-primary)!important;display:none!important;font-size:11.5px!important;font-weight:800!important;height:20px!important;justify-content:center!important;line-height:1!important;min-width:20px!important;padding:0 6px!important}.collection-filter-trigger.is-active{background:var(--lilac-primary)!important;border-color:var(--lilac-primary)!important;color:#fff!important}.collection-filter-trigger.is-active:hover:not(:disabled){background:#4c49e0!important;border-color:#4c49e0!important;color:#fff!important}.collection-filter-trigger.is-active .collection-filter-count{background:#fff!important;color:var(--lilac-primary)!important;display:inline-flex!important}.collection-filter-applypill{display:none!important;font-size:12.5px!important;min-height:34px!important;padding:8px 16px!important}.collection-filter-applypill.is-visible{display:inline-flex!important}.collection-filter-summary{align-items:center!important;display:flex!important;flex-wrap:wrap!important;gap:8px!important;margin:0 0 12px!important}.collection-filter-summary[hidden]{display:none!important}.collection-filter-summary__label{color:var(--lilac-muted)!important;font-size:12.5px!important;font-weight:700!important}.collection-filter-chip{background:var(--lilac-primary-soft)!important;border:1px solid #dcdcfb!important;border-radius:var(--lilac-pill)!important;font-size:12.5px!important;font-weight:600!important;gap:6px!important;line-height:1.2!important;padding:5px 6px 5px 12px!important}.collection-filter-chip,.collection-filter-chip button{align-items:center!important;color:#3a38b8!important;display:inline-flex!important}.collection-filter-chip button{background:#d9d8fa!important;border:0!important;border-radius:50%!important;cursor:pointer!important;font-size:13px!important;font-weight:800!important;height:18px!important;justify-content:center!important;line-height:1!important;padding:0!important;width:18px!important}.collection-filter-chip button:hover{background:var(--lilac-primary)!important;color:#fff!important}.collection-filter-chip__all{background:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:var(--lilac-pill)!important;color:#475467!important;cursor:pointer!important;font-size:12.5px!important;font-weight:700!important;padding:5px 12px!important}.collection-filter-chip__all:hover{border-color:#c9c8f8!important;color:var(--lilac-primary)!important}.collection-filter-overlay{align-items:flex-start!important;backdrop-filter:blur(2px)!important;background:rgba(16,24,40,.45)!important;box-sizing:border-box!important;display:none!important;inset:0!important;justify-content:center!important;overflow-y:auto!important;padding:48px 16px 24px!important;position:fixed!important;z-index:99998!important}.collection-filter-overlay.is-open{display:flex!important}.collection-filter-modal{background:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:16px!important;box-shadow:0 24px 60px rgba(16,24,40,.22)!important;box-sizing:border-box!important;margin:0 auto!important;padding:18px 20px 16px!important;width:min(1040px,100%)!important}.collection-filter-modal-head{align-items:center!important;border-bottom:1px solid var(--lilac-line)!important;display:flex!important;gap:12px!important;justify-content:space-between!important;margin-bottom:14px!important;padding-bottom:12px!important}.collection-filter-modal-head h2{color:var(--lilac-ink)!important;font-size:16px!important;font-weight:800!important;margin:0!important}.collection-filter-modal-head button{align-items:center!important;background:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:50%!important;color:#475467!important;cursor:pointer!important;display:inline-flex!important;font-size:18px!important;height:32px!important;justify-content:center!important;line-height:1!important;padding:0!important;width:32px!important}.collection-filter-modal-head button:hover{background:#f9fafb!important;color:var(--lilac-ink)!important}.collection-filter-overlay .collection-table-actions-row{align-items:end!important;display:grid!important;gap:14px 16px!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;margin:0 0 12px!important}.collection-filter-overlay .collection-tableColp4{display:flex!important;flex-direction:column!important;gap:6px!important;min-width:0!important}.collection-filter-overlay .collection-tableColp4>label{color:var(--lilac-muted)!important;font-size:12px!important;font-weight:700!important;letter-spacing:.01em!important;text-transform:none!important}.collection-filter-select{background-color:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:10px!important;box-shadow:none!important;box-sizing:border-box!important;color:var(--lilac-ink)!important;cursor:pointer!important;font-size:13.5px!important;font-weight:600!important;height:40px!important;min-height:40px!important;padding:0 34px 0 12px!important;width:100%!important}.collection-filter-select:hover{border-color:#d0d5dd!important}.collection-filter-select:focus{border-color:var(--lilac-primary)!important;box-shadow:var(--lilac-ring)!important;outline:none!important}.collection-filter-select.is-set{background-color:#fbfbff!important;border-color:#c9c8f8!important}.collection-filter-dupe-actions,.collection-filter-overlay .collection-tableColp4.collection-filter-dupe-actions{display:none!important}.collection-filter-modal-foot{align-items:center!important;border-top:1px solid var(--lilac-line)!important;display:flex!important;gap:10px!important;justify-content:flex-end!important;margin-top:16px!important;padding-top:14px!important}.collection-filter-modal-foot .collection-filter-btn-apply{margin-left:4px!important}.collection-clear-filters-btn{white-space:nowrap!important}.collection-month-columns-table th.collection-sortable-th{cursor:pointer!important}.collection-month-columns-table th.collection-sortable-th:hover{background-color:#f7f8ff!important}.collection-sort-header-container{gap:4px!important}.collection-sort-arrows,.collection-sort-header-container{align-items:center!important;display:inline-flex!important;justify-content:center!important}.collection-sort-arrows{background:transparent!important;border:none!important;border-radius:50%!important;box-shadow:none!important;flex:0 0 22px!important;flex-direction:column!important;gap:0!important;height:22px!important;min-width:22px!important;transition:background-color .15s ease!important;width:22px!important}.collection-sort-arrows .collection-arrow-down,.collection-sort-arrows .collection-arrow-up{align-items:center!important;background:none!important;color:#374151!important;display:flex!important;font-family:Arial,Helvetica,sans-serif!important;font-size:9px!important;height:9px!important;justify-content:center!important;letter-spacing:0!important;line-height:0!important;opacity:1!important;transition:color .15s ease,opacity .15s ease!important;width:14px!important}.collection-month-columns-table th.collection-sortable-th:hover .collection-sort-arrows{background:rgba(17,24,39,.08)!important}.collection-month-columns-table th.collection-sortable-th:hover .collection-arrow-down,.collection-month-columns-table th.collection-sortable-th:hover .collection-arrow-up{color:#111827!important}.collection-month-columns-table th.collection-sorted-asc .collection-sort-arrows,.collection-month-columns-table th.collection-sorted-desc .collection-sort-arrows{background:rgba(0,120,212,.12)!important}.collection-month-columns-table th.collection-sorted-asc:hover .collection-sort-arrows,.collection-month-columns-table th.collection-sorted-desc:hover .collection-sort-arrows{background:rgba(0,120,212,.2)!important}.collection-month-columns-table th.collection-sorted-asc .collection-arrow-up,.collection-month-columns-table th.collection-sorted-desc .collection-arrow-down{color:#0078d4!important;opacity:1!important}.collection-month-columns-table th.collection-sorted-asc .collection-arrow-down,.collection-month-columns-table th.collection-sorted-desc .collection-arrow-up{opacity:.38!important}.collection-month-subheader .collection-sort-header-container{gap:3px!important}.collection-month-subheader .collection-sort-arrows,.collection-subheader-arrows{flex-basis:18px!important;height:18px!important;min-width:18px!important;width:18px!important}.collection-month-subheader .collection-sort-arrows .collection-arrow-down,.collection-month-subheader .collection-sort-arrows .collection-arrow-up{font-size:7.5px!important;height:8px!important;width:12px!important}.collection-page-loader{background:none!important;display:block!important;height:auto!important;padding:0!important;width:100%!important}.collection-page-loader-track{background:#dcdcdc!important;border-radius:var(--lilac-pill)!important;height:6px!important;overflow:hidden!important;position:relative!important;width:100%!important}.collection-page-loader-bar{animation:collectionPageLoaderSlide 1.25s cubic-bezier(.65,.05,.36,1) infinite!important;background:#6664ff!important;border-radius:var(--lilac-pill)!important;height:100%!important;left:0!important;position:absolute!important;top:0!important;width:50%!important}@keyframes collectionPageLoaderSlide{0%{transform:translateX(-100%)}to{transform:translateX(200%)}}.collection-table-loading-row>td{background:#fff!important;border:0!important;padding:16px 12px!important}.collection-table-loading-content{display:block!important;margin:0 auto!important;width:min(520px,100%)!important}.collection-table-loading-content>span{color:var(--lilac-muted)!important;display:block!important;font-size:13px!important;text-align:center!important}.collection-table-loading-error-row>td{padding:18px 12px!important}.collection-table-loading-error-row .collection-table-loading-content>span{color:var(--lilac-danger)!important;font-weight:600!important}.collection-loading-spinner,.collection-loading-text{display:none!important}.collection-pagination-container{background:linear-gradient(180deg,#fbfcfd,#f4f6f8)!important;border:1px solid var(--lilac-line)!important;border-radius:12px!important;box-sizing:border-box!important;gap:16px!important;justify-content:space-between!important;margin:14px 0 0!important;padding:10px 14px!important;width:100%!important}.collection-pagination-container,.collection-pagination-left{align-items:center!important;display:flex!important;flex-wrap:nowrap!important}.collection-pagination-left{gap:18px!important;white-space:nowrap!important}.collection-pagination-right{align-items:center!important;display:flex!important;flex-wrap:nowrap!important;gap:6px!important}.collection-pagination-size-selector{align-items:center!important;display:flex!important;gap:8px!important;margin:0!important}.collection-pagination-size-selector>label{color:var(--lilac-muted)!important;font-size:13px!important;font-weight:600!important;margin:0!important;white-space:nowrap!important}.collection-page-size-select{background-color:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:var(--lilac-pill)!important;box-sizing:border-box!important;color:var(--lilac-ink)!important;cursor:pointer!important;font-size:13px!important;font-weight:700!important;height:34px!important;min-height:34px!important;padding:0 30px 0 10px!important}.collection-page-size-select:focus{border-color:var(--lilac-primary)!important;box-shadow:var(--lilac-ring)!important;outline:none!important}.collection-pagination-info{color:var(--lilac-muted)!important;font-size:13px!important;font-weight:600!important;white-space:nowrap!important}.collection-pg-count,.collection-pg-range{color:var(--lilac-ink)!important;font-weight:800!important}.collection-pagination-btn{align-items:center!important;background:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:10px!important;color:#475467!important;cursor:pointer!important;display:inline-flex!important;font-size:14px!important;font-weight:700!important;height:34px!important;justify-content:center!important;line-height:1!important;min-width:34px!important;padding:0!important;transition:background-color .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease!important;width:34px!important}.collection-pagination-btn:hover:not(:disabled){background:var(--lilac-primary-soft)!important;border-color:#c9c8f8!important;color:var(--lilac-primary)!important}.collection-pagination-btn:disabled{background:#f2f4f7!important;border-color:var(--lilac-line)!important;color:#b4bac6!important;cursor:not-allowed!important}.collection-pagination-btn:focus-visible{box-shadow:var(--lilac-ring)!important;outline:none!important}.collection-pagination-pages{align-items:center!important;display:flex!important;gap:6px!important;margin:0 4px!important}.collection-page-number{align-items:center!important;background:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:10px!important;color:#475467!important;cursor:pointer!important;display:inline-flex!important;font-size:13px!important;font-weight:700!important;height:34px!important;justify-content:center!important;line-height:1!important;min-width:34px!important;padding:0 8px!important;transition:background-color .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease!important}.collection-page-number:hover:not(:disabled){background:var(--lilac-primary-soft)!important;border-color:#c9c8f8!important;color:var(--lilac-primary)!important}.collection-page-number.active{background:var(--lilac-primary)!important;border-color:var(--lilac-primary)!important;box-shadow:0 2px 8px rgba(96,94,238,.32)!important;color:#fff!important}.collection-page-number.collection-dots,.collection-page-number.collection-dots:disabled{background:transparent!important;border-color:transparent!important;color:#98a2b3!important;cursor:default!important;min-width:20px!important;padding:0!important}.collection-pg-of{color:var(--lilac-muted)!important;font-size:13px!important;font-weight:700!important;margin:0 4px!important;white-space:nowrap!important}.collection-pg-of>span{color:var(--lilac-ink)!important;font-weight:800!important}@media (max-width:768px){.collection-table-toolbar{align-items:stretch!important;flex-direction:column!important}.collection-table-toolbar-actions,.collection-toolbar-left{width:100%!important}.collection-table-toolbar-actions>button{flex:1 1 auto!important}.collection-filter-overlay .collection-table-actions-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}.collection-filter-modal{padding:16px 14px!important}.collection-pagination-container{align-items:flex-start!important;flex-direction:column!important;gap:10px!important}.collection-pagination-left,.collection-pagination-right{flex-wrap:wrap!important;white-space:normal!important}.collection-pagination-right{justify-content:flex-start!important;width:100%!important}.collection-pagination-info{font-size:12.5px!important}}.collection-pagination-btn.collection-pg-icon{align-items:center!important;background:#fff!important;border:1px solid var(--lilac-line)!important;border-radius:10px!important;color:#475467!important;cursor:pointer!important;display:inline-flex!important;font-size:14px!important;font-weight:700!important;height:34px!important;justify-content:center!important;line-height:1!important;margin:0!important;min-width:34px!important;padding:0!important;transition:background-color .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease!important;width:34px!important}.collection-pagination-btn.collection-pg-icon:hover:not(:disabled){background:var(--lilac-primary-soft)!important;border-color:#c9c8f8!important;color:var(--lilac-primary)!important}.collection-pagination-btn.collection-pg-icon:disabled{background:#f2f4f7!important;border-color:var(--lilac-line)!important;color:#b4bac6!important;cursor:not-allowed!important}.collection-pagination-info.collection-pg-info,.collection-pagination-info.collection-pg-total,.collection-pagination-size-selector.collection-pg-size{color:var(--lilac-muted)!important;font-size:13px!important;font-weight:600!important;margin:0!important;white-space:nowrap!important}.collection-pagination-size-selector.collection-pg-size{align-items:center!important;display:inline-flex!important;gap:6px!important}.collection-pagination-size-selector.collection-pg-size label{color:var(--lilac-muted)!important;font-size:13px!important;font-weight:600!important;margin:0!important}.collection-pagination-container .collection-page-size-select{border-radius:var(--lilac-pill)!important;font-size:13px!important;height:34px!important;min-height:34px!important;padding:0 30px 0 10px!important}.collection-page-number.collection-dots,.collection-page-number.collection-dots:disabled,.collection-page-number.collection-dots:hover{background:transparent!important;border-color:transparent!important;color:#98a2b3!important;cursor:default!important;min-width:20px!important;padding:0!important}.loading-overlay{align-items:center!important;backdrop-filter:blur(3px)!important;background:hsla(0,0%,100%,.94)!important;border-radius:12px!important;box-sizing:border-box!important;display:flex!important;height:100%!important;justify-content:center!important;left:0!important;overflow:hidden!important;position:absolute!important;top:0!important;width:100%!important;z-index:99999!important}.loading-container{background:#fff!important;border:1px solid #e8e8e8!important;border-radius:12px!important;box-shadow:0 8px 32px rgba(0,0,0,.15)!important;box-sizing:border-box!important;padding:26px 30px!important;width:min(520px,85vw)!important}.collection-category-current-input,.collection-forecast-total-input{background:#fff!important;border:1px solid #ced4da!important;border-radius:3px!important;box-sizing:border-box!important;color:#333!important;font-size:12px!important;padding:5px 8px!important;text-align:right!important;width:100%!important}.collection-category-current-input:focus{border-color:#0078d4!important;box-shadow:0 0 0 1px rgba(0,120,212,.2)!important;outline:none!important}.collection-forecast-total-input{background:#f1f3f5!important;color:#6c757d!important;cursor:not-allowed!important}span.collection-month-date-badge.collection-has-value{display:none!important}.collection-section>.page-header{align-items:center!important;display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:12px!important;justify-content:space-between!important}\r\n/*      !important is REQUIRED: the ts writes an INLINE display on this  */#collectionSyncBar,.collection-show-form-btn,button#collectionSyncProjectsBtn,button.collection-show-form-btn{display:none!important}.collection-month-columns-table tbody tr:nth-child(2n) td.collection-prev-cell,.collection-month-columns-table td.collection-prev-cell{background:#f1f3f5!important}.collection-month-columns-table tbody tr:hover td.collection-prev-cell{background:#e9ecef!important}.collection-section>.page-header{background:linear-gradient(90deg,#6b0000,#8b0000 6%,#e00000 14%,red 30%,#f5002a 45%,#e81550 55%,#d1307a 63%,#b855b8 72%,#8f7ff0 82%,#7f8ff5 88%,#8a8fc0 94%,#7a7fa0)!important;border-bottom:0!important;border-radius:12px!important;box-shadow:0 4px 12px rgba(16,24,40,.18)!important;box-sizing:border-box!important;color:#fff!important;margin:0 0 14px!important;padding:7px 25px!important}.collection-section>.page-header h1{-webkit-text-fill-color:#fff!important;background-clip:border-box!important;color:#fff!important;flex:1 1 auto!important;font-size:22px!important;font-weight:600!important;line-height:normal!important;margin:0!important;min-width:0!important;overflow:hidden!important;text-align:left!important;text-overflow:ellipsis!important;white-space:nowrap!important}.collection-first-row-container .collection-detailed-months-row{align-items:stretch!important;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;gap:15px!important;width:100%!important}.collection-first-row-container .collection-current-month-container{display:flex!important;flex:0 0 calc(50% - 7.5px)!important;flex-direction:column!important;max-width:calc(50% - 7.5px)!important;min-width:0!important}.collection-first-row-container .collection-next-months-container{display:flex!important;flex:1 1 0!important;flex-direction:row!important;flex-wrap:nowrap!important;gap:15px!important;max-width:none!important;min-width:0!important}.collection-first-row-container .collection-next-month-box{display:flex!important;flex:1 1 0!important;flex-direction:column!important;min-width:0!important}.collection-first-row-container .collection-detailed-month-box{box-sizing:border-box!important;height:100%!important;width:100%!important}.collection-first-row-container .collection-detailed-month-box>div[style*=grid-template-columns]{gap:4px!important}.collection-first-row-container .collection-detailed-month-box table{table-layout:fixed!important;width:100%!important}.collection-first-row-container .collection-detailed-month-box td,.collection-first-row-container .collection-detailed-month-box th{padding:4px 2px!important;word-break:break-word!important}.collection-first-row-container .collection-category-current-input,.collection-first-row-container .collection-category-date-input,.collection-first-row-container .collection-category-forecast-input{box-sizing:border-box!important;font-size:12px!important;padding:4px!important;width:100%!important}@media (max-width:1024px){.collection-first-row-container .collection-detailed-months-row{flex-wrap:wrap!important}.collection-first-row-container .collection-current-month-container{flex:0 0 100%!important;max-width:100%!important}.collection-first-row-container .collection-next-months-container{flex:0 0 100%!important}}@media (max-width:768px){.collection-first-row-container .collection-detailed-months-row,.collection-first-row-container .collection-next-months-container{flex-direction:column!important}.collection-first-row-container .collection-current-month-container,.collection-first-row-container .collection-next-month-box{flex:1 1 auto!important;max-width:none!important}}", true);
 
 
 /***/ }),
@@ -2448,11 +2448,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ 356);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2/dist/sweetalert2.min.css */ 295);
+/* harmony import */ var _sharePointBatch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./sharePointBatch */ 819);
 /* harmony import */ var xlsx_js_style__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! xlsx-js-style */ 685);
 /* harmony import */ var xlsx_js_style__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(xlsx_js_style__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _styles_common_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../styles/common.css */ 712);
 /* harmony import */ var _styles_collection_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../styles/collection.css */ 196);
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./auth */ 966);
+
 
 
 
@@ -2770,6 +2772,8 @@ let currentSortConfig = {
   `,
     script: () => {
         setTimeout(async () => {
+            if (window.__dtActivePageKey !== 'collection')
+                return;
             const siteUrl = typeof _spPageContextInfo !== "undefined" ? _spPageContextInfo.webAbsoluteUrl : window.location.origin + "/sites/Kriya";
             const listName = "Collection List";
             const projectListName = "Project List";
@@ -3580,7 +3584,8 @@ let currentSortConfig = {
                         `EnggSubLead1/Title,EnggSubLead1Id,` +
                         `EnggSubLead2/Title,EnggSubLead2Id,` +
                         `EngineeringManagers/Title,EngineeringManagersId` +
-                        `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers`, { headers: { Accept: "application/json;odata=verbose" } });
+                        `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers` +
+                        `&$top=5000`, { headers: { Accept: "application/json;odata=verbose" } });
                     const data = await res.json();
                     const rawProjects = ((_a = data.d) === null || _a === void 0 ? void 0 : _a.results) || [];
                     const cleanedProjects = rawProjects.map((p) => (Object.assign(Object.assign({}, p), { CustomerName: p.CustomerName || "", GroupHead1: p.GroupHead1 || "", GroupHead1Id: p.GroupHead1Id, PC: p.PC || "", ProjectReference: p.ProjectReference || "", ProjectManager: p.ProjectManager || "", ProjectManagerId: p.ProjectManagerId, 
@@ -3591,17 +3596,6 @@ let currentSortConfig = {
                         projectMap.set(p.Title, p);
                     });
                     projects = Array.from(projectMap.values());
-                    console.log('📋 All projects with role assignments:');
-                    projects.forEach(p => {
-                        const nameOf = (v) => typeof v === 'object' ? v === null || v === void 0 ? void 0 : v.Title : v;
-                        console.log(`  - ${p.Title}: ` +
-                            `PM=${nameOf(p.ProjectManager) || 'None'}, ` +
-                            `GH=${nameOf(p.GroupHead1) || 'None'}, ` +
-                            `EL=${nameOf(p.EnggLead) || 'None'}, ` +
-                            `ES1=${nameOf(p.EnggSubLead1) || 'None'}, ` +
-                            `ES2=${nameOf(p.EnggSubLead2) || 'None'}, ` +
-                            `EM=${nameOf(p.EngineeringManagers) || 'None'}`);
-                    });
                     // 🔐 RBAC: single source of truth for project scope (auth.ts)
                     //   - canReadAllProjects()  → Admin / SC Team / Controlling: ALL projects
                     //   - everyone else         → getAssignedProjects() filters by the role's
@@ -3613,7 +3607,6 @@ let currentSortConfig = {
                         ? projects
                         : (0,_auth__WEBPACK_IMPORTED_MODULE_5__.getAssignedProjects)(projects);
                     console.log(`📋 Total projects: ${projects.length}, Assigned projects: ${assignedProjects.length}`);
-                    console.log('📋 Assigned project titles:', assignedProjects.map(p => p.Title));
                     // Populate project select dropdown (Add / Edit form)
                     projectSelect.innerHTML = `<option value="">Select Project</option>` +
                         assignedProjects.map(p => `<option value="${p.Id}">${p.Title}</option>`).join("");
@@ -3684,7 +3677,7 @@ let currentSortConfig = {
     </tr>
   `;
             };
-            const loadCollections = async () => {
+            const loadCollections = async (projectsReady) => {
                 var _a;
                 // Show the table loading state immediately while SharePoint data is being fetched.
                 // Keep existing rows visible during background refreshes after save/update.
@@ -3703,6 +3696,8 @@ let currentSortConfig = {
                         throw new Error(`HTTP ${res.status}: ${errorText}`);
                     }
                     const data = await res.json();
+                    if (projectsReady)
+                        await projectsReady;
                     // 🔐 RBAC: role-based project scope (must match the dropdown scope above).
                     //   - Admin / SC Team / Controlling (READ_ALL) → ALL projects
                     //   - GH Heads / PM Managers / Engg roles     → OWN assigned projects only
@@ -3738,11 +3733,7 @@ let currentSortConfig = {
                     collections = collections.filter(collection => {
                         var _a;
                         const projectTitle = (_a = collection.Project) === null || _a === void 0 ? void 0 : _a.Title;
-                        const isAllowed = projectTitle && allowedProjectTitles.has(projectTitle);
-                        if (!isAllowed && projectTitle) {
-                            console.log(`🔍 Filtering out: ${projectTitle} (not allowed for this user)`);
-                        }
-                        return isAllowed;
+                        return projectTitle && allowedProjectTitles.has(projectTitle);
                     });
                     console.log(`✅ Loaded ${collections.length} collections (filtered from ${beforeCount})`);
                 }
@@ -3783,6 +3774,10 @@ let currentSortConfig = {
                 var _a, _b, _c, _d;
                 const syncStatus = document.querySelector('#collectionSyncStatus');
                 const syncBtn = document.querySelector('#collectionSyncProjectsBtn');
+                const syncLockKey = `${siteUrl}::${listName}`;
+                const windowState = window;
+                const syncLocks = windowState.__collectionSyncLocks || new Set();
+                windowState.__collectionSyncLocks = syncLocks;
                 const setStatus = (text) => {
                     console.log(text);
                     if (syncStatus)
@@ -3796,23 +3791,44 @@ let currentSortConfig = {
                     setStatus('⚠️ Project List is empty - nothing to sync');
                     return;
                 }
+                if (syncLocks.has(syncLockKey)) {
+                    setStatus('⏳ Collection project sync is already running');
+                    return;
+                }
+                syncLocks.add(syncLockKey);
                 if (syncBtn)
                     syncBtn.disabled = true;
                 try {
                     const visibleProjects = (0,_auth__WEBPACK_IMPORTED_MODULE_5__.canReadAllProjects)()
                         ? projects
                         : (0,_auth__WEBPACK_IMPORTED_MODULE_5__.getAssignedProjects)(projects);
+                    const refField = await collectionListProjectRefField();
+                    const hasTextProjectReference = refField.exists && refField.type !== "Lookup";
+                    const normalizeReference = (value) => String(value !== null && value !== void 0 ? value : "").trim().replace(/\s+/g, " ").toLowerCase();
+                    const getServerProjectIds = (rows) => {
+                        const ids = new Set();
+                        rows.forEach(row => {
+                            [row.ProjectId, row.ProjectReferenceId].forEach(value => {
+                                const id = Number(value);
+                                if (value !== null && value !== undefined && Number.isFinite(id) && id > 0)
+                                    ids.add(id);
+                            });
+                        });
+                        return ids;
+                    };
                     // Safety re-check against SharePoint itself: the in-memory list may be
                     // empty/stale, so never create rows for projects that already exist.        
-                    let serverRows = [];
-                    try {
-                        const chkRes = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,ProjectId,Title&$top=5000`, { headers: { Accept: "application/json;odata=verbose" } });
-                        if (chkRes.ok)
-                            serverRows = ((_b = (_a = (await chkRes.json())) === null || _a === void 0 ? void 0 : _a.d) === null || _b === void 0 ? void 0 : _b.results) || [];
+                    const selectProjectReference = refField.exists
+                        ? (hasTextProjectReference ? ",ProjectReference" : ",ProjectReferenceId")
+                        : "";
+                    const existingRowsUrl = `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,ProjectId,Title${selectProjectReference}&$top=5000`;
+                    const chkRes = await fetch(existingRowsUrl, {
+                        headers: { Accept: "application/json;odata=verbose" }
+                    });
+                    if (!chkRes.ok) {
+                        throw new Error(`Could not verify existing Collection rows (HTTP ${chkRes.status}); sync stopped to prevent duplicates.`);
                     }
-                    catch (chkErr) {
-                        console.error("⚠️ Sync safety-check fetch failed:", chkErr);
-                    }
+                    const serverRows = ((_b = (_a = (await chkRes.json())) === null || _a === void 0 ? void 0 : _a.d) === null || _b === void 0 ? void 0 : _b.results) || [];
                     // If the list really has rows on SharePoint but the page loaded 0, the
                     // main load is broken - creating rows now would duplicate everything.
                     if (serverRows.length > 0 && collections.length === 0) {
@@ -3820,8 +3836,40 @@ let currentSortConfig = {
                         toast("error", `Sync stopped: list has ${serverRows.length} rows but page loaded 0`);
                         return;
                     }
-                    const existsOnServer = (p) => serverRows.some(c => Number(c.ProjectId) === p.Id);
-                    const existsInMemory = (p) => collections.some(c => { var _a; return ((_a = c.Project) === null || _a === void 0 ? void 0 : _a.Id) === p.Id || (c.Project && c.Project.Title === p.Title); });
+                    const serverProjectIds = getServerProjectIds(serverRows);
+                    const serverProjectReferences = new Set(hasTextProjectReference
+                        ? serverRows.map(c => normalizeReference(c.ProjectReference)).filter(Boolean)
+                        : []);
+                    const collectionProjectIds = new Set();
+                    const collectionProjectTitles = new Set();
+                    const collectionProjectReferences = new Set();
+                    const projectsById = new Map();
+                    const projectsByTitle = new Map();
+                    projects.forEach(project => {
+                        projectsById.set(project.Id, project);
+                        projectsByTitle.set(project.Title, project);
+                    });
+                    collections.forEach(collection => {
+                        var _a, _b, _c, _d;
+                        if (((_a = collection.Project) === null || _a === void 0 ? void 0 : _a.Id) !== undefined)
+                            collectionProjectIds.add(collection.Project.Id);
+                        if ((_b = collection.Project) === null || _b === void 0 ? void 0 : _b.Title)
+                            collectionProjectTitles.add(collection.Project.Title);
+                        if (hasTextProjectReference) {
+                            const linkedProjectId = (_c = collection.Project) === null || _c === void 0 ? void 0 : _c.Id;
+                            const linkedProjectTitle = (_d = collection.Project) === null || _d === void 0 ? void 0 : _d.Title;
+                            const project = (linkedProjectId !== undefined ? projectsById.get(linkedProjectId) : undefined) ||
+                                (linkedProjectTitle ? projectsByTitle.get(linkedProjectTitle) : undefined);
+                            const reference = normalizeReference(project === null || project === void 0 ? void 0 : project.ProjectReference);
+                            if (reference)
+                                collectionProjectReferences.add(reference);
+                        }
+                    });
+                    const existsOnServer = (p) => serverProjectIds.has(p.Id) ||
+                        (hasTextProjectReference && serverProjectReferences.has(normalizeReference(p.ProjectReference)));
+                    const existsInMemory = (p) => collectionProjectIds.has(p.Id) ||
+                        collectionProjectTitles.has(p.Title) ||
+                        (hasTextProjectReference && collectionProjectReferences.has(normalizeReference(p.ProjectReference)));
                     const missingProjects = visibleProjects.filter(p => !existsOnServer(p) && !existsInMemory(p));
                     if (missingProjects.length === 0) {
                         // setStatus(`✅ In sync: all ${visibleProjects.length} visible project(s) have a Collection List row`);
@@ -3831,92 +3879,167 @@ let currentSortConfig = {
                     // toast("info", `Checking ${visibleProjects.length} projects... adding ${missingProjects.length} missing`);
                     const digest = await getDigest();
                     const entityType = await getListItemType();
+                    const freshCollectionData = createFreshCollectionStructure();
+                    const freshCollectionDataJson = JSON.stringify(freshCollectionData);
                     let added = 0;
                     let failed = 0;
                     const errors = [];
-                    for (const project of missingProjects) {
+                    const createCollectionForProject = async (project) => {
+                        var _a, _b;
                         let ok = false;
-                        // Try twice before giving up on a project
-                        // Up to 3 payload variants:
-                        //   1 = full create - ProjectReference lookup id as STRING + OBL as STRING
-                        //   2 = without ProjectReference (column may be read-only/misconfigured)
-                        //   3 = without OBL too (column may be read-only/absent)
-                        for (let attempt = 1; attempt <= 3 && !ok; attempt++) {
-                            try {
-                                const freshCollectionData = createFreshCollectionStructure();
-                                // odata=verbose values must be STRINGs (Edm.String); lookup ids and
-                                // numeric fields sent as JSON numbers get a 400 "Cannot convert a
-                                // primitive value to the expected type 'Edm.String'".
-                                const payload = {
-                                    __metadata: { type: entityType },
-                                    Title: generateCollectionTitle(project, freshCollectionData),
-                                    ProjectId: project.Id.toString(),
-                                    ProfitCentre: project.PC || "",
-                                    CollectionData: JSON.stringify(freshCollectionData),
-                                    Remarks: "",
-                                    OBL: project.PC ? "0" : "0",
-                                    CreatedDate: new Date().toISOString(),
-                                    UpdatedDate: new Date().toISOString()
-                                };
-                                // Store Project Reference when the column exists: a LOOKUP column
-                                // receives the target item ID as a STRING (ProjectReferenceId) - the
-                                // same rule used by the Revenue sync so both behave identically.
-                                const refField = await collectionListProjectRefField();
-                                if (refField.exists && attempt === 1) {
-                                    if (refField.type === "Lookup") {
-                                        payload.ProjectReferenceId = String(project.Id);
-                                    }
-                                    else {
-                                        payload.ProjectReference = project.ProjectReference || "";
-                                    }
-                                }
-                                if (attempt >= 2) {
-                                    delete payload.ProjectReference;
-                                    delete payload.ProjectReferenceId;
-                                }
-                                if (attempt >= 3) {
-                                    delete payload.OBL;
-                                }
-                                const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items`, {
-                                    method: "POST",
-                                    headers: {
-                                        Accept: "application/json;odata=verbose",
-                                        "Content-Type": "application/json;odata=verbose",
-                                        "X-RequestDigest": digest
-                                    },
-                                    body: JSON.stringify(payload)
-                                });
-                                if (res.ok) {
-                                    ok = true;
-                                    added++;
-                                    // setStatus(`✅ Added: ${project.Title}${project.ProjectReference ? ' (' + project.ProjectReference + ')' : ''}`);
+                        let stopAfterThrottle = false;
+                        let lastError = "Unknown SharePoint error";
+                        for (let payloadAttempt = 1; payloadAttempt <= 3 && !ok && !stopAfterThrottle; payloadAttempt++) {
+                            const payload = {
+                                __metadata: { type: entityType },
+                                Title: generateCollectionTitle(project, freshCollectionData),
+                                ProjectId: project.Id.toString(),
+                                ProfitCentre: project.PC || "",
+                                CollectionData: freshCollectionDataJson,
+                                Remarks: "",
+                                OBL: "0",
+                                CreatedDate: new Date().toISOString(),
+                                UpdatedDate: new Date().toISOString()
+                            };
+                            if (refField.exists && payloadAttempt === 1) {
+                                if (refField.type === "Lookup") {
+                                    payload.ProjectReferenceId = String(project.Id);
                                 }
                                 else {
+                                    payload.ProjectReference = project.ProjectReference || "";
+                                }
+                            }
+                            if (payloadAttempt >= 2) {
+                                delete payload.ProjectReference;
+                                delete payload.ProjectReferenceId;
+                            }
+                            if (payloadAttempt >= 3)
+                                delete payload.OBL;
+                            let throttleAttempt = 0;
+                            while (!ok && !stopAfterThrottle) {
+                                try {
+                                    const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items`, {
+                                        method: "POST",
+                                        headers: {
+                                            Accept: "application/json;odata=verbose",
+                                            "Content-Type": "application/json;odata=verbose",
+                                            "X-RequestDigest": digest
+                                        },
+                                        body: JSON.stringify(payload)
+                                    });
+                                    if (res.ok) {
+                                        ok = true;
+                                        added++;
+                                        break;
+                                    }
                                     const bodyText = await res.text();
-                                    let message = `HTTP ${res.status}`;
+                                    lastError = `HTTP ${res.status}`;
                                     try {
                                         const errJson = JSON.parse(bodyText);
-                                        message = ((_d = (_c = errJson === null || errJson === void 0 ? void 0 : errJson.error) === null || _c === void 0 ? void 0 : _c.message) === null || _d === void 0 ? void 0 : _d.value) || message;
+                                        lastError = ((_b = (_a = errJson === null || errJson === void 0 ? void 0 : errJson.error) === null || _a === void 0 ? void 0 : _a.message) === null || _b === void 0 ? void 0 : _b.value) || lastError;
                                     }
-                                    catch (e) { /* keep http message */ }
-                                    console.error(`❌ Attempt ${attempt} failed for ${project.Title}: ${bodyText}`);
-                                    if (attempt === 2) {
-                                        failed++;
-                                        errors.push(`${project.Title} -> ${message}`);
+                                    catch (_c) {
+                                        if (bodyText)
+                                            lastError = bodyText.slice(0, 250);
                                     }
+                                    if (res.status === 408 || res.status >= 500) {
+                                        stopAfterThrottle = true;
+                                        console.error(`Collection create returned HTTP ${res.status} for ${project.Title}; it will not be reposted automatically.`);
+                                        break;
+                                    }
+                                    if (res.status === 429) {
+                                        const retryAfter = res.headers.get("Retry-After");
+                                        const retryAfterSeconds = retryAfter === null ? NaN : Number(retryAfter);
+                                        const retryAfterDate = retryAfter && Number.isNaN(retryAfterSeconds)
+                                            ? Date.parse(retryAfter)
+                                            : NaN;
+                                        if (throttleAttempt >= 5) {
+                                            stopAfterThrottle = true;
+                                            console.error(`❌ Throttled too many times while creating ${project.Title}: ${bodyText}`);
+                                            break;
+                                        }
+                                        const waitMs = Number.isFinite(retryAfterSeconds)
+                                            ? Math.max(0, retryAfterSeconds * 1000)
+                                            : Number.isFinite(retryAfterDate)
+                                                ? Math.max(0, retryAfterDate - Date.now())
+                                                : Math.min(60000, 1000 * (2 ** throttleAttempt));
+                                        console.warn(`SharePoint throttled Collection sync; retrying in ${Math.ceil(waitMs / 1000)}s.`);
+                                        throttleAttempt++;
+                                        await new Promise(resolve => setTimeout(resolve, waitMs));
+                                        continue;
+                                    }
+                                    console.error(`❌ Payload attempt ${payloadAttempt} failed for ${project.Title}: ${bodyText}`);
+                                    break;
+                                }
+                                catch (projectError) {
+                                    lastError = projectError instanceof Error ? projectError.message : String(projectError);
+                                    console.error(`❌ Payload attempt ${payloadAttempt} error for ${project.Title}:`, projectError);
+                                    stopAfterThrottle = true;
+                                    break;
                                 }
                             }
-                            catch (projectError) {
-                                console.error(`❌ Attempt ${attempt} error for ${project.Title}:`, projectError);
-                                if (attempt === 2) {
-                                    failed++;
-                                    errors.push(`${project.Title} -> ${projectError instanceof Error ? projectError.message : String(projectError)}`);
-                                }
-                            }
-                            if (!ok)
+                            if (!ok && !stopAfterThrottle && payloadAttempt < 3) {
                                 await new Promise(resolve => setTimeout(resolve, 300));
+                            }
+                        }
+                        if (!ok) {
+                            failed++;
+                            errors.push(`${project.Title} -> ${lastError}`);
                         }
                         await new Promise(resolve => setTimeout(resolve, 100));
+                    };
+                    const batchPayloads = missingProjects.map((project) => {
+                        const payload = {
+                            __metadata: { type: entityType },
+                            Title: generateCollectionTitle(project, freshCollectionData),
+                            ProjectId: project.Id.toString(),
+                            ProfitCentre: project.PC || "",
+                            CollectionData: freshCollectionDataJson,
+                            Remarks: "",
+                            OBL: "0",
+                            CreatedDate: new Date().toISOString(),
+                            UpdatedDate: new Date().toISOString()
+                        };
+                        if (refField.exists) {
+                            if (refField.type === "Lookup")
+                                payload.ProjectReferenceId = String(project.Id);
+                            else
+                                payload.ProjectReference = project.ProjectReference || "";
+                        }
+                        return payload;
+                    });
+                    const batchResults = await (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.createSharePointItemsInBatches)(siteUrl, listName, digest, batchPayloads, 20, 2);
+                    const failedBatchProjects = [];
+                    batchResults.forEach((result, index) => {
+                        if (result.success) {
+                            added++;
+                        }
+                        else {
+                            failedBatchProjects.push(missingProjects[index]);
+                            console.error(`Collection batch create failed for ${missingProjects[index].Title}: ${result.error}`);
+                        }
+                    });
+                    if (failedBatchProjects.length > 0) {
+                        const verifyResponse = await fetch(existingRowsUrl, {
+                            headers: { Accept: "application/json;odata=verbose" }
+                        });
+                        if (!verifyResponse.ok) {
+                            throw new Error(`Could not verify Collection batch results (HTTP ${verifyResponse.status}); individual retries were stopped to avoid duplicate rows.`);
+                        }
+                        const verifiedRows = ((_d = (_c = (await verifyResponse.json())) === null || _c === void 0 ? void 0 : _c.d) === null || _d === void 0 ? void 0 : _d.results) || [];
+                        const verifiedProjectIds = getServerProjectIds(verifiedRows);
+                        const verifiedProjectReferences = new Set(hasTextProjectReference
+                            ? verifiedRows.map((row) => normalizeReference(row.ProjectReference)).filter(Boolean)
+                            : []);
+                        const fallbackProjects = failedBatchProjects.filter(project => !verifiedProjectIds.has(project.Id) &&
+                            !(hasTextProjectReference && verifiedProjectReferences.has(normalizeReference(project.ProjectReference))));
+                        if (fallbackProjects.length < failedBatchProjects.length) {
+                            console.warn("Collection batch verification found rows already created; skipping duplicate retries.");
+                        }
+                        const fallbackConcurrency = 4;
+                        for (let i = 0; i < fallbackProjects.length; i += fallbackConcurrency) {
+                            await Promise.all(fallbackProjects.slice(i, i + fallbackConcurrency).map(createCollectionForProject));
+                        }
                     }
                     if (added > 0) {
                         await loadCollections();
@@ -3928,10 +4051,14 @@ let currentSortConfig = {
                 }
                 catch (error) {
                     console.error("❌ Auto-sync failed:", error);
+                    const message = error instanceof Error ? error.message : String(error);
+                    setStatus(`❌ Collection sync stopped: ${message}`);
+                    toast("error", `Collection sync stopped: ${message}`);
                 }
                 finally {
                     if (syncBtn)
                         syncBtn.disabled = false;
+                    syncLocks.delete(syncLockKey);
                 }
             };
             // Cached check: does Collection List physically have a 'ProjectReference' column,
@@ -7723,6 +7850,7 @@ let currentSortConfig = {
                 // toast("info", `Viewing collection for ${collection.Title}`);
             };
             const applyAutoProgression = async () => {
+                var _a;
                 if (collections.length === 0) {
                     console.log("📊 No collections to progress");
                     return;
@@ -7739,6 +7867,12 @@ let currentSortConfig = {
                         const originalData = safeJsonParse(collection.CollectionData, {});
                         // Check if progression is needed
                         if (checkIfNeedsProgression(originalData)) {
+                            const etag = (_a = collection.__metadata) === null || _a === void 0 ? void 0 : _a.etag;
+                            if (!etag) {
+                                errorCount++;
+                                console.error(`❌ Cannot safely progress collection ${collection.Id}: SharePoint ETag is unavailable`);
+                                continue;
+                            }
                             console.log(`🔄 Progressing collection: ${collection.Title}`);
                             const progressedData = propagateCollectionValues(originalData);
                             const payload = {
@@ -7752,7 +7886,7 @@ let currentSortConfig = {
                                     Accept: "application/json;odata=verbose",
                                     "Content-Type": "application/json;odata=verbose",
                                     "X-RequestDigest": digest,
-                                    "IF-MATCH": "*",
+                                    "IF-MATCH": etag,
                                     "X-HTTP-Method": "MERGE"
                                 },
                                 body: JSON.stringify(payload)
@@ -7762,7 +7896,7 @@ let currentSortConfig = {
                             }
                             else {
                                 errorCount++;
-                                console.error(`❌ Failed to progress collection: ${collection.Id}`);
+                                console.error(`❌ Failed to progress collection: ${collection.Id} (HTTP ${response.status})`);
                             }
                             await new Promise(resolve => setTimeout(resolve, 100));
                         }
@@ -9417,19 +9551,15 @@ let currentSortConfig = {
                     console.log(`🔑 Permission Level: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.getPermissionLevel)().toUpperCase()}`);
                     console.log(`👤 User: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.getCurrentUserFullName)()}`);
                     console.log(`📋 User Groups:`, (0,_auth__WEBPACK_IMPORTED_MODULE_5__.getUserGroups)());
-                    // Load projects first
-                    updateLoadingMessage(loading, "Loading projects...");
-                    await loadProjects();
-                    // Then load collections
-                    updateLoadingMessage(loading, "Loading collections...");
-                    await loadCollections();
+                    updateLoadingMessage(loading, "Loading projects and collections...");
+                    const projectsLoad = loadProjects();
+                    const collectionsLoad = loadCollections(projectsLoad);
+                    await Promise.all([projectsLoad, collectionsLoad]);
                     console.log(`📊 Loaded ${collections.length} collections`);
                     // 🔐 AUTO-SYNC: compare Project List with Collection List and add any
                     // missing project (skeleton JSON: 36 historical + current/next 2 +
                     // next 16 months + 4-year yearly). Only runs for roles with create
                     // rights and only for projects inside that role's visible scope.
-                    updateLoadingMessage(loading, "Syncing missing projects...");
-                    await syncMissingProjectsToCollectionList();
                     // Show the manual Sync button only to roles that can create rows
                     const syncBar = document.querySelector('#collectionSyncBar');
                     if (syncBar) {
@@ -9441,24 +9571,6 @@ let currentSortConfig = {
                     //   - Read-only roles (SC Team, Controlling, Engg Sub2, Engg Mgr) → the
                     //     same roll-over is applied IN MEMORY only, so their screen shows the
                     //     current month structure WITHOUT writing to SharePoint.
-                    if (collections.length > 0) {
-                        if ((0,_auth__WEBPACK_IMPORTED_MODULE_5__.canEditOwn)()) {
-                            updateLoadingMessage(loading, "Applying monthly progression...");
-                            await applyAutoProgression();
-                            // Reload after progression
-                            await loadCollections();
-                        }
-                        else {
-                            const viewerProgressed = collections.map((c) => {
-                                const data = safeJsonParse(c.CollectionData, {});
-                                if (!checkIfNeedsProgression(data))
-                                    return c;
-                                return Object.assign(Object.assign({}, c), { CollectionData: JSON.stringify(propagateCollectionValues(data)) });
-                            });
-                            collections = viewerProgressed;
-                            console.log('👁️ Read-only viewer: progression applied locally for display only (no SharePoint writes)');
-                        }
-                    }
                     // IMPORTANT: Force page size to 25 on initial load
                     pageSize = 25;
                     if (pageSizeSelect) {
@@ -9498,6 +9610,43 @@ let currentSortConfig = {
                         if (historicalExportBtn)
                             historicalExportBtn.style.display = 'none';
                     }
+                    const runBackgroundAutoUpdate = async () => {
+                        try {
+                            (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.setBackgroundAutoUpdateIndicator)(".collection-page", true);
+                            await syncMissingProjectsToCollectionList();
+                            if (collections.length > 0) {
+                                if ((0,_auth__WEBPACK_IMPORTED_MODULE_5__.canEditOwn)()) {
+                                    await applyAutoProgression();
+                                }
+                                else {
+                                    collections = collections.map((collection) => {
+                                        const data = safeJsonParse(collection.CollectionData, {});
+                                        if (!checkIfNeedsProgression(data))
+                                            return collection;
+                                        return Object.assign(Object.assign({}, collection), { CollectionData: JSON.stringify(propagateCollectionValues(data)) });
+                                    });
+                                    console.log('👁️ Read-only viewer: progression applied locally for display only (no SharePoint writes)');
+                                }
+                            }
+                        }
+                        catch (error) {
+                            console.error("Background Collection update failed:", error);
+                            toast("error", "Collection background update failed");
+                        }
+                        finally {
+                            try {
+                                filterTable();
+                            }
+                            catch (error) {
+                                console.error("Could not refresh the Collection table after background update:", error);
+                                toast("error", "Could not refresh the Collection table");
+                            }
+                            finally {
+                                (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.setBackgroundAutoUpdateIndicator)(".collection-page", false);
+                            }
+                        }
+                    };
+                    void runBackgroundAutoUpdate();
                     console.log("✅ Application initialized successfully");
                 }
                 catch (error) {
@@ -10157,7 +10306,8 @@ const loadProjects = async () => {
             `EnggSubLead1/Title,EnggSubLead1Id,` +
             `EnggSubLead2/Title,EnggSubLead2Id,` +
             `EngineeringManagers/Title,EngineeringManagersId` +
-            `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers`, { headers: { Accept: "application/json;odata=verbose" } });
+            `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers` +
+            `&$top=5000`, { headers: { Accept: "application/json;odata=verbose" } });
         const data = await res.json();
         const raw = ((_a = data === null || data === void 0 ? void 0 : data.d) === null || _a === void 0 ? void 0 : _a.results) || [];
         const byTitle = new Map();
@@ -12543,8 +12693,21 @@ const dashboardContent = `
 // ============================================================
 // DASHBOARD SCRIPT
 // ============================================================
+let dashboardRunId = 0;
+let dashboardStartupTimer = null;
+let dashboardCleanup = null;
 const dashboardScript = () => {
-    setTimeout(async () => {
+    dashboardCleanup === null || dashboardCleanup === void 0 ? void 0 : dashboardCleanup();
+    dashboardCleanup = null;
+    if (dashboardStartupTimer !== null) {
+        window.clearTimeout(dashboardStartupTimer);
+    }
+    const runId = ++dashboardRunId;
+    const isCurrentRun = () => runId === dashboardRunId && window.__dtActivePageKey === 'dashboard';
+    dashboardStartupTimer = window.setTimeout(async () => {
+        dashboardStartupTimer = null;
+        if (!isCurrentRun())
+            return;
         const siteUrl = typeof _spPageContextInfo !== 'undefined'
             ? _spPageContextInfo.webAbsoluteUrl
             : window.location.origin + '/sites/Kriya';
@@ -13814,7 +13977,7 @@ const dashboardScript = () => {
             const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.projectList}')/items`
                 + `?$select=${select}`
                 + (expand ? `&$expand=${expand}` : '')
-                + `&$orderby=Title`;
+                + `&$orderby=Title&$top=5000`;
             const res = await safeFetch(url, {
                 headers: { 'Accept': 'application/json;odata=verbose' },
                 credentials: 'same-origin'
@@ -14061,6 +14224,24 @@ const dashboardScript = () => {
         // ============================================================
         let refreshInterval = null;
         let isRefreshing = false;
+        let backgroundSyncTimer = null;
+        const handleVisibilityChange = () => {
+            if (document.hidden || !isCurrentRun())
+                stopAutoRefresh();
+            else
+                startAutoRefresh();
+        };
+        const handlePageDeactivated = (event) => {
+            const detail = event.detail;
+            if ((detail === null || detail === void 0 ? void 0 : detail.pageKey) !== 'dashboard')
+                return;
+            stopAutoRefresh();
+            if (backgroundSyncTimer !== null) {
+                window.clearTimeout(backgroundSyncTimer);
+                backgroundSyncTimer = null;
+            }
+        };
+        const handleBeforeUnload = () => stopAutoRefresh();
         const startAutoRefresh = () => {
             if (refreshInterval) {
                 clearInterval(refreshInterval);
@@ -14072,6 +14253,10 @@ const dashboardScript = () => {
                 indicator.style.color = '#fff';
             }
             refreshInterval = setInterval(async () => {
+                if (!isCurrentRun()) {
+                    stopAutoRefresh();
+                    return;
+                }
                 if (isRefreshing)
                     return;
                 isRefreshing = true;
@@ -14125,15 +14310,9 @@ const dashboardScript = () => {
         };
         const setupAutoRefresh = () => {
             startAutoRefresh();
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden)
-                    stopAutoRefresh();
-                else
-                    startAutoRefresh();
-            });
-            window.addEventListener('beforeunload', () => {
-                stopAutoRefresh();
-            });
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+            document.addEventListener('dt-page-deactivated', handlePageDeactivated);
+            window.addEventListener('beforeunload', handleBeforeUnload);
         };
         // ============================================================
         // AUTHENTICATION & INITIALIZATION
@@ -14145,7 +14324,11 @@ const dashboardScript = () => {
         catch (err) {
             console.error('❌ Dashboard auth initialization failed:', err);
         }
+        if (!isCurrentRun())
+            return;
         await loadScope();
+        if (!isCurrentRun())
+            return;
         console.log('✅ Dashboard initialized for', currentMonthKey);
         setupAutoRefresh();
         const lastUpdated = document.getElementById('dsLastUpdated');
@@ -14532,6 +14715,8 @@ const dashboardScript = () => {
                 return 0;
             }
             const existingIds = await dashExistingProjectIds(target, visibleProjects);
+            if (!isCurrentRun())
+                return 0;
             if (existingIds === null) {
                 dashLog(`⚠️ '${target.label}': existing rows could not be verified - skipped`);
                 return 0;
@@ -14549,15 +14734,27 @@ const dashboardScript = () => {
                 console.error(`[DASH-SYNC] ❌ '${target.label}': could not get digest:`, digestError);
                 return 0;
             }
+            if (!isCurrentRun())
+                return 0;
             const entityType = await dashListEntityType(target.listName, target.entityFallback);
+            if (!isCurrentRun())
+                return 0;
             const pcMap = await dashProjectProfitCentres();
+            if (!isCurrentRun())
+                return 0;
             const refField = await dashListProjectRefField(target.listName);
+            if (!isCurrentRun())
+                return 0;
             await dashPrimeFieldNames(target.listName);
+            if (!isCurrentRun())
+                return 0;
             dashLog(`➕ '${target.label}': adding ${missing.length} row(s): ${missing.map((p) => p.Title).join(', ')}`);
             let added = 0;
             let failed = 0;
             let permissionDenied = 0;
             for (const project of missing) {
+                if (!isCurrentRun())
+                    break;
                 const projectWithPc = Object.assign(Object.assign({}, project), { PC: project.PC || pcMap.get(Number(project.Id)) || '' });
                 let ok = false;
                 for (let attempt = 1; attempt <= 3 && !ok; attempt++) {
@@ -14574,6 +14771,8 @@ const dashboardScript = () => {
                             },
                             body: JSON.stringify(payload)
                         });
+                        if (!isCurrentRun())
+                            return added;
                         if (res.ok) {
                             ok = true;
                             added++;
@@ -14591,9 +14790,13 @@ const dashboardScript = () => {
                         console.error(`[DASH-SYNC] ❌ '${target.listName}' create error for ${projectWithPc.Title} ` +
                             `(variant ${attempt}):`, projectError);
                     }
+                    if (!isCurrentRun())
+                        break;
                     if (!ok)
                         await new Promise(resolve => setTimeout(resolve, 300));
                 }
+                if (!isCurrentRun())
+                    break;
                 if (!ok)
                     failed++;
                 await new Promise(resolve => setTimeout(resolve, 100));
@@ -14616,6 +14819,8 @@ const dashboardScript = () => {
             let rows = [];
             try {
                 const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items?$select=Id,ProjectId,${target.jsonField}&$top=5000`, { headers: { 'Accept': 'application/json;odata=verbose' }, credentials: 'same-origin' });
+                if (!isCurrentRun())
+                    return 0;
                 if (!res.ok) {
                     dashLog(`⚠️ '${target.label}': progression read HTTP ${res.status} - skipped`);
                     return 0;
@@ -14626,6 +14831,8 @@ const dashboardScript = () => {
                 console.error(`[DASH-SYNC] ⚠️ '${target.label}' progression fetch failed:`, error);
                 return 0;
             }
+            if (!isCurrentRun())
+                return 0;
             const inScope = rows.filter((row) => row.ProjectId !== undefined && row.ProjectId !== null && scopeIds.has(Number(row.ProjectId)));
             const blankRows = [];
             const staleRows = [];
@@ -14661,10 +14868,16 @@ const dashboardScript = () => {
                 console.error(`[DASH-SYNC] ❌ '${target.label}': could not get digest:`, digestError);
                 return 0;
             }
+            if (!isCurrentRun())
+                return 0;
             const entityType = await dashListEntityType(target.listName, target.entityFallback);
+            if (!isCurrentRun())
+                return 0;
             dashLog(`🔄 '${target.label}': writing ${work.length} row(s)`);
             let progressed = 0;
             for (const item of work) {
+                if (!isCurrentRun())
+                    break;
                 const row = item.row;
                 try {
                     const progressedData = item.mode === 'fill'
@@ -14686,6 +14899,8 @@ const dashboardScript = () => {
                         },
                         body: JSON.stringify(payload)
                     });
+                    if (!isCurrentRun())
+                        return progressed;
                     if (response.ok) {
                         progressed++;
                     }
@@ -14840,6 +15055,8 @@ const dashboardScript = () => {
         const DASH_SYNC_AUTO_LOCK_MS = 100000;
         const runDashboardBackgroundSync = async (trigger = 'auto') => {
             const w = window;
+            if (!isCurrentRun())
+                return;
             if (dashAutoSyncRunning || w.__dashSyncRunning) {
                 dashLog('already running - second call ignored');
                 return;
@@ -14858,6 +15075,8 @@ const dashboardScript = () => {
             setDashSyncStatus('⏳ Syncing…', '#ffc107');
             try {
                 await dashEnsureSiteLevelAuth();
+                if (!isCurrentRun())
+                    return;
                 dashLog('permissions after re-init:', dashPermissionReport());
                 if (!(0,_auth__WEBPACK_IMPORTED_MODULE_2__.canRead)()) {
                     dashLog('skipped - user has no read access');
@@ -14871,9 +15090,15 @@ const dashboardScript = () => {
                 }
                 dashLog(`project scope: ${dashVisibleProjects().length} project(s)`);
                 for (const target of DASH_AUTO_SYNC_TARGETS) {
+                    if (!isCurrentRun())
+                        break;
                     try {
                         const added = await dashSyncMissingProjects(target);
+                        if (!isCurrentRun())
+                            break;
                         const progressed = await dashApplyAutoProgression(target);
+                        if (!isCurrentRun())
+                            break;
                         changed += added + progressed;
                         summary.push(`${target.label}: +${added} new, ${progressed} written`);
                         setDashSyncStatus(`⏳ Syncing… ${summary.length}/${DASH_AUTO_SYNC_TARGETS.length}`, '#ffc107');
@@ -14887,20 +15112,25 @@ const dashboardScript = () => {
             finally {
                 dashAutoSyncRunning = false;
                 window.__dashSyncRunning = false;
-                dashLog(`finished (${trigger}) →`, summary.join(' | '));
-                if (changed > 0) {
-                    setDashSyncStatus(`✅ Synced ${changed} change(s)`, '#28a745');
-                    try {
-                        await refreshBoard();
+                if (isCurrentRun()) {
+                    dashLog(`finished (${trigger}) →`, summary.join(' | '));
+                    if (changed > 0) {
+                        setDashSyncStatus(`✅ Synced ${changed} change(s)`, '#28a745');
+                        try {
+                            await refreshBoard();
+                        }
+                        catch (refreshError) {
+                            console.error('[DASH-SYNC] ⚠️ refresh after background sync failed:', refreshError);
+                        }
                     }
-                    catch (refreshError) {
-                        console.error('[DASH-SYNC] ⚠️ refresh after background sync failed:', refreshError);
+                    else {
+                        setDashSyncStatus('✅ Already in sync', '#28a745');
                     }
+                    window.setTimeout(() => {
+                        if (isCurrentRun())
+                            setDashSyncStatus('');
+                    }, 15000);
                 }
-                else {
-                    setDashSyncStatus('✅ Already in sync', '#28a745');
-                }
-                window.setTimeout(() => setDashSyncStatus(''), 15000);
             }
         };
         const startDashboardBackgroundSync = () => {
@@ -14915,7 +15145,11 @@ const dashboardScript = () => {
                 setDashSyncStatus('Sync skipped (read-only account)', '#ffc107');
                 return;
             }
-            window.setTimeout(() => { void runDashboardBackgroundSync('auto'); }, 1500);
+            backgroundSyncTimer = window.setTimeout(() => {
+                backgroundSyncTimer = null;
+                if (isCurrentRun())
+                    void runDashboardBackgroundSync('auto');
+            }, 1500);
         };
         const mountDashboardSyncButton = () => {
             const meta = document.querySelector('.header-meta') || document.querySelector('.header');
@@ -14935,6 +15169,21 @@ const dashboardScript = () => {
         window.dashboardSyncNow = runDashboardBackgroundSync;
         mountDashboardSyncButton();
         startDashboardBackgroundSync();
+        dashboardCleanup = () => {
+            var _a;
+            stopAutoRefresh();
+            if (backgroundSyncTimer !== null) {
+                window.clearTimeout(backgroundSyncTimer);
+                backgroundSyncTimer = null;
+            }
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            document.removeEventListener('dt-page-deactivated', handlePageDeactivated);
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+            (_a = document.getElementById('dsBgSyncNow')) === null || _a === void 0 ? void 0 : _a.remove();
+            if (window.dashboardSyncNow === runDashboardBackgroundSync) {
+                delete window.dashboardSyncNow;
+            }
+        };
     }, 250);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -15448,6 +15697,8 @@ const DCSModule = {
     content: dcsContent,
     script: () => {
         setTimeout(async () => {
+            if (window.__dtActivePageKey !== 'dci')
+                return;
             // Configuration
             const siteUrl = typeof _spPageContextInfo !== "undefined"
                 ? _spPageContextInfo.webAbsoluteUrl
@@ -19593,7 +19844,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var xlsx_js_style__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(xlsx_js_style__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _styles_common_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../styles/common.css */ 712);
 /* harmony import */ var _styles_inventory_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../styles/inventory.css */ 407);
+/* harmony import */ var _sharePointBatch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./sharePointBatch */ 819);
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./auth */ 966);
+
 
 
 
@@ -20327,6 +20580,8 @@ let currentSortConfig = {
   `,
     script: () => {
         setTimeout(async () => {
+            if (window.__dtActivePageKey !== 'inventory')
+                return;
             try {
                 const siteUrl = typeof _spPageContextInfo !== "undefined" ? _spPageContextInfo.webAbsoluteUrl : window.location.origin + "/sites/Kriya";
                 const listName = "Inventory";
@@ -20769,6 +21024,7 @@ let currentSortConfig = {
                     return monthlyProgressionNeeded || yearlyProgressionNeeded;
                 };
                 const applyAutoProgression = async () => {
+                    var _a;
                     if (forecasts.length === 0) {
                         return;
                     }
@@ -20782,6 +21038,12 @@ let currentSortConfig = {
                             }
                             const originalData = safeJsonParse(forecast.ForecastData, {});
                             if (checkIfNeedsProgression(originalData)) {
+                                const etag = (_a = forecast.__metadata) === null || _a === void 0 ? void 0 : _a.etag;
+                                if (!etag) {
+                                    errorCount++;
+                                    console.error(`Cannot safely progress Inventory forecast ${forecast.Id}: SharePoint ETag is unavailable`);
+                                    continue;
+                                }
                                 const progressedData = propagateCollectionValues(originalData);
                                 const payload = {
                                     __metadata: { type: "SP.Data.InventoryListItem" },
@@ -20794,7 +21056,7 @@ let currentSortConfig = {
                                         Accept: "application/json;odata=verbose",
                                         "Content-Type": "application/json;odata=verbose",
                                         "X-RequestDigest": digest,
-                                        "IF-MATCH": "*",
+                                        "IF-MATCH": etag,
                                         "X-HTTP-Method": "MERGE"
                                     },
                                     body: JSON.stringify(payload)
@@ -20804,6 +21066,7 @@ let currentSortConfig = {
                                 }
                                 else {
                                     errorCount++;
+                                    console.error(`Failed to progress Inventory forecast ${forecast.Id} (HTTP ${response.status})`);
                                 }
                                 await new Promise(resolve => setTimeout(resolve, 100));
                             }
@@ -20848,7 +21111,8 @@ let currentSortConfig = {
                             `EnggSubLead1/Title,EnggSubLead1Id,` +
                             `EnggSubLead2/Title,EnggSubLead2Id,` +
                             `EngineeringManagers/Title,EngineeringManagersId` +
-                            `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers`, { headers: { Accept: "application/json;odata=verbose" } });
+                            `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers` +
+                            `&$top=5000`, { headers: { Accept: "application/json;odata=verbose" } });
                         if (!res.ok) {
                             // ---------------------------------------------------------------
                             // Fallback path - still includes the engineering fields as IDs so
@@ -20858,7 +21122,8 @@ let currentSortConfig = {
                             const fallbackRes = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${projectListName}')/items` +
                                 `?$select=Id,Title,CustomerName,PC,ProjectReference,` +
                                 `GroupHead1Id,ProjectManagerId,` +
-                                `EnggLeadId,EnggSubLead1Id,EnggSubLead2Id,EngineeringManagersId`, { headers: { Accept: "application/json;odata=verbose" } });
+                                `EnggLeadId,EnggSubLead1Id,EnggSubLead2Id,EngineeringManagersId` +
+                                `&$top=5000`, { headers: { Accept: "application/json;odata=verbose" } });
                             if (!fallbackRes.ok) {
                                 throw new Error(`Failed to load projects: ${fallbackRes.status} ${fallbackRes.statusText}`);
                             }
@@ -20956,7 +21221,7 @@ let currentSortConfig = {
                         toast("error", "Failed to load projects: " + error.message);
                     }
                 };
-                const loadForecasts = async () => {
+                const loadForecasts = async (projectsReady) => {
                     var _a;
                     try {
                         // Only mount the CARD overlay when the full-screen "Processing…"
@@ -20975,6 +21240,8 @@ let currentSortConfig = {
                             throw new Error(`Failed to load forecasts: ${res.status} ${res.statusText}`);
                         }
                         const responseData = await res.json();
+                        if (projectsReady)
+                            await projectsReady;
                         // ✅ Get assigned projects
                         const assignedProjects = (0,_auth__WEBPACK_IMPORTED_MODULE_5__.getAssignedProjects)(projects);
                         const assignedProjectTitles = new Set(assignedProjects.map(p => p.Title));
@@ -22906,11 +23173,20 @@ let currentSortConfig = {
                         if (inventorySyncStatus)
                             inventorySyncStatus.textContent = text;
                     };
+                    const syncLockKey = `${siteUrl}::${listName}`;
+                    const windowState = window;
+                    const syncLocks = windowState.__inventorySyncLocks || new Set();
+                    windowState.__inventorySyncLocks = syncLocks;
                     // 🔐 Role gate (same as SEIBIES): only FULL_CONTROL / CONTRIBUTE roles can create rows
                     if (!(0,_auth__WEBPACK_IMPORTED_MODULE_5__.canCreateRecord)()) {
                         setStatus('👁️ No create rights - sync skipped (Admin/GH Head/PM Manager only)');
                         return;
                     }
+                    if (syncLocks.has(syncLockKey)) {
+                        setStatus('⏳ Inventory project sync is already running');
+                        return;
+                    }
+                    syncLocks.add(syncLockKey);
                     if (inventorySyncProjectsBtn)
                         inventorySyncProjectsBtn.disabled = true;
                     try {
@@ -22921,17 +23197,34 @@ let currentSortConfig = {
                         const visibleProjects = (0,_auth__WEBPACK_IMPORTED_MODULE_5__.canReadAllProjects)()
                             ? projects
                             : (0,_auth__WEBPACK_IMPORTED_MODULE_5__.getAssignedProjects)(projects);
+                        const refField = await inventoryListProjectRefField();
+                        const hasTextProjectReference = refField.exists && refField.type !== "Lookup";
+                        const normalizeReference = (value) => String(value !== null && value !== void 0 ? value : "").trim().replace(/\s+/g, " ").toLowerCase();
+                        const getServerProjectIds = (rows) => {
+                            const ids = new Set();
+                            rows.forEach(row => {
+                                var _a;
+                                [row.ProjectId, row.ProjectReferenceId, (_a = row.Project) === null || _a === void 0 ? void 0 : _a.Id].forEach(value => {
+                                    const id = Number(value);
+                                    if (value !== null && value !== undefined && Number.isFinite(id) && id > 0)
+                                        ids.add(id);
+                                });
+                            });
+                            return ids;
+                        };
                         // Safety re-check against SharePoint itself: the in-memory list may be
                         // empty/stale, so never create rows for projects that already exist.
-                        let serverRows = [];
-                        try {
-                            const chkRes = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,ProjectId,Title&$top=5000`, { headers: { Accept: "application/json;odata=verbose" } });
-                            if (chkRes.ok)
-                                serverRows = ((_b = (_a = (await chkRes.json())) === null || _a === void 0 ? void 0 : _a.d) === null || _b === void 0 ? void 0 : _b.results) || [];
+                        const selectProjectReference = refField.exists
+                            ? (hasTextProjectReference ? ",ProjectReference" : ",ProjectReferenceId")
+                            : "";
+                        const existingRowsUrl = `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,ProjectId,Title,Project/Id,Project/Title${selectProjectReference}&$expand=Project&$top=5000`;
+                        const chkRes = await fetch(existingRowsUrl, {
+                            headers: { Accept: "application/json;odata=verbose" }
+                        });
+                        if (!chkRes.ok) {
+                            throw new Error(`Could not verify existing Inventory rows (HTTP ${chkRes.status}); sync stopped to prevent duplicates.`);
                         }
-                        catch (chkErr) {
-                            console.error("⚠️ Inventory sync safety-check fetch failed:", chkErr);
-                        }
+                        const serverRows = ((_b = (_a = (await chkRes.json())) === null || _a === void 0 ? void 0 : _a.d) === null || _b === void 0 ? void 0 : _b.results) || [];
                         // If the list really has rows on SharePoint but the page loaded 0, the
                         // main load is broken - creating rows now would duplicate everything.
                         if (serverRows.length > 0 && forecasts.length === 0) {
@@ -22939,8 +23232,33 @@ let currentSortConfig = {
                             toast("error", `Sync stopped: list has ${serverRows.length} rows but page loaded 0`);
                             return;
                         }
-                        const existsOnServer = (p) => serverRows.some(c => Number(c.ProjectId) === p.Id);
-                        const existsInMemory = (p) => forecasts.some(f => { var _a; return ((_a = f.Project) === null || _a === void 0 ? void 0 : _a.Id) === p.Id || (f.Project && f.Project.Title === p.Title); });
+                        const serverProjectIds = getServerProjectIds(serverRows);
+                        const serverProjectReferences = new Set(hasTextProjectReference
+                            ? serverRows.map(row => normalizeReference(row.ProjectReference)).filter(Boolean)
+                            : []);
+                        const inventoryProjectReferences = new Set();
+                        const projectsById = new Map();
+                        const projectsByTitle = new Map();
+                        projects.forEach(project => {
+                            projectsById.set(project.Id, project);
+                            projectsByTitle.set(project.Title, project);
+                        });
+                        forecasts.forEach(forecast => {
+                            var _a, _b;
+                            if (!hasTextProjectReference)
+                                return;
+                            const linkedProjectId = (_a = forecast.Project) === null || _a === void 0 ? void 0 : _a.Id;
+                            const linkedProjectTitle = (_b = forecast.Project) === null || _b === void 0 ? void 0 : _b.Title;
+                            const project = (linkedProjectId !== undefined ? projectsById.get(linkedProjectId) : undefined) ||
+                                (linkedProjectTitle ? projectsByTitle.get(linkedProjectTitle) : undefined);
+                            const reference = normalizeReference(project === null || project === void 0 ? void 0 : project.ProjectReference);
+                            if (reference)
+                                inventoryProjectReferences.add(reference);
+                        });
+                        const existsOnServer = (p) => serverProjectIds.has(p.Id) ||
+                            (hasTextProjectReference && serverProjectReferences.has(normalizeReference(p.ProjectReference)));
+                        const existsInMemory = (p) => forecasts.some(f => { var _a; return ((_a = f.Project) === null || _a === void 0 ? void 0 : _a.Id) === p.Id || (f.Project && f.Project.Title === p.Title); }) ||
+                            (hasTextProjectReference && inventoryProjectReferences.has(normalizeReference(p.ProjectReference)));
                         const missingProjects = visibleProjects.filter(p => !existsOnServer(p) && !existsInMemory(p));
                         if (missingProjects.length === 0) {
                             // setStatus(`✅ In sync: all ${visibleProjects.length} visible project(s) have an Inventory row`);
@@ -22955,12 +23273,13 @@ let currentSortConfig = {
                         const errors = [];
                         for (const project of missingProjects) {
                             let ok = false;
+                            let stopAfterAmbiguousResponse = false;
                             // Up to 3 payload variants (same fallback chain as SEIBIES):
                             //   1 = full create - Project lookup id as STRING + ProjectReference (when the
                             //       column exists: Lookup -> ProjectReferenceId, Text -> text) + OBL as STRING
                             //   2 = without ProjectReference (column may be read-only/misconfigured)
                             //   3 = without OBL too (column may be read-only/absent)
-                            for (let attempt = 1; attempt <= 3 && !ok; attempt++) {
+                            for (let attempt = 1; attempt <= 3 && !ok && !stopAfterAmbiguousResponse; attempt++) {
                                 try {
                                     const freshData = createFreshForecastStructure();
                                     const payload = {
@@ -22978,7 +23297,6 @@ let currentSortConfig = {
                                     // Store Project Reference when the column exists - same rule as the
                                     // Revenue / SEIBIES sync: a LOOKUP column receives the target item ID
                                     // as a string (ProjectReferenceId), a text column receives the text.
-                                    const refField = await inventoryListProjectRefField();
                                     if (refField.exists && attempt === 1) {
                                         if (refField.type === "Lookup") {
                                             payload.ProjectReferenceId = String(project.Id);
@@ -23016,6 +23334,13 @@ let currentSortConfig = {
                                         }
                                         catch (e) { /* keep http message */ }
                                         console.error(`❌ Attempt ${attempt} failed for ${project.Title}: ${bodyText}`);
+                                        if (res.status === 408 || res.status === 429 || res.status >= 500) {
+                                            stopAfterAmbiguousResponse = true;
+                                            failed++;
+                                            errors.push(`${project.Title} -> ${message}`);
+                                            console.error(`Inventory create returned HTTP ${res.status} for ${project.Title}; it will not be reposted automatically.`);
+                                            break;
+                                        }
                                         if (attempt === 2) {
                                             failed++;
                                             errors.push(`${project.Title} -> ${message}`);
@@ -23024,11 +23349,12 @@ let currentSortConfig = {
                                 }
                                 catch (projectError) {
                                     console.error(`❌ Attempt ${attempt} error for ${project.Title}:`, projectError);
-                                    if (attempt === 2) {
-                                        failed++;
-                                        errors.push(`${project.Title} -> ${projectError instanceof Error ? projectError.message : String(projectError)}`);
-                                    }
+                                    stopAfterAmbiguousResponse = true;
+                                    failed++;
+                                    errors.push(`${project.Title} -> ${projectError instanceof Error ? projectError.message : String(projectError)}`);
                                 }
+                                if (stopAfterAmbiguousResponse)
+                                    break;
                                 if (!ok)
                                     await new Promise(resolve => setTimeout(resolve, 300));
                             }
@@ -23053,6 +23379,7 @@ let currentSortConfig = {
                     finally {
                         if (inventorySyncProjectsBtn)
                             inventorySyncProjectsBtn.disabled = false;
+                        syncLocks.delete(syncLockKey);
                     }
                 };
                 // ========== INITIALIZE ==========
@@ -23071,24 +23398,10 @@ let currentSortConfig = {
                         console.log(`✅ Can Contribute: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.canContribute)()}`);
                         console.log(`✅ Can Freeze: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.canFreeze)()}`);
                         console.log(`✅ Is GH Head: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.isGHHead)()}`);
-                        showInventoryProcessing("Loading Project List…");
-                        await loadProjects();
-                        showInventoryProcessing("Loading Inventory forecasts…");
-                        await loadForecasts();
-                        // 🔐 AUTO-SYNC (same as SEIBIES): compare Project List with the Inventory List
-                        // and add any missing project row (empty ForecastData skeleton). Role-gated
-                        // inside the function - runs silently for read-only roles, only creates rows
-                        // within this role's visible project scope.
-                        showInventoryProcessing("Syncing Inventory with Project List – adding missing rows…");
-                        await syncMissingProjectsToInventoryList();
-                        // ✅ AUTO-PROGRESSION (same as SEIBIES): roll monthly + yearly data forward,
-                        // then reload so the table shows the progressed figures on page open.
-                        if (forecasts.length > 0) {
-                            showInventoryProcessing("Checking monthly / yearly progression…");
-                            await applyAutoProgression();
-                            showInventoryProcessing("Reloading Inventory forecasts…");
-                            await loadForecasts();
-                        }
+                        showInventoryProcessing("Loading Project List and Inventory forecasts…");
+                        const projectsLoad = loadProjects();
+                        const forecastsLoad = loadForecasts(projectsLoad);
+                        await Promise.all([projectsLoad, forecastsLoad]);
                         // 🔐 Apply visible scope + filters + totals + pagination
                         showInventoryProcessing("Building Inventory table…");
                         populateFilterOptions();
@@ -23103,8 +23416,38 @@ let currentSortConfig = {
                         if (inventorySyncBar) {
                             inventorySyncBar.style.display = (0,_auth__WEBPACK_IMPORTED_MODULE_5__.canCreateRecord)() ? 'flex' : 'none';
                         }
+                        const runBackgroundAutoUpdate = async () => {
+                            try {
+                                (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.setBackgroundAutoUpdateIndicator)(".inventory-page", true);
+                                await syncMissingProjectsToInventoryList();
+                                if (forecasts.length > 0) {
+                                    await applyAutoProgression();
+                                }
+                            }
+                            catch (error) {
+                                console.error("Background Inventory update failed:", error);
+                                toast("error", "Inventory background update failed");
+                            }
+                            finally {
+                                try {
+                                    const selectedMonth = (filterMonth === null || filterMonth === void 0 ? void 0 : filterMonth.value) || "";
+                                    populateFilterOptions();
+                                    if (selectedMonth && filterMonth)
+                                        filterMonth.value = selectedMonth;
+                                    filterTable();
+                                }
+                                catch (error) {
+                                    console.error("Could not refresh the Inventory table after background update:", error);
+                                    toast("error", "Could not refresh the Inventory table");
+                                }
+                                finally {
+                                    (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.setBackgroundAutoUpdateIndicator)(".inventory-page", false);
+                                }
+                            }
+                        };
                         console.log("✅ Inventory application initialized successfully");
                         hideInventoryProcessing();
+                        void runBackgroundAutoUpdate();
                     }
                     catch (error) {
                         hideInventoryProcessing();
@@ -23580,7 +23923,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var xlsx_js_style__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(xlsx_js_style__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _styles_common_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../styles/common.css */ 712);
 /* harmony import */ var _styles_invoicing_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../styles/invoicing.css */ 533);
+/* harmony import */ var _sharePointBatch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./sharePointBatch */ 819);
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./auth */ 966);
+
 
 
 
@@ -23884,6 +24229,8 @@ let currentSortConfig = {
   `,
     script: () => {
         setTimeout(async () => {
+            if (window.__dtActivePageKey !== 'invoicing')
+                return;
             const siteUrl = typeof _spPageContextInfo !== "undefined" ? _spPageContextInfo.webAbsoluteUrl : window.location.origin + "/sites/Kriya";
             const listName = "InvoicingPlanning";
             const projectListName = "Project List";
@@ -24377,7 +24724,8 @@ let currentSortConfig = {
                         `EnggSubLead1/Title,EnggSubLead1Id,` +
                         `EnggSubLead2/Title,EnggSubLead2Id,` +
                         `EngineeringManagers/Title,EngineeringManagersId` +
-                        `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers`, { headers: { Accept: "application/json;odata=verbose" } });
+                        `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers` +
+                        `&$top=5000`, { headers: { Accept: "application/json;odata=verbose" } });
                     if (!res.ok) {
                         // ---------------------------------------------------------------
                         // Fallback path - still carries the engineering IDs so
@@ -24387,7 +24735,8 @@ let currentSortConfig = {
                         const fallbackRes = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${projectListName}')/items` +
                             `?$select=Id,Title,CustomerName,PC,ProjectReference,` +
                             `GroupHead1Id,ProjectManagerId,` +
-                            `EnggLeadId,EnggSubLead1Id,EnggSubLead2Id,EngineeringManagersId`, { headers: { Accept: "application/json;odata=verbose" } });
+                            `EnggLeadId,EnggSubLead1Id,EnggSubLead2Id,EngineeringManagersId` +
+                            `&$top=5000`, { headers: { Accept: "application/json;odata=verbose" } });
                         if (!fallbackRes.ok) {
                             throw new Error(`Failed to load projects: ${fallbackRes.status} ${fallbackRes.statusText}`);
                         }
@@ -24425,7 +24774,6 @@ let currentSortConfig = {
                         console.log(`📋 Total projects from SharePoint (fallback): ${projects.length}`);
                         const assignedProjects = (0,_auth__WEBPACK_IMPORTED_MODULE_5__.getAssignedProjects)(projects);
                         console.log(`📋 Assigned projects: ${assignedProjects.length}`);
-                        console.log('📋 Assigned project titles:', assignedProjects.map(p => p.Title));
                         projectSelect.innerHTML =
                             `<option value="">Select Project</option>` +
                                 assignedProjects.map(p => `<option value="${p.Id}">${p.Title}</option>`).join("");
@@ -24461,7 +24809,6 @@ let currentSortConfig = {
                     }
                     const assignedProjects = (0,_auth__WEBPACK_IMPORTED_MODULE_5__.getAssignedProjects)(projects);
                     console.log(`📋 Total projects: ${projects.length}, Assigned projects: ${assignedProjects.length}`);
-                    console.log('📋 Assigned project titles:', assignedProjects.map(p => p.Title));
                     projectSelect.innerHTML =
                         `<option value="">Select Project</option>` +
                             assignedProjects.map(p => `<option value="${p.Id}">${p.Title}</option>`).join("");
@@ -24477,15 +24824,20 @@ let currentSortConfig = {
                     toast("error", "Failed to load projects");
                 }
             };
-            const loadForecasts = async () => {
+            const loadForecasts = async (projectsReady, showLoader = true) => {
                 var _a;
+                let loading = null;
                 try {
-                    const loading = createLoadingOverlay("Loading Invoicing data...");
-                    loaderHost().appendChild(loading);
+                    if (showLoader) {
+                        loading = createLoadingOverlay("Loading Invoicing data...");
+                        loaderHost().appendChild(loading);
+                    }
                     const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,Title,Project/Id,Project/Title,ProfitCentre,OBL,ForecastData,InvoiceActual,CreatedDate,UpdatedDate&$expand=Project&$top=5000`, {
                         headers: { Accept: "application/json;odata=verbose" }
                     });
                     const data = await res.json();
+                    if (projectsReady)
+                        await projectsReady;
                     // ✅ Get assigned projects
                     const assignedProjects = (0,_auth__WEBPACK_IMPORTED_MODULE_5__.getAssignedProjects)(projects);
                     const assignedProjectTitles = new Set(assignedProjects.map(p => p.Title));
@@ -24507,7 +24859,183 @@ let currentSortConfig = {
                     toast("error", "Failed to load invoicing forecasts");
                 }
                 finally {
-                    removeLoadingOverlay();
+                    if (loading)
+                        removeLoadingOverlay();
+                }
+            };
+            const syncMissingProjectsToInvoicingList = async () => {
+                var _a, _b, _c, _d;
+                if (!(0,_auth__WEBPACK_IMPORTED_MODULE_5__.canCreateRecord)() || projects.length === 0)
+                    return;
+                const syncLockKey = `${siteUrl}::${listName}`;
+                const windowState = window;
+                const syncLocks = windowState.__invoicingSyncLocks || new Set();
+                windowState.__invoicingSyncLocks = syncLocks;
+                if (syncLocks.has(syncLockKey)) {
+                    console.info("Invoicing project sync is already running.");
+                    return;
+                }
+                syncLocks.add(syncLockKey);
+                try {
+                    const visibleProjects = (0,_auth__WEBPACK_IMPORTED_MODULE_5__.canReadAllProjects)() ? projects : (0,_auth__WEBPACK_IMPORTED_MODULE_5__.getAssignedProjects)(projects);
+                    const existingRowsUrl = `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?` +
+                        `$select=Id,ProjectId,Title,Project/Id,Project/Title&$expand=Project&$top=5000`;
+                    const checkResponse = await fetch(existingRowsUrl, { headers: { Accept: "application/json;odata=verbose" } });
+                    if (!checkResponse.ok) {
+                        throw new Error(`Could not verify existing Invoicing rows (HTTP ${checkResponse.status}).`);
+                    }
+                    const serverRows = ((_b = (_a = (await checkResponse.json())) === null || _a === void 0 ? void 0 : _a.d) === null || _b === void 0 ? void 0 : _b.results) || [];
+                    if (serverRows.length > 0 && forecasts.length === 0) {
+                        console.error("Invoicing auto-sync stopped: SharePoint has rows but the page loaded none.");
+                        return;
+                    }
+                    const getServerProjectIds = (rows) => {
+                        const ids = new Set();
+                        rows.forEach(row => {
+                            var _a;
+                            [row.ProjectId, row.ProjectReferenceId, (_a = row.Project) === null || _a === void 0 ? void 0 : _a.Id].forEach(value => {
+                                const id = Number(value);
+                                if (value !== null && value !== undefined && Number.isFinite(id) && id > 0)
+                                    ids.add(id);
+                            });
+                        });
+                        return ids;
+                    };
+                    const serverProjectIds = getServerProjectIds(serverRows);
+                    const forecastProjectIds = new Set();
+                    const forecastProjectTitles = new Set();
+                    forecasts.forEach(forecast => {
+                        var _a, _b;
+                        if (((_a = forecast.Project) === null || _a === void 0 ? void 0 : _a.Id) !== undefined)
+                            forecastProjectIds.add(forecast.Project.Id);
+                        if ((_b = forecast.Project) === null || _b === void 0 ? void 0 : _b.Title)
+                            forecastProjectTitles.add(forecast.Project.Title);
+                    });
+                    const missingProjects = visibleProjects.filter(project => !serverProjectIds.has(project.Id) &&
+                        !forecastProjectIds.has(project.Id) &&
+                        !forecastProjectTitles.has(project.Title));
+                    if (missingProjects.length === 0)
+                        return;
+                    const digest = await getDigest();
+                    const freshData = createFreshForecastStructure();
+                    const freshDataJson = JSON.stringify(freshData);
+                    let added = 0;
+                    let failed = 0;
+                    const createForecastForProject = async (project) => {
+                        var _a, _b;
+                        let lastError = "Unknown SharePoint error";
+                        let throttleAttempt = 0;
+                        while (true) {
+                            try {
+                                const payload = {
+                                    __metadata: { type: "SP.Data.InvoicingPlanningListItem" },
+                                    Title: generateForecastTitle(project, freshData),
+                                    ProjectId: project.Id,
+                                    ProfitCentre: project.PC || "",
+                                    OBL: 0,
+                                    ForecastData: freshDataJson,
+                                    InvoiceActual: "{}"
+                                };
+                                const response = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items`, {
+                                    method: "POST",
+                                    headers: {
+                                        Accept: "application/json;odata=verbose",
+                                        "Content-Type": "application/json;odata=verbose",
+                                        "X-RequestDigest": digest
+                                    },
+                                    body: JSON.stringify(payload)
+                                });
+                                if (response.ok) {
+                                    added++;
+                                    return;
+                                }
+                                const bodyText = await response.text();
+                                lastError = `HTTP ${response.status}`;
+                                try {
+                                    const errorData = JSON.parse(bodyText);
+                                    lastError = ((_b = (_a = errorData === null || errorData === void 0 ? void 0 : errorData.error) === null || _a === void 0 ? void 0 : _a.message) === null || _b === void 0 ? void 0 : _b.value) || lastError;
+                                }
+                                catch (_c) {
+                                    if (bodyText)
+                                        lastError = bodyText.slice(0, 250);
+                                }
+                                if (response.status !== 429)
+                                    break;
+                                if (throttleAttempt >= 5)
+                                    break;
+                                const retryAfter = response.headers.get("Retry-After");
+                                const retryAfterSeconds = retryAfter === null ? NaN : Number(retryAfter);
+                                const retryAfterDate = retryAfter && Number.isNaN(retryAfterSeconds)
+                                    ? Date.parse(retryAfter)
+                                    : NaN;
+                                const waitMs = Number.isFinite(retryAfterSeconds)
+                                    ? Math.max(0, retryAfterSeconds * 1000)
+                                    : Number.isFinite(retryAfterDate)
+                                        ? Math.max(0, retryAfterDate - Date.now())
+                                        : Math.min(60000, 1000 * (2 ** throttleAttempt));
+                                throttleAttempt++;
+                                console.warn(`SharePoint throttled Invoicing sync; retrying in ${Math.ceil(waitMs / 1000)}s.`);
+                                await new Promise(resolve => setTimeout(resolve, waitMs));
+                            }
+                            catch (error) {
+                                lastError = error instanceof Error ? error.message : String(error);
+                                break;
+                            }
+                        }
+                        failed++;
+                        console.error(`Invoicing sync failed for ${project.Title}: ${lastError}`);
+                    };
+                    const batchPayloads = missingProjects.map((project) => ({
+                        __metadata: { type: "SP.Data.InvoicingPlanningListItem" },
+                        Title: generateForecastTitle(project, freshData),
+                        ProjectId: project.Id,
+                        ProfitCentre: project.PC || "",
+                        OBL: 0,
+                        ForecastData: freshDataJson,
+                        InvoiceActual: "{}"
+                    }));
+                    const batchResults = await (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.createSharePointItemsInBatches)(siteUrl, listName, digest, batchPayloads);
+                    const failedBatchProjects = [];
+                    batchResults.forEach((result, index) => {
+                        if (result.success) {
+                            added++;
+                        }
+                        else {
+                            failedBatchProjects.push(missingProjects[index]);
+                            console.error(`Invoicing batch create failed for ${missingProjects[index].Title}: ${result.error}`);
+                        }
+                    });
+                    if (failedBatchProjects.length > 0) {
+                        const verifyResponse = await fetch(existingRowsUrl, {
+                            headers: { Accept: "application/json;odata=verbose" }
+                        });
+                        if (!verifyResponse.ok) {
+                            throw new Error(`Could not verify Invoicing batch results (HTTP ${verifyResponse.status}); individual retries were stopped to avoid duplicate rows.`);
+                        }
+                        const verifiedRows = ((_d = (_c = (await verifyResponse.json())) === null || _c === void 0 ? void 0 : _c.d) === null || _d === void 0 ? void 0 : _d.results) || [];
+                        const verifiedProjectIds = getServerProjectIds(verifiedRows);
+                        const fallbackProjects = failedBatchProjects.filter(project => !verifiedProjectIds.has(project.Id));
+                        if (fallbackProjects.length < failedBatchProjects.length) {
+                            console.warn("Invoicing batch verification found rows already created; skipping duplicate retries.");
+                        }
+                        const fallbackConcurrency = 4;
+                        for (let i = 0; i < fallbackProjects.length; i += fallbackConcurrency) {
+                            await Promise.all(fallbackProjects.slice(i, i + fallbackConcurrency).map(createForecastForProject));
+                        }
+                    }
+                    if (added > 0)
+                        await loadForecasts(undefined, false);
+                    console.log(`Invoicing auto-sync added ${added} project(s)` + (failed > 0 ? ` (${failed} failed)` : ""));
+                    if (failed > 0) {
+                        toast("warning", `Invoicing sync failed for ${failed} project(s). Check the console for details.`);
+                    }
+                }
+                catch (error) {
+                    console.error("Invoicing auto-sync failed:", error);
+                    toast("error", "Could not sync missing Invoicing forecasts.");
+                }
+                finally {
+                    syncLocks.delete(syncLockKey);
                 }
             };
             const getGroupHeadDisplayName = (groupHead) => {
@@ -27400,8 +27928,10 @@ let currentSortConfig = {
                 const loading = createLoadingOverlay("Reloading invoicing data...");
                 loaderHost().appendChild(loading);
                 try {
-                    await loadProjects();
-                    await loadForecasts();
+                    const projectsLoad = loadProjects();
+                    const forecastsLoad = loadForecasts(projectsLoad, false);
+                    await Promise.all([projectsLoad, forecastsLoad]);
+                    await syncMissingProjectsToInvoicingList();
                     populateFilterOptions();
                     syncFilterUIFromSelects();
                     filterTable();
@@ -27670,7 +28200,9 @@ let currentSortConfig = {
             });
             setupPaginationEventListeners();
             // ========== INITIAL LOADS ==========
+            loaderHost().appendChild(createLoadingOverlay("Loading Invoicing data..."));
             try {
+                console.log("⏳ Initializing Invoicing permissions...");
                 await _auth__WEBPACK_IMPORTED_MODULE_5__.authManager.initialize({ siteUrl });
                 console.log(`🔑 Permission Level: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.getPermissionLevel)().toUpperCase()}`);
                 console.log(`👤 User: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.getCurrentUserFullName)()}`);
@@ -27678,8 +28210,10 @@ let currentSortConfig = {
                 console.log(`✅ Full Control: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.hasFullControl)()} | Can Contribute: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.canContribute)()} | Can Read: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.canRead)()}`);
                 console.log(`✅ Can Read All Projects: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.canReadAllProjects)()} | Can Freeze: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.canFreeze)()}`);
                 console.log(`✅ Is GH Head: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.isGHHead)()} | Is PM Manager: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.isPMManager)()} | Is Engg User: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.isEngineeringUser)()}`);
-                await loadProjects();
-                await loadForecasts();
+                console.log("⏳ Loading projects and Invoicing forecasts...");
+                const projectsLoad = loadProjects();
+                const forecastsLoad = loadForecasts(projectsLoad, false);
+                await Promise.all([projectsLoad, forecastsLoad]);
                 setupPaginationEventListeners();
                 // ✅ fill all seven filter dropdowns and paint the toolbar state
                 //    (badge 0, no chips, Apply disabled) - no filter is applied on load
@@ -27690,10 +28224,36 @@ let currentSortConfig = {
                     exportBtn: ".invoicing-export-btn",
                     saveBtn: ".invoicing-btn-primary[type=\"submit\"]"
                 });
+                const runBackgroundAutoUpdate = async () => {
+                    try {
+                        (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.setBackgroundAutoUpdateIndicator)(".invoicing-page", true);
+                        await syncMissingProjectsToInvoicingList();
+                    }
+                    catch (error) {
+                        console.error("Background Invoicing update failed:", error);
+                        toast("error", "Invoicing background update failed");
+                    }
+                    finally {
+                        try {
+                            filterTable();
+                        }
+                        catch (error) {
+                            console.error("Could not refresh the Invoicing table after background update:", error);
+                            toast("error", "Could not refresh the Invoicing table");
+                        }
+                        finally {
+                            (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.setBackgroundAutoUpdateIndicator)(".invoicing-page", false);
+                        }
+                    }
+                };
+                void runBackgroundAutoUpdate();
             }
             catch (error) {
                 console.error('❌ Error initializing Invoicing module:', error);
                 toast("error", "Failed to initialize application");
+            }
+            finally {
+                removeLoadingOverlay();
             }
             console.log("✅ Invoicing Forecast Module Initialized - Default page size: 25 per page");
         }, 100);
@@ -27880,14 +28440,35 @@ const esc = (s) => String(s !== null && s !== void 0 ? s : "").replace(/&/g, "&a
 /* SharePoint REST helpers                                            */
 /* ------------------------------------------------------------------ */
 const netFetch = (url, init) => fetch(url, init);
-const fetchWithTimeout = async (url, options = {}, ms = 45000) => {
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), ms);
-    try {
-        return await netFetch(url, Object.assign(Object.assign({}, options), { signal: ctrl.signal }));
-    }
-    finally {
-        clearTimeout(timer);
+const fetchWithTimeout = async (url, options = {}, ms = 45000, onThrottle) => {
+    const maxRetries = 5;
+    for (let attempt = 0;; attempt++) {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), ms);
+        let response;
+        try {
+            response = await netFetch(url, Object.assign(Object.assign({}, options), { signal: ctrl.signal }));
+        }
+        finally {
+            clearTimeout(timer);
+        }
+        if (response.status !== 429)
+            return response;
+        onThrottle === null || onThrottle === void 0 ? void 0 : onThrottle();
+        if (attempt >= maxRetries)
+            return response;
+        const retryAfter = response.headers.get("Retry-After");
+        const retryAfterSeconds = retryAfter === null ? NaN : Number(retryAfter);
+        const retryAfterDate = retryAfter && Number.isNaN(retryAfterSeconds)
+            ? Date.parse(retryAfter)
+            : NaN;
+        const waitMs = Number.isFinite(retryAfterSeconds)
+            ? Math.max(0, retryAfterSeconds * 1000)
+            : Number.isFinite(retryAfterDate)
+                ? Math.max(0, retryAfterDate - Date.now())
+                : Math.min(60000, 1000 * (2 ** attempt));
+        console.warn(`SharePoint throttled request (429); retrying in ${Math.ceil(waitMs / 1000)}s (${attempt + 1}/${maxRetries}).`);
+        await new Promise(resolve => setTimeout(resolve, waitMs));
     }
 };
 const listFieldsCache = new Map();
@@ -27910,13 +28491,8 @@ const getDigest = async () => {
             method: "POST",
             headers: { Accept: "application/json;odata=verbose", "Content-Type": "application/json;odata=verbose" }
         });
-        // 4. Handle 429 Throttling just in case
-        if (res.status === 429) {
-            const waitSec = parseInt(res.headers.get("Retry-After") || "5", 10);
-            console.warn(`⚠️ Throttled getting digest. Waiting ${waitSec}s...`);
-            await new Promise(r => setTimeout(r, waitSec * 1000));
-            return getDigest(); // Retry
-        }
+        if (!res.ok)
+            throw new Error(`Could not get request digest (HTTP ${res.status}).`);
         const data = await res.json();
         // 5. Assign to the variable so TypeScript knows it's a string
         cachedDigest = String(data.d.GetContextWebInformation.FormDigestValue);
@@ -28783,6 +29359,8 @@ const pageStyle = `
     style: pageStyle,
     script: () => {
         setTimeout(() => {
+            if (window.__dtActivePageKey !== 'master')
+                return;
             const tableBody = document.querySelector(".project-table-body");
             const importBtn = document.querySelector(".import-master-btn");
             const syncAllBtn = document.querySelector(".sync-all-btn");
@@ -29201,104 +29779,356 @@ const pageStyle = `
                     });
                 });
             };
-            const upsertRow = async (o) => {
+            const prepareUpsertRow = async (o) => {
                 var _a;
-                try {
-                    const fields = await getListFields(o.listName);
-                    const digest = await getDigest();
-                    const entityType = await getListEntityType(o.listName);
-                    let itemId = (_a = o.rowId) !== null && _a !== void 0 ? _a : null;
-                    let isNew = false;
-                    if (!itemId && !o.assumeNew) {
-                        const found = await findChildRow(o.listName, o.projectId, o.projectRef, o.projectTitle);
-                        itemId = found.row ? found.row.Id : null;
+                const fields = await getListFields(o.listName);
+                const digest = await getDigest();
+                const entityType = await getListEntityType(o.listName);
+                let itemId = (_a = o.rowId) !== null && _a !== void 0 ? _a : null;
+                if (!itemId && !o.assumeNew) {
+                    const found = await findChildRow(o.listName, o.projectId, o.projectRef, o.projectTitle);
+                    itemId = found.row ? Number(found.row.Id) : null;
+                }
+                const isNew = !itemId;
+                const payload = { __metadata: { type: entityType } };
+                const write = (field, value) => {
+                    if (!field)
+                        return;
+                    const t = field.type;
+                    if (t === "Lookup" || t === "User") {
+                        payload[`${field.internalName}Id`] = String(value);
                     }
-                    if (!itemId)
-                        isNew = true;
-                    const payload = { __metadata: { type: entityType } };
-                    const write = (field, value) => {
-                        if (!field)
-                            return;
-                        const t = field.type;
-                        if (t === "Lookup" || t === "User") {
-                            payload[`${field.internalName}Id`] = String(value);
-                        }
-                        else if (t === "Number" || t === "Currency") {
-                            const n = parseNumText(value);
-                            payload[field.internalName] = n !== null ? n : 0;
-                        }
-                        else if (t === "Boolean") {
-                            payload[field.internalName] = Boolean(value);
-                        }
-                        else {
-                            payload[field.internalName] = String(value);
-                        }
-                    };
-                    const title = `${o.projectRef} - ${o.projectTitle}`;
-                    write(findField(fields, "Title"), title);
-                    const projField = findField(fields, "Project");
-                    if (projField && (projField.type === "Lookup" || projField.type === "User")) {
-                        payload[`${projField.internalName}Id`] = String(o.projectId);
+                    else if (t === "Number" || t === "Currency") {
+                        const n = parseNumText(value);
+                        payload[field.internalName] = n !== null ? n : 0;
                     }
-                    else if (projField) {
-                        payload[projField.internalName] = o.projectTitle;
-                    }
-                    const refField = findField(fields, "ProjectReference");
-                    if (refField && (refField.type === "Lookup" || refField.type === "User")) {
-                        payload[`${refField.internalName}Id`] = String(o.projectId);
-                    }
-                    else if (refField) {
-                        payload[refField.internalName] = o.projectRef;
-                    }
-                    for (const [desired, value] of Object.entries(o.values)) {
-                        if (desired === "Title" || desired === "Project" || desired === "ProjectReference")
-                            continue;
-                        write(findField(fields, desired), value);
-                    }
-                    let res;
-                    if (!isNew && itemId) {
-                        res = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(o.listName)}')/items(${itemId})`, {
-                            method: "POST",
-                            headers: {
-                                Accept: "application/json;odata=verbose",
-                                "Content-Type": "application/json;odata=verbose",
-                                "X-RequestDigest": digest,
-                                "X-HTTP-Method": "MERGE",
-                                "IF-MATCH": "*"
-                            },
-                            body: JSON.stringify(payload)
-                        });
+                    else if (t === "Boolean") {
+                        payload[field.internalName] = Boolean(value);
                     }
                     else {
-                        res = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(o.listName)}')/items`, {
-                            method: "POST",
-                            headers: {
-                                Accept: "application/json;odata=verbose",
-                                "Content-Type": "application/json;odata=verbose",
-                                "X-RequestDigest": digest
-                            },
-                            body: JSON.stringify(payload)
-                        });
+                        payload[field.internalName] = String(value);
                     }
+                };
+                const title = `${o.projectRef} - ${o.projectTitle}`;
+                write(findField(fields, "Title"), title);
+                const projField = findField(fields, "Project");
+                if (projField && (projField.type === "Lookup" || projField.type === "User")) {
+                    payload[`${projField.internalName}Id`] = String(o.projectId);
+                }
+                else if (projField) {
+                    payload[projField.internalName] = o.projectTitle;
+                }
+                const refField = findField(fields, "ProjectReference");
+                if (refField && (refField.type === "Lookup" || refField.type === "User")) {
+                    payload[`${refField.internalName}Id`] = String(o.projectId);
+                }
+                else if (refField) {
+                    payload[refField.internalName] = o.projectRef;
+                }
+                for (const [desired, value] of Object.entries(o.values)) {
+                    if (desired === "Title" || desired === "Project" || desired === "ProjectReference")
+                        continue;
+                    write(findField(fields, desired), value);
+                }
+                const url = `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(o.listName)}')/items` +
+                    (isNew ? "" : `(${itemId})`);
+                const headers = {
+                    Accept: "application/json;odata=verbose",
+                    "Content-Type": "application/json;odata=verbose",
+                    "X-RequestDigest": digest
+                };
+                if (!isNew) {
+                    headers["X-HTTP-Method"] = "MERGE";
+                    headers["IF-MATCH"] = "*";
+                }
+                return { url, headers, body: JSON.stringify(payload), id: itemId, isNew };
+            };
+            const upsertRow = async (o) => {
+                var _a;
+                let prepared = null;
+                try {
+                    prepared = await prepareUpsertRow(o);
+                    const res = await fetchWithTimeout(prepared.url, {
+                        method: "POST",
+                        headers: prepared.headers,
+                        body: prepared.body
+                    });
                     if (res.ok) {
-                        let created = itemId;
-                        if (isNew) {
+                        let created = prepared.id;
+                        if (prepared.isNew) {
                             try {
                                 const j = await res.json();
-                                created = j.d.Id;
+                                const createdId = Number(j.d.Id);
+                                created = Number.isFinite(createdId) ? createdId : null;
                             }
-                            catch (e) { /* ignore */ }
+                            catch (_b) {
+                                created = null;
+                            }
                         }
-                        return { success: true, id: created, isNew };
+                        return { success: true, id: created, isNew: prepared.isNew };
                     }
                     const body = await res.text();
                     console.error(`❌ Failed upsert in ${o.listName}:`, body);
-                    return { success: false, id: null, isNew, error: body };
+                    return { success: false, id: null, isNew: prepared.isNew, error: body };
                 }
                 catch (error) {
                     console.error(`Error upserting in ${o.listName}:`, error);
-                    return { success: false, id: null, isNew: false, error };
+                    return { success: false, id: null, isNew: (_a = prepared === null || prepared === void 0 ? void 0 : prepared.isNew) !== null && _a !== void 0 ? _a : false, error };
                 }
+            };
+            // Each project has at most six writes; keep each SharePoint batch below 100 operations.
+            const PROJECT_GROUPS_PER_BATCH = 16;
+            const MAX_ACTIVE_PROJECT_BATCHES = 4;
+            let activeProjectBatchLimit = 2;
+            let projectBatchSuccessStreak = 0;
+            let projectBatchThrottleCount = 0;
+            let projectBatchRequestCount = 0;
+            let projectBatchOperationsSent = 0;
+            let projectBatchRequestTimeMs = 0;
+            let projectMapRequestCount = 0;
+            let projectMapRequestTimeMs = 0;
+            const queuedProjectBatches = [];
+            let projectBatchFlushTimer = null;
+            let activeProjectBatchFlushes = 0;
+            const recordProjectBatchThrottle = () => {
+                projectBatchThrottleCount++;
+                projectBatchSuccessStreak = 0;
+                activeProjectBatchLimit = Math.max(1, Math.floor(activeProjectBatchLimit / 2));
+            };
+            const recordProjectBatchSuccess = () => {
+                projectBatchSuccessStreak++;
+                if (projectBatchSuccessStreak >= 20 &&
+                    activeProjectBatchLimit < MAX_ACTIVE_PROJECT_BATCHES) {
+                    activeProjectBatchLimit++;
+                    projectBatchSuccessStreak = 0;
+                    console.info(`[Master import] Increasing concurrent batches to ${activeProjectBatchLimit}.`);
+                }
+            };
+            const sendProjectWriteBatchesNow = async (writeGroups) => {
+                const groupOffsets = [];
+                let totalWrites = 0;
+                writeGroups.forEach(group => {
+                    groupOffsets.push(totalWrites);
+                    totalWrites += group.length;
+                });
+                if (totalWrites === 0)
+                    return writeGroups.map(() => []);
+                const results = new Array(totalWrites);
+                let outerBatchThrottled = false;
+                const sendBatchOnce = async (entries) => {
+                    outerBatchThrottled = false;
+                    const batchBoundary = `batch_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+                    const host = new URL(siteUrl).host;
+                    const changesets = new Map();
+                    entries.forEach(entry => {
+                        const group = changesets.get(entry.groupIndex) || [];
+                        group.push(entry);
+                        changesets.set(entry.groupIndex, group);
+                    });
+                    const batchLines = [];
+                    for (const groupEntries of changesets.values()) {
+                        const changesetBoundary = `changeset_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+                        const changesetLines = [];
+                        groupEntries.forEach(entry => {
+                            const write = entry.write;
+                            const isUpdate = write.headers["X-HTTP-Method"] === "MERGE";
+                            const contentId = entries.indexOf(entry) + 1;
+                            changesetLines.push(`--${changesetBoundary}`, "Content-Type: application/http", "Content-Transfer-Encoding: binary", `Content-ID: ${contentId}`, "", `${isUpdate ? "PATCH" : "POST"} ${write.url} HTTP/1.1`, `Host: ${host}`, `Accept: ${write.headers.Accept}`, `Content-Type: ${write.headers["Content-Type"]}`, `Content-Length: ${new Blob([write.body]).size}`, ...(write.headers["IF-MATCH"] ? [`IF-MATCH: ${write.headers["IF-MATCH"]}`] : []), "", write.body);
+                        });
+                        changesetLines.push(`--${changesetBoundary}--`);
+                        const changesetBody = changesetLines.join("\r\n");
+                        batchLines.push(`--${batchBoundary}`, `Content-Type: multipart/mixed; boundary="${changesetBoundary}"`, `Host: ${host}`, `Content-Length: ${new Blob([changesetBody]).size}`, "Content-Transfer-Encoding: binary", "", changesetBody);
+                    }
+                    batchLines.push(`--${batchBoundary}--`, "");
+                    projectBatchRequestCount++;
+                    projectBatchOperationsSent += entries.length;
+                    const batchRequestStartedAt = Date.now();
+                    const res = await fetchWithTimeout(`${siteUrl}/_api/$batch`, {
+                        method: "POST",
+                        headers: {
+                            Accept: "application/json;odata=verbose",
+                            "Content-Type": `multipart/mixed; boundary="${batchBoundary}"`,
+                            DataServiceVersion: "3.0",
+                            MaxDataServiceVersion: "3.0",
+                            "X-RequestDigest": await getDigest()
+                        },
+                        body: batchLines.join("\r\n")
+                    }, 45000, () => {
+                        if (outerBatchThrottled)
+                            return;
+                        outerBatchThrottled = true;
+                        recordProjectBatchThrottle();
+                    });
+                    const responseText = await res.text();
+                    projectBatchRequestTimeMs += Date.now() - batchRequestStartedAt;
+                    if (!res.ok) {
+                        throw new Error(`SharePoint batch failed (HTTP ${res.status}): ${responseText.slice(0, 300)}`);
+                    }
+                    const responseById = new Map();
+                    const contentIdMatches = Array.from(responseText.matchAll(/Content-ID:\s*(\d+)/gi));
+                    contentIdMatches.forEach((match, index) => {
+                        var _a, _b, _c;
+                        const start = ((_a = match.index) !== null && _a !== void 0 ? _a : 0) + match[0].length;
+                        const end = (_c = (_b = contentIdMatches[index + 1]) === null || _b === void 0 ? void 0 : _b.index) !== null && _c !== void 0 ? _c : responseText.length;
+                        responseById.set(Number(match[1]), responseText.slice(start, end));
+                    });
+                    const orderedStatuses = Array.from(responseText.matchAll(/HTTP\/1\.1\s+(\d{3})[^\r\n]*/gi));
+                    const orderedParts = orderedStatuses.map((match, index) => {
+                        var _a, _b, _c;
+                        const start = (_a = match.index) !== null && _a !== void 0 ? _a : 0;
+                        const end = (_c = (_b = orderedStatuses[index + 1]) === null || _b === void 0 ? void 0 : _b.index) !== null && _c !== void 0 ? _c : responseText.length;
+                        return responseText.slice(start, end);
+                    });
+                    const responseError = (part) => {
+                        var _a, _b, _c, _d, _e, _f, _g;
+                        const statusLineStart = part.search(/HTTP\/1\.1\s+\d{3}/i);
+                        const bodyStart = statusLineStart >= 0
+                            ? part.indexOf("\r\n\r\n", statusLineStart)
+                            : -1;
+                        if (bodyStart < 0)
+                            return "";
+                        const body = part.slice(bodyStart + 4).split(/\r?\n--/)[0].trim();
+                        if (!body)
+                            return "";
+                        try {
+                            const data = JSON.parse(body);
+                            const message = (_e = (_c = (_b = (_a = data.error) === null || _a === void 0 ? void 0 : _a.message) === null || _b === void 0 ? void 0 : _b.value) !== null && _c !== void 0 ? _c : (_d = data.error) === null || _d === void 0 ? void 0 : _d.message) !== null && _e !== void 0 ? _e : (_g = (_f = data["odata.error"]) === null || _f === void 0 ? void 0 : _f.message) === null || _g === void 0 ? void 0 : _g.value;
+                            if (message)
+                                return String(message);
+                        }
+                        catch (_h) {
+                            return body.slice(0, 250);
+                        }
+                        return body.slice(0, 250);
+                    };
+                    const parsedResults = entries.map((entry, index) => {
+                        var _a, _b, _c, _d, _e, _f;
+                        const part = (_a = responseById.get(index + 1)) !== null && _a !== void 0 ? _a : (orderedStatuses.length === entries.length ? orderedParts[index] : "");
+                        const status = (_b = part.match(/HTTP\/1\.1\s+(\d{3})[^\r\n]*/i)) === null || _b === void 0 ? void 0 : _b[1];
+                        const statusCode = Number(status);
+                        let id = entry.write.id;
+                        if (entry.write.isNew && statusCode >= 200 && statusCode < 300) {
+                            const statusLineStart = part.search(/HTTP\/1\.1\s+\d{3}/i);
+                            const bodyStart = statusLineStart >= 0
+                                ? part.indexOf("\r\n\r\n", statusLineStart)
+                                : -1;
+                            if (bodyStart >= 0) {
+                                const body = part.slice(bodyStart + 4).split(/\r?\n--/)[0].trim();
+                                if (body) {
+                                    try {
+                                        const data = JSON.parse(body);
+                                        const createdId = Number((_d = (_c = data.d) === null || _c === void 0 ? void 0 : _c.Id) !== null && _d !== void 0 ? _d : data.Id);
+                                        id = Number.isFinite(createdId) ? createdId : null;
+                                    }
+                                    catch (_g) {
+                                        id = null;
+                                    }
+                                }
+                            }
+                        }
+                        return statusCode >= 200 && statusCode < 300
+                            ? { success: true, id, status: statusCode }
+                            : {
+                                success: false,
+                                id: null,
+                                status: Number.isFinite(statusCode) ? statusCode : undefined,
+                                retryAfter: (_f = (_e = part.match(/Retry-After:\s*([^\r\n]+)/i)) === null || _e === void 0 ? void 0 : _e[1]) !== null && _f !== void 0 ? _f : null,
+                                error: [
+                                    status ? `HTTP ${status}` : "No correlated response for batch operation",
+                                    responseError(part)
+                                ].filter(Boolean).join(": ")
+                            };
+                    });
+                    const nestedBatchThrottled = parsedResults.some(result => result.status === 429);
+                    if (nestedBatchThrottled && !outerBatchThrottled) {
+                        recordProjectBatchThrottle();
+                    }
+                    else if (!outerBatchThrottled) {
+                        recordProjectBatchSuccess();
+                    }
+                    return parsedResults;
+                };
+                let pending = writeGroups.flatMap((group, groupIndex) => group.map((write, index) => ({
+                    write,
+                    index: groupOffsets[groupIndex] + index,
+                    groupIndex
+                })));
+                for (let attempt = 0; pending.length && attempt <= 5; attempt++) {
+                    const batchResults = await sendBatchOnce(pending);
+                    const retry = [];
+                    let retryWaitMs = 0;
+                    batchResults.forEach((result, batchIndex) => {
+                        const originalEntry = pending[batchIndex];
+                        if (result.status === 429 && attempt < 5) {
+                            retry.push(originalEntry);
+                            const retryAfter = result.retryAfter;
+                            const seconds = retryAfter === null || retryAfter === undefined ? NaN : Number(retryAfter);
+                            const retryDate = retryAfter && Number.isNaN(seconds) ? Date.parse(retryAfter) : NaN;
+                            const waitMs = Number.isFinite(seconds)
+                                ? Math.max(0, seconds * 1000)
+                                : Number.isFinite(retryDate)
+                                    ? Math.max(0, retryDate - Date.now())
+                                    : Math.min(60000, 1000 * (2 ** attempt));
+                            retryWaitMs = Math.max(retryWaitMs, waitMs);
+                            return;
+                        }
+                        results[originalEntry.index] = result;
+                    });
+                    if (!retry.length)
+                        break;
+                    console.warn(`SharePoint batch throttled; retrying ${retry.length} write(s) in ${Math.ceil(retryWaitMs / 1000)}s.`);
+                    await new Promise(resolve => setTimeout(resolve, retryWaitMs));
+                    pending = retry;
+                }
+                return writeGroups.map((group, groupIndex) => {
+                    const offset = groupOffsets[groupIndex];
+                    return group.map((_, index) => {
+                        var _a;
+                        return (_a = results[offset + index]) !== null && _a !== void 0 ? _a : {
+                            success: false,
+                            id: null,
+                            error: "SharePoint batch did not return a result for this write"
+                        };
+                    });
+                });
+            };
+            const flushProjectWriteBatches = async () => {
+                if (projectBatchFlushTimer !== null) {
+                    clearTimeout(projectBatchFlushTimer);
+                    projectBatchFlushTimer = null;
+                }
+                if (activeProjectBatchFlushes >= activeProjectBatchLimit ||
+                    queuedProjectBatches.length === 0)
+                    return;
+                activeProjectBatchFlushes++;
+                const queued = queuedProjectBatches.splice(0, PROJECT_GROUPS_PER_BATCH);
+                try {
+                    const results = await sendProjectWriteBatchesNow(queued.map(group => group.writes));
+                    queued.forEach((group, index) => group.resolve(results[index]));
+                }
+                catch (error) {
+                    queued.forEach(group => group.reject(error));
+                }
+                finally {
+                    activeProjectBatchFlushes--;
+                    if (queuedProjectBatches.length > 0)
+                        void flushProjectWriteBatches();
+                }
+            };
+            const sendProjectWriteBatch = (writes) => {
+                if (!writes.length)
+                    return Promise.resolve([]);
+                return new Promise((resolve, reject) => {
+                    queuedProjectBatches.push({ writes, resolve, reject });
+                    if (queuedProjectBatches.length >= PROJECT_GROUPS_PER_BATCH) {
+                        void flushProjectWriteBatches();
+                    }
+                    else if (projectBatchFlushTimer === null) {
+                        projectBatchFlushTimer = setTimeout(() => {
+                            void flushProjectWriteBatches();
+                        }, 50);
+                    }
+                });
             };
             const ensureChildRow = async (listName, row) => {
                 const result = await upsertRow({
@@ -29444,6 +30274,17 @@ const pageStyle = `
                 if (impErrorsEl)
                     impErrorsEl.textContent = String(impErrors);
             };
+            let statusScrollScheduled = false;
+            const scheduleStatusScroll = () => {
+                if (statusScrollScheduled)
+                    return;
+                statusScrollScheduled = true;
+                window.setTimeout(() => {
+                    statusScrollScheduled = false;
+                    if (popupStatusList)
+                        popupStatusList.scrollTop = popupStatusList.scrollHeight;
+                }, 250);
+            };
             const addStatusRow = (kind, ref, name, msg) => {
                 if (kind === "created")
                     impCreated++;
@@ -29471,7 +30312,7 @@ const pageStyle = `
                 div.appendChild(chip);
                 div.appendChild(txt);
                 popupStatusList.appendChild(div);
-                popupStatusList.scrollTop = popupStatusList.scrollHeight;
+                scheduleStatusScroll();
             };
             const openImportPopup = () => {
                 if (!popupOverlay || importing)
@@ -29525,78 +30366,21 @@ const pageStyle = `
                 (0,file_saver__WEBPACK_IMPORTED_MODULE_0__.saveAs)(new Blob([buf], { type: "application/octet-stream" }), `Master_Import_Errors_${stamp}.xlsx`);
                 showToast(`📥 Downloaded ${importErrorRows.length} error row(s)`, "success");
             };
-            /**
-        * Resolve a Project List item by Project Reference.
-        * Exact OData filter first (works when text + indexed), then a
-        * case-insensitive client-side scan (handles lookup-typed refs,
-        * casing drift, unindexed columns, and >5000-item lists).
-        */
-            const resolveProjectByRef = async (ref) => {
-                const wanted = String(ref !== null && ref !== void 0 ? ref : "").trim();
-                if (!wanted)
-                    return null;
-                const wantedKey = wanted.toLowerCase();
-                // 1) Fast path: server-side exact filter
-                try {
-                    const res = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items` +
-                        `?$select=Id,Title,ProjectReference&$filter=ProjectReference eq '${encodeURIComponent(wanted)}'&$top=5`, { headers: { Accept: "application/json;odata=verbose" } });
-                    if (res.ok) {
-                        const rows = (await res.json()).d.results || [];
-                        const hit = rows.find(r => { var _a; return String((_a = r.ProjectReference) !== null && _a !== void 0 ? _a : "").trim().toLowerCase() === wantedKey; });
-                        if (hit)
-                            return hit;
-                    }
-                }
-                catch (e) {
-                    console.warn("resolveProjectByRef: exact filter failed, falling back", e);
-                }
-                // 2) Fallback: case-insensitive client-side scan (bounded page)
-                try {
-                    const fields = await getListFields(PROJECT_LIST);
-                    const refField = findField(fields, "ProjectReference");
-                    const select = ["Id", "Title"];
-                    const expand = [];
-                    if (refField) {
-                        if (refField.type === "Lookup" || refField.type === "User") {
-                            select.push(`${refField.internalName}/Id`, `${refField.internalName}/Title`);
-                            expand.push(refField.internalName);
-                        }
-                        else {
-                            select.push(refField.internalName);
-                        }
-                    }
-                    else {
-                        select.push("ProjectReference");
-                    }
-                    const query = `$select=${encodeURIComponent(select.join(","))}` +
-                        (expand.length ? `&$expand=${encodeURIComponent(expand.join(","))}` : "") +
-                        `&$top=5000`;
-                    const res = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items?${query}`, { headers: { Accept: "application/json;odata=verbose" } });
-                    if (!res.ok)
-                        return null;
-                    const rows = (await res.json()).d.results || [];
-                    const readRef = (r) => {
-                        var _a, _b, _c;
-                        if (!refField)
-                            return String((_a = r.ProjectReference) !== null && _a !== void 0 ? _a : "");
-                        const v = r[refField.internalName];
-                        if (v && typeof v === "object")
-                            return String((_c = (_b = v.Title) !== null && _b !== void 0 ? _b : v.Value) !== null && _c !== void 0 ? _c : "");
-                        return String(v !== null && v !== void 0 ? v : "");
-                    };
-                    return rows.find(r => readRef(r).trim().toLowerCase() === wantedKey) || null;
-                }
-                catch (e) {
-                    console.error("resolveProjectByRef: fallback scan failed", e);
-                    return null;
-                }
-            };
             const doImport = async (file) => {
                 if (importing) {
                     showToast("Import already running — please wait for it to finish", "warning");
                     return;
                 }
                 importing = true;
+                const importStartedAt = Date.now();
+                activeProjectBatchLimit = 2;
+                projectBatchSuccessStreak = 0;
+                projectBatchThrottleCount = 0;
+                projectBatchRequestCount = 0;
+                projectBatchOperationsSent = 0;
+                projectBatchRequestTimeMs = 0;
+                projectMapRequestCount = 0;
+                projectMapRequestTimeMs = 0;
                 const setUiBusy = (busy) => {
                     if (importChooseBtn)
                         importChooseBtn.disabled = busy;
@@ -29611,20 +30395,35 @@ const pageStyle = `
                 impUpdated = impCreated = impErrors = 0;
                 importErrorRows = [];
                 bumpChips();
-                const seenRefs = new Set();
                 const resolvedProjectCache = new Map();
-                // ⚡ 1. SAFE FETCH: Automatically handles 429 Too Many Requests
-                const safeFetch = async (url, options) => {
-                    let res = await fetch(url, options);
-                    let retries = 0;
-                    while (res.status === 429 && retries < 5) {
-                        const waitSec = parseInt(res.headers.get("Retry-After") || "5", 10);
-                        console.warn(`⚠️ Throttled by SharePoint (429). Waiting ${waitSec}s before retrying...`);
-                        await new Promise(r => setTimeout(r, waitSec * 1000));
-                        res = await fetch(url, options);
-                        retries++;
+                const safeFetch = (url, options) => fetchWithTimeout(url, options);
+                const MAP_PREFETCH_CONCURRENCY = 6;
+                const mapFetchWaiters = [];
+                let activeMapFetches = 0;
+                const fetchMapPage = async (url) => {
+                    var _a;
+                    if (activeMapFetches >= MAP_PREFETCH_CONCURRENCY) {
+                        await new Promise(resolve => mapFetchWaiters.push(resolve));
                     }
-                    return res;
+                    activeMapFetches++;
+                    projectMapRequestCount++;
+                    const requestStartedAt = Date.now();
+                    try {
+                        return await safeFetch(url, {
+                            headers: { Accept: "application/json;odata=verbose" }
+                        });
+                    }
+                    finally {
+                        projectMapRequestTimeMs += Date.now() - requestStartedAt;
+                        activeMapFetches--;
+                        (_a = mapFetchWaiters.shift()) === null || _a === void 0 ? void 0 : _a();
+                    }
+                };
+                const fetchMapQueries = async (queries, fetchQuery) => {
+                    const results = await Promise.allSettled(queries.map(fetchQuery));
+                    const failedResult = results.find(result => result.status === "rejected");
+                    if ((failedResult === null || failedResult === void 0 ? void 0 : failedResult.status) === "rejected")
+                        throw failedResult.reason;
                 };
                 const fixSPDate = (dateStr) => {
                     if (!dateStr || String(dateStr).trim() === "" || dateStr === "-")
@@ -29655,45 +30454,236 @@ const pageStyle = `
                     }
                     return cleaned;
                 };
-                const fetchExistingMonthJson = async (listName, itemId, fieldName) => {
+                const parseMonthData = (value) => {
+                    if (value && typeof value === "object")
+                        return value;
+                    if (typeof value !== "string" || !value)
+                        return {};
                     try {
-                        const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items(${itemId})?$select=${fieldName}`, {
-                            headers: { Accept: "application/json;odata=verbose" }
-                        });
-                        if (res.ok) {
-                            const j = await res.json();
-                            const rawJson = j.d[fieldName];
-                            if (rawJson)
-                                return JSON.parse(rawJson);
-                        }
+                        const parsed = JSON.parse(value);
+                        return parsed && typeof parsed === "object" ? parsed : {};
                     }
-                    catch (e) {
-                        console.warn(`Could not parse existing ${fieldName} JSON for item ${itemId} in ${listName}`, e);
+                    catch (_a) {
+                        return {};
                     }
-                    return {};
                 };
-                // ⚡ 2. BULK FETCH MAPS: Removes the need for 5,000 findChildRow queries
-                const fetchIdMap = async (listName) => {
-                    var _a;
+                const normalizeProjectReference = (value) => String(value !== null && value !== void 0 ? value : "").trim().replace(/\s+/g, " ").toLowerCase();
+                // Prefetch IDs and current month JSON so the import does not read each row back.
+                const fetchIdMap = async (listName, monthField, projects, targetProjectIds) => {
                     const map = new Map();
-                    try {
-                        // Use safeFetch to prevent 429
-                        const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items?$select=Id,ProjectId&$top=5000`, {
-                            headers: { Accept: "application/json;odata=verbose" }
+                    if (!targetProjectIds.size)
+                        return map;
+                    const fields = await getListFields(listName);
+                    const projectField = findField(fields, "Project");
+                    const referenceField = findField(fields, "ProjectReference");
+                    const projectIdField = projectField && (projectField.type === "Lookup" || projectField.type === "User")
+                        ? `${projectField.internalName}Id`
+                        : null;
+                    const referenceIdField = referenceField && (referenceField.type === "Lookup" || referenceField.type === "User")
+                        ? `${referenceField.internalName}Id`
+                        : null;
+                    const projectTextField = projectField && !projectIdField ? projectField.internalName : null;
+                    const referenceTextField = referenceField && !referenceIdField ? referenceField.internalName : null;
+                    const selectFields = Array.from(new Set([
+                        "Id", "Title", monthField, "ProjectId", projectIdField, referenceIdField,
+                        projectTextField, referenceTextField
+                    ].filter((field) => !!field)));
+                    const projectByTitle = new Map();
+                    projects.byReference.forEach((project, reference) => {
+                        const title = normalizeProjectReference(project.title);
+                        if (title && !projectByTitle.has(title))
+                            projectByTitle.set(title, project.id);
+                        const combinedTitle = normalizeProjectReference(`${reference} - ${project.title}`);
+                        if (combinedTitle && !projectByTitle.has(combinedTitle))
+                            projectByTitle.set(combinedTitle, project.id);
+                    });
+                    const listItemsUrl = `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items`;
+                    const processRows = (rows) => {
+                        rows.forEach((row) => {
+                            var _a, _b, _c, _d, _e;
+                            if (!row.Id)
+                                return;
+                            const linkedProjectId = [
+                                row.ProjectId,
+                                projectIdField ? row[projectIdField] : null,
+                                referenceIdField ? row[referenceIdField] : null
+                            ].map(Number).find(id => Number.isFinite(id) && projects.byId.has(id));
+                            const reference = referenceTextField ? row[referenceTextField] : null;
+                            const projectText = projectTextField ? row[projectTextField] : null;
+                            const projectId = (_e = (_b = linkedProjectId !== null && linkedProjectId !== void 0 ? linkedProjectId : (reference ? (_a = projects.byReference.get(normalizeProjectReference(reference))) === null || _a === void 0 ? void 0 : _a.id : undefined)) !== null && _b !== void 0 ? _b : (projectText
+                                ? (_d = (_c = projects.byReference.get(normalizeProjectReference(projectText))) === null || _c === void 0 ? void 0 : _c.id) !== null && _d !== void 0 ? _d : projectByTitle.get(normalizeProjectReference(projectText))
+                                : undefined)) !== null && _e !== void 0 ? _e : projectByTitle.get(normalizeProjectReference(row.Title));
+                            if (projectId !== undefined) {
+                                map.set(projectId, {
+                                    id: Number(row.Id),
+                                    monthData: parseMonthData(row[monthField])
+                                });
+                            }
                         });
-                        if (res.ok) {
+                    };
+                    const fetchQuery = async (query) => {
+                        var _a, _b;
+                        let url = `${listItemsUrl}?${query}`;
+                        while (url) {
+                            const res = await fetchMapPage(url);
+                            if (!res.ok)
+                                throw new Error(`Could not preload ${listName} rows (HTTP ${res.status}).`);
                             const data = await res.json();
-                            const results = ((_a = data.d) === null || _a === void 0 ? void 0 : _a.results) || [];
-                            results.forEach((r) => {
-                                if (r.ProjectId && r.Id)
-                                    map.set(Number(r.ProjectId), Number(r.Id));
+                            processRows(((_a = data.d) === null || _a === void 0 ? void 0 : _a.results) || []);
+                            url = ((_b = data.d) === null || _b === void 0 ? void 0 : _b.__next) || null;
+                        }
+                    };
+                    const fullQuery = `$select=${encodeURIComponent(selectFields.join(","))}&$top=5000`;
+                    try {
+                        const projectIds = Array.from(targetProjectIds);
+                        const buildIdQueries = (field, ids) => {
+                            const queries = [];
+                            for (let i = 0; i < ids.length; i += 80) {
+                                const clauses = ids.slice(i, i + 80).map(id => `${field} eq ${id}`);
+                                queries.push(`$select=${encodeURIComponent(selectFields.join(","))}` +
+                                    `&$filter=${encodeURIComponent(clauses.join(" or "))}&$top=5000`);
+                            }
+                            return queries;
+                        };
+                        const primaryProjectIdField = projectIdField || "ProjectId";
+                        await fetchMapQueries(buildIdQueries(primaryProjectIdField, projectIds), fetchQuery);
+                        const missingProjectIds = projectIds.filter(id => !map.has(id));
+                        if (referenceIdField && referenceIdField !== primaryProjectIdField && missingProjectIds.length) {
+                            await fetchMapQueries(buildIdQueries(referenceIdField, missingProjectIds), fetchQuery);
+                        }
+                        const missingProjects = Array.from(targetProjectIds)
+                            .filter(id => !map.has(id))
+                            .map(id => projects.byId.get(id))
+                            .filter((project) => !!project);
+                        if (missingProjects.length) {
+                            const referencesById = new Map();
+                            projects.byReference.forEach((project, reference) => {
+                                if (!targetProjectIds.has(project.id))
+                                    return;
+                                const references = referencesById.get(project.id) || [];
+                                references.push(reference);
+                                referencesById.set(project.id, references);
                             });
+                            const textFilters = new Map();
+                            const addTextFilterValues = (field, values) => {
+                                if (!field)
+                                    return;
+                                const fieldValues = textFilters.get(field) || new Set();
+                                values.filter(Boolean).forEach(value => fieldValues.add(value));
+                                textFilters.set(field, fieldValues);
+                            };
+                            addTextFilterValues(referenceTextField, missingProjects.flatMap(project => referencesById.get(project.id) || []));
+                            addTextFilterValues(projectTextField, missingProjects.map(project => project.title));
+                            addTextFilterValues("Title", missingProjects.flatMap(project => [
+                                project.title,
+                                ...(referencesById.get(project.id) || []).map(reference => `${reference} - ${project.title}`)
+                            ]));
+                            const textQueries = [];
+                            textFilters.forEach((values, field) => {
+                                const allValues = Array.from(values);
+                                for (let i = 0; i < allValues.length; i += 10) {
+                                    const clauses = allValues.slice(i, i + 10).map(value => `substringof('${value.replace(/'/g, "''")}', ${field})`);
+                                    textQueries.push(`$select=${encodeURIComponent(selectFields.join(","))}` +
+                                        `&$filter=${encodeURIComponent(clauses.join(" or "))}&$top=5000`);
+                                }
+                            });
+                            await fetchMapQueries(textQueries, fetchQuery);
                         }
                     }
-                    catch (e) {
-                        console.error(`Failed to fetch ID map for ${listName}`, e);
+                    catch (error) {
+                        map.clear();
+                        console.warn(`Filtered preload for ${listName} failed; retrying with a full list read.`, error);
+                        await fetchQuery(fullQuery);
                     }
                     return map;
+                };
+                const fetchProjectImportMap = async () => {
+                    var _a, _b;
+                    const fields = await getListFields(PROJECT_LIST);
+                    const referenceField = findField(fields, "ProjectReference");
+                    const referenceName = (referenceField === null || referenceField === void 0 ? void 0 : referenceField.internalName) || "ProjectReference";
+                    const isLookupReference = (referenceField === null || referenceField === void 0 ? void 0 : referenceField.type) === "Lookup" || (referenceField === null || referenceField === void 0 ? void 0 : referenceField.type) === "User";
+                    const selectFields = ["Id", "Title"];
+                    const expandFields = [];
+                    if (isLookupReference) {
+                        selectFields.push(`${referenceName}/Id`, `${referenceName}/Title`);
+                        expandFields.push(referenceName);
+                    }
+                    else {
+                        selectFields.push(referenceName);
+                    }
+                    const query = `$select=${encodeURIComponent(selectFields.join(","))}` +
+                        (expandFields.length ? `&$expand=${encodeURIComponent(expandFields.join(","))}` : "") +
+                        "&$top=5000&$orderby=Id desc";
+                    const byReference = new Map();
+                    const byId = new Map();
+                    let url = `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items?${query}`;
+                    while (url) {
+                        const res = await fetchMapPage(url);
+                        if (!res.ok)
+                            throw new Error(`Could not preload ${PROJECT_LIST} rows (HTTP ${res.status}).`);
+                        const data = await res.json();
+                        (((_a = data.d) === null || _a === void 0 ? void 0 : _a.results) || []).forEach((row) => {
+                            var _a, _b, _c;
+                            const rawReference = row[referenceName];
+                            const reference = rawReference && typeof rawReference === "object"
+                                ? (_b = (_a = rawReference.Title) !== null && _a !== void 0 ? _a : rawReference.Value) !== null && _b !== void 0 ? _b : ""
+                                : rawReference;
+                            const project = {
+                                id: Number(row.Id),
+                                title: String((_c = row.Title) !== null && _c !== void 0 ? _c : ""),
+                                monthData: {}
+                            };
+                            byId.set(project.id, project);
+                            const key = normalizeProjectReference(reference);
+                            if (key && !byReference.has(key))
+                                byReference.set(key, project);
+                        });
+                        url = ((_b = data.d) === null || _b === void 0 ? void 0 : _b.__next) || null;
+                    }
+                    return { byReference, byId };
+                };
+                const fetchProjectMonthData = async (projectsById, targetProjectIds) => {
+                    const targetIds = Array.from(targetProjectIds).filter(id => projectsById.has(id));
+                    if (!targetIds.length)
+                        return;
+                    const listItemsUrl = `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items`;
+                    const processRows = (rows) => {
+                        rows.forEach((row) => {
+                            const project = projectsById.get(Number(row.Id));
+                            if (project)
+                                project.monthData = parseMonthData(row.ProjectMonth);
+                        });
+                    };
+                    const fetchQuery = async (query) => {
+                        var _a, _b;
+                        let url = `${listItemsUrl}?${query}`;
+                        while (url) {
+                            const res = await fetchMapPage(url);
+                            if (!res.ok)
+                                throw new Error(`Could not preload ${PROJECT_LIST} month data (HTTP ${res.status}).`);
+                            const data = await res.json();
+                            processRows(((_a = data.d) === null || _a === void 0 ? void 0 : _a.results) || []);
+                            url = ((_b = data.d) === null || _b === void 0 ? void 0 : _b.__next) || null;
+                        }
+                    };
+                    try {
+                        const queries = [];
+                        for (let i = 0; i < targetIds.length; i += 80) {
+                            const clauses = targetIds.slice(i, i + 80).map(id => `Id eq ${id}`);
+                            queries.push(`$select=Id,ProjectMonth&$filter=${encodeURIComponent(clauses.join(" or "))}&$top=5000`);
+                        }
+                        await fetchMapQueries(queries, fetchQuery);
+                    }
+                    catch (error) {
+                        console.warn(`Filtered preload for ${PROJECT_LIST} month data failed; retrying with a full list read.`, error);
+                        targetIds.forEach(id => {
+                            const project = projectsById.get(id);
+                            if (project)
+                                project.monthData = {};
+                        });
+                        await fetchQuery("$select=Id,ProjectMonth&$top=5000&$orderby=Id desc");
+                    }
                 };
                 try {
                     const buf = await file.arrayBuffer();
@@ -29714,19 +30704,53 @@ const pageStyle = `
                         popupStatusList.innerHTML = "";
                     if (popupProgress)
                         popupProgress.style.display = "flex";
-                    // Pre-fetch all existing IDs in ONE bulk request per list (saves hours)
+                    // Pre-fetch project and child rows once instead of looking them up per Excel row.
                     console.log("Fetching existing item IDs...");
-                    const existingCollMap = await fetchIdMap(COLLECTION_LIST);
-                    const existingRevMap = await fetchIdMap(REVENUE_LIST);
-                    const existingInvMap = await fetchIdMap(INVOICING_LIST);
-                    const existingSeiMap = await fetchIdMap(SEIBIES_LIST);
-                    const existingInvtMap = await fetchIdMap(INVENTORY_LIST);
-                    // ⚡ 3. INCREASED BATCH SIZE (Safe because we removed duplicate queries)
-                    const BATCH_SIZE = 5;
-                    for (let i = 0; i < rows.length; i += BATCH_SIZE) {
-                        const batch = rows.slice(i, i + BATCH_SIZE);
+                    const projectMaps = await fetchProjectImportMap();
+                    const projectMonthDataById = projectMaps.byId;
+                    const targetProjectIds = new Set();
+                    rows.forEach(row => {
+                        const project = projectMaps.byReference.get(normalizeProjectReference(row.projectReference));
+                        if (project)
+                            targetProjectIds.add(project.id);
+                    });
+                    const [, existingCollMap, existingRevMap, existingInvMap, existingSeiMap, existingInvtMap] = await Promise.all([
+                        fetchProjectMonthData(projectMaps.byId, targetProjectIds),
+                        fetchIdMap(COLLECTION_LIST, "ReceivableValueMonth", projectMaps, targetProjectIds),
+                        fetchIdMap(REVENUE_LIST, "OBLMonth", projectMaps, targetProjectIds),
+                        fetchIdMap(INVOICING_LIST, "OBLMonth", projectMaps, targetProjectIds),
+                        fetchIdMap(SEIBIES_LIST, "OBLMonth", projectMaps, targetProjectIds),
+                        fetchIdMap(INVENTORY_LIST, "OBLMonth", projectMaps, targetProjectIds)
+                    ]);
+                    await Promise.all([
+                        getDigest(),
+                        getUserIdsByTitle(),
+                        ...[PROJECT_LIST, ...CHILD_LISTS].map(getListEntityType)
+                    ]);
+                    // Keep row processing aligned with the number of project changesets packed into one request.
+                    const BATCH_SIZE = PROJECT_GROUPS_PER_BATCH * MAX_ACTIVE_PROJECT_BATCHES;
+                    let rowIndex = 0;
+                    while (rowIndex < rows.length) {
+                        const batch = [];
+                        const batchProjectKeys = new Set();
+                        let nextRowIndex = rowIndex;
+                        while (nextRowIndex < rows.length && batch.length < BATCH_SIZE) {
+                            const row = rows[nextRowIndex];
+                            const referenceKey = normalizeProjectReference(row.projectReference);
+                            const existingProject = projectMaps.byReference.get(referenceKey);
+                            const batchProjectKey = existingProject
+                                ? `project:${existingProject.id}`
+                                : `reference:${referenceKey}`;
+                            if (referenceKey && batchProjectKeys.has(batchProjectKey))
+                                break;
+                            batch.push(row);
+                            if (referenceKey)
+                                batchProjectKeys.add(batchProjectKey);
+                            nextRowIndex++;
+                        }
+                        const batchStartIndex = rowIndex;
                         await Promise.all(batch.map(async (row) => {
-                            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+                            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
                             const refRaw = String((_a = row.projectReference) !== null && _a !== void 0 ? _a : "").trim();
                             if (!refRaw)
                                 return;
@@ -29738,7 +30762,7 @@ const pageStyle = `
                             if (missing.length) {
                                 const msg = "Missing mandatory field(s): " + missing.join(", ");
                                 importErrorRows.push({
-                                    rowNo: (_c = row.__rowNo) !== null && _c !== void 0 ? _c : (i + 2),
+                                    rowNo: (_c = row.__rowNo) !== null && _c !== void 0 ? _c : (batchStartIndex + 2),
                                     projectReference: ref,
                                     projectName: String((_d = row.projectName) !== null && _d !== void 0 ? _d : "").trim(),
                                     missing, message: msg, raw: (_e = row.__raw) !== null && _e !== void 0 ? _e : []
@@ -29750,106 +30774,100 @@ const pageStyle = `
                                 let projectId = null;
                                 let projectTitle = "";
                                 let isNew = false;
-                                const cached = resolvedProjectCache.get(refKey);
+                                let projectMonthData = {};
+                                const cached = resolvedProjectCache.get(refKey) || projectMaps.byReference.get(refKey);
                                 if (cached) {
                                     projectId = cached.id;
-                                    projectTitle = cached.title;
-                                }
-                                else {
-                                    const projData = await resolveProjectByRef(ref);
-                                    if (projData) {
-                                        projectId = projData.Id;
-                                        const storedTitle = String((_g = projData.Title) !== null && _g !== void 0 ? _g : "").trim();
-                                        const excelTitle = String((_h = row.projectName) !== null && _h !== void 0 ? _h : "").trim();
-                                        projectTitle = excelTitle !== "" ? excelTitle : storedTitle;
-                                        resolvedProjectCache.set(refKey, { id: projectId, title: projectTitle });
-                                        seenRefs.add(refKey);
-                                    }
+                                    const excelTitle = String((_g = row.projectName) !== null && _g !== void 0 ? _g : "").trim();
+                                    projectTitle = excelTitle !== "" ? excelTitle : String((_h = cached.title) !== null && _h !== void 0 ? _h : "").trim();
+                                    projectMonthData = cached.monthData;
+                                    resolvedProjectCache.set(refKey, cached);
                                 }
                                 if (projectId === null) {
-                                    if (seenRefs.has(refKey)) {
-                                        const again = await resolveProjectByRef(ref);
-                                        if (!again)
-                                            throw new Error(`Project "${ref}" was created earlier in this import but could not be re-resolved.`);
-                                        projectId = again.Id;
-                                        projectTitle = String((_j = again.Title) !== null && _j !== void 0 ? _j : "").trim();
-                                        resolvedProjectCache.set(refKey, { id: projectId, title: projectTitle });
-                                    }
-                                    else {
-                                        isNew = true;
-                                        projectTitle = String((_k = row.projectName) !== null && _k !== void 0 ? _k : "").trim();
-                                        const entityType = await getListEntityType(PROJECT_LIST);
-                                        const plPayload = { __metadata: { type: entityType } };
-                                        const plFields = await getListFields(PROJECT_LIST);
-                                        const writePL = (desired, value, isDate = false) => {
-                                            const f = findField(plFields, desired);
-                                            if (!f || f.type === "Lookup" || f.type === "User")
-                                                return;
-                                            if (isDate || f.type === "DateTime") {
-                                                plPayload[f.internalName] = fixSPDate(value);
-                                                return;
-                                            }
-                                            if (f.type === "Number" || f.type === "Currency") {
-                                                const n = parseNumText(value);
-                                                if (n !== null)
-                                                    plPayload[f.internalName] = n;
-                                            }
-                                            else if (value !== undefined && value !== null && String(value) !== "") {
-                                                plPayload[f.internalName] = String(value);
-                                            }
-                                        };
-                                        if (projectTitle !== "")
-                                            plPayload.Title = projectTitle;
-                                        writePL("ProjectReference", ref);
-                                        writePL("PC", row.profitCentre);
-                                        writePL("CustomerName", row.customerName);
-                                        writePL("NWC", row.nwc);
-                                        const currentProjectData = {
-                                            status: row.status || "",
-                                            contractualDeliveryDate: row.contractualDeliveryDate || "",
-                                            revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
-                                            prQuality: row.prQuality || "",
-                                            prSubmissionStatus: row.prSubmissionStatus || "",
-                                            prApprovalStatus: row.prApprovalStatus || "",
-                                            nwc: (_l = row.nwc) !== null && _l !== void 0 ? _l : 0
-                                        };
-                                        plPayload["ProjectMonth"] = JSON.stringify({ [currentMonthKey]: currentProjectData });
-                                        const byName = await getUserIdsByTitle();
-                                        const peopleDesired = [
-                                            ["GroupHead1", "groupHead"], ["ProjectManager", "projectManager"],
-                                            ["EnggLead", "enggLead"], ["EnggSubLead1", "engSubLead1"], ["EnggSubLead2", "engSubLead2"]
-                                        ];
-                                        peopleDesired.forEach(([desired, key]) => {
-                                            var _a;
-                                            const nm = String((_a = row[key]) !== null && _a !== void 0 ? _a : "").trim();
-                                            const f = findField(plFields, desired);
-                                            if (!f || f.type !== "User" || !nm)
-                                                return;
-                                            const uid = byName[nm.toLowerCase()];
-                                            if (uid)
-                                                plPayload[f.internalName + "Id"] = String(uid);
-                                        });
-                                        const createRes = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items`, {
-                                            method: "POST",
+                                    isNew = true;
+                                    projectTitle = String((_j = row.projectName) !== null && _j !== void 0 ? _j : "").trim();
+                                    const entityType = await getListEntityType(PROJECT_LIST);
+                                    const plPayload = { __metadata: { type: entityType } };
+                                    const plFields = await getListFields(PROJECT_LIST);
+                                    const writePL = (desired, value, isDate = false) => {
+                                        const f = findField(plFields, desired);
+                                        if (!f || f.type === "Lookup" || f.type === "User")
+                                            return;
+                                        if (isDate || f.type === "DateTime") {
+                                            plPayload[f.internalName] = fixSPDate(value);
+                                            return;
+                                        }
+                                        if (f.type === "Number" || f.type === "Currency") {
+                                            const n = parseNumText(value);
+                                            if (n !== null)
+                                                plPayload[f.internalName] = n;
+                                        }
+                                        else if (value !== undefined && value !== null && String(value) !== "") {
+                                            plPayload[f.internalName] = String(value);
+                                        }
+                                    };
+                                    if (projectTitle !== "")
+                                        plPayload.Title = projectTitle;
+                                    writePL("ProjectReference", ref);
+                                    writePL("PC", row.profitCentre);
+                                    writePL("CustomerName", row.customerName);
+                                    writePL("NWC", row.nwc);
+                                    const currentProjectData = {
+                                        status: row.status || "",
+                                        contractualDeliveryDate: row.contractualDeliveryDate || "",
+                                        revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
+                                        prQuality: row.prQuality || "",
+                                        prSubmissionStatus: row.prSubmissionStatus || "",
+                                        prApprovalStatus: row.prApprovalStatus || "",
+                                        nwc: (_k = row.nwc) !== null && _k !== void 0 ? _k : 0
+                                    };
+                                    plPayload["ProjectMonth"] = JSON.stringify({ [currentMonthKey]: currentProjectData });
+                                    const byName = await getUserIdsByTitle();
+                                    const peopleDesired = [
+                                        ["GroupHead1", "groupHead"], ["ProjectManager", "projectManager"],
+                                        ["EnggLead", "enggLead"], ["EnggSubLead1", "engSubLead1"], ["EnggSubLead2", "engSubLead2"]
+                                    ];
+                                    peopleDesired.forEach(([desired, key]) => {
+                                        var _a;
+                                        const nm = String((_a = row[key]) !== null && _a !== void 0 ? _a : "").trim();
+                                        const f = findField(plFields, desired);
+                                        if (!f || f.type !== "User" || !nm)
+                                            return;
+                                        const uid = byName[nm.toLowerCase()];
+                                        if (uid)
+                                            plPayload[f.internalName + "Id"] = String(uid);
+                                    });
+                                    const [createResult] = await sendProjectWriteBatch([{
+                                            url: `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items`,
                                             headers: {
                                                 Accept: "application/json;odata=verbose",
                                                 "Content-Type": "application/json;odata=verbose",
                                                 "X-RequestDigest": await getDigest()
                                             },
-                                            body: JSON.stringify(plPayload)
-                                        });
-                                        if (!createRes.ok)
-                                            throw new Error(`Could not create project: ${describeError(await createRes.text())}`);
-                                        const j = await createRes.json();
-                                        projectId = j.d.Id;
-                                        resolvedProjectCache.set(refKey, { id: projectId, title: projectTitle });
-                                        seenRefs.add(refKey);
+                                            body: JSON.stringify(plPayload),
+                                            id: null,
+                                            isNew: true
+                                        }]);
+                                    if (!(createResult === null || createResult === void 0 ? void 0 : createResult.success) || createResult.id === null) {
+                                        throw new Error(`Could not create project: ${(createResult === null || createResult === void 0 ? void 0 : createResult.error) || "SharePoint returned no new item ID."}`);
                                     }
+                                    projectId = createResult.id;
+                                    projectMonthData = parseMonthData(plPayload.ProjectMonth);
+                                    const createdProject = {
+                                        id: projectId,
+                                        title: projectTitle,
+                                        monthData: projectMonthData
+                                    };
+                                    resolvedProjectCache.set(refKey, createdProject);
+                                    projectMaps.byReference.set(refKey, createdProject);
+                                    projectMonthDataById.set(createdProject.id, createdProject);
                                 }
                                 if (projectId === null)
                                     throw new Error(`Could not resolve or create project "${ref}".`);
                                 const resolvedProjectId = projectId;
-                                const notes = [];
+                                const projectWrites = [];
+                                const childMapUpdates = [];
+                                let projectMonthUpdate = null;
                                 // 1. UPDATE PROJECT LIST
                                 if (!isNew) {
                                     const update = {};
@@ -29891,7 +30909,7 @@ const pageStyle = `
                                         if (uid)
                                             update[f.internalName + "Id"] = String(uid);
                                     });
-                                    const existingProjJson = await fetchExistingMonthJson(PROJECT_LIST, resolvedProjectId, "ProjectMonth");
+                                    const existingProjJson = Object.assign({}, (((_l = projectMonthDataById.get(resolvedProjectId)) === null || _l === void 0 ? void 0 : _l.monthData) || {}));
                                     existingProjJson[currentMonthKey] = {
                                         status: row.status || "",
                                         contractualDeliveryDate: row.contractualDeliveryDate || "",
@@ -29901,10 +30919,12 @@ const pageStyle = `
                                         prApprovalStatus: row.prApprovalStatus || "",
                                         nwc: (_m = row.nwc) !== null && _m !== void 0 ? _m : 0
                                     };
-                                    update["ProjectMonth"] = JSON.stringify(cleanOldMonths(existingProjJson));
+                                    const updatedProjectMonthData = cleanOldMonths(existingProjJson);
+                                    update["ProjectMonth"] = JSON.stringify(updatedProjectMonthData);
                                     if (Object.keys(update).length) {
-                                        const f = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items(${resolvedProjectId})`, {
-                                            method: "POST",
+                                        const projectEntityType = await getListEntityType(PROJECT_LIST);
+                                        const projectWriteIndex = projectWrites.push({
+                                            url: `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items(${resolvedProjectId})`,
                                             headers: {
                                                 Accept: "application/json;odata=verbose",
                                                 "Content-Type": "application/json;odata=verbose",
@@ -29912,10 +30932,11 @@ const pageStyle = `
                                                 "X-HTTP-Method": "MERGE",
                                                 "IF-MATCH": "*"
                                             },
-                                            body: JSON.stringify(Object.assign({ __metadata: { type: await getListEntityType(PROJECT_LIST) } }, update))
-                                        });
-                                        if (!f.ok)
-                                            notes.push("⚠ Project List update failed");
+                                            body: JSON.stringify(Object.assign({ __metadata: { type: projectEntityType } }, update)),
+                                            id: resolvedProjectId,
+                                            isNew: false
+                                        }) - 1;
+                                        projectMonthUpdate = { index: projectWriteIndex, monthData: updatedProjectMonthData };
                                     }
                                 }
                                 // 2. UPDATE COLLECTION LIST (Uses ID Map, No findChildRow)
@@ -29935,30 +30956,32 @@ const pageStyle = `
                                     if (typeof v === "number" && v !== 0)
                                         collValues[fieldKey] = v;
                                 });
-                                const collRowId = existingCollMap.get(resolvedProjectId);
-                                let existingCollJson = collRowId ? await fetchExistingMonthJson(COLLECTION_LIST, collRowId, "ReceivableValueMonth") : {};
+                                const collRow = existingCollMap.get(resolvedProjectId);
+                                const collRowId = (_o = collRow === null || collRow === void 0 ? void 0 : collRow.id) !== null && _o !== void 0 ? _o : null;
+                                const existingCollJson = Object.assign({}, ((collRow === null || collRow === void 0 ? void 0 : collRow.monthData) || {}));
                                 existingCollJson[currentMonthKey] = currentReceivableData;
-                                collValues["ReceivableValueMonth"] = JSON.stringify(cleanOldMonths(existingCollJson));
-                                const collRes = await upsertRow({
+                                const updatedCollMonthData = cleanOldMonths(existingCollJson);
+                                collValues["ReceivableValueMonth"] = JSON.stringify(updatedCollMonthData);
+                                const collWriteIndex = projectWrites.push(await prepareUpsertRow({
                                     listName: COLLECTION_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-                                    values: collValues, rowId: collRowId
-                                });
-                                if (!collRes.success)
-                                    notes.push("⚠ Collection List update failed");
+                                    values: collValues, rowId: collRowId, assumeNew: isNew
+                                })) - 1;
+                                childMapUpdates.push({ index: collWriteIndex, map: existingCollMap, monthData: updatedCollMonthData });
                                 // 3. UPDATE REVENUE FORECAST LIST (Uses ID Map)
                                 if (typeof row.obl === "number" || typeof row.obl === "string") {
-                                    const revRowId = existingRevMap.get(resolvedProjectId);
-                                    let existingRevJson = revRowId ? await fetchExistingMonthJson(REVENUE_LIST, revRowId, "OBLMonth") : {};
+                                    const revRow = existingRevMap.get(resolvedProjectId);
+                                    const revRowId = (_p = revRow === null || revRow === void 0 ? void 0 : revRow.id) !== null && _p !== void 0 ? _p : null;
+                                    const existingRevJson = Object.assign({}, ((revRow === null || revRow === void 0 ? void 0 : revRow.monthData) || {}));
                                     existingRevJson[currentMonthKey] = row.obl || 0;
-                                    const revValues = { OBLMonth: JSON.stringify(cleanOldMonths(existingRevJson)) };
+                                    const updatedRevMonthData = cleanOldMonths(existingRevJson);
+                                    const revValues = { OBLMonth: JSON.stringify(updatedRevMonthData) };
                                     if (typeof row.obl === "number" && row.obl !== 0)
                                         revValues["OBL"] = row.obl;
-                                    const revRes = await upsertRow({
+                                    const revWriteIndex = projectWrites.push(await prepareUpsertRow({
                                         listName: REVENUE_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-                                        values: revValues, rowId: revRowId
-                                    });
-                                    if (!revRes.success)
-                                        notes.push("⚠ Revenue Forecast List update failed");
+                                        values: revValues, rowId: revRowId, assumeNew: isNew
+                                    })) - 1;
+                                    childMapUpdates.push({ index: revWriteIndex, map: existingRevMap, monthData: updatedRevMonthData });
                                 }
                                 // 4. UPDATE OTHER SINGLE TABLES (Uses ID Maps)
                                 const singleTables = [
@@ -29968,35 +30991,72 @@ const pageStyle = `
                                 ];
                                 for (const { listName, excelKey, jsonColName, map } of singleTables) {
                                     const v = row[excelKey];
-                                    const rowId = map.get(resolvedProjectId);
-                                    let existingJson = rowId ? await fetchExistingMonthJson(listName, rowId, jsonColName) : {};
+                                    const existingRow = map.get(resolvedProjectId);
+                                    const rowId = (_q = existingRow === null || existingRow === void 0 ? void 0 : existingRow.id) !== null && _q !== void 0 ? _q : null;
+                                    const existingJson = Object.assign({}, ((existingRow === null || existingRow === void 0 ? void 0 : existingRow.monthData) || {}));
                                     existingJson[currentMonthKey] = v || 0;
-                                    const values = { [jsonColName]: JSON.stringify(cleanOldMonths(existingJson)) };
+                                    const updatedMonthData = cleanOldMonths(existingJson);
+                                    const values = { [jsonColName]: JSON.stringify(updatedMonthData) };
                                     if (typeof v === "number" && v !== 0)
                                         values["OBL"] = v;
-                                    const ur = await upsertRow({
+                                    const writeIndex = projectWrites.push(await prepareUpsertRow({
                                         listName, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-                                        values, rowId: rowId
-                                    });
-                                    if (!ur.success)
-                                        notes.push(`⚠ ${listName} update failed`);
+                                        values, rowId, assumeNew: isNew
+                                    })) - 1;
+                                    childMapUpdates.push({ index: writeIndex, map, monthData: updatedMonthData });
+                                }
+                                const batchResults = await sendProjectWriteBatch(projectWrites);
+                                childMapUpdates.forEach(({ index, map, monthData }) => {
+                                    const result = batchResults[index];
+                                    if ((result === null || result === void 0 ? void 0 : result.success) && result.id !== null && result.id !== undefined) {
+                                        map.set(resolvedProjectId, { id: result.id, monthData });
+                                    }
+                                });
+                                if (projectMonthUpdate && ((_r = batchResults[projectMonthUpdate.index]) === null || _r === void 0 ? void 0 : _r.success)) {
+                                    const projectSnapshot = projectMonthDataById.get(resolvedProjectId);
+                                    if (projectSnapshot)
+                                        projectSnapshot.monthData = projectMonthUpdate.monthData;
+                                }
+                                const failedWrite = batchResults.find(result => !result.success);
+                                if (failedWrite) {
+                                    throw new Error(`One or more SharePoint writes failed (${failedWrite.error || "unknown error"}); ` +
+                                        "other writes in this row may already have succeeded. Re-import the row to retry.");
                                 }
                                 const baseMsg = isNew ? "New project created." : "Existing project updated.";
-                                addStatusRow(isNew ? "created" : "updated", ref, projectTitle, notes.length ? baseMsg + " " + notes.join(" ") : baseMsg);
+                                addStatusRow(isNew ? "created" : "updated", ref, projectTitle, baseMsg);
                             }
                             catch (err) {
                                 console.error("Error processing row:", row, err);
                                 const msg = describeError(err instanceof Error ? err.message : err);
                                 importErrorRows.push({
-                                    rowNo: (_o = row.__rowNo) !== null && _o !== void 0 ? _o : (i + 2), projectReference: ref,
-                                    projectName: String((_p = row.projectName) !== null && _p !== void 0 ? _p : "").trim(), missing: [], message: msg, raw: (_q = row.__raw) !== null && _q !== void 0 ? _q : []
+                                    rowNo: (_s = row.__rowNo) !== null && _s !== void 0 ? _s : (batchStartIndex + 2), projectReference: ref,
+                                    projectName: String((_t = row.projectName) !== null && _t !== void 0 ? _t : "").trim(), missing: [], message: msg, raw: (_u = row.__raw) !== null && _u !== void 0 ? _u : []
                                 });
-                                addStatusRow("error", ref, String((_r = row.projectName) !== null && _r !== void 0 ? _r : ""), msg);
+                                addStatusRow("error", ref, String((_v = row.projectName) !== null && _v !== void 0 ? _v : ""), msg);
                             }
                         }));
+                        rowIndex = nextRowIndex;
                         // Let the browser UI breathe
-                        await new Promise(resolve => setTimeout(resolve, 100));
+                        await new Promise(resolve => setTimeout(resolve, 25));
                     }
+                    console.info("[Master import] Batch summary", {
+                        rows: total,
+                        elapsedSeconds: Math.round((Date.now() - importStartedAt) / 1000),
+                        batchGroups: PROJECT_GROUPS_PER_BATCH,
+                        maxConcurrentBatches: MAX_ACTIVE_PROJECT_BATCHES,
+                        finalConcurrentBatches: activeProjectBatchLimit,
+                        throttleEvents: projectBatchThrottleCount,
+                        httpRequests: projectBatchRequestCount,
+                        operationsSent: projectBatchOperationsSent,
+                        averageOperationsPerRequest: projectBatchRequestCount
+                            ? Number((projectBatchOperationsSent / projectBatchRequestCount).toFixed(1))
+                            : 0,
+                        averageRequestMs: projectBatchRequestCount
+                            ? Math.round(projectBatchRequestTimeMs / projectBatchRequestCount)
+                            : 0,
+                        preloadHttpRequests: projectMapRequestCount,
+                        preloadRequestTimeMs: projectMapRequestTimeMs
+                    });
                     if (popupProgress)
                         popupProgress.style.display = "none";
                     if (popupResults)
@@ -30367,6 +31427,8 @@ const pageStyle = `
             const boot = async () => {
                 lockTitlesWhite();
                 await loadMaster();
+                if (window.__dtActivePageKey !== 'master')
+                    return;
                 if (!AUTO_SYNC_ON_LOAD)
                     return;
                 if (autoSyncDone)
@@ -30735,6 +31797,8 @@ const procurementContent = `
     content: procurementContent,
     script: () => {
         setTimeout(async () => {
+            if (window.__dtActivePageKey !== 'procurement')
+                return;
             // Configuration
             const siteUrl = typeof _spPageContextInfo !== "undefined"
                 ? _spPageContextInfo.webAbsoluteUrl
@@ -34202,6 +35266,7 @@ class ManagerLookup {
         this.container = container;
         this.siteUrl = siteUrl;
         this.groupName = groupName;
+        this.signal = options === null || options === void 0 ? void 0 : options.signal;
         this.onSelect = options === null || options === void 0 ? void 0 : options.onSelect;
         this.onClear = options === null || options === void 0 ? void 0 : options.onClear;
         this.searchInput = container.querySelector('.manager-search-input');
@@ -34244,6 +35309,7 @@ class ManagerLookup {
         });
     }
     async search() {
+        var _a;
         const searchTerm = this.searchInput.value.trim();
         if (searchTerm.length < 2) {
             // Show inline hint instead of Swal
@@ -34257,6 +35323,8 @@ class ManagerLookup {
             this.displaySuggestions(managers);
         }
         catch (error) {
+            if ((_a = this.signal) === null || _a === void 0 ? void 0 : _a.aborted)
+                return;
             console.error('Error searching managers:', error);
             this.suggestionsDiv.innerHTML =
                 '<div class="manager-suggestion-item" style="color:#d13438;">Search failed. Please try again.</div>';
@@ -34276,7 +35344,8 @@ class ManagerLookup {
                 headers: {
                     'Accept': 'application/json;odata=verbose',
                     'Content-Type': 'application/json;odata=verbose'
-                }
+                },
+                signal: this.signal
             });
             if (res.ok) {
                 const data = await res.json();
@@ -34295,7 +35364,8 @@ class ManagerLookup {
             headers: {
                 'Accept': 'application/json;odata=verbose',
                 'Content-Type': 'application/json;odata=verbose'
-            }
+            },
+            signal: this.signal
         });
         if (!res.ok)
             throw new Error(`HTTP error! status: ${res.status}`);
@@ -35051,6 +36121,8 @@ const projectContent = `
 .pimp-table tr:nth-child(even) { background: #fafafa; }
 .pimp-badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:600; }
 .pimp-badge-add { background:#d4edda; color:#155724; }
+.pimp-badge-update { background:#cce5ff; color:#004085; }
+.pimp-badge-skip { background:#e2e3e5; color:#383d41; }
 .pimp-badge-err { background:#f8d7da; color:#721c24; }
 .pimp-actions { display:flex; justify-content:flex-end; gap:10px; margin-top:14px; flex-wrap:wrap; }
 .pimp-status { margin-top: 12px; font-size: 13px; white-space: pre-line; }
@@ -35066,8 +36138,8 @@ const projectContent = `
 @media (max-width:768px){
   .form-group { flex:1 1 100%; }
   .manager-lookup { flex-direction: column; }
-  .manager-lookup button { width: 100%; }
-  .modern-table { font-size: 12px; }
+  .manager-lookup button { width: 100%; }                
+  .modern-table { font-size: 12px; }       
   .modern-table th, .modern-table td { padding: 6px; }
   .pagination-controls { gap: 8px; }
   .pagination button { padding: 5px 9px; font-size: 13px; }
@@ -35538,6 +36610,20 @@ const projectContent = `
 `,
     script: () => {
         setTimeout(async () => {
+            if (window.__dtActivePageKey !== 'project')
+                return;
+            const projectReadController = new AbortController();
+            const isProjectActive = () => !projectReadController.signal.aborted && window.__dtActivePageKey === 'project';
+            const handleProjectDeactivation = (event) => {
+                const detail = event.detail;
+                if ((detail === null || detail === void 0 ? void 0 : detail.pageKey) !== 'project')
+                    return;
+                projectReadController.abort();
+                document.querySelectorAll('.pj-loading-overlay').forEach(overlay => overlay.remove());
+                document.removeEventListener('dt-page-deactivated', handleProjectDeactivation);
+            };
+            document.addEventListener('dt-page-deactivated', handleProjectDeactivation);
+            const fetchProjectRead = (input, init = {}) => fetch(input, Object.assign(Object.assign({}, init), { signal: projectReadController.signal }));
             // ============================================
             // LOAD SWEETALERT2 (SharePoint-safe CDN loader)
             // ============================================
@@ -35581,7 +36667,7 @@ const projectContent = `
                 return overlay;
             };
             const removeLoadingOverlay = () => {
-                document.querySelectorAll(".pj-loading-overlay, .loading-overlay").forEach(el => el.remove());
+                document.querySelectorAll(".pj-loading-overlay").forEach(el => el.remove());
             };
             const loaderHost = () => {
                 const sections = Array.from(document.querySelectorAll('.table-section, .form-section'));
@@ -35610,18 +36696,21 @@ const projectContent = `
             catch (error) {
                 console.error('❌ Auth initialization failed:', error);
             }
+            if (!isProjectActive())
+                return;
             removeLoadingOverlay();
             // ============================================
             // MANAGER LOOKUP INSTANCES
             // ============================================
-            const groupHeadLookup = new ManagerLookup(document.querySelector('#groupHeadLookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.GroupHead1);
-            const projectManagerLookup = new ManagerLookup(document.querySelector('#projectManagerLookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.ProjectManager);
-            const enggLeadLookup = new ManagerLookup(document.querySelector('#enggLeadLookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.EnggLead);
-            const enggSubLead1Lookup = new ManagerLookup(document.querySelector('#enggSubLead1Lookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.EnggSubLead1);
-            const enggSubLead2Lookup = new ManagerLookup(document.querySelector('#enggSubLead2Lookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.EnggSubLead2);
-            const enggManagersLookup = new ManagerLookup(document.querySelector('#enggManagersLookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.EngineeringManagers);
-            const scmLookup = new ManagerLookup(document.querySelector('#scmLookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.SCM);
-            const controllingLookup = new ManagerLookup(document.querySelector('#controllingLookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.Controlling);
+            const lookupOptions = { signal: projectReadController.signal };
+            const groupHeadLookup = new ManagerLookup(document.querySelector('#groupHeadLookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.GroupHead1, lookupOptions);
+            const projectManagerLookup = new ManagerLookup(document.querySelector('#projectManagerLookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.ProjectManager, lookupOptions);
+            const enggLeadLookup = new ManagerLookup(document.querySelector('#enggLeadLookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.EnggLead, lookupOptions);
+            const enggSubLead1Lookup = new ManagerLookup(document.querySelector('#enggSubLead1Lookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.EnggSubLead1, lookupOptions);
+            const enggSubLead2Lookup = new ManagerLookup(document.querySelector('#enggSubLead2Lookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.EnggSubLead2, lookupOptions);
+            const enggManagersLookup = new ManagerLookup(document.querySelector('#enggManagersLookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.EngineeringManagers, lookupOptions);
+            const scmLookup = new ManagerLookup(document.querySelector('#scmLookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.SCM, lookupOptions);
+            const controllingLookup = new ManagerLookup(document.querySelector('#controllingLookup'), siteUrl, _auth__WEBPACK_IMPORTED_MODULE_4__.ROLE_GROUP_NAMES.Controlling, lookupOptions);
             const managerLookups = {
                 groupHead: groupHeadLookup,
                 projectManager: projectManagerLookup,
@@ -35766,45 +36855,73 @@ const projectContent = `
             // FETCH MANAGER DETAILS (Fallback)
             // ============================================
             const fetchManagerDetails = async (projects) => {
-                for (const project of projects) {
-                    const managerFields = [
-                        { id: 'GroupHead1Id', field: 'GroupHead1' },
-                        { id: 'ProjectManagerId', field: 'ProjectManager' },
-                        { id: 'EnggLeadId', field: 'EnggLead' },
-                        { id: 'EnggSubLead1Id', field: 'EnggSubLead1' },
-                        { id: 'EnggSubLead2Id', field: 'EnggSubLead2' },
-                        { id: 'EngineeringManagersId', field: 'EngineeringManagers' },
-                        { id: 'SCMId', field: 'SCM' },
-                        { id: 'ControllingId', field: 'Controlling' }
-                    ];
-                    for (const { id, field } of managerFields) {
-                        const managerId = project[id];
-                        if (managerId && !project[field]) {
-                            try {
-                                const managerRes = await fetch(`${siteUrl}/_api/web/getuserbyid(${managerId})?$select=Id,Title,Email`, { headers: { 'Accept': 'application/json;odata=verbose' } });
-                                if (managerRes.ok) {
-                                    const managerData = await managerRes.json();
-                                    project[field] = {
-                                        Id: managerData.d.Id,
-                                        Title: managerData.d.Title,
-                                        Email: managerData.d.Email || ''
-                                    };
-                                }
-                            }
-                            catch (error) {
-                                console.warn(`Could not fetch manager details for ${field} ID ${managerId}:`, error);
+                const managerFields = [
+                    { id: 'GroupHead1Id', field: 'GroupHead1' },
+                    { id: 'ProjectManagerId', field: 'ProjectManager' },
+                    { id: 'EnggLeadId', field: 'EnggLead' },
+                    { id: 'EnggSubLead1Id', field: 'EnggSubLead1' },
+                    { id: 'EnggSubLead2Id', field: 'EnggSubLead2' },
+                    { id: 'EngineeringManagersId', field: 'EngineeringManagers' },
+                    { id: 'SCMId', field: 'SCM' },
+                    { id: 'ControllingId', field: 'Controlling' }
+                ];
+                const managerIdSet = new Set();
+                projects.forEach(project => {
+                    managerFields.forEach(({ id, field }) => {
+                        const managerId = Number(project[id]);
+                        if (project[id] && !project[field] && Number.isFinite(managerId)) {
+                            managerIdSet.add(managerId);
+                        }
+                    });
+                });
+                const managerIds = Array.from(managerIdSet);
+                const managersById = new Map();
+                let nextManagerIndex = 0;
+                const loadNextManager = async () => {
+                    while (isProjectActive() && nextManagerIndex < managerIds.length) {
+                        const managerId = managerIds[nextManagerIndex++];
+                        try {
+                            const managerRes = await fetchProjectRead(`${siteUrl}/_api/web/getuserbyid(${managerId})?$select=Id,Title,Email`, { headers: { 'Accept': 'application/json;odata=verbose' } });
+                            if (!isProjectActive())
+                                return;
+                            if (!managerRes.ok)
+                                continue;
+                            const managerData = await managerRes.json();
+                            managersById.set(managerId, {
+                                Id: managerData.d.Id,
+                                Title: managerData.d.Title,
+                                Email: managerData.d.Email || ''
+                            });
+                        }
+                        catch (error) {
+                            if (isProjectActive()) {
+                                console.warn(`Could not fetch manager details for ID ${managerId}:`, error);
                             }
                         }
                     }
+                };
+                const workerCount = Math.min(8, managerIds.length);
+                await Promise.all(Array.from({ length: workerCount }, () => loadNextManager()));
+                if (!isProjectActive())
+                    return;
+                for (const project of projects) {
+                    managerFields.forEach(({ id, field }) => {
+                        if (project[id] && !project[field]) {
+                            project[field] = managersById.get(Number(project[id])) || project[field];
+                        }
+                    });
                 }
             };
             // ============================================
             // FETCH PROJECTS
             // ============================================
             const fetchProjects = async (isBackground = false) => {
+                if (!isProjectActive())
+                    return;
+                let loading = null;
                 if (!isBackground) {
                     showTableLoader("Loading projects…");
-                    const loading = createLoadingOverlay("Loading projects…");
+                    loading = createLoadingOverlay("Loading projects…");
                     loaderHost().appendChild(loading);
                 }
                 try {
@@ -35824,27 +36941,34 @@ const projectContent = `
                         'Controlling/Id', 'Controlling/Title', 'Controlling/Email'
                     ].join(',');
                     const query = `$select=${selectFields}&$expand=${expandFields}&$top=5000&$orderby=Id desc`;
-                    const res = await fetch(`${apiBase}?${query}`, {
+                    const res = await fetchProjectRead(`${apiBase}?${query}`, {
                         headers: { 'Accept': 'application/json;odata=verbose', 'Content-Type': 'application/json;odata=verbose' }
                     });
+                    if (!isProjectActive())
+                        return;
                     let rawProjects = [];
                     if (!res.ok) {
-                        const res2 = await fetch(`${apiBase}?$select=${selectFields}&$top=5000&$orderby=Id desc`, {
+                        const res2 = await fetchProjectRead(`${apiBase}?$select=${selectFields}&$top=5000&$orderby=Id desc`, {
                             headers: { 'Accept': 'application/json;odata=verbose', 'Content-Type': 'application/json;odata=verbose' }
                         });
+                        if (!isProjectActive())
+                            return;
                         if (res2.ok) {
                             const data2 = await res2.json();
+                            if (!isProjectActive())
+                                return;
                             rawProjects = data2.d.results || [];
                         }
                     }
                     else {
                         const data = await res.json();
+                        if (!isProjectActive())
+                            return;
                         rawProjects = data.d.results || [];
                     }
-                    const hasExpandedData = rawProjects.some(p => p.ProjectManager && p.ProjectManager.Title);
-                    if (!hasExpandedData) {
-                        await fetchManagerDetails(rawProjects);
-                    }
+                    if (!isProjectActive())
+                        return;
+                    const needsManagerFallback = !rawProjects.some(p => p.ProjectManager && p.ProjectManager.Title);
                     projectData = rawProjects;
                     filteredData = (0,_auth__WEBPACK_IMPORTED_MODULE_4__.getAssignedProjects)(projectData);
                     if (!isBackground)
@@ -35872,16 +36996,32 @@ const projectContent = `
                         exportBtnEl.style.display = canExport ? '' : 'none';
                         exportBtnEl.disabled = !canExport;
                     }
+                    if (needsManagerFallback) {
+                        void fetchManagerDetails(rawProjects).then(() => {
+                            if (!isProjectActive())
+                                return;
+                            if (searchInput.value.trim())
+                                applySearchAndFilter();
+                            else
+                                renderTable(filteredData);
+                        }).catch(error => {
+                            if (isProjectActive()) {
+                                console.error('Error loading project manager details:', error);
+                            }
+                        });
+                    }
                 }
                 catch (err) {
-                    console.error("Error fetching projects:", err);
-                    if (!isBackground)
-                        toast("Error fetching projects.", "error");
+                    if (isProjectActive()) {
+                        console.error("Error fetching projects:", err);
+                        if (!isBackground)
+                            toast("Error fetching projects.", "error");
+                    }
                 }
                 finally {
                     if (!isBackground) {
                         hideTableLoader();
-                        removeLoadingOverlay();
+                        loading === null || loading === void 0 ? void 0 : loading.remove();
                     }
                 }
             };
@@ -36589,7 +37729,7 @@ const projectContent = `
                 return payload;
             };
             /** Per-row validation. Returns a list of human-readable problems. */
-            const validateImportRow = (payload, existingRefsLower) => {
+            const validateImportRow = (payload, existingProjectsByRef, duplicateInFile) => {
                 const missing = [];
                 if (!payload.PC)
                     missing.push('Profit Centre');
@@ -36606,10 +37746,32 @@ const projectContent = `
                 if (missing.length)
                     return [`Missing: ${missing.join(', ')}`];
                 const ref = String(payload.ProjectReference).trim().toLowerCase();
-                if (existingRefsLower.has(ref)) {
-                    return [`Project Reference "${payload.ProjectReference}" already exists`];
+                if (duplicateInFile) {
+                    return [`Project Reference "${payload.ProjectReference}" appears more than once in the uploaded file`];
+                }
+                const existing = existingProjectsByRef.get(ref);
+                if (existing && importRowHasChanges(payload, existing) && !hasEditPermission()) {
+                    return ['Updating existing projects requires administrator permission'];
                 }
                 return [];
+            };
+            const importRowHasChanges = (payload, existing) => {
+                var _a, _b;
+                const textFields = ['PC', 'CustomerName', 'Title'];
+                if (textFields.some(field => { var _a, _b; return String((_a = payload[field]) !== null && _a !== void 0 ? _a : '').trim() !== String((_b = existing[field]) !== null && _b !== void 0 ? _b : '').trim(); }))
+                    return true;
+                if (String((_a = payload.ProjectReference) !== null && _a !== void 0 ? _a : '').trim().toLowerCase() !==
+                    String((_b = existing.ProjectReference) !== null && _b !== void 0 ? _b : '').trim().toLowerCase())
+                    return true;
+                return ROLE_COLS.some(({ field }) => {
+                    const incomingId = payload[field] === '' || payload[field] === null || payload[field] === undefined
+                        ? null
+                        : Number(payload[field]);
+                    const existingId = existing[field] === '' || existing[field] === null || existing[field] === undefined
+                        ? null
+                        : Number(existing[field]);
+                    return incomingId !== existingId;
+                });
             };
             let currentPreviewRows = [];
             /** Render the preview table + error-download button. */
@@ -36641,7 +37803,11 @@ const projectContent = `
                     const isErr = row.__status === 'error';
                     const badge = isErr
                         ? `<span class="pimp-badge pimp-badge-err" title="${esc(row.__error)}">Error</span>`
-                        : `<span class="pimp-badge pimp-badge-add">Add</span>`;
+                        : row.__status === 'updated'
+                            ? '<span class="pimp-badge pimp-badge-update">Update</span>'
+                            : row.__status === 'unchanged'
+                                ? '<span class="pimp-badge pimp-badge-skip">Unchanged</span>'
+                                : '<span class="pimp-badge pimp-badge-add">Add</span>';
                     const cells = IMPORT_HEADERS.map(header => {
                         const isRoleCol = ROLE_COLS.some(rc => rc.header === header);
                         if (isErr && isRoleCol) {
@@ -36742,6 +37908,7 @@ const projectContent = `
              */
             /** Handle an uploaded file: header check → per-row validation → preview. */
             const handleImportFile = async (file) => {
+                var _a;
                 const statusEl = document.querySelector('.pimp-status');
                 if (statusEl) {
                     statusEl.textContent = '';
@@ -36754,7 +37921,7 @@ const projectContent = `
                     const buf = await file.arrayBuffer();
                     wb = xlsx__WEBPACK_IMPORTED_MODULE_5__.read(buf);
                 }
-                catch (_a) {
+                catch (_b) {
                     showImportError('Could not read the file. Make sure it is a valid .xlsx or .xls file.');
                     return;
                 }
@@ -36785,31 +37952,47 @@ const projectContent = `
                     return;
                 }
                 await ensureEmployeesLoaded();
-                const existingRefsLower = new Set(projectData
-                    .map(p => { var _a; return String((_a = p.ProjectReference) !== null && _a !== void 0 ? _a : '').trim().toLowerCase(); })
-                    .filter(Boolean));
+                const existingProjectsByRef = new Map();
+                projectData.forEach(project => {
+                    var _a;
+                    const ref = String((_a = project.ProjectReference) !== null && _a !== void 0 ? _a : '').trim().toLowerCase();
+                    if (ref && !existingProjectsByRef.has(ref))
+                        existingProjectsByRef.set(ref, project);
+                });
+                const uploadedRefsLower = new Set();
                 const previewRows = [];
-                let addCount = 0, errCount = 0;
+                let addCount = 0, updateCount = 0, unchangedCount = 0, errCount = 0;
                 for (const raw of rawRows) {
                     const payload = mapImportRowToPayload(raw);
-                    const problems = validateImportRow(payload, existingRefsLower);
+                    const ref = String((_a = payload.ProjectReference) !== null && _a !== void 0 ? _a : '').trim().toLowerCase();
+                    const duplicateInFile = !!ref && uploadedRefsLower.has(ref);
+                    if (ref)
+                        uploadedRefsLower.add(ref);
+                    const problems = validateImportRow(payload, existingProjectsByRef, duplicateInFile);
                     if (problems.length) {
                         previewRows.push(Object.assign(Object.assign({}, blankRoleCellsOnError(payload)), { __status: 'error', __error: problems.join(' | ') }));
                         errCount++;
                     }
                     else {
-                        previewRows.push(Object.assign(Object.assign({}, payload), { __status: 'added', __error: '' }));
-                        addCount++;
-                        existingRefsLower.add(String(payload.ProjectReference).trim().toLowerCase());
+                        const existing = existingProjectsByRef.get(ref);
+                        const status = !existing ? 'added' : importRowHasChanges(payload, existing) ? 'updated' : 'unchanged';
+                        previewRows.push(Object.assign(Object.assign(Object.assign({}, payload), { __status: status, __error: '' }), (existing ? { __existingId: existing.Id } : {})));
+                        if (status === 'added')
+                            addCount++;
+                        else if (status === 'updated')
+                            updateCount++;
+                        else
+                            unchangedCount++;
                     }
                 }
                 renderImportPreview(previewRows);
                 if (errCount) {
-                    showImportError(`Preview ready — ${addCount} valid, ${errCount} error${errCount === 1 ? '' : 's'}. ` +
+                    showImportError(`Preview ready — ${addCount} to add, ${updateCount} to update, ${unchangedCount} unchanged, ` +
+                        `${errCount} error${errCount === 1 ? '' : 's'}. ` +
                         `Errored rows have their role cells cleared. Use "Download Error List" to save them.`);
                 }
                 else {
-                    showImportSuccess(`Preview ready — all ${addCount} row${addCount === 1 ? '' : 's'} valid. Click Import to save them.`);
+                    showImportSuccess(`Preview ready — ${addCount} to add, ${updateCount} to update, ${unchangedCount} unchanged. Click Import to save changes.`);
                 }
             };
             /** Bind the modal's file input + drag-drop to handleImportFile. */
@@ -36852,9 +38035,11 @@ const projectContent = `
                     return;
                 try {
                     let users = [];
-                    const res = await fetch(`${siteUrl}/_api/web/siteusers?$filter=PrincipalType eq 1&$top=5000&$orderby=Title`, {
+                    const res = await fetchProjectRead(`${siteUrl}/_api/web/siteusers?$filter=PrincipalType eq 1&$top=5000&$orderby=Title`, {
                         headers: { 'Accept': 'application/json;odata=verbose', 'Content-Type': 'application/json;odata=verbose' }
                     });
+                    if (!isProjectActive())
+                        return;
                     if (res.ok) {
                         const data = await res.json();
                         users = ((_a = data.d) === null || _a === void 0 ? void 0 : _a.results) || [];
@@ -36866,7 +38051,8 @@ const projectContent = `
                     allEmployeesLoaded = true;
                 }
                 catch (error) {
-                    console.error('Error loading employees:', error);
+                    if (isProjectActive())
+                        console.error('Error loading employees:', error);
                 }
             };
             const matchEmployee = (value) => {
@@ -36893,12 +38079,15 @@ const projectContent = `
                 const low = v.toLowerCase();
                 return allEmployees.find(e => (e.title && e.title.toLowerCase().includes(low)) || (e.email && e.email.toLowerCase().includes(low))) || null;
             };
-            const writeProjectRow = async (payload) => {
+            const writeProjectRow = async (payload, existingId) => {
+                var _a;
                 try {
                     const ref = (payload.ProjectReference || '').trim().toLowerCase();
                     const existing = projectData.find(p => (p.ProjectReference || '').trim().toLowerCase() === ref);
-                    if (existing) {
-                        return { ok: false, mode: 'error', error: 'Project Reference already exists' };
+                    const rowId = (_a = existing === null || existing === void 0 ? void 0 : existing.Id) !== null && _a !== void 0 ? _a : existingId;
+                    const isUpdate = rowId !== undefined && rowId !== null;
+                    if (isUpdate && !hasEditPermission()) {
+                        return { ok: false, mode: 'error', error: 'Updating existing projects requires administrator permission' };
                     }
                     const digest = await getDigest();
                     const entityType = await getEntityType();
@@ -36907,6 +38096,10 @@ const projectContent = `
                         'Content-Type': 'application/json;odata=verbose',
                         'X-RequestDigest': digest
                     };
+                    if (isUpdate) {
+                        headers['X-HTTP-Method'] = 'MERGE';
+                        headers['IF-MATCH'] = '*';
+                    }
                     const finalPayload = {
                         __metadata: { type: entityType },
                         PC: payload.PC || '',
@@ -36916,14 +38109,14 @@ const projectContent = `
                     };
                     for (const rc of ROLE_COLS) {
                         const val = payload[rc.field];
-                        if (val && val !== '' && val !== 'null' && val !== 'undefined')
-                            finalPayload[rc.field] = parseInt(val, 10);
+                        finalPayload[rc.field] = val && val !== 'null' && val !== 'undefined' ? parseInt(val, 10) : null;
                     }
-                    const res = await fetch(apiBase, { method: 'POST', headers, body: JSON.stringify(finalPayload) });
+                    const url = isUpdate ? `${apiBase}(${rowId})` : apiBase;
+                    const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(finalPayload) });
                     if (!res.ok) {
                         return { ok: false, mode: 'error', error: `HTTP ${res.status}` };
                     }
-                    return { ok: true, mode: 'added' };
+                    return { ok: true, mode: isUpdate ? 'updated' : 'added' };
                 }
                 catch (err) {
                     return { ok: false, mode: 'error', error: String(err) };
@@ -36962,7 +38155,7 @@ const projectContent = `
                     ['1. Fill in the "Projects" sheet. One row per project.'],
                     ['2. Required columns: Profit Centre, Project Reference, Customer Name, Project Name, Group Head, Project Manager.'],
                     ['3. Role columns: copy a person from the "Employee List" sheet (or type name/email).'],
-                    ['4. The system will reject rows where the Project Reference already exists in the system.'],
+                    ['4. Existing Project References are updated when values change; unchanged rows are skipped. Duplicate references within the file are rejected.'],
                     ['5. Do NOT rename, reorder, or delete the header row of the "Projects" sheet.'],
                     [''],
                     ['The "Employee List" sheet lists every employee already added in SharePoint.']
@@ -37039,15 +38232,15 @@ const projectContent = `
                 (_c = overlay.querySelector('.pimp-download-template-btn')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => { void downloadTemplate(); });
                 const confirmBtn = overlay.querySelector('.pimp-btn-primary');
                 confirmBtn.addEventListener('click', async () => {
-                    const toImport = currentPreviewRows.filter(r => r.__status === 'added');
+                    const toImport = currentPreviewRows.filter(r => r.__status === 'added' || r.__status === 'updated');
                     if (!toImport.length) {
-                        toast('No valid rows to import', 'error');
+                        toast('No project changes to import; rows may be unchanged or invalid.', 'error');
                         return;
                     }
                     confirmBtn.disabled = true;
                     const loading = createLoadingOverlay(`Importing ${toImport.length} project(s)…`);
                     document.body.appendChild(loading);
-                    let ok = 0, fail = 0;
+                    let added = 0, updated = 0, fail = 0;
                     try {
                         for (const r of toImport) {
                             const payload = {
@@ -37055,14 +38248,18 @@ const projectContent = `
                                 CustomerName: r.CustomerName, Title: r.Title
                             };
                             ROLE_COLS.forEach(rc => { payload[rc.field] = r[rc.field] || ''; });
-                            const res = await writeProjectRow(payload);
-                            if (res.ok)
-                                ok++;
-                            else
+                            const res = await writeProjectRow(payload, r.__existingId);
+                            if (!res.ok) {
                                 fail++;
+                                console.error(`Project import failed for "${r.ProjectReference}":`, res.error);
+                            }
+                            else if (res.mode === 'added')
+                                added++;
+                            else
+                                updated++;
                         }
                         await fetchProjects(true);
-                        toast(`✅ Imported ${ok} project${ok === 1 ? '' : 's'}` +
+                        toast(`✅ Added ${added}, updated ${updated} project${added + updated === 1 ? '' : 's'}` +
                             (fail ? ` — ${fail} failed (see console)` : ''), fail ? 'error' : 'success');
                         close();
                     }
@@ -37141,8 +38338,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2 */ 356);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sweetalert2/dist/sweetalert2.min.css */ 295);
+/* harmony import */ var _sharePointBatch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./sharePointBatch */ 819);
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./auth */ 966);
 // import Swal from "sweetalert2";
+
 
 
 
@@ -37469,6 +38668,8 @@ let currentSortConfig = {
 </div>
   `,
     script: () => {
+        if (window.__dtActivePageKey !== 'revenue')
+            return;
         // ============================================
         // LOAD SWEETALERT2 WITH GUARANTEED FALLBACK
         // ============================================
@@ -37533,6 +38734,8 @@ let currentSortConfig = {
         // Kick off the load, then start the page
         loadSwal().then(() => {
             setTimeout(async () => {
+                if (window.__dtActivePageKey !== 'revenue')
+                    return;
                 // ============================================
                 // ⚠️ CRITICAL: rebind local Swal from window
                 // ============================================
@@ -38299,6 +39502,7 @@ let currentSortConfig = {
                     return updatedData;
                 };
                 const applyAutoProgression = async () => {
+                    var _a;
                     if (forecasts.length === 0) {
                         return;
                     }
@@ -38313,6 +39517,12 @@ let currentSortConfig = {
                             }
                             const originalData = safeJsonParse(forecast.ForecastData, {});
                             if (checkIfNeedsProgression(originalData)) {
+                                const etag = (_a = forecast.__metadata) === null || _a === void 0 ? void 0 : _a.etag;
+                                if (!etag) {
+                                    errorCount++;
+                                    console.error(`Cannot safely progress Revenue forecast ${forecast.Id}: SharePoint ETag is unavailable`);
+                                    continue;
+                                }
                                 // ✅ FIX: Call with only 1 argument
                                 const progressedData = propagateCollectionValues(originalData);
                                 const payload = {
@@ -38326,7 +39536,7 @@ let currentSortConfig = {
                                         Accept: "application/json;odata=verbose",
                                         "Content-Type": "application/json;odata=verbose",
                                         "X-RequestDigest": digest,
-                                        "IF-MATCH": "*",
+                                        "IF-MATCH": etag,
                                         "X-HTTP-Method": "MERGE"
                                     },
                                     body: JSON.stringify(payload)
@@ -38336,6 +39546,7 @@ let currentSortConfig = {
                                 }
                                 else {
                                     errorCount++;
+                                    console.error(`Failed to progress Revenue forecast ${forecast.Id} (HTTP ${response.status})`);
                                 }
                                 await new Promise(resolve => setTimeout(resolve, 100));
                             }
@@ -38364,7 +39575,8 @@ let currentSortConfig = {
                             `EnggSubLead1/Title,EnggSubLead1Id,` +
                             `EnggSubLead2/Title,EnggSubLead2Id,` +
                             `EngineeringManagers/Title,EngineeringManagersId` +
-                            `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers`, { headers: { Accept: "application/json;odata=verbose" } });
+                            `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers` +
+                            `&$top=5000`, { headers: { Accept: "application/json;odata=verbose" } });
                         const data = await res.json();
                         const rawProjects = ((_a = data.d) === null || _a === void 0 ? void 0 : _a.results) || [];
                         const cleanedProjects = rawProjects.map((p) => (Object.assign(Object.assign({}, p), { CustomerName: p.CustomerName || "", GroupHead1: p.GroupHead1 || "", GroupHead1Id: p.GroupHead1Id, PC: p.PC || "", ProjectReference: p.ProjectReference || "", ProjectManager: p.ProjectManager || "", ProjectManagerId: p.ProjectManagerId, 
@@ -38457,13 +39669,15 @@ let currentSortConfig = {
                     });
                     return Array.from(values).sort();
                 };
-                const loadForecasts = async () => {
+                const loadForecasts = async (projectsReady) => {
                     var _a;
                     try {
                         const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,Title,Project/Id,Project/Title,ProfitCentre,OBL,ForecastData,RevenueActual,Remarks,CreatedDate,UpdatedDate,Freeze&$expand=Project&$top=5000`, {
                             headers: { Accept: "application/json;odata=verbose" }
                         });
                         const data = await res.json();
+                        if (projectsReady)
+                            await projectsReady;
                         forecasts = (((_a = data.d) === null || _a === void 0 ? void 0 : _a.results) || []).map(forecast => (Object.assign(Object.assign({}, forecast), { ForecastData: typeof forecast.ForecastData === 'string' ?
                                 forecast.ForecastData :
                                 JSON.stringify(forecast.ForecastData || {}), RevenueActual: typeof forecast.RevenueActual === 'string' ?
@@ -38516,6 +39730,10 @@ let currentSortConfig = {
                     var _a, _b, _c, _d;
                     const syncStatus = document.querySelector('#revenueSyncStatus');
                     const syncBtn = document.querySelector('#revenueSyncProjectsBtn');
+                    const syncLockKey = `${siteUrl}::${listName}`;
+                    const windowState = window;
+                    const syncLocks = windowState.__revenueSyncLocks || new Set();
+                    windowState.__revenueSyncLocks = syncLocks;
                     const setStatus = (text) => {
                         console.log(text);
                         if (syncStatus)
@@ -38529,23 +39747,45 @@ let currentSortConfig = {
                         setStatus('⚠️ Project List is empty - nothing to sync');
                         return;
                     }
+                    if (syncLocks.has(syncLockKey)) {
+                        setStatus('⏳ Revenue project sync is already running');
+                        return;
+                    }
+                    syncLocks.add(syncLockKey);
                     if (syncBtn)
                         syncBtn.disabled = true;
                     try {
                         const visibleProjects = (0,_auth__WEBPACK_IMPORTED_MODULE_5__.canReadAllProjects)()
                             ? projects
                             : (0,_auth__WEBPACK_IMPORTED_MODULE_5__.getAssignedProjects)(projects);
+                        const refField = await revenueListProjectRefField();
+                        const hasTextProjectReference = refField.exists && refField.type !== "Lookup";
+                        const normalizeReference = (value) => String(value !== null && value !== void 0 ? value : "").trim().replace(/\s+/g, " ").toLowerCase();
+                        const getServerProjectIds = (rows) => {
+                            const ids = new Set();
+                            rows.forEach(row => {
+                                var _a;
+                                [row.ProjectId, row.ProjectReferenceId, (_a = row.Project) === null || _a === void 0 ? void 0 : _a.Id].forEach(value => {
+                                    const id = Number(value);
+                                    if (value !== null && value !== undefined && Number.isFinite(id) && id > 0)
+                                        ids.add(id);
+                                });
+                            });
+                            return ids;
+                        };
                         // Safety re-check against SharePoint itself: the in-memory list may be
                         // empty/stale, so never create rows for projects that already exist.
-                        let serverRows = [];
-                        try {
-                            const chkRes = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,ProjectId,Title&$top=5000`, { headers: { Accept: "application/json;odata=verbose" } });
-                            if (chkRes.ok)
-                                serverRows = ((_b = (_a = (await chkRes.json())) === null || _a === void 0 ? void 0 : _a.d) === null || _b === void 0 ? void 0 : _b.results) || [];
+                        const selectProjectReference = refField.exists
+                            ? (hasTextProjectReference ? ",ProjectReference" : ",ProjectReferenceId")
+                            : "";
+                        const existingRowsUrl = `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,ProjectId,Title,Project/Id,Project/Title${selectProjectReference}&$expand=Project&$top=5000`;
+                        const chkRes = await fetch(existingRowsUrl, {
+                            headers: { Accept: "application/json;odata=verbose" }
+                        });
+                        if (!chkRes.ok) {
+                            throw new Error(`Could not verify existing Revenue rows (HTTP ${chkRes.status}); sync stopped to prevent duplicates.`);
                         }
-                        catch (chkErr) {
-                            console.error("⚠️ Revenue sync safety-check fetch failed:", chkErr);
-                        }
+                        const serverRows = ((_b = (_a = (await chkRes.json())) === null || _a === void 0 ? void 0 : _a.d) === null || _b === void 0 ? void 0 : _b.results) || [];
                         // If the list really has rows on SharePoint but the page loaded 0, the
                         // main load is broken - creating rows now would duplicate everything.
                         if (serverRows.length > 0 && forecasts.length === 0) {
@@ -38553,8 +39793,40 @@ let currentSortConfig = {
                             toast("error", `Sync stopped: list has ${serverRows.length} rows but page loaded 0`);
                             return;
                         }
-                        const existsOnServer = (p) => serverRows.some(c => Number(c.ProjectId) === p.Id);
-                        const existsInMemory = (p) => forecasts.some(f => { var _a; return ((_a = f.Project) === null || _a === void 0 ? void 0 : _a.Id) === p.Id || (f.Project && f.Project.Title === p.Title); });
+                        const serverProjectIds = getServerProjectIds(serverRows);
+                        const serverProjectReferences = new Set(hasTextProjectReference
+                            ? serverRows.map(row => normalizeReference(row.ProjectReference)).filter(Boolean)
+                            : []);
+                        const forecastProjectIds = new Set();
+                        const forecastProjectTitles = new Set();
+                        const forecastProjectReferences = new Set();
+                        const projectsById = new Map();
+                        const projectsByTitle = new Map();
+                        projects.forEach(project => {
+                            projectsById.set(project.Id, project);
+                            projectsByTitle.set(project.Title, project);
+                        });
+                        forecasts.forEach(forecast => {
+                            var _a, _b, _c, _d;
+                            if (((_a = forecast.Project) === null || _a === void 0 ? void 0 : _a.Id) !== undefined)
+                                forecastProjectIds.add(forecast.Project.Id);
+                            if ((_b = forecast.Project) === null || _b === void 0 ? void 0 : _b.Title)
+                                forecastProjectTitles.add(forecast.Project.Title);
+                            if (hasTextProjectReference) {
+                                const linkedProjectId = (_c = forecast.Project) === null || _c === void 0 ? void 0 : _c.Id;
+                                const linkedProjectTitle = (_d = forecast.Project) === null || _d === void 0 ? void 0 : _d.Title;
+                                const project = (linkedProjectId !== undefined ? projectsById.get(linkedProjectId) : undefined) ||
+                                    (linkedProjectTitle ? projectsByTitle.get(linkedProjectTitle) : undefined);
+                                const reference = normalizeReference(project === null || project === void 0 ? void 0 : project.ProjectReference);
+                                if (reference)
+                                    forecastProjectReferences.add(reference);
+                            }
+                        });
+                        const existsOnServer = (p) => serverProjectIds.has(p.Id) ||
+                            (hasTextProjectReference && serverProjectReferences.has(normalizeReference(p.ProjectReference)));
+                        const existsInMemory = (p) => forecastProjectIds.has(p.Id) ||
+                            forecastProjectTitles.has(p.Title) ||
+                            (hasTextProjectReference && forecastProjectReferences.has(normalizeReference(p.ProjectReference)));
                         const missingProjects = visibleProjects.filter(p => !existsOnServer(p) && !existsInMemory(p));
                         if (missingProjects.length === 0) {
                             // setStatus(`✅ In sync: all ${visibleProjects.length} visible project(s) have a Revenue Forecast List row`);
@@ -38564,94 +39836,170 @@ let currentSortConfig = {
                         // toast("info", `Checking ${visibleProjects.length} projects... adding ${missingProjects.length} missing`);
                         const digest = await getDigest();
                         const entityType = await getListEntityType();
+                        const freshData = createFreshForecastStructure();
+                        const freshDataJson = JSON.stringify(freshData);
                         let added = 0;
                         let failed = 0;
                         const errors = [];
-                        for (const project of missingProjects) {
+                        const createForecastForProject = async (project) => {
+                            var _a, _b;
                             let ok = false;
-                            // Try twice before giving up on a project
-                            // Up to 3 payload variants:
-                            //   1 = full create - ProjectReference lookup id as STRING + OBL as STRING
-                            //   2 = without ProjectReference (column may be read-only/misconfigured)
-                            //   3 = without OBL too (column may be read-only/absent)
-                            for (let attempt = 1; attempt <= 3 && !ok; attempt++) {
-                                try {
-                                    const freshData = createFreshForecastStructure();
-                                    // In odata=verbose every value must be a STRING (Edm.String):
-                                    // lookup ids (ProjectId / ProjectReferenceId) and numeric fields
-                                    // (OBL) are rejected as JSON numbers with a 400 "Cannot convert a
-                                    // primitive value to the expected type 'Edm.String'".
-                                    const payload = {
-                                        __metadata: { type: entityType },
-                                        Title: generateForecastTitle(project, freshData),
-                                        ProjectId: project.Id.toString(),
-                                        ProfitCentre: project.PC || "",
-                                        ForecastData: JSON.stringify(freshData),
-                                        RevenueActual: "{}",
-                                        Remarks: "",
-                                        OBL: String(project.PC ? 0 : 0),
-                                        CreatedDate: new Date().toISOString(),
-                                        UpdatedDate: new Date().toISOString()
-                                    };
-                                    // Store Project Reference when the column exists - same rule as the
-                                    // Collection List sync: a LOOKUP column receives the target item ID
-                                    // as a string (ProjectReferenceId), a text column receives the text.
-                                    const refField = await revenueListProjectRefField();
-                                    if (refField.exists && attempt === 1) {
-                                        if (refField.type === "Lookup") {
-                                            payload.ProjectReferenceId = String(project.Id);
-                                        }
-                                        else {
-                                            payload.ProjectReference = project.ProjectReference || "";
-                                        }
-                                    }
-                                    if (attempt >= 2) {
-                                        delete payload.ProjectReference;
-                                        delete payload.ProjectReferenceId;
-                                    }
-                                    if (attempt >= 3) {
-                                        delete payload.OBL;
-                                    }
-                                    const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items`, {
-                                        method: "POST",
-                                        headers: {
-                                            Accept: "application/json;odata=verbose",
-                                            "Content-Type": "application/json;odata=verbose",
-                                            "X-RequestDigest": digest
-                                        },
-                                        body: JSON.stringify(payload)
-                                    });
-                                    if (res.ok) {
-                                        ok = true;
-                                        added++;
-                                        // setStatus(`✅ Added: ${project.Title}${project.ProjectReference ? ' (' + project.ProjectReference + ')' : ''}`);
+                            let stopAfterThrottle = false;
+                            let lastError = "Unknown SharePoint error";
+                            // Keep the existing payload fallbacks for optional/read-only columns.
+                            for (let payloadAttempt = 1; payloadAttempt <= 3 && !ok && !stopAfterThrottle; payloadAttempt++) {
+                                const payload = {
+                                    __metadata: { type: entityType },
+                                    Title: generateForecastTitle(project, freshData),
+                                    ProjectId: project.Id.toString(),
+                                    ProfitCentre: project.PC || "",
+                                    ForecastData: freshDataJson,
+                                    RevenueActual: "{}",
+                                    Remarks: "",
+                                    OBL: "0",
+                                    CreatedDate: new Date().toISOString(),
+                                    UpdatedDate: new Date().toISOString()
+                                };
+                                if (refField.exists && payloadAttempt === 1) {
+                                    if (refField.type === "Lookup") {
+                                        payload.ProjectReferenceId = String(project.Id);
                                     }
                                     else {
+                                        payload.ProjectReference = project.ProjectReference || "";
+                                    }
+                                }
+                                if (payloadAttempt >= 2) {
+                                    delete payload.ProjectReference;
+                                    delete payload.ProjectReferenceId;
+                                }
+                                if (payloadAttempt >= 3)
+                                    delete payload.OBL;
+                                let throttleAttempt = 0;
+                                while (!ok && !stopAfterThrottle) {
+                                    try {
+                                        const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items`, {
+                                            method: "POST",
+                                            headers: {
+                                                Accept: "application/json;odata=verbose",
+                                                "Content-Type": "application/json;odata=verbose",
+                                                "X-RequestDigest": digest
+                                            },
+                                            body: JSON.stringify(payload)
+                                        });
+                                        if (res.ok) {
+                                            ok = true;
+                                            added++;
+                                            break;
+                                        }
                                         const bodyText = await res.text();
-                                        let message = `HTTP ${res.status}`;
+                                        lastError = `HTTP ${res.status}`;
                                         try {
                                             const errJson = JSON.parse(bodyText);
-                                            message = ((_d = (_c = errJson === null || errJson === void 0 ? void 0 : errJson.error) === null || _c === void 0 ? void 0 : _c.message) === null || _d === void 0 ? void 0 : _d.value) || message;
+                                            lastError = ((_b = (_a = errJson === null || errJson === void 0 ? void 0 : errJson.error) === null || _a === void 0 ? void 0 : _a.message) === null || _b === void 0 ? void 0 : _b.value) || lastError;
                                         }
-                                        catch (e) { /* keep http message */ }
-                                        console.error(`❌ Attempt ${attempt} failed for ${project.Title}: ${bodyText}`);
-                                        if (attempt === 2) {
-                                            failed++;
-                                            errors.push(`${project.Title} -> ${message}`);
+                                        catch (_c) {
+                                            if (bodyText)
+                                                lastError = bodyText.slice(0, 250);
                                         }
+                                        if (res.status === 408 || res.status >= 500) {
+                                            stopAfterThrottle = true;
+                                            console.error(`Revenue create returned HTTP ${res.status} for ${project.Title}; it will not be reposted automatically.`);
+                                            break;
+                                        }
+                                        if (res.status === 429) {
+                                            const retryAfter = res.headers.get("Retry-After");
+                                            const retryAfterSeconds = retryAfter === null ? NaN : Number(retryAfter);
+                                            const retryAfterDate = retryAfter && Number.isNaN(retryAfterSeconds)
+                                                ? Date.parse(retryAfter)
+                                                : NaN;
+                                            if (throttleAttempt >= 5) {
+                                                stopAfterThrottle = true;
+                                                console.error(`❌ Throttled too many times while creating ${project.Title}: ${bodyText}`);
+                                                break;
+                                            }
+                                            const waitMs = Number.isFinite(retryAfterSeconds)
+                                                ? Math.max(0, retryAfterSeconds * 1000)
+                                                : Number.isFinite(retryAfterDate)
+                                                    ? Math.max(0, retryAfterDate - Date.now())
+                                                    : Math.min(60000, 1000 * (2 ** throttleAttempt));
+                                            console.warn(`SharePoint throttled Revenue sync; retrying in ${Math.ceil(waitMs / 1000)}s.`);
+                                            throttleAttempt++;
+                                            await new Promise(resolve => setTimeout(resolve, waitMs));
+                                            continue;
+                                        }
+                                        console.error(`❌ Payload attempt ${payloadAttempt} failed for ${project.Title}: ${bodyText}`);
+                                        break;
+                                    }
+                                    catch (projectError) {
+                                        lastError = projectError instanceof Error ? projectError.message : String(projectError);
+                                        console.error(`❌ Payload attempt ${payloadAttempt} error for ${project.Title}:`, projectError);
+                                        stopAfterThrottle = true;
+                                        break;
                                     }
                                 }
-                                catch (projectError) {
-                                    console.error(`❌ Attempt ${attempt} error for ${project.Title}:`, projectError);
-                                    if (attempt === 2) {
-                                        failed++;
-                                        errors.push(`${project.Title} -> ${projectError instanceof Error ? projectError.message : String(projectError)}`);
-                                    }
-                                }
-                                if (!ok)
+                                if (!ok && !stopAfterThrottle && payloadAttempt < 3) {
                                     await new Promise(resolve => setTimeout(resolve, 300));
+                                }
+                            }
+                            if (!ok) {
+                                failed++;
+                                errors.push(`${project.Title} -> ${lastError}`);
                             }
                             await new Promise(resolve => setTimeout(resolve, 100));
+                        };
+                        const batchPayloads = missingProjects.map((project) => {
+                            const payload = {
+                                __metadata: { type: entityType },
+                                Title: generateForecastTitle(project, freshData),
+                                ProjectId: project.Id.toString(),
+                                ProfitCentre: project.PC || "",
+                                ForecastData: freshDataJson,
+                                RevenueActual: "{}",
+                                Remarks: "",
+                                OBL: "0",
+                                CreatedDate: new Date().toISOString(),
+                                UpdatedDate: new Date().toISOString()
+                            };
+                            if (refField.exists) {
+                                if (refField.type === "Lookup")
+                                    payload.ProjectReferenceId = String(project.Id);
+                                else
+                                    payload.ProjectReference = project.ProjectReference || "";
+                            }
+                            return payload;
+                        });
+                        const batchResults = await (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.createSharePointItemsInBatches)(siteUrl, listName, digest, batchPayloads);
+                        const failedBatchProjects = [];
+                        batchResults.forEach((result, index) => {
+                            if (result.success) {
+                                added++;
+                            }
+                            else {
+                                failedBatchProjects.push(missingProjects[index]);
+                                console.error(`Revenue batch create failed for ${missingProjects[index].Title}: ${result.error}`);
+                            }
+                        });
+                        if (failedBatchProjects.length > 0) {
+                            const verifyResponse = await fetch(existingRowsUrl, {
+                                headers: { Accept: "application/json;odata=verbose" }
+                            });
+                            if (!verifyResponse.ok) {
+                                throw new Error(`Could not verify Revenue batch results (HTTP ${verifyResponse.status}); individual retries were stopped to avoid duplicate rows.`);
+                            }
+                            const verifiedRows = ((_d = (_c = (await verifyResponse.json())) === null || _c === void 0 ? void 0 : _c.d) === null || _d === void 0 ? void 0 : _d.results) || [];
+                            const verifiedProjectIds = getServerProjectIds(verifiedRows);
+                            const verifiedProjectReferences = new Set(hasTextProjectReference
+                                ? verifiedRows.map((row) => normalizeReference(row.ProjectReference)).filter(Boolean)
+                                : []);
+                            const fallbackProjects = failedBatchProjects.filter(project => !verifiedProjectIds.has(project.Id) &&
+                                !(hasTextProjectReference && verifiedProjectReferences.has(normalizeReference(project.ProjectReference))));
+                            if (fallbackProjects.length < failedBatchProjects.length) {
+                                console.warn("Revenue batch verification found rows already created; skipping duplicate retries.");
+                            }
+                            const fallbackConcurrency = 4;
+                            for (let i = 0; i < fallbackProjects.length; i += fallbackConcurrency) {
+                                await Promise.all(fallbackProjects.slice(i, i + fallbackConcurrency).map(createForecastForProject));
+                            }
                         }
                         if (added > 0) {
                             await loadForecasts();
@@ -38663,10 +40011,14 @@ let currentSortConfig = {
                     }
                     catch (error) {
                         console.error("❌ Revenue auto-sync failed:", error);
+                        const message = error instanceof Error ? error.message : String(error);
+                        setStatus(`❌ Revenue sync stopped: ${message}`);
+                        toast("error", `Revenue sync stopped: ${message}`);
                     }
                     finally {
                         if (syncBtn)
                             syncBtn.disabled = false;
+                        syncLocks.delete(syncLockKey);
                     }
                 };
                 const getMonthName = (monthNumber) => {
@@ -40749,8 +42101,9 @@ let currentSortConfig = {
                 const reloadRevenuePage = async () => {
                     showRevenueLoader('Reloading Data', 'Refreshing projects and forecasts...');
                     try {
-                        await loadProjects();
-                        await loadForecasts();
+                        const projectsLoad = loadProjects();
+                        const forecastsLoad = loadForecasts(projectsLoad);
+                        await Promise.all([projectsLoad, forecastsLoad]);
                         initializeFilters();
                         // renderTableHeader();
                         filteredData = [...forecasts];
@@ -43231,6 +44584,7 @@ let currentSortConfig = {
                 };
                 const initialize = async () => {
                     try {
+                        showRevenueLoader('Loading Revenue Data', 'Initializing permissions...');
                         await _auth__WEBPACK_IMPORTED_MODULE_5__.authManager.initialize({ siteUrl });
                         console.log(`🔑 Permission Level: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.getPermissionLevel)().toUpperCase()}`);
                         console.log(`👤 User: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.getCurrentUserFullName)()}`);
@@ -43239,14 +44593,11 @@ let currentSortConfig = {
                         console.log(`✅ Can Contribute: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.canContribute)()}`);
                         console.log(`✅ Can Freeze: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.canFreeze)()}`);
                         console.log(`✅ Is GH Head: ${(0,_auth__WEBPACK_IMPORTED_MODULE_5__.isGHHead)()}`);
-                        await loadProjects();
-                        await loadForecasts();
+                        showRevenueLoader('Loading Revenue Data', 'Loading projects and forecasts...');
+                        const projectsLoad = loadProjects();
+                        const forecastsLoad = loadForecasts(projectsLoad);
+                        await Promise.all([projectsLoad, forecastsLoad]);
                         console.log("🚀 Total forecasts loaded:", forecasts.length);
-                        // 🔐 AUTO-SYNC: compare Project List with Revenue Forecast List and
-                        // add any missing project row (empty ForecastData skeleton). Only
-                        // runs for roles with create rights, and only for projects inside
-                        // that role's visible scope.
-                        await syncMissingProjectsToRevenueList();
                         // Show the manual Sync button only to roles that can create rows
                         const revenueSyncBar = document.querySelector('#revenueSyncBar');
                         if (revenueSyncBar) {
@@ -43255,28 +44606,6 @@ let currentSortConfig = {
                         if (pageSizeSelect) {
                             pageSize = parseInt(pageSizeSelect.value) || 10;
                         }
-                        // 🔐 RBAC AUTO-PROGRESSION (monthly roll-over):
-                        //   - Roles with edit rights (canEditOwn: Admin, GH Heads, PM Managers,
-                        //     Engg Lead, Engg Sub1) → perform the real SharePoint bulk update.
-                        //   - Read-only roles (SC Team, Controlling, Engg Sub2, Engg Mgr) → the
-                        //     same roll-over is applied IN MEMORY only, so their screen shows
-                        //     the current month structure WITHOUT writing to SharePoint.
-                        if (forecasts.length > 0) {
-                            if ((0,_auth__WEBPACK_IMPORTED_MODULE_5__.canEditOwn)()) {
-                                await applyAutoProgression();
-                                await loadForecasts();
-                            }
-                            else {
-                                const viewerProgressed = forecasts.map((forecast) => {
-                                    const data = safeJsonParse(forecast.ForecastData, {});
-                                    if (!checkIfNeedsProgression(data))
-                                        return forecast;
-                                    return Object.assign(Object.assign({}, forecast), { ForecastData: JSON.stringify(propagateCollectionValues(data)) });
-                                });
-                                forecasts = viewerProgressed;
-                                console.log('👁️ Read-only viewer: progression applied locally for display only (no SharePoint writes)');
-                            }
-                        }
                         initializeFilters();
                         setupPaginationEventListeners();
                         filterTable();
@@ -43284,6 +44613,43 @@ let currentSortConfig = {
                         if (canImportData()) {
                             importActualBtns.addEventListener("click", importActualDatas);
                         }
+                        const runBackgroundAutoUpdate = async () => {
+                            try {
+                                (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.setBackgroundAutoUpdateIndicator)(".revenue-page", true);
+                                await syncMissingProjectsToRevenueList();
+                                if (forecasts.length > 0) {
+                                    if ((0,_auth__WEBPACK_IMPORTED_MODULE_5__.canEditOwn)()) {
+                                        await applyAutoProgression();
+                                    }
+                                    else {
+                                        forecasts = forecasts.map((forecast) => {
+                                            const data = safeJsonParse(forecast.ForecastData, {});
+                                            if (!checkIfNeedsProgression(data))
+                                                return forecast;
+                                            return Object.assign(Object.assign({}, forecast), { ForecastData: JSON.stringify(propagateCollectionValues(data)) });
+                                        });
+                                        console.log('👁️ Read-only viewer: progression applied locally for display only (no SharePoint writes)');
+                                    }
+                                }
+                            }
+                            catch (error) {
+                                console.error("Background Revenue update failed:", error);
+                                toast("error", "Revenue background update failed");
+                            }
+                            finally {
+                                try {
+                                    filterTable();
+                                }
+                                catch (error) {
+                                    console.error("Could not refresh the Revenue table after background update:", error);
+                                    toast("error", "Could not refresh the Revenue table");
+                                }
+                                finally {
+                                    (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.setBackgroundAutoUpdateIndicator)(".revenue-page", false);
+                                }
+                            }
+                        };
+                        void runBackgroundAutoUpdate();
                         console.log("✅ Application initialized successfully");
                     }
                     catch (error) {
@@ -43372,7 +44738,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var xlsx_js_style__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(xlsx_js_style__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _styles_common_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../styles/common.css */ 712);
 /* harmony import */ var _styles_seibies_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../styles/seibies.css */ 265);
+/* harmony import */ var _sharePointBatch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./sharePointBatch */ 819);
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./auth */ 966);
+
 
 
 
@@ -43691,6 +45059,8 @@ let currentSortConfig = {
   `,
     script: () => {
         setTimeout(async () => {
+            if (window.__dtActivePageKey !== 'seibies')
+                return;
             const siteUrl = typeof _spPageContextInfo !== "undefined"
                 ? _spPageContextInfo.webAbsoluteUrl
                 : window.location.origin + "/sites/Kriya";
@@ -44265,6 +45635,118 @@ let currentSortConfig = {
                 catch (error) {
                     console.error("Error loading SEIBIES forecasts:", error);
                     toast("error", "Failed to load SEIBIES forecasts");
+                }
+            };
+            const syncMissingProjectsToSeibiesList = async () => {
+                var _a, _b, _c, _d;
+                if (!(0,_auth__WEBPACK_IMPORTED_MODULE_5__.canCreateRecord)()) {
+                    console.info("SEIBIES auto-sync skipped: this role cannot create records.");
+                    return;
+                }
+                if (projects.length === 0) {
+                    console.warn("SEIBIES auto-sync skipped: Project List returned no projects.");
+                    return;
+                }
+                const syncLockKey = `${siteUrl}::${listName}`;
+                const windowState = window;
+                const syncLocks = windowState.__seibiesSyncLocks || new Set();
+                windowState.__seibiesSyncLocks = syncLocks;
+                if (syncLocks.has(syncLockKey)) {
+                    console.info("SEIBIES auto-sync is already running.");
+                    return;
+                }
+                syncLocks.add(syncLockKey);
+                try {
+                    const visibleProjects = (0,_auth__WEBPACK_IMPORTED_MODULE_5__.canReadAllProjects)() ? projects : (0,_auth__WEBPACK_IMPORTED_MODULE_5__.getAssignedProjects)(projects);
+                    const existingRowsUrl = `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?` +
+                        `$select=Id,ProjectId,Project/Id,Project/Title&$expand=Project&$top=5000`;
+                    const response = await fetch(existingRowsUrl, {
+                        headers: { Accept: "application/json;odata=verbose" }
+                    });
+                    if (!response.ok) {
+                        throw new Error(`Could not verify existing SEIBIES rows (HTTP ${response.status}).`);
+                    }
+                    const existingRows = ((_b = (_a = (await response.json())) === null || _a === void 0 ? void 0 : _a.d) === null || _b === void 0 ? void 0 : _b.results) || [];
+                    const existingProjectIds = new Set();
+                    const existingProjectTitles = new Set();
+                    existingRows.forEach((row) => {
+                        var _a, _b;
+                        [row.ProjectId, (_a = row.Project) === null || _a === void 0 ? void 0 : _a.Id].forEach((value) => {
+                            const id = Number(value);
+                            if (value !== null && value !== undefined && Number.isFinite(id) && id > 0) {
+                                existingProjectIds.add(id);
+                            }
+                        });
+                        if ((_b = row.Project) === null || _b === void 0 ? void 0 : _b.Title)
+                            existingProjectTitles.add(String(row.Project.Title));
+                    });
+                    const forecastProjectIds = new Set();
+                    const forecastProjectTitles = new Set();
+                    forecasts.forEach(forecast => {
+                        var _a, _b;
+                        if (((_a = forecast.Project) === null || _a === void 0 ? void 0 : _a.Id) !== undefined)
+                            forecastProjectIds.add(forecast.Project.Id);
+                        if ((_b = forecast.Project) === null || _b === void 0 ? void 0 : _b.Title)
+                            forecastProjectTitles.add(forecast.Project.Title);
+                    });
+                    const missingProjects = visibleProjects.filter(project => !existingProjectIds.has(project.Id) &&
+                        !forecastProjectIds.has(project.Id) &&
+                        !existingProjectTitles.has(project.Title) &&
+                        !forecastProjectTitles.has(project.Title));
+                    if (missingProjects.length === 0) {
+                        console.info("SEIBIES is already in sync with the visible projects.");
+                        return;
+                    }
+                    const digest = await getDigest();
+                    const freshData = createFreshForecastStructure();
+                    const freshDataJson = JSON.stringify(freshData);
+                    const payloads = missingProjects.map((project) => ({
+                        __metadata: { type: "SP.Data.SEIBIESListItem" },
+                        Title: generateForecastTitle(project, freshData),
+                        ProjectId: project.Id,
+                        ProfitCentre: project.PC || "",
+                        OBL: 0,
+                        ForecastData: freshDataJson,
+                        SeibiesActual: "{}",
+                        CreatedDate: new Date().toISOString(),
+                        UpdatedDate: new Date().toISOString()
+                    }));
+                    const batchResults = await (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.createSharePointItemsInBatches)(siteUrl, listName, digest, payloads);
+                    const failedProjects = batchResults
+                        .map((result, index) => result.success ? null : missingProjects[index])
+                        .filter((project) => project !== null);
+                    if (failedProjects.length > 0) {
+                        const verifyResponse = await fetch(existingRowsUrl, {
+                            headers: { Accept: "application/json;odata=verbose" }
+                        });
+                        if (!verifyResponse.ok) {
+                            throw new Error(`Could not verify SEIBIES batch results (HTTP ${verifyResponse.status}); uncertain creates were not retried.`);
+                        }
+                        const verifiedRows = ((_d = (_c = (await verifyResponse.json())) === null || _c === void 0 ? void 0 : _c.d) === null || _d === void 0 ? void 0 : _d.results) || [];
+                        const verifiedProjectIds = new Set();
+                        const verifiedProjectTitles = new Set();
+                        verifiedRows.forEach((row) => {
+                            var _a, _b;
+                            [row.ProjectId, (_a = row.Project) === null || _a === void 0 ? void 0 : _a.Id].forEach((value) => {
+                                const id = Number(value);
+                                if (value !== null && value !== undefined && Number.isFinite(id) && id > 0) {
+                                    verifiedProjectIds.add(id);
+                                }
+                            });
+                            if ((_b = row.Project) === null || _b === void 0 ? void 0 : _b.Title)
+                                verifiedProjectTitles.add(String(row.Project.Title));
+                        });
+                        const notCreated = failedProjects.filter(project => !verifiedProjectIds.has(project.Id) && !verifiedProjectTitles.has(project.Title));
+                        if (notCreated.length > 0) {
+                            console.error(`SEIBIES auto-sync could not create ${notCreated.length} row(s):`, notCreated.map(project => project.Title));
+                            toast("warning", `SEIBIES sync could not add ${notCreated.length} project(s). Check the console for details.`);
+                        }
+                    }
+                    await loadForecasts();
+                    console.info(`SEIBIES auto-sync checked ${missingProjects.length} missing project(s).`);
+                }
+                finally {
+                    syncLocks.delete(syncLockKey);
                 }
             };
             const getGroupHeadDisplayName = (groupHead) => {
@@ -46759,6 +48241,24 @@ let currentSortConfig = {
                     addBtn: ".show-form-btn-seibies",
                     saveBtn: '.btn-primary-seibies[type="submit"]'
                 });
+                if ((0,_auth__WEBPACK_IMPORTED_MODULE_5__.canCreateRecord)()) {
+                    const runSeibiesAutoSync = async () => {
+                        try {
+                            (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.setBackgroundAutoUpdateIndicator)(".seibies-page", true);
+                            await syncMissingProjectsToSeibiesList();
+                            filterTable();
+                        }
+                        catch (error) {
+                            console.error("SEIBIES background auto-sync failed:", error);
+                            const message = error instanceof Error ? error.message : String(error);
+                            toast("error", `SEIBIES auto-sync failed: ${message}`);
+                        }
+                        finally {
+                            (0,_sharePointBatch__WEBPACK_IMPORTED_MODULE_6__.setBackgroundAutoUpdateIndicator)(".seibies-page", false);
+                        }
+                    };
+                    void runSeibiesAutoSync();
+                }
             }
             catch (error) {
                 console.error('❌ Error initializing SEIBIES module:', error);
@@ -46771,6 +48271,179 @@ let currentSortConfig = {
         }, 100);
     }
 });
+
+
+/***/ }),
+
+/***/ 819:
+/*!****************************************************************!*\
+  !*** ./lib/webparts/kriya/components/pages/sharePointBatch.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createSharePointItemsInBatches: () => (/* binding */ createSharePointItemsInBatches),
+/* harmony export */   setBackgroundAutoUpdateIndicator: () => (/* binding */ setBackgroundAutoUpdateIndicator)
+/* harmony export */ });
+const setBackgroundAutoUpdateIndicator = (pageSelector, active) => {
+    const page = document.querySelector(pageSelector);
+    if (!page)
+        return;
+    let indicator = page.querySelector(".kriya-auto-update-indicator");
+    if (!active) {
+        indicator === null || indicator === void 0 ? void 0 : indicator.remove();
+        return;
+    }
+    if (indicator)
+        return;
+    if (!document.getElementById("kriya-auto-update-indicator-styles")) {
+        const styles = document.createElement("style");
+        styles.id = "kriya-auto-update-indicator-styles";
+        styles.textContent = `
+      .kriya-auto-update-indicator {
+        position: fixed;
+        top: 82px;
+        right: 20px;
+        z-index: 9998;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 11px;
+        border: 1px solid #c8d8f0;
+        border-radius: 16px;
+        background: #fff;
+        color: #23446f;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+        font: 12px/1.2 Arial, sans-serif;
+      }
+      .kriya-auto-update-spinner {
+        width: 11px;
+        height: 11px;
+        border: 2px solid #c8d8f0;
+        border-top-color: #2563eb;
+        border-radius: 50%;
+        animation: kriya-auto-update-spin .8s linear infinite;
+      }
+      @keyframes kriya-auto-update-spin {
+        to { transform: rotate(360deg); }
+      }
+    `;
+        document.head.appendChild(styles);
+    }
+    indicator = document.createElement("div");
+    indicator.className = "kriya-auto-update-indicator";
+    indicator.setAttribute("role", "status");
+    indicator.setAttribute("aria-live", "polite");
+    indicator.innerHTML = '<span class="kriya-auto-update-spinner" aria-hidden="true"></span><span>Auto-updating</span>';
+    page.appendChild(indicator);
+};
+const getRetryDelay = (retryAfter, attempt) => {
+    const seconds = retryAfter === null ? NaN : Number(retryAfter);
+    const date = retryAfter && Number.isNaN(seconds) ? Date.parse(retryAfter) : NaN;
+    if (Number.isFinite(seconds))
+        return Math.max(0, seconds * 1000);
+    if (Number.isFinite(date))
+        return Math.max(0, date - Date.now());
+    return Math.min(60000, 1000 * (2 ** attempt));
+};
+const createSharePointItemsInBatches = async (siteUrl, listName, digest, payloads, batchSize = 20, maxConcurrentBatches = 1) => {
+    const startedAt = Date.now();
+    const results = new Array(payloads.length);
+    const host = new URL(siteUrl).host;
+    const itemsUrl = `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items`;
+    const safeBatchSize = Math.max(1, Math.floor(batchSize));
+    const safeBatchConcurrency = Math.max(1, Math.floor(maxConcurrentBatches));
+    const batchOffsets = Array.from({ length: Math.ceil(payloads.length / safeBatchSize) }, (_, index) => index * safeBatchSize);
+    const sendBatch = async (offset) => {
+        const batchPayloads = payloads.slice(offset, offset + safeBatchSize);
+        const batchBoundary = `batch_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+        const changesetBoundary = `changeset_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+        const changesetLines = [];
+        batchPayloads.forEach(payload => {
+            const body = JSON.stringify(payload);
+            changesetLines.push(`--${changesetBoundary}`, "Content-Type: application/http", "Content-Transfer-Encoding: binary", "", `POST ${itemsUrl} HTTP/1.1`, `Host: ${host}`, "Accept: application/json;odata=verbose", "Content-Type: application/json;odata=verbose", `Content-Length: ${new Blob([body]).size}`, "", body);
+        });
+        changesetLines.push(`--${changesetBoundary}--`);
+        const changesetBody = changesetLines.join("\r\n");
+        const batchBody = [
+            `--${batchBoundary}`,
+            `Content-Type: multipart/mixed; boundary="${changesetBoundary}"`,
+            `Host: ${host}`,
+            `Content-Length: ${new Blob([changesetBody]).size}`,
+            "Content-Transfer-Encoding: binary",
+            "",
+            changesetBody,
+            `--${batchBoundary}--`,
+            ""
+        ].join("\r\n");
+        let response;
+        let responseText = "";
+        let requestError = "";
+        for (let attempt = 0; attempt <= 5; attempt++) {
+            try {
+                response = await fetch(`${siteUrl}/_api/$batch`, {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json;odata=verbose",
+                        "Content-Type": `multipart/mixed; boundary="${batchBoundary}"`,
+                        DataServiceVersion: "3.0",
+                        MaxDataServiceVersion: "3.0",
+                        "X-RequestDigest": digest
+                    },
+                    body: batchBody
+                });
+                responseText = await response.text();
+            }
+            catch (error) {
+                requestError = error instanceof Error ? error.message : String(error);
+                break;
+            }
+            if (response.status !== 429 || attempt === 5)
+                break;
+            const waitMs = getRetryDelay(response.headers.get("Retry-After"), attempt);
+            console.warn(`SharePoint ${listName} batch throttled; retrying in ${Math.ceil(waitMs / 1000)}s.`);
+            await new Promise(resolve => setTimeout(resolve, waitMs));
+        }
+        const failure = requestError ||
+            (response && !response.ok ? `HTTP ${response.status}: ${responseText.slice(0, 250)}` : "");
+        if (failure) {
+            batchPayloads.forEach((_, index) => {
+                results[offset + index] = { success: false, error: failure };
+            });
+            return;
+        }
+        const statuses = Array.from(responseText.matchAll(/HTTP\/1\.1\s+(\d{3})[^\r\n]*/gi));
+        const batchSucceeded = statuses.length === batchPayloads.length &&
+            statuses.every(status => {
+                const statusCode = Number(status[1]);
+                return statusCode >= 200 && statusCode < 300;
+            });
+        if (!batchSucceeded) {
+            const errorStatuses = statuses
+                .map(status => Number(status[1]))
+                .filter(status => status < 200 || status >= 300);
+            const error = errorStatuses.length
+                ? `SharePoint batch item failure (HTTP ${errorStatuses.join(", ")})`
+                : "SharePoint batch response did not contain a success status for every item";
+            batchPayloads.forEach((_, index) => {
+                results[offset + index] = { success: false, error };
+            });
+            return;
+        }
+        batchPayloads.forEach((_, index) => {
+            results[offset + index] = { success: true };
+        });
+    };
+    for (let index = 0; index < batchOffsets.length; index += safeBatchConcurrency) {
+        await Promise.all(batchOffsets
+            .slice(index, index + safeBatchConcurrency)
+            .map(sendBatch));
+    }
+    console.info(`SharePoint ${listName}: ${payloads.length} item(s) in ${batchOffsets.length} batch request(s), ${Date.now() - startedAt}ms.`);
+    return results;
+};
 
 
 /***/ }),
@@ -78488,6 +80161,7 @@ class KriyaWebPart extends _microsoft_sp_webpart_base__WEBPACK_IMPORTED_MODULE_1
     }
     mountPage(body, page, pageKey) {
         this.activePageKey = pageKey;
+        window.__dtActivePageKey = pageKey;
         (0,_components_Sidebar__WEBPACK_IMPORTED_MODULE_2__.setActiveSidebarPage)(pageKey, false);
         this.highlightSidebarTab(pageKey);
         body.innerHTML = page.content;
@@ -78545,7 +80219,13 @@ class KriyaWebPart extends _microsoft_sp_webpart_base__WEBPACK_IMPORTED_MODULE_1
         }
     }
     showAccessDenied(body, pageKey) {
+        if (this.activePageKey && this.activePageKey !== pageKey) {
+            document.dispatchEvent(new CustomEvent('dt-page-deactivated', {
+                detail: { pageKey: this.activePageKey }
+            }));
+        }
         this.activePageKey = pageKey;
+        window.__dtActivePageKey = pageKey;
         body.innerHTML = `
       <div style="text-align: center; padding: 50px; background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
         <h2 style="color: #dc3545;">🔒 Access Denied</h2>
@@ -78572,6 +80252,13 @@ class KriyaWebPart extends _microsoft_sp_webpart_base__WEBPACK_IMPORTED_MODULE_1
         const body = this.domElement.querySelector('.dt-body');
         if (!body)
             return;
+        if (this.activePageKey) {
+            document.dispatchEvent(new CustomEvent('dt-page-deactivated', {
+                detail: { pageKey: this.activePageKey }
+            }));
+        }
+        this.activePageKey = pageKey;
+        window.__dtActivePageKey = pageKey;
         if (pageKey === 'master' || ADMIN_ONLY_PAGES.has(pageKey)) {
             this.checkAndLoadMasterPage(body, pageKey);
             return;
@@ -78600,6 +80287,8 @@ class KriyaWebPart extends _microsoft_sp_webpart_base__WEBPACK_IMPORTED_MODULE_1
         if (!this.isAuthInitialized) {
             await this.initializeAuth();
         }
+        if (this.activePageKey !== pageKey)
+            return;
         const hasAccess = this.canAccessMaster();
         if (hasAccess) {
             console.log(`✅ User ${(0,_components_pages_auth__WEBPACK_IMPORTED_MODULE_19__.getCurrentUserFullName)()} has access to Master Data page`);

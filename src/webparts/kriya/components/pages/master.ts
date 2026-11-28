@@ -205,13 +205,40 @@ const esc = (s: string): string =>
 
 const netFetch = (url: string, init?: RequestInit): Promise<Response> => fetch(url, init);
 
-const fetchWithTimeout = async (url: string, options: RequestInit = {}, ms = 45000): Promise<Response> => {
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), ms);
-  try {
-    return await netFetch(url, { ...options, signal: ctrl.signal });
-  } finally {
-    clearTimeout(timer);
+const fetchWithTimeout = async (
+  url: string,
+  options: RequestInit = {},
+  ms = 45000,
+  onThrottle?: () => void
+): Promise<Response> => {
+  const maxRetries = 5;
+  for (let attempt = 0; ; attempt++) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), ms);
+    let response: Response;
+    try {
+      response = await netFetch(url, { ...options, signal: ctrl.signal });
+    } finally {
+      clearTimeout(timer);
+    }
+
+    if (response.status !== 429) return response;
+    onThrottle?.();
+    if (attempt >= maxRetries) return response;
+
+    const retryAfter = response.headers.get("Retry-After");
+    const retryAfterSeconds = retryAfter === null ? NaN : Number(retryAfter);
+    const retryAfterDate = retryAfter && Number.isNaN(retryAfterSeconds)
+      ? Date.parse(retryAfter)
+      : NaN;
+    const waitMs = Number.isFinite(retryAfterSeconds)
+      ? Math.max(0, retryAfterSeconds * 1000)
+      : Number.isFinite(retryAfterDate)
+        ? Math.max(0, retryAfterDate - Date.now())
+        : Math.min(60000, 1000 * (2 ** attempt));
+
+    console.warn(`SharePoint throttled request (429); retrying in ${Math.ceil(waitMs / 1000)}s (${attempt + 1}/${maxRetries}).`);
+    await new Promise(resolve => setTimeout(resolve, waitMs));
   }
 };
 
@@ -239,13 +266,7 @@ const getDigest = async (): Promise<string> => {
       headers: { Accept: "application/json;odata=verbose", "Content-Type": "application/json;odata=verbose" }
     });
     
-    // 4. Handle 429 Throttling just in case
-    if (res.status === 429) {
-      const waitSec = parseInt(res.headers.get("Retry-After") || "5", 10);
-      console.warn(`⚠️ Throttled getting digest. Waiting ${waitSec}s...`);
-      await new Promise(r => setTimeout(r, waitSec * 1000));
-      return getDigest(); // Retry
-    }
+    if (!res.ok) throw new Error(`Could not get request digest (HTTP ${res.status}).`);
 
     const data = await res.json();
     
@@ -1139,9 +1160,10 @@ const pageStyle = `
 
 export default {
   content: pageContent,
-  style: pageStyle,
+  style: pageStyle,           
   script: (): void => {
     setTimeout((): void => {
+      if ((window as any).__dtActivePageKey !== 'master') return;
       const tableBody = document.querySelector(".project-table-body") as HTMLTableSectionElement | null;
       const importBtn = document.querySelector(".import-master-btn") as HTMLButtonElement | null;
       const syncAllBtn = document.querySelector(".sync-all-btn") as HTMLButtonElement | null;
@@ -1580,97 +1602,413 @@ export default {
         assumeNew?: boolean;
       }
 
-      const upsertRow = async (o: UpsertOpts): Promise<{ success: boolean; id: number | null; isNew: boolean; error?: any }> => {
-        try {
-          const fields = await getListFields(o.listName);
-          const digest = await getDigest();
-          const entityType = await getListEntityType(o.listName);
+      interface PreparedSharePointWrite {
+        url: string;
+        headers: Record<string, string>;
+        body: string;
+        id: number | null;
+        isNew: boolean;
+      }
 
-          let itemId: number | null = o.rowId ?? null;
-          let isNew = false;
-          if (!itemId && !o.assumeNew) {
-            const found = await findChildRow(o.listName, o.projectId, o.projectRef, o.projectTitle);
-            itemId = found.row ? found.row.Id : null;
-          }
-          if (!itemId) isNew = true;
+      const prepareUpsertRow = async (o: UpsertOpts): Promise<PreparedSharePointWrite> => {
+        const fields = await getListFields(o.listName);
+        const digest = await getDigest();
+        const entityType = await getListEntityType(o.listName);
 
-          const payload: any = { __metadata: { type: entityType } };
+        let itemId: number | null = o.rowId ?? null;
+        if (!itemId && !o.assumeNew) {
+          const found = await findChildRow(o.listName, o.projectId, o.projectRef, o.projectTitle);
+          itemId = found.row ? Number(found.row.Id) : null;
+        }
+        const isNew = !itemId;
+        const payload: any = { __metadata: { type: entityType } };
 
-          const write = (field: SharePointField | null, value: number | string): void => {
-            if (!field) return;
-            const t = field.type;
-            if (t === "Lookup" || t === "User") {
-              payload[`${field.internalName}Id`] = String(value);
-            } else if (t === "Number" || t === "Currency") {
-              const n = parseNumText(value);
-              payload[field.internalName] = n !== null ? n : 0;
-            } else if (t === "Boolean") {
-              payload[field.internalName] = Boolean(value);
-            } else {
-              payload[field.internalName] = String(value);
-            }
-          };
-
-          const title = `${o.projectRef} - ${o.projectTitle}`;
-          write(findField(fields, "Title"), title);
-
-          const projField = findField(fields, "Project");
-          if (projField && (projField.type === "Lookup" || projField.type === "User")) {
-            payload[`${projField.internalName}Id`] = String(o.projectId);
-          } else if (projField) {
-            payload[projField.internalName] = o.projectTitle;
-          }
-          const refField = findField(fields, "ProjectReference");
-          if (refField && (refField.type === "Lookup" || refField.type === "User")) {
-            payload[`${refField.internalName}Id`] = String(o.projectId);
-          } else if (refField) {
-            payload[refField.internalName] = o.projectRef;
-          }
-
-          for (const [desired, value] of Object.entries(o.values)) {
-            if (desired === "Title" || desired === "Project" || desired === "ProjectReference") continue;
-            write(findField(fields, desired), value);
-          }
-
-          let res: Response;
-          if (!isNew && itemId) {
-            res = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(o.listName)}')/items(${itemId})`, {
-              method: "POST",
-              headers: {
-                Accept: "application/json;odata=verbose",
-                "Content-Type": "application/json;odata=verbose",
-                "X-RequestDigest": digest,
-                "X-HTTP-Method": "MERGE",
-                "IF-MATCH": "*"
-              },
-              body: JSON.stringify(payload)
-            });
+        const write = (field: SharePointField | null, value: number | string): void => {
+          if (!field) return;
+          const t = field.type;
+          if (t === "Lookup" || t === "User") {
+            payload[`${field.internalName}Id`] = String(value);
+          } else if (t === "Number" || t === "Currency") {
+            const n = parseNumText(value);
+            payload[field.internalName] = n !== null ? n : 0;
+          } else if (t === "Boolean") {
+            payload[field.internalName] = Boolean(value);
           } else {
-            res = await fetchWithTimeout(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(o.listName)}')/items`, {
-              method: "POST",
-              headers: {
-                Accept: "application/json;odata=verbose",
-                "Content-Type": "application/json;odata=verbose",
-                "X-RequestDigest": digest
-              },
-              body: JSON.stringify(payload)
-            });
+            payload[field.internalName] = String(value);
           }
+        };
 
+        const title = `${o.projectRef} - ${o.projectTitle}`;
+        write(findField(fields, "Title"), title);
+
+        const projField = findField(fields, "Project");
+        if (projField && (projField.type === "Lookup" || projField.type === "User")) {
+          payload[`${projField.internalName}Id`] = String(o.projectId);
+        } else if (projField) {
+          payload[projField.internalName] = o.projectTitle;
+        }
+        const refField = findField(fields, "ProjectReference");
+        if (refField && (refField.type === "Lookup" || refField.type === "User")) {
+          payload[`${refField.internalName}Id`] = String(o.projectId);
+        } else if (refField) {
+          payload[refField.internalName] = o.projectRef;
+        }
+
+        for (const [desired, value] of Object.entries(o.values)) {
+          if (desired === "Title" || desired === "Project" || desired === "ProjectReference") continue;
+          write(findField(fields, desired), value);
+        }
+
+        const url = `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(o.listName)}')/items` +
+          (isNew ? "" : `(${itemId})`);
+        const headers: Record<string, string> = {
+          Accept: "application/json;odata=verbose",
+          "Content-Type": "application/json;odata=verbose",
+          "X-RequestDigest": digest
+        };
+        if (!isNew) {
+          headers["X-HTTP-Method"] = "MERGE";
+          headers["IF-MATCH"] = "*";
+        }
+
+        return { url, headers, body: JSON.stringify(payload), id: itemId, isNew };
+      };
+
+      const upsertRow = async (o: UpsertOpts): Promise<{ success: boolean; id: number | null; isNew: boolean; error?: any }> => {
+        let prepared: PreparedSharePointWrite | null = null;
+        try {
+          prepared = await prepareUpsertRow(o);
+          const res = await fetchWithTimeout(prepared.url, {
+            method: "POST",
+            headers: prepared.headers,
+            body: prepared.body
+          });
           if (res.ok) {
-            let created: number | null = itemId;
-            if (isNew) {
-              try { const j = await res.json(); created = j.d.Id; } catch (e) { /* ignore */ }
+            let created = prepared.id;
+            if (prepared.isNew) {
+              try {
+                const j = await res.json();
+                const createdId = Number(j.d.Id);
+                created = Number.isFinite(createdId) ? createdId : null;
+              } catch {
+                created = null;
+              }
             }
-            return { success: true, id: created, isNew };
+            return { success: true, id: created, isNew: prepared.isNew };
           }
           const body = await res.text();
           console.error(`❌ Failed upsert in ${o.listName}:`, body);
-          return { success: false, id: null, isNew, error: body };
+          return { success: false, id: null, isNew: prepared.isNew, error: body };
         } catch (error) {
           console.error(`Error upserting in ${o.listName}:`, error);
-          return { success: false, id: null, isNew: false, error };
+          return { success: false, id: null, isNew: prepared?.isNew ?? false, error };
         }
+      };
+
+      interface BatchWriteResult {
+        success: boolean;
+        id: number | null;
+        error?: string;
+        status?: number;
+        retryAfter?: string | null;
+      }
+
+      interface PendingBatchWrite {
+        write: PreparedSharePointWrite;
+        index: number;
+        groupIndex: number;
+      }
+
+      interface QueuedProjectBatch {
+        writes: PreparedSharePointWrite[];
+        resolve: (results: BatchWriteResult[]) => void;
+        reject: (reason?: unknown) => void;
+      }
+
+      // Each project has at most six writes; keep each SharePoint batch below 100 operations.
+      const PROJECT_GROUPS_PER_BATCH = 16;
+      const MAX_ACTIVE_PROJECT_BATCHES = 4;
+      let activeProjectBatchLimit = 2;
+      let projectBatchSuccessStreak = 0;
+      let projectBatchThrottleCount = 0;
+      let projectBatchRequestCount = 0;
+      let projectBatchOperationsSent = 0;
+      let projectBatchRequestTimeMs = 0;
+      let projectMapRequestCount = 0;
+      let projectMapRequestTimeMs = 0;
+      const queuedProjectBatches: QueuedProjectBatch[] = [];
+      let projectBatchFlushTimer: ReturnType<typeof setTimeout> | null = null;
+      let activeProjectBatchFlushes = 0;
+      const recordProjectBatchThrottle = (): void => {
+        projectBatchThrottleCount++;
+        projectBatchSuccessStreak = 0;
+        activeProjectBatchLimit = Math.max(1, Math.floor(activeProjectBatchLimit / 2));
+      };
+      const recordProjectBatchSuccess = (): void => {
+        projectBatchSuccessStreak++;
+        if (
+          projectBatchSuccessStreak >= 20 &&
+          activeProjectBatchLimit < MAX_ACTIVE_PROJECT_BATCHES
+        ) {
+          activeProjectBatchLimit++;
+          projectBatchSuccessStreak = 0;
+          console.info(`[Master import] Increasing concurrent batches to ${activeProjectBatchLimit}.`);
+        }
+      };
+
+      const sendProjectWriteBatchesNow = async (
+        writeGroups: PreparedSharePointWrite[][]
+      ): Promise<BatchWriteResult[][]> => {
+        const groupOffsets: number[] = [];
+        let totalWrites = 0;
+        writeGroups.forEach(group => {
+          groupOffsets.push(totalWrites);
+          totalWrites += group.length;
+        });
+        if (totalWrites === 0) return writeGroups.map(() => []);
+
+        const results: Array<BatchWriteResult | undefined> = new Array(totalWrites);
+        let outerBatchThrottled = false;
+        const sendBatchOnce = async (entries: PendingBatchWrite[]): Promise<BatchWriteResult[]> => {
+          outerBatchThrottled = false;
+          const batchBoundary = `batch_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+          const host = new URL(siteUrl).host;
+          const changesets = new Map<number, PendingBatchWrite[]>();
+          entries.forEach(entry => {
+            const group = changesets.get(entry.groupIndex) || [];
+            group.push(entry);
+            changesets.set(entry.groupIndex, group);
+          });
+
+          const batchLines: string[] = [];
+          for (const groupEntries of changesets.values()) {
+            const changesetBoundary = `changeset_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+            const changesetLines: string[] = [];
+            groupEntries.forEach(entry => {
+              const write = entry.write;
+              const isUpdate = write.headers["X-HTTP-Method"] === "MERGE";
+              const contentId = entries.indexOf(entry) + 1;
+              changesetLines.push(
+                `--${changesetBoundary}`,
+                "Content-Type: application/http",
+                "Content-Transfer-Encoding: binary",
+                `Content-ID: ${contentId}`,
+                "",
+                `${isUpdate ? "PATCH" : "POST"} ${write.url} HTTP/1.1`,
+                `Host: ${host}`,
+                `Accept: ${write.headers.Accept}`,
+                `Content-Type: ${write.headers["Content-Type"]}`,
+                `Content-Length: ${new Blob([write.body]).size}`,
+                ...(write.headers["IF-MATCH"] ? [`IF-MATCH: ${write.headers["IF-MATCH"]}`] : []),
+                "",
+                write.body
+              );
+            });
+            changesetLines.push(`--${changesetBoundary}--`);
+            const changesetBody = changesetLines.join("\r\n");
+            batchLines.push(
+              `--${batchBoundary}`,
+              `Content-Type: multipart/mixed; boundary="${changesetBoundary}"`,
+              `Host: ${host}`,
+              `Content-Length: ${new Blob([changesetBody]).size}`,
+              "Content-Transfer-Encoding: binary",
+              "",
+              changesetBody
+            );
+          }
+          batchLines.push(`--${batchBoundary}--`, "");
+
+          projectBatchRequestCount++;
+          projectBatchOperationsSent += entries.length;
+          const batchRequestStartedAt = Date.now();
+          const res = await fetchWithTimeout(
+            `${siteUrl}/_api/$batch`,
+            {
+              method: "POST",
+              headers: {
+                Accept: "application/json;odata=verbose",
+                "Content-Type": `multipart/mixed; boundary="${batchBoundary}"`,
+                DataServiceVersion: "3.0",
+                MaxDataServiceVersion: "3.0",
+                "X-RequestDigest": await getDigest()
+              },
+              body: batchLines.join("\r\n")
+            },
+            45000,
+            () => {
+              if (outerBatchThrottled) return;
+              outerBatchThrottled = true;
+              recordProjectBatchThrottle();
+            }
+          );
+          const responseText = await res.text();
+          projectBatchRequestTimeMs += Date.now() - batchRequestStartedAt;
+          if (!res.ok) {
+            throw new Error(`SharePoint batch failed (HTTP ${res.status}): ${responseText.slice(0, 300)}`);
+          }
+
+          const responseById = new Map<number, string>();
+          const contentIdMatches = Array.from(responseText.matchAll(/Content-ID:\s*(\d+)/gi));
+          contentIdMatches.forEach((match, index) => {
+            const start = (match.index ?? 0) + match[0].length;
+            const end = contentIdMatches[index + 1]?.index ?? responseText.length;
+            responseById.set(Number(match[1]), responseText.slice(start, end));
+          });
+          const orderedStatuses = Array.from(responseText.matchAll(/HTTP\/1\.1\s+(\d{3})[^\r\n]*/gi));
+          const orderedParts = orderedStatuses.map((match, index) => {
+            const start = match.index ?? 0;
+            const end = orderedStatuses[index + 1]?.index ?? responseText.length;
+            return responseText.slice(start, end);
+          });
+          const responseError = (part: string): string => {
+            const statusLineStart = part.search(/HTTP\/1\.1\s+\d{3}/i);
+            const bodyStart = statusLineStart >= 0
+              ? part.indexOf("\r\n\r\n", statusLineStart)
+              : -1;
+            if (bodyStart < 0) return "";
+            const body = part.slice(bodyStart + 4).split(/\r?\n--/)[0].trim();
+            if (!body) return "";
+            try {
+              const data = JSON.parse(body);
+              const message = data.error?.message?.value ?? data.error?.message ?? data["odata.error"]?.message?.value;
+              if (message) return String(message);
+            } catch {
+              return body.slice(0, 250);
+            }
+            return body.slice(0, 250);
+          };
+
+          const parsedResults = entries.map((entry, index) => {
+            const part = responseById.get(index + 1) ??
+              (orderedStatuses.length === entries.length ? orderedParts[index] : "");
+            const status = part.match(/HTTP\/1\.1\s+(\d{3})[^\r\n]*/i)?.[1];
+            const statusCode = Number(status);
+            let id = entry.write.id;
+
+            if (entry.write.isNew && statusCode >= 200 && statusCode < 300) {
+              const statusLineStart = part.search(/HTTP\/1\.1\s+\d{3}/i);
+              const bodyStart = statusLineStart >= 0
+                ? part.indexOf("\r\n\r\n", statusLineStart)
+                : -1;
+              if (bodyStart >= 0) {
+                const body = part.slice(bodyStart + 4).split(/\r?\n--/)[0].trim();
+                if (body) {
+                  try {
+                    const data = JSON.parse(body);
+                    const createdId = Number(data.d?.Id ?? data.Id);
+                    id = Number.isFinite(createdId) ? createdId : null;
+                  } catch {
+                    id = null;
+                  }
+                }
+              }
+            }
+
+            return statusCode >= 200 && statusCode < 300
+              ? { success: true, id, status: statusCode }
+              : {
+                  success: false,
+                  id: null,
+                  status: Number.isFinite(statusCode) ? statusCode : undefined,
+                  retryAfter: part.match(/Retry-After:\s*([^\r\n]+)/i)?.[1] ?? null,
+                  error: [
+                    status ? `HTTP ${status}` : "No correlated response for batch operation",
+                    responseError(part)
+                  ].filter(Boolean).join(": ")
+                };
+          });
+          const nestedBatchThrottled = parsedResults.some(result => result.status === 429);
+          if (nestedBatchThrottled && !outerBatchThrottled) {
+            recordProjectBatchThrottle();
+          } else if (!outerBatchThrottled) {
+            recordProjectBatchSuccess();
+          }
+          return parsedResults;
+        };
+
+        let pending: PendingBatchWrite[] = writeGroups.flatMap((group, groupIndex) =>
+          group.map((write, index) => ({
+            write,
+            index: groupOffsets[groupIndex] + index,
+            groupIndex
+          }))
+        );
+        for (let attempt = 0; pending.length && attempt <= 5; attempt++) {
+          const batchResults = await sendBatchOnce(pending);
+          const retry: PendingBatchWrite[] = [];
+          let retryWaitMs = 0;
+
+          batchResults.forEach((result, batchIndex) => {
+            const originalEntry = pending[batchIndex];
+            if (result.status === 429 && attempt < 5) {
+              retry.push(originalEntry);
+              const retryAfter = result.retryAfter;
+              const seconds = retryAfter === null || retryAfter === undefined ? NaN : Number(retryAfter);
+              const retryDate = retryAfter && Number.isNaN(seconds) ? Date.parse(retryAfter) : NaN;
+              const waitMs = Number.isFinite(seconds)
+                ? Math.max(0, seconds * 1000)
+                : Number.isFinite(retryDate)
+                  ? Math.max(0, retryDate - Date.now())
+                  : Math.min(60000, 1000 * (2 ** attempt));
+              retryWaitMs = Math.max(retryWaitMs, waitMs);
+              return;
+            }
+            results[originalEntry.index] = result;
+          });
+
+          if (!retry.length) break;
+          console.warn(`SharePoint batch throttled; retrying ${retry.length} write(s) in ${Math.ceil(retryWaitMs / 1000)}s.`);
+          await new Promise(resolve => setTimeout(resolve, retryWaitMs));
+          pending = retry;
+        }
+
+        return writeGroups.map((group, groupIndex) => {
+          const offset = groupOffsets[groupIndex];
+          return group.map((_, index) => results[offset + index] ?? {
+            success: false,
+            id: null,
+            error: "SharePoint batch did not return a result for this write"
+          });
+        });
+      };
+
+      const flushProjectWriteBatches = async (): Promise<void> => {
+        if (projectBatchFlushTimer !== null) {
+          clearTimeout(projectBatchFlushTimer);
+          projectBatchFlushTimer = null;
+        }
+        if (
+          activeProjectBatchFlushes >= activeProjectBatchLimit ||
+          queuedProjectBatches.length === 0
+        ) return;
+
+        activeProjectBatchFlushes++;
+        const queued = queuedProjectBatches.splice(0, PROJECT_GROUPS_PER_BATCH);
+        try {
+          const results = await sendProjectWriteBatchesNow(queued.map(group => group.writes));
+          queued.forEach((group, index) => group.resolve(results[index]));
+        } catch (error) {
+          queued.forEach(group => group.reject(error));
+        } finally {
+          activeProjectBatchFlushes--;
+          if (queuedProjectBatches.length > 0) void flushProjectWriteBatches();
+        }
+      };
+
+      const sendProjectWriteBatch = (
+        writes: PreparedSharePointWrite[]
+      ): Promise<BatchWriteResult[]> => {
+        if (!writes.length) return Promise.resolve([]);
+        return new Promise((resolve, reject) => {
+          queuedProjectBatches.push({ writes, resolve, reject });
+          if (queuedProjectBatches.length >= PROJECT_GROUPS_PER_BATCH) {
+            void flushProjectWriteBatches();
+          } else if (projectBatchFlushTimer === null) {
+            projectBatchFlushTimer = setTimeout(() => {
+              void flushProjectWriteBatches();
+            }, 50);
+          }
+        });
       };
 
       const ensureChildRow = async (listName: string, row: MasterRow): Promise<boolean> => {
@@ -1808,6 +2146,16 @@ export default {
         if (impErrorsEl) impErrorsEl.textContent = String(impErrors);
       };
 
+      let statusScrollScheduled = false;
+      const scheduleStatusScroll = (): void => {
+        if (statusScrollScheduled) return;
+        statusScrollScheduled = true;
+        window.setTimeout(() => {
+          statusScrollScheduled = false;
+          if (popupStatusList) popupStatusList.scrollTop = popupStatusList.scrollHeight;
+        }, 250);
+      };
+
       const addStatusRow = (kind: "updated" | "created" | "error", ref: string, name: string, msg: string): void => {
         if (kind === "created") impCreated++;
         else if (kind === "updated") impUpdated++;
@@ -1831,7 +2179,7 @@ export default {
         div.appendChild(chip);
         div.appendChild(txt);
         popupStatusList.appendChild(div);
-        popupStatusList.scrollTop = popupStatusList.scrollHeight;
+        scheduleStatusScroll();
       };
 
       const openImportPopup = (): void => {
@@ -1886,81 +2234,18 @@ export default {
         showToast(`📥 Downloaded ${importErrorRows.length} error row(s)`, "success");
       };
 
-     /**
- * Resolve a Project List item by Project Reference.
- * Exact OData filter first (works when text + indexed), then a
- * case-insensitive client-side scan (handles lookup-typed refs,
- * casing drift, unindexed columns, and >5000-item lists).
- */
- const resolveProjectByRef = async (ref: string): Promise<any | null> => {
-  const wanted = String(ref ?? "").trim();
-  if (!wanted) return null;
-  const wantedKey = wanted.toLowerCase();
-
-  // 1) Fast path: server-side exact filter
-  try {
-    const res = await fetchWithTimeout(
-      `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items` +
-      `?$select=Id,Title,ProjectReference&$filter=ProjectReference eq '${encodeURIComponent(wanted)}'&$top=5`,
-      { headers: { Accept: "application/json;odata=verbose" } }
-    );
-    if (res.ok) {
-      const rows: any[] = (await res.json()).d.results || [];
-      const hit = rows.find(r =>
-        String(r.ProjectReference ?? "").trim().toLowerCase() === wantedKey
-      );
-      if (hit) return hit;
-    }
-  } catch (e) {
-    console.warn("resolveProjectByRef: exact filter failed, falling back", e);
-  }
-
-  // 2) Fallback: case-insensitive client-side scan (bounded page)
-  try {
-    const fields = await getListFields(PROJECT_LIST);
-    const refField = findField(fields, "ProjectReference");
-    const select = ["Id", "Title"];
-    const expand: string[] = [];
-    if (refField) {
-      if (refField.type === "Lookup" || refField.type === "User") {
-        select.push(`${refField.internalName}/Id`, `${refField.internalName}/Title`);
-        expand.push(refField.internalName);
-      } else {
-        select.push(refField.internalName);
-      }
-    } else {
-      select.push("ProjectReference");
-    }
-
-    const query =
-      `$select=${encodeURIComponent(select.join(","))}` +
-      (expand.length ? `&$expand=${encodeURIComponent(expand.join(","))}` : "") +
-      `&$top=5000`;
-
-    const res = await fetchWithTimeout(
-      `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items?${query}`,
-      { headers: { Accept: "application/json;odata=verbose" } }
-    );
-    if (!res.ok) return null;
-    const rows: any[] = (await res.json()).d.results || [];
-
-    const readRef = (r: any): string => {
-      if (!refField) return String(r.ProjectReference ?? "");
-      const v = r[refField.internalName];
-      if (v && typeof v === "object") return String(v.Title ?? v.Value ?? "");
-      return String(v ?? "");
-    };
-
-    return rows.find(r => readRef(r).trim().toLowerCase() === wantedKey) || null;
-  } catch (e) {
-    console.error("resolveProjectByRef: fallback scan failed", e);
-    return null;
-  }
-};
-
 const doImport = async (file: File): Promise<void> => {
   if (importing) { showToast("Import already running — please wait for it to finish", "warning"); return; }
   importing = true;
+  const importStartedAt = Date.now();
+  activeProjectBatchLimit = 2;
+  projectBatchSuccessStreak = 0;
+  projectBatchThrottleCount = 0;
+  projectBatchRequestCount = 0;
+  projectBatchOperationsSent = 0;
+  projectBatchRequestTimeMs = 0;
+  projectMapRequestCount = 0;
+  projectMapRequestTimeMs = 0;
   
   const setUiBusy = (busy: boolean): void => {
     if (importChooseBtn) importChooseBtn.disabled = busy;
@@ -1973,21 +2258,38 @@ const doImport = async (file: File): Promise<void> => {
   importErrorRows = [];
   bumpChips();
 
-  const seenRefs = new Set<string>();
-  const resolvedProjectCache = new Map<string, { id: number; title: string }>();
+  const resolvedProjectCache = new Map<string, ImportedProject>();
 
-  // ⚡ 1. SAFE FETCH: Automatically handles 429 Too Many Requests
-  const safeFetch = async (url: string, options: any): Promise<Response> => {
-    let res = await fetch(url, options);
-    let retries = 0;
-    while (res.status === 429 && retries < 5) {
-      const waitSec = parseInt(res.headers.get("Retry-After") || "5", 10);
-      console.warn(`⚠️ Throttled by SharePoint (429). Waiting ${waitSec}s before retrying...`);
-      await new Promise(r => setTimeout(r, waitSec * 1000));
-      res = await fetch(url, options);
-      retries++;
+  const safeFetch = (url: string, options: RequestInit): Promise<Response> =>
+    fetchWithTimeout(url, options);
+
+  const MAP_PREFETCH_CONCURRENCY = 6;
+  const mapFetchWaiters: Array<() => void> = [];
+  let activeMapFetches = 0;
+  const fetchMapPage = async (url: string): Promise<Response> => {
+    if (activeMapFetches >= MAP_PREFETCH_CONCURRENCY) {
+      await new Promise<void>(resolve => mapFetchWaiters.push(resolve));
     }
-    return res;
+    activeMapFetches++;
+    projectMapRequestCount++;
+    const requestStartedAt = Date.now();
+    try {
+      return await safeFetch(url, {
+        headers: { Accept: "application/json;odata=verbose" }
+      });
+    } finally {
+      projectMapRequestTimeMs += Date.now() - requestStartedAt;
+      activeMapFetches--;
+      mapFetchWaiters.shift()?.();
+    }
+  };
+  const fetchMapQueries = async (
+    queries: string[],
+    fetchQuery: (query: string) => Promise<void>
+  ): Promise<void> => {
+    const results = await Promise.allSettled(queries.map(fetchQuery));
+    const failedResult = results.find(result => result.status === "rejected");
+    if (failedResult?.status === "rejected") throw failedResult.reason;
   };
 
   const fixSPDate = (dateStr: any): string | null => {
@@ -2021,41 +2323,271 @@ const doImport = async (file: File): Promise<void> => {
     return cleaned;
   };
 
-  const fetchExistingMonthJson = async (listName: string, itemId: number, fieldName: string): Promise<Record<string, any>> => {
+  interface ImportedChildRow {
+    id: number;
+    monthData: Record<string, any>;
+  }
+  interface ImportedProject {
+    id: number;
+    title: string;
+    monthData: Record<string, any>;
+  }
+
+  const parseMonthData = (value: any): Record<string, any> => {
+    if (value && typeof value === "object") return value;
+    if (typeof value !== "string" || !value) return {};
     try {
-      const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items(${itemId})?$select=${fieldName}`, {
-        headers: { Accept: "application/json;odata=verbose" }
-      });
-      if (res.ok) {
-        const j = await res.json();
-        const rawJson = j.d[fieldName];
-        if (rawJson) return JSON.parse(rawJson);
-      }
-    } catch (e) {
-      console.warn(`Could not parse existing ${fieldName} JSON for item ${itemId} in ${listName}`, e);
+      const parsed = JSON.parse(value);
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch {
+      return {};
     }
-    return {};
   };
 
-  // ⚡ 2. BULK FETCH MAPS: Removes the need for 5,000 findChildRow queries
-  const fetchIdMap = async (listName: string): Promise<Map<number, number>> => {
-    const map = new Map<number, number>();
-    try {
-      // Use safeFetch to prevent 429
-      const res = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items?$select=Id,ProjectId&$top=5000`, {
-        headers: { Accept: "application/json;odata=verbose" }
+  const normalizeProjectReference = (value: any): string =>
+    String(value ?? "").trim().replace(/\s+/g, " ").toLowerCase();
+
+  // Prefetch IDs and current month JSON so the import does not read each row back.
+  const fetchIdMap = async (
+    listName: string,
+    monthField: string,
+    projects: {
+      byReference: Map<string, ImportedProject>;
+      byId: Map<number, ImportedProject>;
+    },
+    targetProjectIds: Set<number>
+  ): Promise<Map<number, ImportedChildRow>> => {
+    const map = new Map<number, ImportedChildRow>();
+    if (!targetProjectIds.size) return map;
+
+    const fields = await getListFields(listName);
+    const projectField = findField(fields, "Project");
+    const referenceField = findField(fields, "ProjectReference");
+    const projectIdField = projectField && (projectField.type === "Lookup" || projectField.type === "User")
+      ? `${projectField.internalName}Id` 
+      : null;
+    const referenceIdField = referenceField && (referenceField.type === "Lookup" || referenceField.type === "User")
+      ? `${referenceField.internalName}Id`
+      : null;
+    const projectTextField = projectField && !projectIdField ? projectField.internalName : null;
+    const referenceTextField = referenceField && !referenceIdField ? referenceField.internalName : null;
+    const selectFields = Array.from(new Set([
+      "Id", "Title", monthField, "ProjectId", projectIdField, referenceIdField,
+      projectTextField, referenceTextField
+    ].filter((field): field is string => !!field)));
+    const projectByTitle = new Map<string, number>();
+    projects.byReference.forEach((project, reference) => {
+      const title = normalizeProjectReference(project.title);
+      if (title && !projectByTitle.has(title)) projectByTitle.set(title, project.id);
+      const combinedTitle = normalizeProjectReference(`${reference} - ${project.title}`);
+      if (combinedTitle && !projectByTitle.has(combinedTitle)) projectByTitle.set(combinedTitle, project.id);
+    });    
+    const listItemsUrl = `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(listName)}')/items`;
+    const processRows = (rows: any[]): void => {
+      rows.forEach((row: any) => {
+        if (!row.Id) return;
+        const linkedProjectId = [
+          row.ProjectId,
+          projectIdField ? row[projectIdField] : null,
+          referenceIdField ? row[referenceIdField] : null
+        ].map(Number).find(id => Number.isFinite(id) && projects.byId.has(id));
+        const reference = referenceTextField ? row[referenceTextField] : null;
+        const projectText = projectTextField ? row[projectTextField] : null;
+        const projectId = linkedProjectId ??
+          (reference ? projects.byReference.get(normalizeProjectReference(reference))?.id : undefined) ??
+          (projectText
+            ? projects.byReference.get(normalizeProjectReference(projectText))?.id ??
+              projectByTitle.get(normalizeProjectReference(projectText))
+            : undefined) ??
+          projectByTitle.get(normalizeProjectReference(row.Title));
+
+        if (projectId !== undefined) {
+          map.set(projectId, {
+            id: Number(row.Id),
+            monthData: parseMonthData(row[monthField])
+          });
+        }
       });
-      if (res.ok) {
+    };
+    const fetchQuery = async (query: string): Promise<void> => {
+      let url: string | null = `${listItemsUrl}?${query}`;
+      while (url) {
+        const res = await fetchMapPage(url);
+        if (!res.ok) throw new Error(`Could not preload ${listName} rows (HTTP ${res.status}).`);
+
         const data = await res.json();
-        const results = data.d?.results || [];
-        results.forEach((r: any) => {
-          if (r.ProjectId && r.Id) map.set(Number(r.ProjectId), Number(r.Id));
-        });
+        processRows(data.d?.results || []);
+        url = data.d?.__next || null;
       }
-    } catch (e) {
-      console.error(`Failed to fetch ID map for ${listName}`, e);
+    };
+    const fullQuery = `$select=${encodeURIComponent(selectFields.join(","))}&$top=5000`;
+
+    try {
+      const projectIds = Array.from(targetProjectIds);
+      const buildIdQueries = (field: string, ids: number[]): string[] => {
+        const queries: string[] = [];
+        for (let i = 0; i < ids.length; i += 80) {
+          const clauses = ids.slice(i, i + 80).map(id => `${field} eq ${id}`);
+          queries.push(
+            `$select=${encodeURIComponent(selectFields.join(","))}` +
+            `&$filter=${encodeURIComponent(clauses.join(" or "))}&$top=5000`
+          );
+        }
+        return queries;
+      };
+
+      const primaryProjectIdField = projectIdField || "ProjectId";
+      await fetchMapQueries(buildIdQueries(primaryProjectIdField, projectIds), fetchQuery);
+
+      const missingProjectIds = projectIds.filter(id => !map.has(id));
+      if (referenceIdField && referenceIdField !== primaryProjectIdField && missingProjectIds.length) {
+        await fetchMapQueries(buildIdQueries(referenceIdField, missingProjectIds), fetchQuery);
+      }
+
+      const missingProjects = Array.from(targetProjectIds)
+        .filter(id => !map.has(id))
+        .map(id => projects.byId.get(id))
+        .filter((project): project is ImportedProject => !!project);
+      if (missingProjects.length) {
+        const referencesById = new Map<number, string[]>();
+        projects.byReference.forEach((project, reference) => {
+          if (!targetProjectIds.has(project.id)) return;
+          const references = referencesById.get(project.id) || [];
+          references.push(reference);
+          referencesById.set(project.id, references);
+        });
+        const textFilters = new Map<string, Set<string>>();
+        const addTextFilterValues = (field: string | null, values: string[]): void => {
+          if (!field) return;
+          const fieldValues = textFilters.get(field) || new Set<string>();
+          values.filter(Boolean).forEach(value => fieldValues.add(value));
+          textFilters.set(field, fieldValues);
+        };
+        addTextFilterValues(
+          referenceTextField,
+          missingProjects.flatMap(project => referencesById.get(project.id) || [])
+        );
+        addTextFilterValues(projectTextField, missingProjects.map(project => project.title));
+        addTextFilterValues("Title", missingProjects.flatMap(project => [
+          project.title,
+          ...(referencesById.get(project.id) || []).map(reference => `${reference} - ${project.title}`)
+        ]));
+
+        const textQueries: string[] = [];
+        textFilters.forEach((values, field) => {
+          const allValues = Array.from(values);
+          for (let i = 0; i < allValues.length; i += 10) {
+            const clauses = allValues.slice(i, i + 10).map(value =>
+              `substringof('${value.replace(/'/g, "''")}', ${field})`
+            );
+            textQueries.push(
+              `$select=${encodeURIComponent(selectFields.join(","))}` +
+              `&$filter=${encodeURIComponent(clauses.join(" or "))}&$top=5000`
+            );
+          }
+        });
+        await fetchMapQueries(textQueries, fetchQuery);
+      }
+    } catch (error) {
+      map.clear();
+      console.warn(`Filtered preload for ${listName} failed; retrying with a full list read.`, error);
+      await fetchQuery(fullQuery);
     }
     return map;
+  };
+
+  const fetchProjectImportMap = async (): Promise<{
+    byReference: Map<string, ImportedProject>;
+    byId: Map<number, ImportedProject>;
+  }> => {
+    const fields = await getListFields(PROJECT_LIST);
+    const referenceField = findField(fields, "ProjectReference");
+    const referenceName = referenceField?.internalName || "ProjectReference";
+    const isLookupReference = referenceField?.type === "Lookup" || referenceField?.type === "User";
+    const selectFields = ["Id", "Title"];
+    const expandFields: string[] = [];
+
+    if (isLookupReference) {
+      selectFields.push(`${referenceName}/Id`, `${referenceName}/Title`);
+      expandFields.push(referenceName);
+    } else {
+      selectFields.push(referenceName);
+    }
+
+    const query = `$select=${encodeURIComponent(selectFields.join(","))}` +
+      (expandFields.length ? `&$expand=${encodeURIComponent(expandFields.join(","))}` : "") +
+      "&$top=5000&$orderby=Id desc";
+    const byReference = new Map<string, ImportedProject>();
+    const byId = new Map<number, ImportedProject>();
+    let url: string | null =
+      `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items?${query}`;
+    while (url) {
+      const res = await fetchMapPage(url);
+      if (!res.ok) throw new Error(`Could not preload ${PROJECT_LIST} rows (HTTP ${res.status}).`);
+
+      const data = await res.json();
+      (data.d?.results || []).forEach((row: any) => {
+        const rawReference = row[referenceName];
+        const reference = rawReference && typeof rawReference === "object"
+          ? rawReference.Title ?? rawReference.Value ?? ""
+          : rawReference;
+        const project: ImportedProject = {
+          id: Number(row.Id),
+          title: String(row.Title ?? ""),
+          monthData: {}
+        };
+        byId.set(project.id, project);
+        const key = normalizeProjectReference(reference);
+        if (key && !byReference.has(key)) byReference.set(key, project);
+      });
+      url = data.d?.__next || null;
+    }
+    return { byReference, byId };
+  };
+
+  const fetchProjectMonthData = async (
+    projectsById: Map<number, ImportedProject>,
+    targetProjectIds: Set<number>
+  ): Promise<void> => {
+    const targetIds = Array.from(targetProjectIds).filter(id => projectsById.has(id));
+    if (!targetIds.length) return;
+
+    const listItemsUrl = `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items`;
+    const processRows = (rows: any[]): void => {
+      rows.forEach((row: any) => {
+        const project = projectsById.get(Number(row.Id));
+        if (project) project.monthData = parseMonthData(row.ProjectMonth);
+      });
+    };
+    const fetchQuery = async (query: string): Promise<void> => {
+      let url: string | null = `${listItemsUrl}?${query}`;
+      while (url) {
+        const res = await fetchMapPage(url);
+        if (!res.ok) throw new Error(`Could not preload ${PROJECT_LIST} month data (HTTP ${res.status}).`);
+
+        const data = await res.json();
+        processRows(data.d?.results || []);
+        url = data.d?.__next || null;
+      }
+    };
+
+    try {
+      const queries: string[] = [];
+      for (let i = 0; i < targetIds.length; i += 80) {
+        const clauses = targetIds.slice(i, i + 80).map(id => `Id eq ${id}`);
+        queries.push(
+          `$select=Id,ProjectMonth&$filter=${encodeURIComponent(clauses.join(" or "))}&$top=5000`
+        );
+      }
+      await fetchMapQueries(queries, fetchQuery);
+    } catch (error) {
+      console.warn(`Filtered preload for ${PROJECT_LIST} month data failed; retrying with a full list read.`, error);
+      targetIds.forEach(id => {
+        const project = projectsById.get(id);
+        if (project) project.monthData = {};
+      });
+      await fetchQuery("$select=Id,ProjectMonth&$top=5000&$orderby=Id desc");
+    }
   };
 
   try {
@@ -2074,19 +2606,58 @@ const doImport = async (file: File): Promise<void> => {
     if (popupStatusList) popupStatusList.innerHTML = "";
     if (popupProgress) popupProgress.style.display = "flex";
 
-    // Pre-fetch all existing IDs in ONE bulk request per list (saves hours)
+    // Pre-fetch project and child rows once instead of looking them up per Excel row.
     console.log("Fetching existing item IDs...");
-    const existingCollMap = await fetchIdMap(COLLECTION_LIST);
-    const existingRevMap  = await fetchIdMap(REVENUE_LIST);
-    const existingInvMap  = await fetchIdMap(INVOICING_LIST);
-    const existingSeiMap  = await fetchIdMap(SEIBIES_LIST);
-    const existingInvtMap = await fetchIdMap(INVENTORY_LIST);
+    const projectMaps = await fetchProjectImportMap();
+    const projectMonthDataById = projectMaps.byId;
+    const targetProjectIds = new Set<number>();
+    rows.forEach(row => {
+      const project = projectMaps.byReference.get(normalizeProjectReference(row.projectReference));
+      if (project) targetProjectIds.add(project.id);
+    });
+    const [
+      ,
+      existingCollMap,
+      existingRevMap,
+      existingInvMap,
+      existingSeiMap,
+      existingInvtMap
+    ] = await Promise.all([
+      fetchProjectMonthData(projectMaps.byId, targetProjectIds),
+      fetchIdMap(COLLECTION_LIST, "ReceivableValueMonth", projectMaps, targetProjectIds),
+      fetchIdMap(REVENUE_LIST, "OBLMonth", projectMaps, targetProjectIds),
+      fetchIdMap(INVOICING_LIST, "OBLMonth", projectMaps, targetProjectIds),
+      fetchIdMap(SEIBIES_LIST, "OBLMonth", projectMaps, targetProjectIds),
+      fetchIdMap(INVENTORY_LIST, "OBLMonth", projectMaps, targetProjectIds)
+    ]);
 
-    // ⚡ 3. INCREASED BATCH SIZE (Safe because we removed duplicate queries)
-    const BATCH_SIZE = 5;
+    await Promise.all([
+      getDigest(),
+      getUserIdsByTitle(),
+      ...[PROJECT_LIST, ...CHILD_LISTS].map(getListEntityType)
+    ]);
 
-    for (let i = 0; i < rows.length; i += BATCH_SIZE) {
-      const batch = rows.slice(i, i + BATCH_SIZE);
+    // Keep row processing aligned with the number of project changesets packed into one request.
+    const BATCH_SIZE = PROJECT_GROUPS_PER_BATCH * MAX_ACTIVE_PROJECT_BATCHES;
+
+    let rowIndex = 0;
+    while (rowIndex < rows.length) {
+      const batch: ParsedRow[] = [];
+      const batchProjectKeys = new Set<string>();
+      let nextRowIndex = rowIndex;
+      while (nextRowIndex < rows.length && batch.length < BATCH_SIZE) {
+        const row = rows[nextRowIndex];
+        const referenceKey = normalizeProjectReference(row.projectReference);
+        const existingProject = projectMaps.byReference.get(referenceKey);
+        const batchProjectKey = existingProject
+          ? `project:${existingProject.id}`
+          : `reference:${referenceKey}`;
+        if (referenceKey && batchProjectKeys.has(batchProjectKey)) break;
+        batch.push(row);
+        if (referenceKey) batchProjectKeys.add(batchProjectKey);
+        nextRowIndex++;
+      }
+      const batchStartIndex = rowIndex;
 
       await Promise.all(batch.map(async (row) => {
         const refRaw = String(row.projectReference ?? "").trim();
@@ -2102,7 +2673,7 @@ const doImport = async (file: File): Promise<void> => {
         if (missing.length) {
           const msg = "Missing mandatory field(s): " + missing.join(", ");
           importErrorRows.push({
-            rowNo: row.__rowNo ?? (i + 2),
+            rowNo: row.__rowNo ?? (batchStartIndex + 2),
             projectReference: ref,
             projectName: String(row.projectName ?? "").trim(),
             missing, message: msg, raw: row.__raw ?? []
@@ -2114,102 +2685,103 @@ const doImport = async (file: File): Promise<void> => {
         try {
           let projectId: number | null = null;
           let projectTitle = "";
-          let isNew = false;
+          let isNew = false;     
+          let projectMonthData: Record<string, any> = {};
 
-          const cached = resolvedProjectCache.get(refKey);
+          const cached = resolvedProjectCache.get(refKey) || projectMaps.byReference.get(refKey);
           if (cached) {
             projectId = cached.id;
-            projectTitle = cached.title;
-          } else {
-            const projData = await resolveProjectByRef(ref);
-            if (projData) {
-              projectId = projData.Id;
-              const storedTitle = String(projData.Title ?? "").trim();
-              const excelTitle  = String(row.projectName ?? "").trim();
-              projectTitle = excelTitle !== "" ? excelTitle : storedTitle;
-              resolvedProjectCache.set(refKey, { id: projectId as number, title: projectTitle });
-              seenRefs.add(refKey);
-            }
+            const excelTitle = String(row.projectName ?? "").trim();
+            projectTitle = excelTitle !== "" ? excelTitle : String(cached.title ?? "").trim();
+            projectMonthData = cached.monthData;
+            resolvedProjectCache.set(refKey, cached);
           }
-
+        
           if (projectId === null) {
-            if (seenRefs.has(refKey)) {
-              const again = await resolveProjectByRef(ref);
-              if (!again) throw new Error(`Project "${ref}" was created earlier in this import but could not be re-resolved.`);
-              projectId = again.Id;
-              projectTitle = String(again.Title ?? "").trim();
-              resolvedProjectCache.set(refKey, { id: projectId as number, title: projectTitle });
-            } else {
-              isNew = true;
-              projectTitle = String(row.projectName ?? "").trim();
+                isNew = true;
+            projectTitle = String(row.projectName ?? "").trim();
 
-              const entityType = await getListEntityType(PROJECT_LIST);
-              const plPayload: any = { __metadata: { type: entityType } };
-              const plFields = await getListFields(PROJECT_LIST);
+            const entityType = await getListEntityType(PROJECT_LIST);
+            const plPayload: any = { __metadata: { type: entityType } };
+            const plFields = await getListFields(PROJECT_LIST);
 
-              const writePL = (desired: string, value: any, isDate = false): void => {
-                const f = findField(plFields, desired);
-                if (!f || f.type === "Lookup" || f.type === "User") return;
-                if (isDate || f.type === "DateTime") { plPayload[f.internalName] = fixSPDate(value); return; }
-                if (f.type === "Number" || f.type === "Currency") {
-                  const n = parseNumText(value);
-                  if (n !== null) plPayload[f.internalName] = n;
-                } else if (value !== undefined && value !== null && String(value) !== "") {
-                  plPayload[f.internalName] = String(value);
-                }
-              };
+            const writePL = (desired: string, value: any, isDate = false): void => {
+              const f = findField(plFields, desired);
+              if (!f || f.type === "Lookup" || f.type === "User") return;
+              if (isDate || f.type === "DateTime") { plPayload[f.internalName] = fixSPDate(value); return; }
+              if (f.type === "Number" || f.type === "Currency") {
+                const n = parseNumText(value);
+                if (n !== null) plPayload[f.internalName] = n;
+              } else if (value !== undefined && value !== null && String(value) !== "") {
+                plPayload[f.internalName] = String(value);
+              }
+            };
 
-              if (projectTitle !== "") plPayload.Title = projectTitle;
-              writePL("ProjectReference", ref);
-              writePL("PC", row.profitCentre);
-              writePL("CustomerName", row.customerName);
-              writePL("NWC", row.nwc);
+            if (projectTitle !== "") plPayload.Title = projectTitle;
+            writePL("ProjectReference", ref);
+            writePL("PC", row.profitCentre);
+            writePL("CustomerName", row.customerName);
+            writePL("NWC", row.nwc);
 
-              const currentProjectData = {
-                status: row.status || "",
-                contractualDeliveryDate: row.contractualDeliveryDate || "",
-                revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
-                prQuality: row.prQuality || "",
-                prSubmissionStatus: row.prSubmissionStatus || "",
-                prApprovalStatus: row.prApprovalStatus || "",
-                nwc: row.nwc ?? 0
-              };
-              plPayload["ProjectMonth"] = JSON.stringify({ [currentMonthKey]: currentProjectData });
+            const currentProjectData = {
+              status: row.status || "",
+              contractualDeliveryDate: row.contractualDeliveryDate || "",
+              revisedContractualDeliveryDate: row.revisedContractualDeliveryDate || "",
+              prQuality: row.prQuality || "",
+              prSubmissionStatus: row.prSubmissionStatus || "",
+              prApprovalStatus: row.prApprovalStatus || "",
+              nwc: row.nwc ?? 0
+            };
+            plPayload["ProjectMonth"] = JSON.stringify({ [currentMonthKey]: currentProjectData });
 
-              const byName = await getUserIdsByTitle();
-              const peopleDesired: Array<[string, string]> = [
-                ["GroupHead1", "groupHead"], ["ProjectManager", "projectManager"],
-                ["EnggLead", "enggLead"], ["EnggSubLead1", "engSubLead1"], ["EnggSubLead2", "engSubLead2"]
-              ];
-              peopleDesired.forEach(([desired, key]) => {
-                const nm = String(row[key] ?? "").trim();
-                const f = findField(plFields, desired);
-                if (!f || f.type !== "User" || !nm) return;
-                const uid = byName[nm.toLowerCase()];
-                if (uid) plPayload[f.internalName + "Id"] = String(uid);
-              });
+            const byName = await getUserIdsByTitle();
+            const peopleDesired: Array<[string, string]> = [
+              ["GroupHead1", "groupHead"], ["ProjectManager", "projectManager"],
+              ["EnggLead", "enggLead"], ["EnggSubLead1", "engSubLead1"], ["EnggSubLead2", "engSubLead2"]
+            ];
+            peopleDesired.forEach(([desired, key]) => {
+              const nm = String(row[key] ?? "").trim();
+              const f = findField(plFields, desired);
+              if (!f || f.type !== "User" || !nm) return;
+              const uid = byName[nm.toLowerCase()];
+              if (uid) plPayload[f.internalName + "Id"] = String(uid);
+            });
 
-              const createRes = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items`, {
-                method: "POST",
-                headers: {
-                  Accept: "application/json;odata=verbose",
-                  "Content-Type": "application/json;odata=verbose",
-                  "X-RequestDigest": await getDigest()
-                },
-                body: JSON.stringify(plPayload)
-              });
-              
-              if (!createRes.ok) throw new Error(`Could not create project: ${describeError(await createRes.text())}`);
-              const j = await createRes.json();
-              projectId = j.d.Id;
-              resolvedProjectCache.set(refKey, { id: projectId as number, title: projectTitle });
-              seenRefs.add(refKey);
+            const [createResult] = await sendProjectWriteBatch([{
+              url: `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items`,
+              headers: {
+                Accept: "application/json;odata=verbose",
+                "Content-Type": "application/json;odata=verbose",
+                "X-RequestDigest": await getDigest()
+              },
+              body: JSON.stringify(plPayload),
+              id: null,
+              isNew: true
+            }]);
+            if (!createResult?.success || createResult.id === null) {
+              throw new Error(`Could not create project: ${createResult?.error || "SharePoint returned no new item ID."}`);
             }
+            projectId = createResult.id;
+            projectMonthData = parseMonthData(plPayload.ProjectMonth);
+            const createdProject: ImportedProject = {
+              id: projectId as number,
+              title: projectTitle,
+              monthData: projectMonthData
+            };
+            resolvedProjectCache.set(refKey, createdProject);
+            projectMaps.byReference.set(refKey, createdProject);
+            projectMonthDataById.set(createdProject.id, createdProject);
           }
 
           if (projectId === null) throw new Error(`Could not resolve or create project "${ref}".`);
           const resolvedProjectId: number = projectId;
-          const notes: string[] = [];
+          const projectWrites: PreparedSharePointWrite[] = [];
+          const childMapUpdates: Array<{
+            index: number;
+            map: Map<number, ImportedChildRow>;
+            monthData: Record<string, any>;
+          }> = [];
+          let projectMonthUpdate: { index: number; monthData: Record<string, any> } | null = null;
 
           // 1. UPDATE PROJECT LIST
           if (!isNew) {
@@ -2246,7 +2818,7 @@ const doImport = async (file: File): Promise<void> => {
               if (uid) update[f.internalName + "Id"] = String(uid);
             });
 
-            const existingProjJson = await fetchExistingMonthJson(PROJECT_LIST, resolvedProjectId, "ProjectMonth");
+            const existingProjJson = { ...(projectMonthDataById.get(resolvedProjectId)?.monthData || {}) };
             existingProjJson[currentMonthKey] = {
               status: row.status || "",
               contractualDeliveryDate: row.contractualDeliveryDate || "",
@@ -2256,11 +2828,13 @@ const doImport = async (file: File): Promise<void> => {
               prApprovalStatus: row.prApprovalStatus || "",
               nwc: row.nwc ?? 0
             };
-            update["ProjectMonth"] = JSON.stringify(cleanOldMonths(existingProjJson));
+            const updatedProjectMonthData = cleanOldMonths(existingProjJson);
+            update["ProjectMonth"] = JSON.stringify(updatedProjectMonthData);
 
             if (Object.keys(update).length) {
-              const f = await safeFetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items(${resolvedProjectId})`, {
-                method: "POST",
+              const projectEntityType = await getListEntityType(PROJECT_LIST);
+              const projectWriteIndex = projectWrites.push({
+                url: `${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(PROJECT_LIST)}')/items(${resolvedProjectId})`,
                 headers: {
                   Accept: "application/json;odata=verbose",
                   "Content-Type": "application/json;odata=verbose",
@@ -2268,9 +2842,11 @@ const doImport = async (file: File): Promise<void> => {
                   "X-HTTP-Method": "MERGE",
                   "IF-MATCH": "*"
                 },
-                body: JSON.stringify({ __metadata: { type: await getListEntityType(PROJECT_LIST) }, ...update })
-              });
-              if (!f.ok) notes.push("⚠ Project List update failed");
+                body: JSON.stringify({ __metadata: { type: projectEntityType }, ...update }),
+                id: resolvedProjectId,
+                isNew: false
+              }) - 1;
+              projectMonthUpdate = { index: projectWriteIndex, monthData: updatedProjectMonthData };
             }
           }
 
@@ -2291,30 +2867,34 @@ const doImport = async (file: File): Promise<void> => {
             if (typeof v === "number" && v !== 0) collValues[fieldKey] = v;
           });
 
-          const collRowId = existingCollMap.get(resolvedProjectId);
-          let existingCollJson = collRowId ? await fetchExistingMonthJson(COLLECTION_LIST, collRowId, "ReceivableValueMonth") : {};
+          const collRow = existingCollMap.get(resolvedProjectId);
+          const collRowId = collRow?.id ?? null;
+          const existingCollJson = { ...(collRow?.monthData || {}) };
           existingCollJson[currentMonthKey] = currentReceivableData;
-          collValues["ReceivableValueMonth"] = JSON.stringify(cleanOldMonths(existingCollJson));
+          const updatedCollMonthData = cleanOldMonths(existingCollJson);
+          collValues["ReceivableValueMonth"] = JSON.stringify(updatedCollMonthData);
 
-          const collRes = await upsertRow({
+          const collWriteIndex = projectWrites.push(await prepareUpsertRow({
             listName: COLLECTION_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-            values: collValues, rowId: collRowId
-          });
-          if (!collRes.success) notes.push("⚠ Collection List update failed");
+            values: collValues, rowId: collRowId, assumeNew: isNew
+          })) - 1;
+          childMapUpdates.push({ index: collWriteIndex, map: existingCollMap, monthData: updatedCollMonthData });
 
           // 3. UPDATE REVENUE FORECAST LIST (Uses ID Map)
           if (typeof row.obl === "number" || typeof row.obl === "string") {
-            const revRowId = existingRevMap.get(resolvedProjectId);
-            let existingRevJson = revRowId ? await fetchExistingMonthJson(REVENUE_LIST, revRowId, "OBLMonth") : {};
+            const revRow = existingRevMap.get(resolvedProjectId);
+            const revRowId = revRow?.id ?? null;
+            const existingRevJson = { ...(revRow?.monthData || {}) };
             existingRevJson[currentMonthKey] = row.obl || 0;
-            const revValues: Record<string, number | string> = { OBLMonth: JSON.stringify(cleanOldMonths(existingRevJson)) };
+            const updatedRevMonthData = cleanOldMonths(existingRevJson);
+            const revValues: Record<string, number | string> = { OBLMonth: JSON.stringify(updatedRevMonthData) };
             if (typeof row.obl === "number" && row.obl !== 0) revValues["OBL"] = row.obl;
 
-            const revRes = await upsertRow({
+            const revWriteIndex = projectWrites.push(await prepareUpsertRow({
               listName: REVENUE_LIST, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-              values: revValues, rowId: revRowId
-            });
-            if (!revRes.success) notes.push("⚠ Revenue Forecast List update failed");
+              values: revValues, rowId: revRowId, assumeNew: isNew
+            })) - 1;
+            childMapUpdates.push({ index: revWriteIndex, map: existingRevMap, monthData: updatedRevMonthData });
           }
 
           // 4. UPDATE OTHER SINGLE TABLES (Uses ID Maps)
@@ -2326,37 +2906,79 @@ const doImport = async (file: File): Promise<void> => {
 
           for (const { listName, excelKey, jsonColName, map } of singleTables) {
             const v = row[excelKey];
-            const rowId = map.get(resolvedProjectId);
-            let existingJson = rowId ? await fetchExistingMonthJson(listName, rowId, jsonColName) : {};
+            const existingRow = map.get(resolvedProjectId);
+            const rowId = existingRow?.id ?? null;
+            const existingJson = { ...(existingRow?.monthData || {}) };
             existingJson[currentMonthKey] = v || 0;
 
-            const values: Record<string, number | string> = { [jsonColName]: JSON.stringify(cleanOldMonths(existingJson)) };
+            const updatedMonthData = cleanOldMonths(existingJson);
+            const values: Record<string, number | string> = { [jsonColName]: JSON.stringify(updatedMonthData) };
             if (typeof v === "number" && v !== 0) values["OBL"] = v;
 
-            const ur = await upsertRow({
+            const writeIndex = projectWrites.push(await prepareUpsertRow({
               listName, projectId: resolvedProjectId, projectRef: ref, projectTitle,
-              values, rowId: rowId
-            });
-            if (!ur.success) notes.push(`⚠ ${listName} update failed`);
+              values, rowId, assumeNew: isNew
+            })) - 1;
+            childMapUpdates.push({ index: writeIndex, map, monthData: updatedMonthData });
+          }
+
+          const batchResults = await sendProjectWriteBatch(projectWrites);
+          childMapUpdates.forEach(({ index, map, monthData }) => {
+            const result = batchResults[index];
+            if (result?.success && result.id !== null && result.id !== undefined) {
+              map.set(resolvedProjectId, { id: result.id, monthData });
+            }
+          });
+          if (projectMonthUpdate && batchResults[projectMonthUpdate.index]?.success) {
+            const projectSnapshot = projectMonthDataById.get(resolvedProjectId);
+            if (projectSnapshot) projectSnapshot.monthData = projectMonthUpdate.monthData;
+          }
+
+          const failedWrite = batchResults.find(result => !result.success);
+          if (failedWrite) {
+            throw new Error(
+              `One or more SharePoint writes failed (${failedWrite.error || "unknown error"}); ` +
+              "other writes in this row may already have succeeded. Re-import the row to retry."
+            );
           }
 
           const baseMsg = isNew ? "New project created." : "Existing project updated.";
-          addStatusRow(isNew ? "created" : "updated", ref, projectTitle, notes.length ? baseMsg + " " + notes.join(" ") : baseMsg);
+          addStatusRow(isNew ? "created" : "updated", ref, projectTitle, baseMsg);
           
         } catch (err) {
           console.error("Error processing row:", row, err);
           const msg = describeError(err instanceof Error ? err.message : err);
           importErrorRows.push({
-            rowNo: row.__rowNo ?? (i + 2), projectReference: ref,
+            rowNo: row.__rowNo ?? (batchStartIndex + 2), projectReference: ref,
             projectName: String(row.projectName ?? "").trim(), missing: [], message: msg, raw: row.__raw ?? []
           });
           addStatusRow("error", ref, String(row.projectName ?? ""), msg);
         }
       })); 
 
+      rowIndex = nextRowIndex;
       // Let the browser UI breathe
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise(resolve => setTimeout(resolve, 25));
     }
+
+    console.info("[Master import] Batch summary", {
+      rows: total,
+      elapsedSeconds: Math.round((Date.now() - importStartedAt) / 1000),
+      batchGroups: PROJECT_GROUPS_PER_BATCH,
+      maxConcurrentBatches: MAX_ACTIVE_PROJECT_BATCHES,
+      finalConcurrentBatches: activeProjectBatchLimit,
+      throttleEvents: projectBatchThrottleCount,
+      httpRequests: projectBatchRequestCount,
+      operationsSent: projectBatchOperationsSent,
+      averageOperationsPerRequest: projectBatchRequestCount
+        ? Number((projectBatchOperationsSent / projectBatchRequestCount).toFixed(1))
+        : 0,
+      averageRequestMs: projectBatchRequestCount 
+        ? Math.round(projectBatchRequestTimeMs / projectBatchRequestCount)
+        : 0,
+      preloadHttpRequests: projectMapRequestCount,
+      preloadRequestTimeMs: projectMapRequestTimeMs
+    });
 
     if (popupProgress) popupProgress.style.display = "none";
     if (popupResults) popupResults.style.display = "block";
@@ -2679,6 +3301,7 @@ const doImport = async (file: File): Promise<void> => {
       const boot = async (): Promise<void> => {
         lockTitlesWhite();
         await loadMaster();
+        if ((window as any).__dtActivePageKey !== 'master') return;
         if (!AUTO_SYNC_ON_LOAD) return;
         if (autoSyncDone) return;
         autoSyncDone = true;

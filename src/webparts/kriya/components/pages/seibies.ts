@@ -4,6 +4,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import * as XLSX from 'xlsx-js-style';
 import "../styles/common.css";
 import "../styles/seibies.css";
+import { createSharePointItemsInBatches, setBackgroundAutoUpdateIndicator } from "./sharePointBatch";
 import { 
   authManager,
   hasFullControl,
@@ -445,6 +446,7 @@ export default {
   `,
   script: () => {
     setTimeout(async () => {
+      if ((window as any).__dtActivePageKey !== 'seibies') return;
       const siteUrl = typeof _spPageContextInfo !== "undefined" 
         ? _spPageContextInfo.webAbsoluteUrl 
         : window.location.origin + "/sites/Kriya";
@@ -1112,6 +1114,126 @@ const loadForecasts = async (): Promise<void> => {
   } catch (error) {
     console.error("Error loading SEIBIES forecasts:", error);
     toast("error", "Failed to load SEIBIES forecasts");
+  }
+};
+
+const syncMissingProjectsToSeibiesList = async (): Promise<void> => {
+  if (!canCreateRecord()) {
+    console.info("SEIBIES auto-sync skipped: this role cannot create records.");
+    return;
+  }
+  if (projects.length === 0) {
+    console.warn("SEIBIES auto-sync skipped: Project List returned no projects.");
+    return;
+  }
+
+  const syncLockKey = `${siteUrl}::${listName}`;
+  const windowState = window as any;
+  const syncLocks: Set<string> = windowState.__seibiesSyncLocks || new Set<string>();
+  windowState.__seibiesSyncLocks = syncLocks;
+  if (syncLocks.has(syncLockKey)) {
+    console.info("SEIBIES auto-sync is already running.");
+    return;
+  }
+  syncLocks.add(syncLockKey);
+
+  try {
+    const visibleProjects = canReadAllProjects() ? projects : getAssignedProjects(projects);
+    const existingRowsUrl =
+      `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?` +
+      `$select=Id,ProjectId,Project/Id,Project/Title&$expand=Project&$top=5000`;
+    const response = await fetch(existingRowsUrl, {
+      headers: { Accept: "application/json;odata=verbose" }
+    });
+    if (!response.ok) {
+      throw new Error(`Could not verify existing SEIBIES rows (HTTP ${response.status}).`);
+    }
+
+    const existingRows = (await response.json())?.d?.results || [];
+    const existingProjectIds = new Set<number>();
+    const existingProjectTitles = new Set<string>();
+    existingRows.forEach((row: any) => {
+      [row.ProjectId, row.Project?.Id].forEach((value: unknown) => {
+        const id = Number(value);
+        if (value !== null && value !== undefined && Number.isFinite(id) && id > 0) {
+          existingProjectIds.add(id);
+        }
+      });
+      if (row.Project?.Title) existingProjectTitles.add(String(row.Project.Title));
+    });
+
+    const forecastProjectIds = new Set<number>();
+    const forecastProjectTitles = new Set<string>();
+    forecasts.forEach(forecast => {
+      if (forecast.Project?.Id !== undefined) forecastProjectIds.add(forecast.Project.Id);
+      if (forecast.Project?.Title) forecastProjectTitles.add(forecast.Project.Title);
+    });
+
+    const missingProjects = visibleProjects.filter(project =>
+      !existingProjectIds.has(project.Id) &&
+      !forecastProjectIds.has(project.Id) &&
+      !existingProjectTitles.has(project.Title) &&
+      !forecastProjectTitles.has(project.Title)
+    );
+    if (missingProjects.length === 0) {
+      console.info("SEIBIES is already in sync with the visible projects.");
+      return;
+    }
+
+    const digest = await getDigest();
+    const freshData = createFreshForecastStructure();
+    const freshDataJson = JSON.stringify(freshData);
+    const payloads = missingProjects.map((project): Record<string, unknown> => ({
+      __metadata: { type: "SP.Data.SEIBIESListItem" },
+      Title: generateForecastTitle(project, freshData),
+      ProjectId: project.Id,
+      ProfitCentre: project.PC || "",
+      OBL: 0,
+      ForecastData: freshDataJson,
+      SeibiesActual: "{}",
+      CreatedDate: new Date().toISOString(),
+      UpdatedDate: new Date().toISOString()
+    }));
+
+    const batchResults = await createSharePointItemsInBatches(siteUrl, listName, digest, payloads);
+    const failedProjects = batchResults
+      .map((result, index) => result.success ? null : missingProjects[index])
+      .filter((project): project is ProjectItem => project !== null);
+
+    if (failedProjects.length > 0) {
+      const verifyResponse = await fetch(existingRowsUrl, {
+        headers: { Accept: "application/json;odata=verbose" }
+      });
+      if (!verifyResponse.ok) {
+        throw new Error(`Could not verify SEIBIES batch results (HTTP ${verifyResponse.status}); uncertain creates were not retried.`);
+      }
+
+      const verifiedRows = (await verifyResponse.json())?.d?.results || [];
+      const verifiedProjectIds = new Set<number>();
+      const verifiedProjectTitles = new Set<string>();
+      verifiedRows.forEach((row: any) => {
+        [row.ProjectId, row.Project?.Id].forEach((value: unknown) => {
+          const id = Number(value);
+          if (value !== null && value !== undefined && Number.isFinite(id) && id > 0) {
+            verifiedProjectIds.add(id);
+          }
+        });
+        if (row.Project?.Title) verifiedProjectTitles.add(String(row.Project.Title));
+      });
+
+      const notCreated = failedProjects.filter(project =>
+        !verifiedProjectIds.has(project.Id) && !verifiedProjectTitles.has(project.Title)
+      );
+      if (notCreated.length > 0) {
+        console.error(`SEIBIES auto-sync could not create ${notCreated.length} row(s):`, notCreated.map(project => project.Title));
+        toast("warning", `SEIBIES sync could not add ${notCreated.length} project(s). Check the console for details.`);
+      }
+    }
+
+    await loadForecasts();
+    console.info(`SEIBIES auto-sync checked ${missingProjects.length} missing project(s).`);
+  } finally {
+    syncLocks.delete(syncLockKey);
   }
 };
 
@@ -3933,6 +4055,23 @@ backBtn.addEventListener("click", async (e) => {
           addBtn: ".show-form-btn-seibies",
           saveBtn: '.btn-primary-seibies[type="submit"]'
         });
+
+        if (canCreateRecord()) {
+          const runSeibiesAutoSync = async (): Promise<void> => {
+            try {
+              setBackgroundAutoUpdateIndicator(".seibies-page", true);
+              await syncMissingProjectsToSeibiesList();
+              filterTable();
+            } catch (error) {
+              console.error("SEIBIES background auto-sync failed:", error);
+              const message = error instanceof Error ? error.message : String(error);
+              toast("error", `SEIBIES auto-sync failed: ${message}`);
+            } finally {
+              setBackgroundAutoUpdateIndicator(".seibies-page", false);
+            }
+          };
+          void runSeibiesAutoSync();
+        }
 
       } catch (error) {
         console.error('❌ Error initializing SEIBIES module:', error);

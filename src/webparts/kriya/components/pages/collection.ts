@@ -1,6 +1,7 @@
 declare const _spPageContextInfo: any;
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css"; 
+import { createSharePointItemsInBatches, setBackgroundAutoUpdateIndicator } from "./sharePointBatch";
 import * as XLSX from 'xlsx-js-style';
 import "../styles/common.css";
 import "../styles/collection.css";
@@ -67,6 +68,7 @@ let currentSortConfig: SortConfig = {
 interface CollectionItem {
   Id: number;
   Title: string;
+  __metadata?: { etag?: string };
   Project?: {
     Id: number;
     Title: string;
@@ -447,6 +449,7 @@ export default {
 
   script: () => {
     setTimeout(async () => {
+      if ((window as any).__dtActivePageKey !== 'collection') return;
       const siteUrl = typeof _spPageContextInfo !== "undefined" ? _spPageContextInfo.webAbsoluteUrl : window.location.origin + "/sites/Kriya";
       const listName = "Collection List";
       const projectListName = "Project List";
@@ -1370,7 +1373,8 @@ const loadProjects = async (): Promise<void> => {
       `EnggSubLead1/Title,EnggSubLead1Id,` +
       `EnggSubLead2/Title,EnggSubLead2Id,` +
       `EngineeringManagers/Title,EngineeringManagersId` +
-      `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers`,
+      `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers` +
+      `&$top=5000`,
       { headers: { Accept: "application/json;odata=verbose" } }
     );
     const data: SharePointResponse<ProjectItem> = await res.json();
@@ -1403,20 +1407,6 @@ const loadProjects = async (): Promise<void> => {
 
     projects = Array.from(projectMap.values());
 
-    console.log('📋 All projects with role assignments:');
-    projects.forEach(p => {
-      const nameOf = (v: any) => typeof v === 'object' ? v?.Title : v;
-      console.log(
-        `  - ${p.Title}: ` +
-        `PM=${nameOf(p.ProjectManager) || 'None'}, ` +
-        `GH=${nameOf(p.GroupHead1) || 'None'}, ` +
-        `EL=${nameOf(p.EnggLead) || 'None'}, ` +
-        `ES1=${nameOf(p.EnggSubLead1) || 'None'}, ` +
-        `ES2=${nameOf(p.EnggSubLead2) || 'None'}, ` +
-        `EM=${nameOf(p.EngineeringManagers) || 'None'}`
-      );
-    });
-
     // 🔐 RBAC: single source of truth for project scope (auth.ts)
     //   - canReadAllProjects()  → Admin / SC Team / Controlling: ALL projects
     //   - everyone else         → getAssignedProjects() filters by the role's
@@ -1429,7 +1419,6 @@ const loadProjects = async (): Promise<void> => {
       : getAssignedProjects(projects);
 
     console.log(`📋 Total projects: ${projects.length}, Assigned projects: ${assignedProjects.length}`);
-    console.log('📋 Assigned project titles:', assignedProjects.map(p => p.Title));
 
     // Populate project select dropdown (Add / Edit form)
     projectSelect.innerHTML = `<option value="">Select Project</option>` +
@@ -1507,7 +1496,7 @@ const showCollectionTableLoadError = (): void => {
   `;
 };
 
-const loadCollections = async (): Promise<void> => {
+const loadCollections = async (projectsReady?: Promise<void>): Promise<void> => {
   // Show the table loading state immediately while SharePoint data is being fetched.
   // Keep existing rows visible during background refreshes after save/update.
   if (collections.length === 0) {
@@ -1531,6 +1520,7 @@ const loadCollections = async (): Promise<void> => {
     }
 
     const data: SharePointResponse<CollectionItem> = await res.json();
+    if (projectsReady) await projectsReady;
 
     // 🔐 RBAC: role-based project scope (must match the dropdown scope above).
     //   - Admin / SC Team / Controlling (READ_ALL) → ALL projects
@@ -1578,11 +1568,7 @@ const loadCollections = async (): Promise<void> => {
     const beforeCount = collections.length;
     collections = collections.filter(collection => {
       const projectTitle = collection.Project?.Title;
-      const isAllowed = projectTitle && allowedProjectTitles.has(projectTitle);
-      if (!isAllowed && projectTitle) {
-        console.log(`🔍 Filtering out: ${projectTitle} (not allowed for this user)`);
-      }
-      return isAllowed;
+      return projectTitle && allowedProjectTitles.has(projectTitle);
     });
 
     console.log(`✅ Loaded ${collections.length} collections (filtered from ${beforeCount})`);
@@ -1626,6 +1612,10 @@ uploadActualBtns.forEach(btn => {
 const syncMissingProjectsToCollectionList = async (): Promise<void> => {
   const syncStatus = document.querySelector('#collectionSyncStatus') as HTMLElement | null;
   const syncBtn = document.querySelector('#collectionSyncProjectsBtn') as HTMLButtonElement | null;
+  const syncLockKey = `${siteUrl}::${listName}`;
+  const windowState = window as any;
+  const syncLocks: Set<string> = windowState.__collectionSyncLocks || new Set<string>();
+  windowState.__collectionSyncLocks = syncLocks;
 
   const setStatus = (text: string): void => {
     console.log(text);
@@ -1640,26 +1630,47 @@ const syncMissingProjectsToCollectionList = async (): Promise<void> => {
   if (!projects || projects.length === 0) {
     setStatus('⚠️ Project List is empty - nothing to sync');
     return;
-  } 
+  }
+
+  if (syncLocks.has(syncLockKey)) {
+    setStatus('⏳ Collection project sync is already running');
+    return;
+  }
+  syncLocks.add(syncLockKey);
 
   if (syncBtn) syncBtn.disabled = true;
   try {
     const visibleProjects = canReadAllProjects()
       ? projects
       : getAssignedProjects(projects);
+    const refField = await collectionListProjectRefField();
+    const hasTextProjectReference = refField.exists && refField.type !== "Lookup";
+    const normalizeReference = (value: unknown): string =>
+      String(value ?? "").trim().replace(/\s+/g, " ").toLowerCase();
+    const getServerProjectIds = (rows: any[]): Set<number> => {
+      const ids = new Set<number>();
+      rows.forEach(row => {
+        [row.ProjectId, row.ProjectReferenceId].forEach(value => {
+          const id = Number(value);
+          if (value !== null && value !== undefined && Number.isFinite(id) && id > 0) ids.add(id);
+        });
+      });
+      return ids;
+    };
 
     // Safety re-check against SharePoint itself: the in-memory list may be
     // empty/stale, so never create rows for projects that already exist.        
-    let serverRows: any[] = [];
-    try {
-      const chkRes = await fetch(
-        `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,ProjectId,Title&$top=5000`,
-        { headers: { Accept: "application/json;odata=verbose" } }
-      );
-      if (chkRes.ok) serverRows = (await chkRes.json())?.d?.results || [];
-    } catch (chkErr) {
-      console.error("⚠️ Sync safety-check fetch failed:", chkErr);
+    const selectProjectReference = refField.exists
+      ? (hasTextProjectReference ? ",ProjectReference" : ",ProjectReferenceId")
+      : "";
+    const existingRowsUrl = `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,ProjectId,Title${selectProjectReference}&$top=5000`;
+    const chkRes = await fetch(existingRowsUrl, {
+      headers: { Accept: "application/json;odata=verbose" }
+    });
+    if (!chkRes.ok) {
+      throw new Error(`Could not verify existing Collection rows (HTTP ${chkRes.status}); sync stopped to prevent duplicates.`);
     }
+    const serverRows: any[] = (await chkRes.json())?.d?.results || [];
 
     // If the list really has rows on SharePoint but the page loaded 0, the
     // main load is broken - creating rows now would duplicate everything.
@@ -1669,13 +1680,41 @@ const syncMissingProjectsToCollectionList = async (): Promise<void> => {
       return;
     }
 
-    const existsOnServer = (p: ProjectItem): boolean =>
-      serverRows.some(c => Number(c.ProjectId) === p.Id);
+    const serverProjectIds = getServerProjectIds(serverRows);
+    const serverProjectReferences = new Set(
+      hasTextProjectReference
+        ? serverRows.map(c => normalizeReference(c.ProjectReference)).filter(Boolean)
+        : []
+    );
+    const collectionProjectIds = new Set<number>();
+    const collectionProjectTitles = new Set<string>();
+    const collectionProjectReferences = new Set<string>();
+    const projectsById = new Map<number, ProjectItem>();
+    const projectsByTitle = new Map<string, ProjectItem>();
+    projects.forEach(project => {
+      projectsById.set(project.Id, project);
+      projectsByTitle.set(project.Title, project);
+    });
+    collections.forEach(collection => {
+      if (collection.Project?.Id !== undefined) collectionProjectIds.add(collection.Project.Id);
+      if (collection.Project?.Title) collectionProjectTitles.add(collection.Project.Title);
+      if (hasTextProjectReference) {
+        const linkedProjectId = collection.Project?.Id;
+        const linkedProjectTitle = collection.Project?.Title;
+        const project = (linkedProjectId !== undefined ? projectsById.get(linkedProjectId) : undefined) ||
+          (linkedProjectTitle ? projectsByTitle.get(linkedProjectTitle) : undefined);
+        const reference = normalizeReference(project?.ProjectReference);
+        if (reference) collectionProjectReferences.add(reference);
+      }
+    });
 
+    const existsOnServer = (p: ProjectItem): boolean =>
+      serverProjectIds.has(p.Id) ||
+      (hasTextProjectReference && serverProjectReferences.has(normalizeReference(p.ProjectReference)));
     const existsInMemory = (p: ProjectItem): boolean =>
-      collections.some(c =>
-        c.Project?.Id === p.Id || (c.Project && c.Project.Title === p.Title)
-      );
+      collectionProjectIds.has(p.Id) ||
+      collectionProjectTitles.has(p.Title) ||
+      (hasTextProjectReference && collectionProjectReferences.has(normalizeReference(p.ProjectReference)));
 
     const missingProjects = visibleProjects.filter(p => !existsOnServer(p) && !existsInMemory(p));
 
@@ -1689,92 +1728,177 @@ const syncMissingProjectsToCollectionList = async (): Promise<void> => {
 
     const digest = await getDigest();
     const entityType = await getListItemType();
+    const freshCollectionData = createFreshCollectionStructure();
+    const freshCollectionDataJson = JSON.stringify(freshCollectionData);
     let added = 0;
     let failed = 0;
     const errors: string[] = [];
 
-    for (const project of missingProjects) {
+    const createCollectionForProject = async (project: ProjectItem): Promise<void> => {
       let ok = false;
-      // Try twice before giving up on a project
-      // Up to 3 payload variants:
-      //   1 = full create - ProjectReference lookup id as STRING + OBL as STRING
-      //   2 = without ProjectReference (column may be read-only/misconfigured)
-      //   3 = without OBL too (column may be read-only/absent)
-      for (let attempt = 1; attempt <= 3 && !ok; attempt++) {
-        try {
-          const freshCollectionData = createFreshCollectionStructure();
+      let stopAfterThrottle = false;
+      let lastError = "Unknown SharePoint error";
 
-          // odata=verbose values must be STRINGs (Edm.String); lookup ids and
-          // numeric fields sent as JSON numbers get a 400 "Cannot convert a
-          // primitive value to the expected type 'Edm.String'".
-          const payload: any = {
-            __metadata: { type: entityType },
-            Title: generateCollectionTitle(project, freshCollectionData),
-            ProjectId: project.Id.toString(),
-            ProfitCentre: project.PC || "",
-            CollectionData: JSON.stringify(freshCollectionData),
-            Remarks: "",
-            OBL: project.PC ? "0" : "0",
-            CreatedDate: new Date().toISOString(),
-            UpdatedDate: new Date().toISOString()
-          };
+      for (let payloadAttempt = 1; payloadAttempt <= 3 && !ok && !stopAfterThrottle; payloadAttempt++) {
+        const payload: any = {
+          __metadata: { type: entityType },
+          Title: generateCollectionTitle(project, freshCollectionData),
+          ProjectId: project.Id.toString(),
+          ProfitCentre: project.PC || "",
+          CollectionData: freshCollectionDataJson,
+          Remarks: "",
+          OBL: "0",
+          CreatedDate: new Date().toISOString(),
+          UpdatedDate: new Date().toISOString()
+        };
 
-          // Store Project Reference when the column exists: a LOOKUP column
-          // receives the target item ID as a STRING (ProjectReferenceId) - the
-          // same rule used by the Revenue sync so both behave identically.
-          const refField = await collectionListProjectRefField();
-          if (refField.exists && attempt === 1) {
-            if (refField.type === "Lookup") {
-              payload.ProjectReferenceId = String(project.Id);
-            } else {
-              payload.ProjectReference = project.ProjectReference || "";
-            }
-          }
-          if (attempt >= 2) {
-            delete payload.ProjectReference;
-            delete payload.ProjectReferenceId;
-          }
-          if (attempt >= 3) {
-            delete payload.OBL;
-          }
-
-          const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items`, {
-            method: "POST",
-            headers: {
-              Accept: "application/json;odata=verbose",
-              "Content-Type": "application/json;odata=verbose",
-              "X-RequestDigest": digest
-            },
-            body: JSON.stringify(payload)
-          });
-
-          if (res.ok) {
-            ok = true;
-            added++;
-            // setStatus(`✅ Added: ${project.Title}${project.ProjectReference ? ' (' + project.ProjectReference + ')' : ''}`);
+        if (refField.exists && payloadAttempt === 1) {
+          if (refField.type === "Lookup") {
+            payload.ProjectReferenceId = String(project.Id);
           } else {
-            const bodyText = await res.text();
-            let message = `HTTP ${res.status}`;
-            try {
-              const errJson = JSON.parse(bodyText);
-              message = errJson?.error?.message?.value || message;
-            } catch (e) { /* keep http message */ }
-            console.error(`❌ Attempt ${attempt} failed for ${project.Title}: ${bodyText}`);
-            if (attempt === 2) {
-              failed++;
-              errors.push(`${project.Title} -> ${message}`);
-            }
-          }
-        } catch (projectError) {
-          console.error(`❌ Attempt ${attempt} error for ${project.Title}:`, projectError);
-          if (attempt === 2) {
-            failed++;
-            errors.push(`${project.Title} -> ${projectError instanceof Error ? projectError.message : String(projectError)}`);
+            payload.ProjectReference = project.ProjectReference || "";
           }
         }
-        if (!ok) await new Promise(resolve => setTimeout(resolve, 300));
+        if (payloadAttempt >= 2) {
+          delete payload.ProjectReference;
+          delete payload.ProjectReferenceId;
+        }
+        if (payloadAttempt >= 3) delete payload.OBL;
+
+        let throttleAttempt = 0;
+        while (!ok && !stopAfterThrottle) {
+          try {
+            const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items`, {
+              method: "POST",
+              headers: {
+                Accept: "application/json;odata=verbose",
+                "Content-Type": "application/json;odata=verbose",
+                "X-RequestDigest": digest
+              },
+              body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+              ok = true;
+              added++;
+              break;
+            }
+
+            const bodyText = await res.text();
+            lastError = `HTTP ${res.status}`;
+            try {
+              const errJson = JSON.parse(bodyText);
+              lastError = errJson?.error?.message?.value || lastError;
+            } catch {
+              if (bodyText) lastError = bodyText.slice(0, 250);
+            }
+
+            if (res.status === 408 || res.status >= 500) {
+              stopAfterThrottle = true;
+              console.error(`Collection create returned HTTP ${res.status} for ${project.Title}; it will not be reposted automatically.`);
+              break;
+            }
+
+            if (res.status === 429) {
+              const retryAfter = res.headers.get("Retry-After");
+              const retryAfterSeconds = retryAfter === null ? NaN : Number(retryAfter);
+              const retryAfterDate = retryAfter && Number.isNaN(retryAfterSeconds)
+                ? Date.parse(retryAfter)
+                : NaN;
+              if (throttleAttempt >= 5) {
+                stopAfterThrottle = true;
+                console.error(`❌ Throttled too many times while creating ${project.Title}: ${bodyText}`);
+                break;
+              }
+
+              const waitMs = Number.isFinite(retryAfterSeconds)
+                ? Math.max(0, retryAfterSeconds * 1000)
+                : Number.isFinite(retryAfterDate)
+                  ? Math.max(0, retryAfterDate - Date.now())
+                  : Math.min(60000, 1000 * (2 ** throttleAttempt));
+              console.warn(`SharePoint throttled Collection sync; retrying in ${Math.ceil(waitMs / 1000)}s.`);
+              throttleAttempt++;
+              await new Promise(resolve => setTimeout(resolve, waitMs));
+              continue;
+            }
+
+            console.error(`❌ Payload attempt ${payloadAttempt} failed for ${project.Title}: ${bodyText}`);
+            break;
+          } catch (projectError) {
+            lastError = projectError instanceof Error ? projectError.message : String(projectError);
+            console.error(`❌ Payload attempt ${payloadAttempt} error for ${project.Title}:`, projectError);
+            stopAfterThrottle = true;
+            break;
+          }
+        }
+
+        if (!ok && !stopAfterThrottle && payloadAttempt < 3) {
+          await new Promise(resolve => setTimeout(resolve, 300));
+        }
+      }
+
+      if (!ok) {
+        failed++;
+        errors.push(`${project.Title} -> ${lastError}`);
       }
       await new Promise(resolve => setTimeout(resolve, 100));
+    };
+
+    const batchPayloads = missingProjects.map((project): Record<string, unknown> => {
+      const payload: Record<string, unknown> = {
+        __metadata: { type: entityType },
+        Title: generateCollectionTitle(project, freshCollectionData),
+        ProjectId: project.Id.toString(),
+        ProfitCentre: project.PC || "",
+        CollectionData: freshCollectionDataJson,
+        Remarks: "",
+        OBL: "0",
+        CreatedDate: new Date().toISOString(),
+        UpdatedDate: new Date().toISOString()
+      };
+      if (refField.exists) {
+        if (refField.type === "Lookup") payload.ProjectReferenceId = String(project.Id);
+        else payload.ProjectReference = project.ProjectReference || "";
+      }
+      return payload;
+    });
+    const batchResults = await createSharePointItemsInBatches(siteUrl, listName, digest, batchPayloads, 20, 2);
+    const failedBatchProjects: ProjectItem[] = [];
+    batchResults.forEach((result, index) => {
+      if (result.success) {
+        added++;
+      } else {
+        failedBatchProjects.push(missingProjects[index]);
+        console.error(`Collection batch create failed for ${missingProjects[index].Title}: ${result.error}`);
+      }
+    });
+
+    if (failedBatchProjects.length > 0) {
+      const verifyResponse = await fetch(existingRowsUrl, {
+        headers: { Accept: "application/json;odata=verbose" }
+      });
+      if (!verifyResponse.ok) {
+        throw new Error(`Could not verify Collection batch results (HTTP ${verifyResponse.status}); individual retries were stopped to avoid duplicate rows.`);
+      }
+      const verifiedRows = (await verifyResponse.json())?.d?.results || [];
+      const verifiedProjectIds = getServerProjectIds(verifiedRows);
+      const verifiedProjectReferences = new Set(
+        hasTextProjectReference
+          ? verifiedRows.map((row: any) => normalizeReference(row.ProjectReference)).filter(Boolean)
+          : []
+      );
+      const fallbackProjects = failedBatchProjects.filter(project =>
+        !verifiedProjectIds.has(project.Id) &&
+        !(hasTextProjectReference && verifiedProjectReferences.has(normalizeReference(project.ProjectReference)))
+      );
+
+      if (fallbackProjects.length < failedBatchProjects.length) {
+        console.warn("Collection batch verification found rows already created; skipping duplicate retries.");
+      }
+      const fallbackConcurrency = 4;
+      for (let i = 0; i < fallbackProjects.length; i += fallbackConcurrency) {
+        await Promise.all(fallbackProjects.slice(i, i + fallbackConcurrency).map(createCollectionForProject));
+      }
     }
 
     if (added > 0) {
@@ -1785,10 +1909,14 @@ const syncMissingProjectsToCollectionList = async (): Promise<void> => {
     }
   } catch (error) {
     console.error("❌ Auto-sync failed:", error);
+    const message = error instanceof Error ? error.message : String(error);
+    setStatus(`❌ Collection sync stopped: ${message}`);
+    toast("error", `Collection sync stopped: ${message}`);
   } finally {
     if (syncBtn) syncBtn.disabled = false;
+    syncLocks.delete(syncLockKey);       
   }
-};
+};  
 
 // Cached check: does Collection List physically have a 'ProjectReference' column,
 // and is it a plain Text field or a Lookup to Project List?
@@ -6327,6 +6455,12 @@ const applyAutoProgression = async (): Promise<void> => {
 
             // Check if progression is needed
             if (checkIfNeedsProgression(originalData)) {
+                const etag = collection.__metadata?.etag;
+                if (!etag) {
+                    errorCount++;
+                    console.error(`❌ Cannot safely progress collection ${collection.Id}: SharePoint ETag is unavailable`);
+                    continue;
+                }
                 console.log(`🔄 Progressing collection: ${collection.Title}`);
                 const progressedData = propagateCollectionValues(originalData);
 
@@ -6342,7 +6476,7 @@ const applyAutoProgression = async (): Promise<void> => {
                         Accept: "application/json;odata=verbose",
                         "Content-Type": "application/json;odata=verbose",
                         "X-RequestDigest": digest,
-                        "IF-MATCH": "*",
+                        "IF-MATCH": etag,
                         "X-HTTP-Method": "MERGE"
                     },
                     body: JSON.stringify(payload)
@@ -6352,7 +6486,7 @@ const applyAutoProgression = async (): Promise<void> => {
                     progressedCount++;
                 } else {
                     errorCount++;
-                    console.error(`❌ Failed to progress collection: ${collection.Id}`);
+                    console.error(`❌ Failed to progress collection: ${collection.Id} (HTTP ${response.status})`);
                 }
 
                 await new Promise(resolve => setTimeout(resolve, 100));
@@ -8361,13 +8495,10 @@ const debugDataTypes = (data: any, path: string = ''): void => {
     console.log(`👤 User: ${getCurrentUserFullName()}`);
     console.log(`📋 User Groups:`, getUserGroups());
 
-    // Load projects first
-    updateLoadingMessage(loading, "Loading projects...");
-    await loadProjects();
-
-    // Then load collections
-    updateLoadingMessage(loading, "Loading collections...");
-    await loadCollections();
+    updateLoadingMessage(loading, "Loading projects and collections...");
+    const projectsLoad = loadProjects();
+    const collectionsLoad = loadCollections(projectsLoad);
+    await Promise.all([projectsLoad, collectionsLoad]);
 
     console.log(`📊 Loaded ${collections.length} collections`);
 
@@ -8375,38 +8506,18 @@ const debugDataTypes = (data: any, path: string = ''): void => {
     // missing project (skeleton JSON: 36 historical + current/next 2 +
     // next 16 months + 4-year yearly). Only runs for roles with create
     // rights and only for projects inside that role's visible scope.
-    updateLoadingMessage(loading, "Syncing missing projects...");
-    await syncMissingProjectsToCollectionList();
-
     // Show the manual Sync button only to roles that can create rows
     const syncBar = document.querySelector('#collectionSyncBar') as HTMLElement | null;
     if (syncBar) {
       syncBar.style.display = canCreateRecord() ? 'flex' : 'none';
     }
-
+       
     // 🔐 RBAC AUTO-PROGRESSION (monthly roll-over):
     //   - Roles with edit rights (canEditOwn: Admin, GH Heads, PM Managers,
     //     Engg Lead, Engg Sub1) → perform the real SharePoint bulk update.
     //   - Read-only roles (SC Team, Controlling, Engg Sub2, Engg Mgr) → the
     //     same roll-over is applied IN MEMORY only, so their screen shows the
     //     current month structure WITHOUT writing to SharePoint.
-    if (collections.length > 0) {
-        if (canEditOwn()) {
-            updateLoadingMessage(loading, "Applying monthly progression...");
-            await applyAutoProgression();
-            // Reload after progression
-            await loadCollections();
-        } else {
-            const viewerProgressed = collections.map((c: CollectionItem) => {
-                const data = safeJsonParse(c.CollectionData, {});
-                if (!checkIfNeedsProgression(data)) return c;
-                return { ...c, CollectionData: JSON.stringify(propagateCollectionValues(data)) };
-            });
-            collections = viewerProgressed;
-            console.log('👁️ Read-only viewer: progression applied locally for display only (no SharePoint writes)');
-        }
-    }
-
     // IMPORTANT: Force page size to 25 on initial load
     pageSize = 25;
     if (pageSizeSelect) {
@@ -8452,6 +8563,39 @@ const debugDataTypes = (data: any, path: string = ''): void => {
       const historicalExportBtn = document.querySelector('.collection-export-historical-btn') as HTMLElement | null;
       if (historicalExportBtn) historicalExportBtn.style.display = 'none';
     }
+
+    const runBackgroundAutoUpdate = async (): Promise<void> => {
+      try {
+        setBackgroundAutoUpdateIndicator(".collection-page", true);
+        await syncMissingProjectsToCollectionList();
+
+        if (collections.length > 0) {
+          if (canEditOwn()) {
+            await applyAutoProgression();
+          } else {
+            collections = collections.map((collection: CollectionItem) => {
+              const data = safeJsonParse(collection.CollectionData, {});
+              if (!checkIfNeedsProgression(data)) return collection;
+              return { ...collection, CollectionData: JSON.stringify(propagateCollectionValues(data)) };
+            });
+            console.log('👁️ Read-only viewer: progression applied locally for display only (no SharePoint writes)');
+          }
+        }
+      } catch (error) {
+        console.error("Background Collection update failed:", error);
+        toast("error", "Collection background update failed");
+      } finally {
+        try {
+          filterTable();
+        } catch (error) {
+          console.error("Could not refresh the Collection table after background update:", error);
+          toast("error", "Could not refresh the Collection table");
+        } finally {
+          setBackgroundAutoUpdateIndicator(".collection-page", false);
+        }
+      }
+    };
+    void runBackgroundAutoUpdate();
 
     console.log("✅ Application initialized successfully");
 

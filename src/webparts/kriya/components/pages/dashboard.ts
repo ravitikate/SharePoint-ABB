@@ -409,8 +409,24 @@ const dashboardContent = `
 // ============================================================
 // DASHBOARD SCRIPT
 // ============================================================
+let dashboardRunId = 0;
+let dashboardStartupTimer: number | null = null;
+let dashboardCleanup: (() => void) | null = null;
+
 const dashboardScript = (): void => {
-  setTimeout(async () => {
+  dashboardCleanup?.();
+  dashboardCleanup = null;
+  if (dashboardStartupTimer !== null) {
+    window.clearTimeout(dashboardStartupTimer);
+  }
+  const runId = ++dashboardRunId;
+  const isCurrentRun = (): boolean =>
+    runId === dashboardRunId && (window as any).__dtActivePageKey === 'dashboard';
+
+  dashboardStartupTimer = window.setTimeout(async () => {
+    dashboardStartupTimer = null;
+    if (!isCurrentRun()) return;
+
     const siteUrl = typeof _spPageContextInfo !== 'undefined'
       ? _spPageContextInfo.webAbsoluteUrl
       : window.location.origin + '/sites/Kriya';
@@ -1877,7 +1893,7 @@ const getSelectedProjectIds = (): Set<number> => {
       const url = `${siteUrl}/_api/web/lists/getbytitle('${DASH_SOURCES.projectList}')/items`
         + `?$select=${select}`
         + (expand ? `&$expand=${expand}` : '')
-        + `&$orderby=Title`;
+        + `&$orderby=Title&$top=5000`;
       const res = await safeFetch(url, {
         headers: { 'Accept': 'application/json;odata=verbose' },
         credentials: 'same-origin'
@@ -2128,6 +2144,21 @@ const getSelectedProjectIds = (): Set<number> => {
     // ============================================================
     let refreshInterval: ReturnType<typeof setInterval> | null = null;
     let isRefreshing = false;
+    let backgroundSyncTimer: number | null = null;
+    const handleVisibilityChange = (): void => {
+      if (document.hidden || !isCurrentRun()) stopAutoRefresh();
+      else startAutoRefresh();
+    };
+    const handlePageDeactivated = (event: Event): void => {
+      const detail = (event as CustomEvent<{ pageKey: string }>).detail;
+      if (detail?.pageKey !== 'dashboard') return;
+      stopAutoRefresh();
+      if (backgroundSyncTimer !== null) {
+        window.clearTimeout(backgroundSyncTimer);
+        backgroundSyncTimer = null;
+      }
+    };
+    const handleBeforeUnload = (): void => stopAutoRefresh();
 
     const startAutoRefresh = (): void => {
       if (refreshInterval) {
@@ -2142,6 +2173,10 @@ const getSelectedProjectIds = (): Set<number> => {
       }
 
       refreshInterval = setInterval(async () => {
+        if (!isCurrentRun()) {
+          stopAutoRefresh();
+          return;
+        }
         if (isRefreshing) return;
         isRefreshing = true;
 
@@ -2198,13 +2233,9 @@ const getSelectedProjectIds = (): Set<number> => {
 
     const setupAutoRefresh = (): void => {
       startAutoRefresh();
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) stopAutoRefresh();
-        else startAutoRefresh();
-      });
-      window.addEventListener('beforeunload', () => {
-        stopAutoRefresh();
-      });
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      document.addEventListener('dt-page-deactivated', handlePageDeactivated);
+      window.addEventListener('beforeunload', handleBeforeUnload);
     };
 
     // ============================================================
@@ -2217,7 +2248,9 @@ const getSelectedProjectIds = (): Set<number> => {
       console.error('❌ Dashboard auth initialization failed:', err);
     }
 
+    if (!isCurrentRun()) return;
     await loadScope();
+    if (!isCurrentRun()) return;
     console.log('✅ Dashboard initialized for', currentMonthKey);
     setupAutoRefresh();
 
@@ -2652,6 +2685,7 @@ const getSelectedProjectIds = (): Set<number> => {
       }
 
       const existingIds = await dashExistingProjectIds(target, visibleProjects);
+      if (!isCurrentRun()) return 0;
       if (existingIds === null) {
         dashLog(`⚠️ '${target.label}': existing rows could not be verified - skipped`);
         return 0;
@@ -2670,11 +2704,16 @@ const getSelectedProjectIds = (): Set<number> => {
         console.error(`[DASH-SYNC] ❌ '${target.label}': could not get digest:`, digestError);
         return 0;
       }
+      if (!isCurrentRun()) return 0;
 
       const entityType = await dashListEntityType(target.listName, target.entityFallback);
+      if (!isCurrentRun()) return 0;
       const pcMap = await dashProjectProfitCentres();
+      if (!isCurrentRun()) return 0;
       const refField = await dashListProjectRefField(target.listName);
+      if (!isCurrentRun()) return 0;
       await dashPrimeFieldNames(target.listName);
+      if (!isCurrentRun()) return 0;
 
       dashLog(`➕ '${target.label}': adding ${missing.length} row(s): ${missing.map((p: any) => p.Title).join(', ')}`);
 
@@ -2683,6 +2722,7 @@ const getSelectedProjectIds = (): Set<number> => {
       let permissionDenied = 0;
 
       for (const project of missing) {
+        if (!isCurrentRun()) break;
         const projectWithPc = { ...project, PC: project.PC || pcMap.get(Number(project.Id)) || '' };
         let ok = false;
 
@@ -2701,6 +2741,7 @@ const getSelectedProjectIds = (): Set<number> => {
               },
               body: JSON.stringify(payload)
             });
+            if (!isCurrentRun()) return added;
 
             if (res.ok) {
               ok = true;
@@ -2717,9 +2758,11 @@ const getSelectedProjectIds = (): Set<number> => {
               `(variant ${attempt}):`, projectError);
           }
 
+          if (!isCurrentRun()) break;
           if (!ok) await new Promise(resolve => setTimeout(resolve, 300));
         }
 
+        if (!isCurrentRun()) break;
         if (!ok) failed++;
         await new Promise(resolve => setTimeout(resolve, 100));
       }
@@ -2745,6 +2788,7 @@ const getSelectedProjectIds = (): Set<number> => {
           `${siteUrl}/_api/web/lists/getbytitle('${target.listName}')/items?$select=Id,ProjectId,${target.jsonField}&$top=5000`,
           { headers: { 'Accept': 'application/json;odata=verbose' } as any, credentials: 'same-origin' }
         );
+        if (!isCurrentRun()) return 0;
         if (!res.ok) {
           dashLog(`⚠️ '${target.label}': progression read HTTP ${res.status} - skipped`);
           return 0;
@@ -2754,6 +2798,7 @@ const getSelectedProjectIds = (): Set<number> => {
         console.error(`[DASH-SYNC] ⚠️ '${target.label}' progression fetch failed:`, error);
         return 0;
       }
+      if (!isCurrentRun()) return 0;
 
       const inScope = rows.filter((row: any) =>
         row.ProjectId !== undefined && row.ProjectId !== null && scopeIds.has(Number(row.ProjectId))
@@ -2796,13 +2841,16 @@ const getSelectedProjectIds = (): Set<number> => {
         console.error(`[DASH-SYNC] ❌ '${target.label}': could not get digest:`, digestError);
         return 0;
       }
+      if (!isCurrentRun()) return 0;
 
       const entityType = await dashListEntityType(target.listName, target.entityFallback);
+      if (!isCurrentRun()) return 0;
       dashLog(`🔄 '${target.label}': writing ${work.length} row(s)`);
 
       let progressed = 0;
 
       for (const item of work) {
+        if (!isCurrentRun()) break;
         const row = item.row;
         try {
           const progressedData = item.mode === 'fill'
@@ -2825,6 +2873,7 @@ const getSelectedProjectIds = (): Set<number> => {
             },
             body: JSON.stringify(payload)
           });
+          if (!isCurrentRun()) return progressed;
 
           if (response.ok) {
             progressed++;
@@ -2979,6 +3028,7 @@ const getSelectedProjectIds = (): Set<number> => {
     const runDashboardBackgroundSync = async (trigger: string = 'auto'): Promise<void> => {
       const w = window as any;
 
+      if (!isCurrentRun()) return;
       if (dashAutoSyncRunning || w.__dashSyncRunning) {
         dashLog('already running - second call ignored');
         return;
@@ -3001,6 +3051,7 @@ const getSelectedProjectIds = (): Set<number> => {
 
       try {
         await dashEnsureSiteLevelAuth();
+        if (!isCurrentRun()) return;
         dashLog('permissions after re-init:', dashPermissionReport());
 
         if (!canRead()) {
@@ -3018,9 +3069,12 @@ const getSelectedProjectIds = (): Set<number> => {
         dashLog(`project scope: ${dashVisibleProjects().length} project(s)`);
 
         for (const target of DASH_AUTO_SYNC_TARGETS) {
+          if (!isCurrentRun()) break;
           try {
             const added = await dashSyncMissingProjects(target);
+            if (!isCurrentRun()) break;
             const progressed = await dashApplyAutoProgression(target);
+            if (!isCurrentRun()) break;
             changed += added + progressed;
             summary.push(`${target.label}: +${added} new, ${progressed} written`);
             setDashSyncStatus(`⏳ Syncing… ${summary.length}/${DASH_AUTO_SYNC_TARGETS.length}`, '#ffc107');
@@ -3032,20 +3086,24 @@ const getSelectedProjectIds = (): Set<number> => {
       } finally {
         dashAutoSyncRunning = false;
         (window as any).__dashSyncRunning = false;
-        dashLog(`finished (${trigger}) →`, summary.join(' | '));
+        if (isCurrentRun()) {
+          dashLog(`finished (${trigger}) →`, summary.join(' | '));
 
-        if (changed > 0) {
-          setDashSyncStatus(`✅ Synced ${changed} change(s)`, '#28a745');
-          try {
-            await refreshBoard();
-          } catch (refreshError) {
-            console.error('[DASH-SYNC] ⚠️ refresh after background sync failed:', refreshError);
+          if (changed > 0) {
+            setDashSyncStatus(`✅ Synced ${changed} change(s)`, '#28a745');
+            try {
+              await refreshBoard();
+            } catch (refreshError) {
+              console.error('[DASH-SYNC] ⚠️ refresh after background sync failed:', refreshError);
+            }
+          } else {
+            setDashSyncStatus('✅ Already in sync', '#28a745');
           }
-        } else {
-          setDashSyncStatus('✅ Already in sync', '#28a745');
-        }
 
-        window.setTimeout(() => setDashSyncStatus(''), 15000);
+          window.setTimeout(() => {
+            if (isCurrentRun()) setDashSyncStatus('');
+          }, 15000);
+        }
       }
     };
 
@@ -3062,7 +3120,10 @@ const getSelectedProjectIds = (): Set<number> => {
         return;
       }
 
-      window.setTimeout(() => { void runDashboardBackgroundSync('auto'); }, 1500);
+      backgroundSyncTimer = window.setTimeout(() => {
+        backgroundSyncTimer = null;
+        if (isCurrentRun()) void runDashboardBackgroundSync('auto');
+      }, 1500);
     };
 
     const mountDashboardSyncButton = (): void => {
@@ -3086,6 +3147,20 @@ const getSelectedProjectIds = (): Set<number> => {
     mountDashboardSyncButton();
     startDashboardBackgroundSync();
 
+    dashboardCleanup = (): void => {
+      stopAutoRefresh();
+      if (backgroundSyncTimer !== null) {
+        window.clearTimeout(backgroundSyncTimer);
+        backgroundSyncTimer = null;
+      }
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener('dt-page-deactivated', handlePageDeactivated);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.getElementById('dsBgSyncNow')?.remove();
+      if ((window as any).dashboardSyncNow === runDashboardBackgroundSync) {
+        delete (window as any).dashboardSyncNow;
+      }
+    };
   }, 250);
 };
 

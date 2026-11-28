@@ -50,10 +50,6 @@ body,
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .collection-table-container {
-    overflow-x: auto;
-  }
-
   .collection-pagination-navigation {
     flex-wrap: wrap;
     justify-content: center;
@@ -226,21 +222,22 @@ body,
   transform: scale(0.95);
 }
 
-/* ===== SCROLL CONTAINER (sticky headers only work inside this) ===== */
+/* ===== TABLE SCROLLING (match Revenue's page-level scrolling) ===== */
 .collection-table-container {
-  max-height: 70vh;            /* table body height cap */
-  overflow: auto;              /* was: visible (page-scroll) */
+  overflow: visible !important;
+  max-height: none !important;
+  height: auto !important;
   border: 1px solid #cfd8dc;
   border-radius: 6px;
   background: #fff;
-  -webkit-overflow-scrolling: touch;
   position: relative;
 }
 
 /* legacy class kept for safety (if any other markup uses it) */
 .collection-table-scroll {
-  max-height: 70vh;
-  overflow: auto;
+  overflow: visible !important;
+  max-height: none !important;
+  height: auto !important;
   border: 1px solid #cfd8dc;
 }
 

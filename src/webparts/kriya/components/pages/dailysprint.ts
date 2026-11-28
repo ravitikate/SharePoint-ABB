@@ -552,7 +552,8 @@ const loadProjects = async (): Promise<void> => {
       `EnggSubLead1/Title,EnggSubLead1Id,` +
       `EnggSubLead2/Title,EnggSubLead2Id,` +
       `EngineeringManagers/Title,EngineeringManagersId` +
-      `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers`,
+      `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers` +
+      `&$top=5000`,
       { headers: { Accept: "application/json;odata=verbose" } }
     );
     const data = await res.json();

@@ -360,6 +360,7 @@ export default class KriyaWebPart extends BaseClientSideWebPart<IKriyaWebPartPro
     pageKey: string
   ): void {
     this.activePageKey = pageKey;
+    (window as any).__dtActivePageKey = pageKey;
 
     setActiveSidebarPage(pageKey, false);
     this.highlightSidebarTab(pageKey);
@@ -427,7 +428,13 @@ export default class KriyaWebPart extends BaseClientSideWebPart<IKriyaWebPartPro
   }
 
   private showAccessDenied(body: Element, pageKey: string): void {
+    if (this.activePageKey && this.activePageKey !== pageKey) {
+      document.dispatchEvent(new CustomEvent('dt-page-deactivated', {
+        detail: { pageKey: this.activePageKey }
+      }));
+    }
     this.activePageKey = pageKey;
+    (window as any).__dtActivePageKey = pageKey;
     body.innerHTML = `
       <div style="text-align: center; padding: 50px; background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
         <h2 style="color: #dc3545;">🔒 Access Denied</h2>
@@ -455,6 +462,14 @@ export default class KriyaWebPart extends BaseClientSideWebPart<IKriyaWebPartPro
   private loadPage(pageKey: string): void {
     const body = this.domElement.querySelector('.dt-body');
     if (!body) return;
+
+    if (this.activePageKey) {
+      document.dispatchEvent(new CustomEvent('dt-page-deactivated', {
+        detail: { pageKey: this.activePageKey }
+      }));
+    }
+    this.activePageKey = pageKey;
+    (window as any).__dtActivePageKey = pageKey;
 
     if (pageKey === 'master' || ADMIN_ONLY_PAGES.has(pageKey)) {
       this.checkAndLoadMasterPage(body, pageKey);
@@ -491,6 +506,7 @@ export default class KriyaWebPart extends BaseClientSideWebPart<IKriyaWebPartPro
       await this.initializeAuth();
     }
 
+    if (this.activePageKey !== pageKey) return;
     const hasAccess = this.canAccessMaster();
 
     if (hasAccess) {

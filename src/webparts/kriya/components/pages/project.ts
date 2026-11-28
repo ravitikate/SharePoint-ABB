@@ -4,7 +4,7 @@ import { saveAs } from 'file-saver';
 import "../styles/common.css";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
- 
+
 import {
   authManager,
   canCreate,
@@ -44,16 +44,19 @@ class ManagerLookup {
   private hiddenInput: HTMLInputElement;
   private siteUrl: string;
   private groupName: string | null;
+  private signal?: AbortSignal;
   private onSelect?: (manager: any) => void;
   private onClear?: () => void;
 
   constructor(container: HTMLElement, siteUrl: string, groupName: string | null, options?: {
     onSelect?: (manager: any) => void;
     onClear?: () => void;
+    signal?: AbortSignal;
   }) {
     this.container = container;
     this.siteUrl = siteUrl;
     this.groupName = groupName;
+    this.signal = options?.signal;
     this.onSelect = options?.onSelect;
     this.onClear = options?.onClear;
 
@@ -113,6 +116,7 @@ class ManagerLookup {
       const managers = await this.searchManagers(searchTerm);
       this.displaySuggestions(managers);
     } catch (error) {
+      if (this.signal?.aborted) return;
       console.error('Error searching managers:', error);
       this.suggestionsDiv.innerHTML =
         '<div class="manager-suggestion-item" style="color:#d13438;">Search failed. Please try again.</div>';
@@ -135,7 +139,8 @@ class ManagerLookup {
         headers: {
           'Accept': 'application/json;odata=verbose',
           'Content-Type': 'application/json;odata=verbose'
-        }
+        },
+        signal: this.signal
       });
 
       if (res.ok) {
@@ -158,7 +163,8 @@ class ManagerLookup {
       headers: {
         'Accept': 'application/json;odata=verbose',
         'Content-Type': 'application/json;odata=verbose'
-      }
+      },
+      signal: this.signal
     });
 
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -927,6 +933,8 @@ export default {
 .pimp-table tr:nth-child(even) { background: #fafafa; }
 .pimp-badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:600; }
 .pimp-badge-add { background:#d4edda; color:#155724; }
+.pimp-badge-update { background:#cce5ff; color:#004085; }
+.pimp-badge-skip { background:#e2e3e5; color:#383d41; }
 .pimp-badge-err { background:#f8d7da; color:#721c24; }
 .pimp-actions { display:flex; justify-content:flex-end; gap:10px; margin-top:14px; flex-wrap:wrap; }
 .pimp-status { margin-top: 12px; font-size: 13px; white-space: pre-line; }
@@ -942,8 +950,8 @@ export default {
 @media (max-width:768px){
   .form-group { flex:1 1 100%; }
   .manager-lookup { flex-direction: column; }
-  .manager-lookup button { width: 100%; }
-  .modern-table { font-size: 12px; }
+  .manager-lookup button { width: 100%; }                
+  .modern-table { font-size: 12px; }       
   .modern-table th, .modern-table td { padding: 6px; }
   .pagination-controls { gap: 8px; }
   .pagination button { padding: 5px 9px; font-size: 13px; }
@@ -1414,6 +1422,21 @@ export default {
 `,
   script: () => {
     setTimeout(async () => {
+      if ((window as any).__dtActivePageKey !== 'project') return;
+      const projectReadController = new AbortController();
+      const isProjectActive = (): boolean =>
+        !projectReadController.signal.aborted && (window as any).__dtActivePageKey === 'project';
+      const handleProjectDeactivation = (event: Event): void => {
+        const detail = (event as CustomEvent<{ pageKey: string }>).detail;
+        if (detail?.pageKey !== 'project') return;
+        projectReadController.abort();
+        document.querySelectorAll('.pj-loading-overlay').forEach(overlay => overlay.remove());
+        document.removeEventListener('dt-page-deactivated', handleProjectDeactivation);
+      };
+      document.addEventListener('dt-page-deactivated', handleProjectDeactivation);
+      const fetchProjectRead = (input: string, init: RequestInit = {}): Promise<Response> =>
+        fetch(input, { ...init, signal: projectReadController.signal });
+
       // ============================================
       // LOAD SWEETALERT2 (SharePoint-safe CDN loader)
       // ============================================
@@ -1471,7 +1494,7 @@ export default {
       };
 
       const removeLoadingOverlay = (): void => {
-        document.querySelectorAll(".pj-loading-overlay, .loading-overlay").forEach(el => el.remove());
+        document.querySelectorAll(".pj-loading-overlay").forEach(el => el.remove());
       };
 
       const loaderHost = (): HTMLElement => {
@@ -1503,19 +1526,21 @@ export default {
       } catch (error) {
         console.error('❌ Auth initialization failed:', error);
       }
+      if (!isProjectActive()) return;
       removeLoadingOverlay();
 
       // ============================================
       // MANAGER LOOKUP INSTANCES
       // ============================================
-      const groupHeadLookup       = new ManagerLookup(document.querySelector('#groupHeadLookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.GroupHead1);
-      const projectManagerLookup  = new ManagerLookup(document.querySelector('#projectManagerLookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.ProjectManager);
-      const enggLeadLookup        = new ManagerLookup(document.querySelector('#enggLeadLookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.EnggLead);
-      const enggSubLead1Lookup    = new ManagerLookup(document.querySelector('#enggSubLead1Lookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.EnggSubLead1);
-      const enggSubLead2Lookup    = new ManagerLookup(document.querySelector('#enggSubLead2Lookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.EnggSubLead2);
-      const enggManagersLookup    = new ManagerLookup(document.querySelector('#enggManagersLookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.EngineeringManagers);
-      const scmLookup             = new ManagerLookup(document.querySelector('#scmLookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.SCM);
-      const controllingLookup     = new ManagerLookup(document.querySelector('#controllingLookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.Controlling);
+      const lookupOptions = { signal: projectReadController.signal };
+      const groupHeadLookup       = new ManagerLookup(document.querySelector('#groupHeadLookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.GroupHead1, lookupOptions);
+      const projectManagerLookup  = new ManagerLookup(document.querySelector('#projectManagerLookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.ProjectManager, lookupOptions);
+      const enggLeadLookup        = new ManagerLookup(document.querySelector('#enggLeadLookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.EnggLead, lookupOptions);
+      const enggSubLead1Lookup    = new ManagerLookup(document.querySelector('#enggSubLead1Lookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.EnggSubLead1, lookupOptions);
+      const enggSubLead2Lookup    = new ManagerLookup(document.querySelector('#enggSubLead2Lookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.EnggSubLead2, lookupOptions);
+      const enggManagersLookup    = new ManagerLookup(document.querySelector('#enggManagersLookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.EngineeringManagers, lookupOptions);
+      const scmLookup             = new ManagerLookup(document.querySelector('#scmLookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.SCM, lookupOptions);
+      const controllingLookup     = new ManagerLookup(document.querySelector('#controllingLookup') as HTMLElement, siteUrl, ROLE_GROUP_NAMES.Controlling, lookupOptions);
 
       const managerLookups = {
         groupHead: groupHeadLookup,
@@ -1652,39 +1677,64 @@ export default {
       // FETCH MANAGER DETAILS (Fallback)
       // ============================================
       const fetchManagerDetails = async (projects: any[]) => {
-        for (const project of projects) {
-          const managerFields = [
-            { id: 'GroupHead1Id', field: 'GroupHead1' },
-            { id: 'ProjectManagerId', field: 'ProjectManager' },
-            { id: 'EnggLeadId', field: 'EnggLead' },
-            { id: 'EnggSubLead1Id', field: 'EnggSubLead1' },
-            { id: 'EnggSubLead2Id', field: 'EnggSubLead2' },
-            { id: 'EngineeringManagersId', field: 'EngineeringManagers' },
-            { id: 'SCMId', field: 'SCM' },
-            { id: 'ControllingId', field: 'Controlling' }
-          ];
+        const managerFields = [
+          { id: 'GroupHead1Id', field: 'GroupHead1' },
+          { id: 'ProjectManagerId', field: 'ProjectManager' },
+          { id: 'EnggLeadId', field: 'EnggLead' },
+          { id: 'EnggSubLead1Id', field: 'EnggSubLead1' },
+          { id: 'EnggSubLead2Id', field: 'EnggSubLead2' },
+          { id: 'EngineeringManagersId', field: 'EngineeringManagers' },
+          { id: 'SCMId', field: 'SCM' },
+          { id: 'ControllingId', field: 'Controlling' }
+        ];
+        const managerIdSet = new Set<number>();
+        projects.forEach(project => {
+          managerFields.forEach(({ id, field }) => {
+            const managerId = Number(project[id]);
+            if (project[id] && !project[field] && Number.isFinite(managerId)) {
+              managerIdSet.add(managerId);
+            }
+          });
+        });
+        const managerIds = Array.from(managerIdSet);
+        const managersById = new Map<number, any>();
+        let nextManagerIndex = 0;
 
-          for (const { id, field } of managerFields) {
-            const managerId = project[id];
-            if (managerId && !project[field]) {
-              try {
-                const managerRes = await fetch(
-                  `${siteUrl}/_api/web/getuserbyid(${managerId})?$select=Id,Title,Email`,
-                  { headers: { 'Accept': 'application/json;odata=verbose' } }
-                );
-                if (managerRes.ok) {
-                  const managerData = await managerRes.json();
-                  project[field] = {
-                    Id: managerData.d.Id,
-                    Title: managerData.d.Title,
-                    Email: managerData.d.Email || ''
-                  };
-                }
-              } catch (error) {
-                console.warn(`Could not fetch manager details for ${field} ID ${managerId}:`, error);
+        const loadNextManager = async (): Promise<void> => {
+          while (isProjectActive() && nextManagerIndex < managerIds.length) {
+            const managerId = managerIds[nextManagerIndex++];
+            try {
+              const managerRes = await fetchProjectRead(
+                `${siteUrl}/_api/web/getuserbyid(${managerId})?$select=Id,Title,Email`,
+                { headers: { 'Accept': 'application/json;odata=verbose' } }
+              );
+              if (!isProjectActive()) return;
+              if (!managerRes.ok) continue;
+
+              const managerData = await managerRes.json();
+              managersById.set(managerId, {
+                Id: managerData.d.Id,
+                Title: managerData.d.Title,
+                Email: managerData.d.Email || ''
+              });
+            } catch (error) {
+              if (isProjectActive()) {
+                console.warn(`Could not fetch manager details for ID ${managerId}:`, error);
               }
             }
           }
+        };
+
+        const workerCount = Math.min(8, managerIds.length);
+        await Promise.all(Array.from({ length: workerCount }, () => loadNextManager()));
+        if (!isProjectActive()) return;
+
+        for (const project of projects) {
+          managerFields.forEach(({ id, field }) => {
+            if (project[id] && !project[field]) {
+              project[field] = managersById.get(Number(project[id])) || project[field];
+            }
+          });
         }
       };
 
@@ -1692,9 +1742,11 @@ export default {
       // FETCH PROJECTS
       // ============================================
       const fetchProjects = async (isBackground = false) => {
+        if (!isProjectActive()) return;
+        let loading: HTMLElement | null = null;
         if (!isBackground) {
           showTableLoader("Loading projects…");
-          const loading = createLoadingOverlay("Loading projects…");
+          loading = createLoadingOverlay("Loading projects…");
           loaderHost().appendChild(loading);
         }
 
@@ -1717,28 +1769,30 @@ export default {
           ].join(',');
 
           const query = `$select=${selectFields}&$expand=${expandFields}&$top=5000&$orderby=Id desc`;
-          const res = await fetch(`${apiBase}?${query}`, {
+          const res = await fetchProjectRead(`${apiBase}?${query}`, {
             headers: { 'Accept': 'application/json;odata=verbose', 'Content-Type': 'application/json;odata=verbose' }
           });
+          if (!isProjectActive()) return;
 
           let rawProjects: any[] = [];
           if (!res.ok) {
-            const res2 = await fetch(`${apiBase}?$select=${selectFields}&$top=5000&$orderby=Id desc`, {
+            const res2 = await fetchProjectRead(`${apiBase}?$select=${selectFields}&$top=5000&$orderby=Id desc`, {
               headers: { 'Accept': 'application/json;odata=verbose', 'Content-Type': 'application/json;odata=verbose' }
             });
+            if (!isProjectActive()) return;
             if (res2.ok) {
               const data2 = await res2.json();
+              if (!isProjectActive()) return;
               rawProjects = data2.d.results || [];
             }
           } else {
             const data = await res.json();
+            if (!isProjectActive()) return;
             rawProjects = data.d.results || [];
           }
 
-          const hasExpandedData = rawProjects.some(p => p.ProjectManager && p.ProjectManager.Title);
-          if (!hasExpandedData) {
-            await fetchManagerDetails(rawProjects);
-          }
+          if (!isProjectActive()) return;
+          const needsManagerFallback = !rawProjects.some(p => p.ProjectManager && p.ProjectManager.Title);
 
           projectData = rawProjects;
           filteredData = getAssignedProjects(projectData);
@@ -1770,13 +1824,26 @@ export default {
             exportBtnEl.disabled = !canExport;
           }
 
+          if (needsManagerFallback) {
+            void fetchManagerDetails(rawProjects).then(() => {
+              if (!isProjectActive()) return;
+              if (searchInput.value.trim()) applySearchAndFilter();
+              else renderTable(filteredData);
+            }).catch(error => {
+              if (isProjectActive()) {
+                console.error('Error loading project manager details:', error);
+              }
+            });
+          }
         } catch (err) {
-          console.error("Error fetching projects:", err);
-          if (!isBackground) toast("Error fetching projects.", "error");
+          if (isProjectActive()) {
+            console.error("Error fetching projects:", err);
+            if (!isBackground) toast("Error fetching projects.", "error");
+          }
         } finally {
           if (!isBackground) {
             hideTableLoader();
-            removeLoadingOverlay();
+            loading?.remove();
           }
         }
       };
@@ -2553,7 +2620,8 @@ exportBtn.addEventListener('click', () => {
       /** Per-row validation. Returns a list of human-readable problems. */
       const validateImportRow = (
         payload: Record<string, any>,
-        existingRefsLower: Set<string>
+        existingProjectsByRef: Map<string, any>,
+        duplicateInFile: boolean
       ): string[] => {
         const missing: string[] = [];
         if (!payload.PC)               missing.push('Profit Centre');
@@ -2565,16 +2633,42 @@ exportBtn.addEventListener('click', () => {
         if (missing.length) return [`Missing: ${missing.join(', ')}`];
 
         const ref = String(payload.ProjectReference).trim().toLowerCase();
-        if (existingRefsLower.has(ref)) {
-          return [`Project Reference "${payload.ProjectReference}" already exists`];
+        if (duplicateInFile) {
+          return [`Project Reference "${payload.ProjectReference}" appears more than once in the uploaded file`];
+        }
+
+        const existing = existingProjectsByRef.get(ref);
+        if (existing && importRowHasChanges(payload, existing) && !hasEditPermission()) {
+          return ['Updating existing projects requires administrator permission'];
         }
         return [];
       };
 
+      const importRowHasChanges = (payload: Record<string, any>, existing: any): boolean => {
+        const textFields = ['PC', 'CustomerName', 'Title'];
+        if (textFields.some(field =>
+          String(payload[field] ?? '').trim() !== String(existing[field] ?? '').trim()
+        )) return true;
+
+        if (String(payload.ProjectReference ?? '').trim().toLowerCase() !==
+            String(existing.ProjectReference ?? '').trim().toLowerCase()) return true;
+
+        return ROLE_COLS.some(({ field }) => {
+          const incomingId = payload[field] === '' || payload[field] === null || payload[field] === undefined
+            ? null
+            : Number(payload[field]);
+          const existingId = existing[field] === '' || existing[field] === null || existing[field] === undefined
+            ? null
+            : Number(existing[field]);
+          return incomingId !== existingId;
+        });
+      };
+
        // --- preview model ----------------------------------------------------
       interface ImportPreviewRow extends Record<string, any> {
-        __status: 'added' | 'error';
+        __status: 'added' | 'updated' | 'unchanged' | 'error';
         __error: string;
+        __existingId?: number;
       }
       let currentPreviewRows: ImportPreviewRow[] = [];
 
@@ -2607,7 +2701,11 @@ exportBtn.addEventListener('click', () => {
           const isErr = row.__status === 'error';
           const badge = isErr
             ? `<span class="pimp-badge pimp-badge-err" title="${esc(row.__error)}">Error</span>`
-            : `<span class="pimp-badge pimp-badge-add">Add</span>`;
+            : row.__status === 'updated'
+              ? '<span class="pimp-badge pimp-badge-update">Update</span>'
+              : row.__status === 'unchanged'
+                ? '<span class="pimp-badge pimp-badge-skip">Unchanged</span>'
+                : '<span class="pimp-badge pimp-badge-add">Add</span>';
 
           const cells = IMPORT_HEADERS.map(header => {
             const isRoleCol = ROLE_COLS.some(rc => rc.header === header);
@@ -2759,18 +2857,22 @@ exportBtn.addEventListener('click', () => {
 
         await ensureEmployeesLoaded();
 
-        const existingRefsLower = new Set(
-          projectData
-            .map(p => String(p.ProjectReference ?? '').trim().toLowerCase())
-            .filter(Boolean)
-        );
+        const existingProjectsByRef = new Map<string, any>();
+        projectData.forEach(project => {
+          const ref = String(project.ProjectReference ?? '').trim().toLowerCase();
+          if (ref && !existingProjectsByRef.has(ref)) existingProjectsByRef.set(ref, project);
+        });
+        const uploadedRefsLower = new Set<string>();
 
         const previewRows: ImportPreviewRow[] = [];
-        let addCount = 0, errCount = 0;
+        let addCount = 0, updateCount = 0, unchangedCount = 0, errCount = 0;
 
         for (const raw of rawRows) {
           const payload = mapImportRowToPayload(raw);
-          const problems = validateImportRow(payload, existingRefsLower);
+          const ref = String(payload.ProjectReference ?? '').trim().toLowerCase();
+          const duplicateInFile = !!ref && uploadedRefsLower.has(ref);
+          if (ref) uploadedRefsLower.add(ref);
+          const problems = validateImportRow(payload, existingProjectsByRef, duplicateInFile);
 
           if (problems.length) {
             previewRows.push({
@@ -2780,9 +2882,17 @@ exportBtn.addEventListener('click', () => {
             });
             errCount++;
           } else {
-            previewRows.push({ ...payload, __status: 'added', __error: '' });
-            addCount++;
-            existingRefsLower.add(String(payload.ProjectReference).trim().toLowerCase());
+            const existing = existingProjectsByRef.get(ref);
+            const status = !existing ? 'added' : importRowHasChanges(payload, existing) ? 'updated' : 'unchanged';
+            previewRows.push({
+              ...payload,
+              __status: status,
+              __error: '',
+              ...(existing ? { __existingId: existing.Id } : {})
+            });
+            if (status === 'added') addCount++;
+            else if (status === 'updated') updateCount++;
+            else unchangedCount++;
           }
         }
 
@@ -2790,12 +2900,13 @@ exportBtn.addEventListener('click', () => {
 
         if (errCount) {
           showImportError(
-            `Preview ready — ${addCount} valid, ${errCount} error${errCount === 1 ? '' : 's'}. ` +
+            `Preview ready — ${addCount} to add, ${updateCount} to update, ${unchangedCount} unchanged, ` +
+            `${errCount} error${errCount === 1 ? '' : 's'}. ` +
             `Errored rows have their role cells cleared. Use "Download Error List" to save them.`
           );
         } else {
           showImportSuccess(
-            `Preview ready — all ${addCount} row${addCount === 1 ? '' : 's'} valid. Click Import to save them.`
+            `Preview ready — ${addCount} to add, ${updateCount} to update, ${unchangedCount} unchanged. Click Import to save changes.`
           );
         }
       };
@@ -2841,16 +2952,19 @@ exportBtn.addEventListener('click', () => {
         if (allEmployeesLoaded) return;
         try {
           let users: any[] = [];
-          const res = await fetch(`${siteUrl}/_api/web/siteusers?$filter=PrincipalType eq 1&$top=5000&$orderby=Title`, {
+          const res = await fetchProjectRead(`${siteUrl}/_api/web/siteusers?$filter=PrincipalType eq 1&$top=5000&$orderby=Title`, {
             headers: { 'Accept': 'application/json;odata=verbose', 'Content-Type': 'application/json;odata=verbose' }
           });
+          if (!isProjectActive()) return;
           if (res.ok) { const data = await res.json(); users = data.d?.results || []; }
           allEmployees = users
             .filter((u: any) => !isServiceAccount(u.Title || ''))
             .map((u: any) => ({ id: u.Id, title: u.Title || '', email: u.Email || '' }))
             .sort((a: any, b: any) => a.title.localeCompare(b.title));
           allEmployeesLoaded = true;
-        } catch (error) { console.error('Error loading employees:', error); }
+        } catch (error) {
+          if (isProjectActive()) console.error('Error loading employees:', error);
+        }
       };
 
       const matchEmployee = (value: any): any => {
@@ -2874,13 +2988,17 @@ exportBtn.addEventListener('click', () => {
         ) || null;
       };
 
-      const writeProjectRow = async (payload: any): Promise<{ ok: boolean; mode: 'added' | 'error'; error?: string }> => {
+      const writeProjectRow = async (
+        payload: any,
+        existingId?: number
+      ): Promise<{ ok: boolean; mode: 'added' | 'updated' | 'error'; error?: string }> => {
         try {
           const ref = (payload.ProjectReference || '').trim().toLowerCase();
           const existing = projectData.find(p => (p.ProjectReference || '').trim().toLowerCase() === ref);
-          
-          if (existing) {
-            return { ok: false, mode: 'error', error: 'Project Reference already exists' };
+          const rowId = existing?.Id ?? existingId;
+          const isUpdate = rowId !== undefined && rowId !== null;
+          if (isUpdate && !hasEditPermission()) {
+            return { ok: false, mode: 'error', error: 'Updating existing projects requires administrator permission' };
           }
 
           const digest = await getDigest();
@@ -2890,6 +3008,10 @@ exportBtn.addEventListener('click', () => {
             'Content-Type': 'application/json;odata=verbose',
             'X-RequestDigest': digest
           };
+          if (isUpdate) {
+            headers['X-HTTP-Method'] = 'MERGE';
+            headers['IF-MATCH'] = '*';
+          }
 
           const finalPayload: any = {
             __metadata: { type: entityType },
@@ -2900,14 +3022,15 @@ exportBtn.addEventListener('click', () => {
           };
           for (const rc of ROLE_COLS) {
             const val = payload[rc.field];
-            if (val && val !== '' && val !== 'null' && val !== 'undefined') finalPayload[rc.field] = parseInt(val, 10);
+            finalPayload[rc.field] = val && val !== 'null' && val !== 'undefined' ? parseInt(val, 10) : null;
           }
 
-          const res = await fetch(apiBase, { method: 'POST', headers, body: JSON.stringify(finalPayload) });
+          const url = isUpdate ? `${apiBase}(${rowId})` : apiBase;
+          const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(finalPayload) });
           if (!res.ok) {
             return { ok: false, mode: 'error', error: `HTTP ${res.status}` };
           }
-          return { ok: true, mode: 'added' };
+          return { ok: true, mode: isUpdate ? 'updated' : 'added' };
         } catch (err) {
           return { ok: false, mode: 'error', error: String(err) };
         }
@@ -2940,7 +3063,7 @@ exportBtn.addEventListener('click', () => {
           ['1. Fill in the "Projects" sheet. One row per project.'],
           ['2. Required columns: Profit Centre, Project Reference, Customer Name, Project Name, Group Head, Project Manager.'],
           ['3. Role columns: copy a person from the "Employee List" sheet (or type name/email).'],
-          ['4. The system will reject rows where the Project Reference already exists in the system.'],
+          ['4. Existing Project References are updated when values change; unchanged rows are skipped. Duplicate references within the file are rejected.'],
           ['5. Do NOT rename, reorder, or delete the header row of the "Projects" sheet.'],
           [''],
           ['The "Employee List" sheet lists every employee already added in SharePoint.']
@@ -3022,14 +3145,14 @@ exportBtn.addEventListener('click', () => {
 
         const confirmBtn = overlay.querySelector('.pimp-btn-primary') as HTMLButtonElement;
         confirmBtn.addEventListener('click', async () => {
-          const toImport = currentPreviewRows.filter(r => r.__status === 'added');
-          if (!toImport.length) { toast('No valid rows to import', 'error'); return; }
+          const toImport = currentPreviewRows.filter(r => r.__status === 'added' || r.__status === 'updated');
+          if (!toImport.length) { toast('No project changes to import; rows may be unchanged or invalid.', 'error'); return; }
 
           confirmBtn.disabled = true;
           const loading = createLoadingOverlay(`Importing ${toImport.length} project(s)…`);
           document.body.appendChild(loading);
 
-          let ok = 0, fail = 0;
+          let added = 0, updated = 0, fail = 0;
           try {
             for (const r of toImport) {
               const payload: Record<string, any> = {
@@ -3038,12 +3161,16 @@ exportBtn.addEventListener('click', () => {
               };
               ROLE_COLS.forEach(rc => { payload[rc.field] = r[rc.field] || ''; });
 
-              const res = await writeProjectRow(payload);
-              if (res.ok) ok++; else fail++;
+              const res = await writeProjectRow(payload, r.__existingId);
+              if (!res.ok) {
+                fail++;
+                console.error(`Project import failed for "${r.ProjectReference}":`, res.error);
+              } else if (res.mode === 'added') added++;
+              else updated++;
             }
             await fetchProjects(true);
             toast(
-              `✅ Imported ${ok} project${ok === 1 ? '' : 's'}` +
+              `✅ Added ${added}, updated ${updated} project${added + updated === 1 ? '' : 's'}` +
               (fail ? ` — ${fail} failed (see console)` : ''),
               fail ? 'error' : 'success'
             );

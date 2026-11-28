@@ -6,6 +6,7 @@ import "../styles/common.css";
 import "../styles/revenue.css";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
+import { createSharePointItemsInBatches, setBackgroundAutoUpdateIndicator } from "./sharePointBatch";
 
 import { 
   authManager, 
@@ -62,6 +63,7 @@ let currentSortConfig: SortConfig = {
 interface RevenueForecastItem {
   Id: number;
   Title: string;
+  __metadata?: { etag?: string };
   Project?: { 
     Id: number;
     Title: string;
@@ -436,6 +438,7 @@ export default {
   `,
 
 script: () => {
+  if ((window as any).__dtActivePageKey !== 'revenue') return;
   
   // ============================================
   // LOAD SWEETALERT2 WITH GUARANTEED FALLBACK
@@ -513,6 +516,7 @@ script: () => {
   // Kick off the load, then start the page
   loadSwal().then(() => {
     setTimeout(async () => {
+      if ((window as any).__dtActivePageKey !== 'revenue') return;
       // ============================================
       // ⚠️ CRITICAL: rebind local Swal from window
       // ============================================
@@ -1479,6 +1483,12 @@ const applyAutoProgression = async (): Promise<void> => {
             const originalData = safeJsonParse(forecast.ForecastData, {});
             
             if (checkIfNeedsProgression(originalData)) {  
+                const etag = forecast.__metadata?.etag;
+                if (!etag) {
+                    errorCount++;
+                    console.error(`Cannot safely progress Revenue forecast ${forecast.Id}: SharePoint ETag is unavailable`);
+                    continue;
+                }
                 // ✅ FIX: Call with only 1 argument
                 const progressedData = propagateCollectionValues(originalData);
                 
@@ -1494,7 +1504,7 @@ const applyAutoProgression = async (): Promise<void> => {
                         Accept: "application/json;odata=verbose",
                         "Content-Type": "application/json;odata=verbose",
                         "X-RequestDigest": digest,
-                        "IF-MATCH": "*",
+                        "IF-MATCH": etag,
                         "X-HTTP-Method": "MERGE"
                     },
                     body: JSON.stringify(payload)
@@ -1504,6 +1514,7 @@ const applyAutoProgression = async (): Promise<void> => {
                     progressedCount++; 
                 } else {
                     errorCount++; 
+                    console.error(`Failed to progress Revenue forecast ${forecast.Id} (HTTP ${response.status})`);
                 }
                 
                 await new Promise(resolve => setTimeout(resolve, 100));
@@ -1534,7 +1545,8 @@ const loadProjects = async (): Promise<void> => {
       `EnggSubLead1/Title,EnggSubLead1Id,` +
       `EnggSubLead2/Title,EnggSubLead2Id,` +
       `EngineeringManagers/Title,EngineeringManagersId` +
-      `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers`,
+      `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers` +
+      `&$top=5000`,
       { headers: { Accept: "application/json;odata=verbose" } }
     );
     const data: SharePointResponse<ProjectItem> = await res.json();
@@ -1658,12 +1670,13 @@ const getAssignedProjectValues = (key: keyof ProjectItem): string[] => {
   return Array.from(values).sort();
 };
 
-  const loadForecasts = async (): Promise<void> => {
+  const loadForecasts = async (projectsReady?: Promise<void>): Promise<void> => {
   try {
     const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,Title,Project/Id,Project/Title,ProfitCentre,OBL,ForecastData,RevenueActual,Remarks,CreatedDate,UpdatedDate,Freeze&$expand=Project&$top=5000`, {
       headers: { Accept: "application/json;odata=verbose" }
     });
     const data: SharePointResponse<RevenueForecastItem> = await res.json();
+    if (projectsReady) await projectsReady;
     
     forecasts = (data.d?.results || []).map(forecast => ({
       ...forecast,
@@ -1719,10 +1732,14 @@ const revenueListProjectRefField = async (): Promise<{ exists: boolean; type: st
   }
   return revenueProjectRefField;
 };
-
+  
 const syncMissingProjectsToRevenueList = async (): Promise<void> => {
   const syncStatus = document.querySelector('#revenueSyncStatus') as HTMLElement | null;
   const syncBtn = document.querySelector('#revenueSyncProjectsBtn') as HTMLButtonElement | null;
+  const syncLockKey = `${siteUrl}::${listName}`;
+  const windowState = window as any;
+  const syncLocks: Set<string> = windowState.__revenueSyncLocks || new Set<string>();
+  windowState.__revenueSyncLocks = syncLocks;
 
   const setStatus = (text: string): void => {
     console.log(text);
@@ -1739,24 +1756,45 @@ const syncMissingProjectsToRevenueList = async (): Promise<void> => {
     return;
   }
 
+  if (syncLocks.has(syncLockKey)) {
+    setStatus('⏳ Revenue project sync is already running');
+    return;
+  }
+  syncLocks.add(syncLockKey);
+
   if (syncBtn) syncBtn.disabled = true;
   try {
     const visibleProjects = canReadAllProjects()
       ? projects
       : getAssignedProjects(projects);
+    const refField = await revenueListProjectRefField();
+    const hasTextProjectReference = refField.exists && refField.type !== "Lookup";
+    const normalizeReference = (value: unknown): string =>
+      String(value ?? "").trim().replace(/\s+/g, " ").toLowerCase();
+    const getServerProjectIds = (rows: any[]): Set<number> => {
+      const ids = new Set<number>();
+      rows.forEach(row => {
+        [row.ProjectId, row.ProjectReferenceId, row.Project?.Id].forEach(value => {
+          const id = Number(value);
+          if (value !== null && value !== undefined && Number.isFinite(id) && id > 0) ids.add(id);
+        });
+      });
+      return ids;
+    };
 
     // Safety re-check against SharePoint itself: the in-memory list may be
     // empty/stale, so never create rows for projects that already exist.
-    let serverRows: any[] = [];
-    try {
-      const chkRes = await fetch(
-        `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,ProjectId,Title&$top=5000`,
-        { headers: { Accept: "application/json;odata=verbose" } }
-      );
-      if (chkRes.ok) serverRows = (await chkRes.json())?.d?.results || [];
-    } catch (chkErr) {
-      console.error("⚠️ Revenue sync safety-check fetch failed:", chkErr);
+    const selectProjectReference = refField.exists
+      ? (hasTextProjectReference ? ",ProjectReference" : ",ProjectReferenceId")
+      : "";
+    const existingRowsUrl = `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,ProjectId,Title,Project/Id,Project/Title${selectProjectReference}&$expand=Project&$top=5000`;
+    const chkRes = await fetch(existingRowsUrl, {
+      headers: { Accept: "application/json;odata=verbose" }
+    });
+    if (!chkRes.ok) {
+      throw new Error(`Could not verify existing Revenue rows (HTTP ${chkRes.status}); sync stopped to prevent duplicates.`);
     }
+    const serverRows: any[] = (await chkRes.json())?.d?.results || [];
 
     // If the list really has rows on SharePoint but the page loaded 0, the
     // main load is broken - creating rows now would duplicate everything.
@@ -1766,13 +1804,41 @@ const syncMissingProjectsToRevenueList = async (): Promise<void> => {
       return;
     }
 
-    const existsOnServer = (p: ProjectItem): boolean =>
-      serverRows.some(c => Number(c.ProjectId) === p.Id);
+    const serverProjectIds = getServerProjectIds(serverRows);
+    const serverProjectReferences = new Set(
+      hasTextProjectReference
+        ? serverRows.map(row => normalizeReference(row.ProjectReference)).filter(Boolean)
+        : []
+    );
+    const forecastProjectIds = new Set<number>();
+    const forecastProjectTitles = new Set<string>();
+    const forecastProjectReferences = new Set<string>();
+    const projectsById = new Map<number, ProjectItem>();
+    const projectsByTitle = new Map<string, ProjectItem>();
+    projects.forEach(project => {
+      projectsById.set(project.Id, project);
+      projectsByTitle.set(project.Title, project);
+    });
+    forecasts.forEach(forecast => {
+      if (forecast.Project?.Id !== undefined) forecastProjectIds.add(forecast.Project.Id);
+      if (forecast.Project?.Title) forecastProjectTitles.add(forecast.Project.Title);
+      if (hasTextProjectReference) {
+        const linkedProjectId = forecast.Project?.Id;
+        const linkedProjectTitle = forecast.Project?.Title;
+        const project = (linkedProjectId !== undefined ? projectsById.get(linkedProjectId) : undefined) ||
+          (linkedProjectTitle ? projectsByTitle.get(linkedProjectTitle) : undefined);
+        const reference = normalizeReference(project?.ProjectReference);
+        if (reference) forecastProjectReferences.add(reference);
+      }
+    });
 
+    const existsOnServer = (p: ProjectItem): boolean =>
+      serverProjectIds.has(p.Id) ||
+      (hasTextProjectReference && serverProjectReferences.has(normalizeReference(p.ProjectReference)));
     const existsInMemory = (p: ProjectItem): boolean =>
-      forecasts.some(f =>
-        f.Project?.Id === p.Id || (f.Project && f.Project.Title === p.Title)
-      );
+      forecastProjectIds.has(p.Id) ||
+      forecastProjectTitles.has(p.Title) ||
+      (hasTextProjectReference && forecastProjectReferences.has(normalizeReference(p.ProjectReference)));
 
     const missingProjects = visibleProjects.filter(p => !existsOnServer(p) && !existsInMemory(p));
 
@@ -1786,94 +1852,180 @@ const syncMissingProjectsToRevenueList = async (): Promise<void> => {
 
     const digest = await getDigest();
     const entityType = await getListEntityType();
+    const freshData = createFreshForecastStructure();
+    const freshDataJson = JSON.stringify(freshData);
     let added = 0;
     let failed = 0;
     const errors: string[] = [];
 
-    for (const project of missingProjects) {
+    const createForecastForProject = async (project: ProjectItem): Promise<void> => {
       let ok = false;
-      // Try twice before giving up on a project
-      // Up to 3 payload variants:
-      //   1 = full create - ProjectReference lookup id as STRING + OBL as STRING
-      //   2 = without ProjectReference (column may be read-only/misconfigured)
-      //   3 = without OBL too (column may be read-only/absent)
-      for (let attempt = 1; attempt <= 3 && !ok; attempt++) {
-        try {
-          const freshData = createFreshForecastStructure();
+      let stopAfterThrottle = false;
+      let lastError = "Unknown SharePoint error";
 
-          // In odata=verbose every value must be a STRING (Edm.String):
-          // lookup ids (ProjectId / ProjectReferenceId) and numeric fields
-          // (OBL) are rejected as JSON numbers with a 400 "Cannot convert a
-          // primitive value to the expected type 'Edm.String'".
-          const payload: any = {
-            __metadata: { type: entityType },
-            Title: generateForecastTitle(project, freshData),
-            ProjectId: project.Id.toString(),
-            ProfitCentre: project.PC || "",
-            ForecastData: JSON.stringify(freshData),
-            RevenueActual: "{}",
-            Remarks: "",
-            OBL: String(project.PC ? 0 : 0),
-            CreatedDate: new Date().toISOString(),
-            UpdatedDate: new Date().toISOString()
-          };
+      // Keep the existing payload fallbacks for optional/read-only columns.
+      for (let payloadAttempt = 1; payloadAttempt <= 3 && !ok && !stopAfterThrottle; payloadAttempt++) {
+        const payload: any = {
+          __metadata: { type: entityType },
+          Title: generateForecastTitle(project, freshData),
+          ProjectId: project.Id.toString(),
+          ProfitCentre: project.PC || "",
+          ForecastData: freshDataJson,
+          RevenueActual: "{}",
+          Remarks: "",
+          OBL: "0",
+          CreatedDate: new Date().toISOString(),
+          UpdatedDate: new Date().toISOString()
+        };
 
-          // Store Project Reference when the column exists - same rule as the
-          // Collection List sync: a LOOKUP column receives the target item ID
-          // as a string (ProjectReferenceId), a text column receives the text.
-          const refField = await revenueListProjectRefField();
-          if (refField.exists && attempt === 1) {
-            if (refField.type === "Lookup") {
-              payload.ProjectReferenceId = String(project.Id);
-            } else {
-              payload.ProjectReference = project.ProjectReference || "";
-            }
-          }
-          if (attempt >= 2) {
-            delete payload.ProjectReference;
-            delete payload.ProjectReferenceId;
-          }
-          if (attempt >= 3) {
-            delete payload.OBL;
-          }
-
-          const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items`, {
-            method: "POST",
-            headers: {
-              Accept: "application/json;odata=verbose",
-              "Content-Type": "application/json;odata=verbose",
-              "X-RequestDigest": digest
-            },
-            body: JSON.stringify(payload)
-          });
-
-          if (res.ok) {
-            ok = true;
-            added++;
-            // setStatus(`✅ Added: ${project.Title}${project.ProjectReference ? ' (' + project.ProjectReference + ')' : ''}`);
+        if (refField.exists && payloadAttempt === 1) {
+          if (refField.type === "Lookup") {
+            payload.ProjectReferenceId = String(project.Id);
           } else {
-            const bodyText = await res.text();
-            let message = `HTTP ${res.status}`;
-            try {
-              const errJson = JSON.parse(bodyText);
-              message = errJson?.error?.message?.value || message;
-            } catch (e) { /* keep http message */ }
-            console.error(`❌ Attempt ${attempt} failed for ${project.Title}: ${bodyText}`);
-            if (attempt === 2) {
-              failed++;
-              errors.push(`${project.Title} -> ${message}`);
-            }
-          }
-        } catch (projectError) {
-          console.error(`❌ Attempt ${attempt} error for ${project.Title}:`, projectError);
-          if (attempt === 2) {
-            failed++;
-            errors.push(`${project.Title} -> ${projectError instanceof Error ? projectError.message : String(projectError)}`);
+            payload.ProjectReference = project.ProjectReference || "";
           }
         }
-        if (!ok) await new Promise(resolve => setTimeout(resolve, 300));
+        if (payloadAttempt >= 2) {
+          delete payload.ProjectReference;
+          delete payload.ProjectReferenceId;
+        }
+        if (payloadAttempt >= 3) delete payload.OBL;
+
+        let throttleAttempt = 0;
+        while (!ok && !stopAfterThrottle) {
+          try {
+            const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items`, {
+              method: "POST",
+              headers: {
+                Accept: "application/json;odata=verbose",
+                "Content-Type": "application/json;odata=verbose",
+                "X-RequestDigest": digest
+              },
+              body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+              ok = true;
+              added++;
+              break;
+            }
+
+            const bodyText = await res.text();
+            lastError = `HTTP ${res.status}`;
+            try {     
+              const errJson = JSON.parse(bodyText);
+              lastError = errJson?.error?.message?.value || lastError;
+            } catch {
+              if (bodyText) lastError = bodyText.slice(0, 250);
+            }
+
+            if (res.status === 408 || res.status >= 500) {
+              stopAfterThrottle = true;
+              console.error(`Revenue create returned HTTP ${res.status} for ${project.Title}; it will not be reposted automatically.`);
+              break;
+            }
+
+            if (res.status === 429) {
+              const retryAfter = res.headers.get("Retry-After");
+              const retryAfterSeconds = retryAfter === null ? NaN : Number(retryAfter);
+              const retryAfterDate = retryAfter && Number.isNaN(retryAfterSeconds)
+                ? Date.parse(retryAfter)
+                : NaN;
+              if (throttleAttempt >= 5) {
+                stopAfterThrottle = true;
+                console.error(`❌ Throttled too many times while creating ${project.Title}: ${bodyText}`);
+                break;
+              }
+
+              const waitMs = Number.isFinite(retryAfterSeconds)
+                ? Math.max(0, retryAfterSeconds * 1000)
+                : Number.isFinite(retryAfterDate)
+                  ? Math.max(0, retryAfterDate - Date.now())
+                  : Math.min(60000, 1000 * (2 ** throttleAttempt));
+              console.warn(`SharePoint throttled Revenue sync; retrying in ${Math.ceil(waitMs / 1000)}s.`);
+              throttleAttempt++;
+              await new Promise(resolve => setTimeout(resolve, waitMs));
+              continue;
+            }
+
+            console.error(`❌ Payload attempt ${payloadAttempt} failed for ${project.Title}: ${bodyText}`);
+            break;
+          } catch (projectError) {
+            lastError = projectError instanceof Error ? projectError.message : String(projectError);
+            console.error(`❌ Payload attempt ${payloadAttempt} error for ${project.Title}:`, projectError);
+            stopAfterThrottle = true;
+            break;
+          }
+        }
+
+        if (!ok && !stopAfterThrottle && payloadAttempt < 3) {
+          await new Promise(resolve => setTimeout(resolve, 300));
+        }
+      }
+
+      if (!ok) {
+        failed++;
+        errors.push(`${project.Title} -> ${lastError}`);
       }
       await new Promise(resolve => setTimeout(resolve, 100));
+    };
+
+    const batchPayloads = missingProjects.map((project): Record<string, unknown> => {
+      const payload: Record<string, unknown> = {
+        __metadata: { type: entityType },
+        Title: generateForecastTitle(project, freshData),
+        ProjectId: project.Id.toString(),
+        ProfitCentre: project.PC || "",
+        ForecastData: freshDataJson,
+        RevenueActual: "{}",
+        Remarks: "",
+        OBL: "0",
+        CreatedDate: new Date().toISOString(),
+        UpdatedDate: new Date().toISOString()
+      };
+      if (refField.exists) {
+        if (refField.type === "Lookup") payload.ProjectReferenceId = String(project.Id);
+        else payload.ProjectReference = project.ProjectReference || "";
+      }
+      return payload;
+    });
+    const batchResults = await createSharePointItemsInBatches(siteUrl, listName, digest, batchPayloads);
+    const failedBatchProjects: ProjectItem[] = [];
+    batchResults.forEach((result, index) => {
+      if (result.success) {
+        added++;
+      } else {
+        failedBatchProjects.push(missingProjects[index]);
+        console.error(`Revenue batch create failed for ${missingProjects[index].Title}: ${result.error}`);
+      }
+    });
+
+    if (failedBatchProjects.length > 0) {
+      const verifyResponse = await fetch(existingRowsUrl, {
+        headers: { Accept: "application/json;odata=verbose" }
+      });
+      if (!verifyResponse.ok) {
+        throw new Error(`Could not verify Revenue batch results (HTTP ${verifyResponse.status}); individual retries were stopped to avoid duplicate rows.`);
+      }
+      const verifiedRows = (await verifyResponse.json())?.d?.results || [];
+      const verifiedProjectIds = getServerProjectIds(verifiedRows);
+      const verifiedProjectReferences = new Set(
+        hasTextProjectReference
+          ? verifiedRows.map((row: any) => normalizeReference(row.ProjectReference)).filter(Boolean)
+          : []
+      );
+      const fallbackProjects = failedBatchProjects.filter(project =>
+        !verifiedProjectIds.has(project.Id) &&
+        !(hasTextProjectReference && verifiedProjectReferences.has(normalizeReference(project.ProjectReference)))
+      );
+
+      if (fallbackProjects.length < failedBatchProjects.length) {
+        console.warn("Revenue batch verification found rows already created; skipping duplicate retries.");
+      }
+      const fallbackConcurrency = 4;
+      for (let i = 0; i < fallbackProjects.length; i += fallbackConcurrency) {
+        await Promise.all(fallbackProjects.slice(i, i + fallbackConcurrency).map(createForecastForProject));
+      }
     }
 
     if (added > 0) {
@@ -1884,8 +2036,12 @@ const syncMissingProjectsToRevenueList = async (): Promise<void> => {
     }
   } catch (error) {
     console.error("❌ Revenue auto-sync failed:", error);
+    const message = error instanceof Error ? error.message : String(error);
+    setStatus(`❌ Revenue sync stopped: ${message}`);
+    toast("error", `Revenue sync stopped: ${message}`);
   } finally {
     if (syncBtn) syncBtn.disabled = false;
+    syncLocks.delete(syncLockKey);
   }
 };
 
@@ -4303,8 +4459,9 @@ window.addEventListener('scroll', positionLoaderOverlay, { passive: true });
       const reloadRevenuePage = async (): Promise<void> => {
         showRevenueLoader('Reloading Data', 'Refreshing projects and forecasts...');
         try {
-          await loadProjects();
-          await loadForecasts();
+          const projectsLoad = loadProjects();
+          const forecastsLoad = loadForecasts(projectsLoad);
+          await Promise.all([projectsLoad, forecastsLoad]);
           initializeFilters();
          // renderTableHeader();
           filteredData = [...forecasts];
@@ -7153,6 +7310,7 @@ const propagateYearlyValues = (forecastData: ForecastData, isNewMonth: boolean =
         };
 const initialize = async (): Promise<void> => {
     try {
+        showRevenueLoader('Loading Revenue Data', 'Initializing permissions...');
         await authManager.initialize({ siteUrl });
 
         console.log(`🔑 Permission Level: ${getPermissionLevel().toUpperCase()}`);
@@ -7163,16 +7321,12 @@ const initialize = async (): Promise<void> => {
         console.log(`✅ Can Freeze: ${canFreeze()}`);
         console.log(`✅ Is GH Head: ${isGHHead()}`);
 
-        await loadProjects();
-        await loadForecasts();
+        showRevenueLoader('Loading Revenue Data', 'Loading projects and forecasts...');
+        const projectsLoad = loadProjects();
+        const forecastsLoad = loadForecasts(projectsLoad);
+        await Promise.all([projectsLoad, forecastsLoad]);
         
         console.log("🚀 Total forecasts loaded:", forecasts.length);
-
-        // 🔐 AUTO-SYNC: compare Project List with Revenue Forecast List and
-        // add any missing project row (empty ForecastData skeleton). Only
-        // runs for roles with create rights, and only for projects inside
-        // that role's visible scope.
-        await syncMissingProjectsToRevenueList();
 
         // Show the manual Sync button only to roles that can create rows
         const revenueSyncBar = document.querySelector('#revenueSyncBar') as HTMLElement | null;
@@ -7182,27 +7336,6 @@ const initialize = async (): Promise<void> => {
         
         if (pageSizeSelect) {
             pageSize = parseInt(pageSizeSelect.value) || 10;
-        }
-        
-        // 🔐 RBAC AUTO-PROGRESSION (monthly roll-over):
-        //   - Roles with edit rights (canEditOwn: Admin, GH Heads, PM Managers,
-        //     Engg Lead, Engg Sub1) → perform the real SharePoint bulk update.
-        //   - Read-only roles (SC Team, Controlling, Engg Sub2, Engg Mgr) → the
-        //     same roll-over is applied IN MEMORY only, so their screen shows
-        //     the current month structure WITHOUT writing to SharePoint.
-        if (forecasts.length > 0) {
-            if (canEditOwn()) {
-                await applyAutoProgression();
-                await loadForecasts();
-            } else {
-                const viewerProgressed = forecasts.map((forecast: RevenueForecastItem) => {
-                    const data = safeJsonParse(forecast.ForecastData, {});
-                    if (!checkIfNeedsProgression(data)) return forecast;
-                    return { ...forecast, ForecastData: JSON.stringify(propagateCollectionValues(data)) };
-                });
-                forecasts = viewerProgressed;
-                console.log('👁️ Read-only viewer: progression applied locally for display only (no SharePoint writes)');
-            }
         }
         
         initializeFilters();
@@ -7216,6 +7349,39 @@ const initialize = async (): Promise<void> => {
         if (canImportData()) {
             importActualBtns.addEventListener("click", importActualDatas);
         }
+
+        const runBackgroundAutoUpdate = async (): Promise<void> => {
+            try {
+                setBackgroundAutoUpdateIndicator(".revenue-page", true);
+                await syncMissingProjectsToRevenueList();
+
+                if (forecasts.length > 0) {
+                    if (canEditOwn()) {
+                        await applyAutoProgression();
+                    } else {
+                        forecasts = forecasts.map((forecast: RevenueForecastItem) => {
+                            const data = safeJsonParse(forecast.ForecastData, {});
+                            if (!checkIfNeedsProgression(data)) return forecast;
+                            return { ...forecast, ForecastData: JSON.stringify(propagateCollectionValues(data)) };
+                        });
+                        console.log('👁️ Read-only viewer: progression applied locally for display only (no SharePoint writes)');
+                    }
+                }
+            } catch (error) {
+                console.error("Background Revenue update failed:", error);
+                toast("error", "Revenue background update failed");
+            } finally {
+                try {
+                    filterTable();
+                } catch (error) {
+                    console.error("Could not refresh the Revenue table after background update:", error);
+                    toast("error", "Could not refresh the Revenue table");
+                } finally {
+                    setBackgroundAutoUpdateIndicator(".revenue-page", false);
+                }
+            }
+        };
+        void runBackgroundAutoUpdate();
          
         console.log("✅ Application initialized successfully");
         

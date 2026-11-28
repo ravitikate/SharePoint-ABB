@@ -4,6 +4,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import * as XLSX from 'xlsx-js-style';
 import "../styles/common.css";
 import "../styles/inventory.css";
+import { setBackgroundAutoUpdateIndicator } from "./sharePointBatch";
 import { 
   authManager,
   hasFullControl,
@@ -63,6 +64,7 @@ let currentSortConfig: SortConfig = {
 interface InventoryForecastItem {
   Id: number;
   Title: string;
+  __metadata?: { etag?: string };
   Project?: {
     Id: number;
     Title: string;
@@ -830,6 +832,7 @@ export default {
 
   script: () => {
     setTimeout(async () => {
+      if ((window as any).__dtActivePageKey !== 'inventory') return;
       try {
         const siteUrl = typeof _spPageContextInfo !== "undefined" ? _spPageContextInfo.webAbsoluteUrl : window.location.origin + "/sites/Kriya";
         const listName = "Inventory";
@@ -1371,6 +1374,12 @@ const bumpSwalZIndex = (): void => {
               const originalData = safeJsonParse(forecast.ForecastData, {});
 
               if (checkIfNeedsProgression(originalData)) {
+                const etag = forecast.__metadata?.etag;
+                if (!etag) {
+                  errorCount++;
+                  console.error(`Cannot safely progress Inventory forecast ${forecast.Id}: SharePoint ETag is unavailable`);
+                  continue;
+                }
                 const progressedData = propagateCollectionValues(originalData);
 
                 const payload = {
@@ -1385,7 +1394,7 @@ const bumpSwalZIndex = (): void => {
                     Accept: "application/json;odata=verbose",
                     "Content-Type": "application/json;odata=verbose",
                     "X-RequestDigest": digest,
-                    "IF-MATCH": "*",
+                    "IF-MATCH": etag,
                     "X-HTTP-Method": "MERGE"
                   },
                   body: JSON.stringify(payload)
@@ -1395,6 +1404,7 @@ const bumpSwalZIndex = (): void => {
                   progressedCount++;
                 } else {
                   errorCount++;
+                  console.error(`Failed to progress Inventory forecast ${forecast.Id} (HTTP ${response.status})`);
                 }
 
                 await new Promise(resolve => setTimeout(resolve, 100));
@@ -1443,7 +1453,8 @@ const bumpSwalZIndex = (): void => {
         `EnggSubLead1/Title,EnggSubLead1Id,` +
         `EnggSubLead2/Title,EnggSubLead2Id,` +
         `EngineeringManagers/Title,EngineeringManagersId` +
-        `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers`,
+        `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers` +
+        `&$top=5000`,
       { headers: { Accept: "application/json;odata=verbose" } }
     );
 
@@ -1457,7 +1468,8 @@ const bumpSwalZIndex = (): void => {
         `${siteUrl}/_api/web/lists/getbytitle('${projectListName}')/items` +
           `?$select=Id,Title,CustomerName,PC,ProjectReference,` +
           `GroupHead1Id,ProjectManagerId,` +
-          `EnggLeadId,EnggSubLead1Id,EnggSubLead2Id,EngineeringManagersId`,
+          `EnggLeadId,EnggSubLead1Id,EnggSubLead2Id,EngineeringManagersId` +
+          `&$top=5000`,
         { headers: { Accept: "application/json;odata=verbose" } }
       );
 
@@ -1605,7 +1617,7 @@ const bumpSwalZIndex = (): void => {
   }
 };
 
-        const loadForecasts = async (): Promise<void> => {
+        const loadForecasts = async (projectsReady?: Promise<void>): Promise<void> => {
           try {
             // Only mount the CARD overlay when the full-screen "Processing…"
             // overlay is NOT already showing - otherwise two loaders appear
@@ -1625,6 +1637,7 @@ const bumpSwalZIndex = (): void => {
             }
 
             const responseData: SharePointResponse<InventoryForecastItem> = await res.json();
+            if (projectsReady) await projectsReady;
 
             // ✅ Get assigned projects
             const assignedProjects = getAssignedProjects(projects);
@@ -3782,6 +3795,10 @@ form.addEventListener("submit", async (e: Event) => {
             console.log(text);
             if (inventorySyncStatus) inventorySyncStatus.textContent = text;
           };
+          const syncLockKey = `${siteUrl}::${listName}`;
+          const windowState = window as any;
+          const syncLocks: Set<string> = windowState.__inventorySyncLocks || new Set<string>();
+          windowState.__inventorySyncLocks = syncLocks;
 
           // 🔐 Role gate (same as SEIBIES): only FULL_CONTROL / CONTRIBUTE roles can create rows
           if (!canCreateRecord()) {
@@ -3789,6 +3806,11 @@ form.addEventListener("submit", async (e: Event) => {
             return;
           }
 
+          if (syncLocks.has(syncLockKey)) {
+            setStatus('⏳ Inventory project sync is already running');
+            return;
+          }
+          syncLocks.add(syncLockKey);
           if (inventorySyncProjectsBtn) inventorySyncProjectsBtn.disabled = true;
 
           try {
@@ -3800,19 +3822,34 @@ form.addEventListener("submit", async (e: Event) => {
             const visibleProjects = canReadAllProjects()
               ? projects
               : getAssignedProjects(projects);
+            const refField = await inventoryListProjectRefField();
+            const hasTextProjectReference = refField.exists && refField.type !== "Lookup";
+            const normalizeReference = (value: unknown): string =>
+              String(value ?? "").trim().replace(/\s+/g, " ").toLowerCase();
+            const getServerProjectIds = (rows: any[]): Set<number> => {
+              const ids = new Set<number>();
+              rows.forEach(row => {
+                [row.ProjectId, row.ProjectReferenceId, row.Project?.Id].forEach(value => {
+                  const id = Number(value);
+                  if (value !== null && value !== undefined && Number.isFinite(id) && id > 0) ids.add(id);
+                });
+              });
+              return ids;
+            };
 
             // Safety re-check against SharePoint itself: the in-memory list may be
             // empty/stale, so never create rows for projects that already exist.
-            let serverRows: any[] = [];
-            try {
-              const chkRes = await fetch(
-                `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,ProjectId,Title&$top=5000`,
-                { headers: { Accept: "application/json;odata=verbose" } }
-              );
-              if (chkRes.ok) serverRows = (await chkRes.json())?.d?.results || [];
-            } catch (chkErr) {
-              console.error("⚠️ Inventory sync safety-check fetch failed:", chkErr);
+            const selectProjectReference = refField.exists
+              ? (hasTextProjectReference ? ",ProjectReference" : ",ProjectReferenceId")
+              : "";
+            const existingRowsUrl = `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,ProjectId,Title,Project/Id,Project/Title${selectProjectReference}&$expand=Project&$top=5000`;
+            const chkRes = await fetch(existingRowsUrl, {
+              headers: { Accept: "application/json;odata=verbose" }
+            });
+            if (!chkRes.ok) {
+              throw new Error(`Could not verify existing Inventory rows (HTTP ${chkRes.status}); sync stopped to prevent duplicates.`);
             }
+            const serverRows: any[] = (await chkRes.json())?.d?.results || [];
 
             // If the list really has rows on SharePoint but the page loaded 0, the
             // main load is broken - creating rows now would duplicate everything.
@@ -3822,13 +3859,36 @@ form.addEventListener("submit", async (e: Event) => {
               return;
             }
 
+            const serverProjectIds = getServerProjectIds(serverRows);
+            const serverProjectReferences = new Set(
+              hasTextProjectReference
+                ? serverRows.map(row => normalizeReference(row.ProjectReference)).filter(Boolean)
+                : []
+            );
+            const inventoryProjectReferences = new Set<string>();
+            const projectsById = new Map<number, ProjectItem>();
+            const projectsByTitle = new Map<string, ProjectItem>();
+            projects.forEach(project => {
+              projectsById.set(project.Id, project);
+              projectsByTitle.set(project.Title, project);
+            });
+            forecasts.forEach(forecast => {
+              if (!hasTextProjectReference) return;
+              const linkedProjectId = forecast.Project?.Id;
+              const linkedProjectTitle = forecast.Project?.Title;
+              const project = (linkedProjectId !== undefined ? projectsById.get(linkedProjectId) : undefined) ||
+                (linkedProjectTitle ? projectsByTitle.get(linkedProjectTitle) : undefined);
+              const reference = normalizeReference(project?.ProjectReference);
+              if (reference) inventoryProjectReferences.add(reference);
+            });
+
             const existsOnServer = (p: ProjectItem): boolean =>
-              serverRows.some(c => Number(c.ProjectId) === p.Id);
+              serverProjectIds.has(p.Id) ||
+              (hasTextProjectReference && serverProjectReferences.has(normalizeReference(p.ProjectReference)));
 
             const existsInMemory = (p: ProjectItem): boolean =>
-              forecasts.some(f =>
-                f.Project?.Id === p.Id || (f.Project && f.Project.Title === p.Title)
-              );
+              forecasts.some(f => f.Project?.Id === p.Id || (f.Project && f.Project.Title === p.Title)) ||
+              (hasTextProjectReference && inventoryProjectReferences.has(normalizeReference(p.ProjectReference)));
 
             const missingProjects = visibleProjects.filter(p => !existsOnServer(p) && !existsInMemory(p));
 
@@ -3848,12 +3908,13 @@ form.addEventListener("submit", async (e: Event) => {
 
             for (const project of missingProjects) {
               let ok = false;
+              let stopAfterAmbiguousResponse = false;
               // Up to 3 payload variants (same fallback chain as SEIBIES):
               //   1 = full create - Project lookup id as STRING + ProjectReference (when the
               //       column exists: Lookup -> ProjectReferenceId, Text -> text) + OBL as STRING
               //   2 = without ProjectReference (column may be read-only/misconfigured)
               //   3 = without OBL too (column may be read-only/absent)
-              for (let attempt = 1; attempt <= 3 && !ok; attempt++) {
+              for (let attempt = 1; attempt <= 3 && !ok && !stopAfterAmbiguousResponse; attempt++) {
                 try {
                   const freshData = createFreshForecastStructure();
 
@@ -3873,7 +3934,6 @@ form.addEventListener("submit", async (e: Event) => {
                   // Store Project Reference when the column exists - same rule as the
                   // Revenue / SEIBIES sync: a LOOKUP column receives the target item ID
                   // as a string (ProjectReferenceId), a text column receives the text.
-                  const refField = await inventoryListProjectRefField();
                   if (refField.exists && attempt === 1) {
                     if (refField.type === "Lookup") {
                       payload.ProjectReferenceId = String(project.Id);
@@ -3910,6 +3970,13 @@ form.addEventListener("submit", async (e: Event) => {
                       message = errJson?.error?.message?.value || message;
                     } catch (e) { /* keep http message */ }
                     console.error(`❌ Attempt ${attempt} failed for ${project.Title}: ${bodyText}`);
+                    if (res.status === 408 || res.status === 429 || res.status >= 500) {
+                      stopAfterAmbiguousResponse = true;
+                      failed++;
+                      errors.push(`${project.Title} -> ${message}`);
+                      console.error(`Inventory create returned HTTP ${res.status} for ${project.Title}; it will not be reposted automatically.`);
+                      break;
+                    }
                     if (attempt === 2) {
                       failed++;
                       errors.push(`${project.Title} -> ${message}`);
@@ -3917,11 +3984,11 @@ form.addEventListener("submit", async (e: Event) => {
                   }
                 } catch (projectError) {
                   console.error(`❌ Attempt ${attempt} error for ${project.Title}:`, projectError);
-                  if (attempt === 2) {
-                    failed++;
-                    errors.push(`${project.Title} -> ${projectError instanceof Error ? projectError.message : String(projectError)}`);
-                  }
+                  stopAfterAmbiguousResponse = true;
+                  failed++;
+                  errors.push(`${project.Title} -> ${projectError instanceof Error ? projectError.message : String(projectError)}`);
                 }
+                if (stopAfterAmbiguousResponse) break;
                 if (!ok) await new Promise(resolve => setTimeout(resolve, 300));
               }
               await new Promise(resolve => setTimeout(resolve, 100));
@@ -3942,6 +4009,7 @@ form.addEventListener("submit", async (e: Event) => {
             setStatus("❌ Sync failed - see console");
           } finally {
             if (inventorySyncProjectsBtn) inventorySyncProjectsBtn.disabled = false;
+            syncLocks.delete(syncLockKey);
           }
         };
 
@@ -3966,27 +4034,10 @@ form.addEventListener("submit", async (e: Event) => {
             console.log(`✅ Can Freeze: ${canFreeze()}`);
             console.log(`✅ Is GH Head: ${isGHHead()}`);
 
-            showInventoryProcessing("Loading Project List…");
-            await loadProjects();
-
-            showInventoryProcessing("Loading Inventory forecasts…");
-            await loadForecasts();
-
-            // 🔐 AUTO-SYNC (same as SEIBIES): compare Project List with the Inventory List
-            // and add any missing project row (empty ForecastData skeleton). Role-gated
-            // inside the function - runs silently for read-only roles, only creates rows
-            // within this role's visible project scope.
-            showInventoryProcessing("Syncing Inventory with Project List – adding missing rows…");
-            await syncMissingProjectsToInventoryList();
-
-            // ✅ AUTO-PROGRESSION (same as SEIBIES): roll monthly + yearly data forward,
-            // then reload so the table shows the progressed figures on page open.
-            if (forecasts.length > 0) {
-              showInventoryProcessing("Checking monthly / yearly progression…");
-              await applyAutoProgression();
-              showInventoryProcessing("Reloading Inventory forecasts…");
-              await loadForecasts();
-            }
+            showInventoryProcessing("Loading Project List and Inventory forecasts…");
+            const projectsLoad = loadProjects();
+            const forecastsLoad = loadForecasts(projectsLoad);
+            await Promise.all([projectsLoad, forecastsLoad]);
 
             // 🔐 Apply visible scope + filters + totals + pagination
             showInventoryProcessing("Building Inventory table…");
@@ -4005,8 +4056,34 @@ form.addEventListener("submit", async (e: Event) => {
               inventorySyncBar.style.display = canCreateRecord() ? 'flex' : 'none';
             }
 
+            const runBackgroundAutoUpdate = async (): Promise<void> => {
+              try {
+                setBackgroundAutoUpdateIndicator(".inventory-page", true);
+                await syncMissingProjectsToInventoryList();
+                if (forecasts.length > 0) {
+                  await applyAutoProgression();
+                }
+              } catch (error) {
+                console.error("Background Inventory update failed:", error);
+                toast("error", "Inventory background update failed");
+              } finally {
+                try {
+                  const selectedMonth = filterMonth?.value || "";
+                  populateFilterOptions();
+                  if (selectedMonth && filterMonth) filterMonth.value = selectedMonth;
+                  filterTable();
+                } catch (error) {
+                  console.error("Could not refresh the Inventory table after background update:", error);
+                  toast("error", "Could not refresh the Inventory table");
+                } finally {
+                  setBackgroundAutoUpdateIndicator(".inventory-page", false);
+                }
+              }
+            };
+
             console.log("✅ Inventory application initialized successfully");
             hideInventoryProcessing();
+            void runBackgroundAutoUpdate();
           } catch (error) {
             hideInventoryProcessing();
             console.error("Failed to initialize Inventory application:", error);
@@ -4486,3 +4563,4 @@ if (backBtn) {
     }, 100);
   }
 };
+

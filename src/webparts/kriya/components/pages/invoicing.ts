@@ -4,6 +4,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import * as XLSX from 'xlsx-js-style';
 import "../styles/common.css";
 import "../styles/invoicing.css";
+import { createSharePointItemsInBatches, setBackgroundAutoUpdateIndicator } from "./sharePointBatch";
 
 import { 
   authManager,
@@ -412,6 +413,7 @@ export default {
 
   script: () => {
     setTimeout(async () => {
+      if ((window as any).__dtActivePageKey !== 'invoicing') return;
       const siteUrl = typeof _spPageContextInfo !== "undefined" ? _spPageContextInfo.webAbsoluteUrl : window.location.origin + "/sites/Kriya";
       const listName = "InvoicingPlanning";
       const projectListName = "Project List";
@@ -984,7 +986,8 @@ const loadProjects = async (): Promise<void> => {
         `EnggSubLead1/Title,EnggSubLead1Id,` +
         `EnggSubLead2/Title,EnggSubLead2Id,` +
         `EngineeringManagers/Title,EngineeringManagersId` +
-        `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers`,
+        `&$expand=GroupHead1,ProjectManager,EnggLead,EnggSubLead1,EnggSubLead2,EngineeringManagers` +
+        `&$top=5000`,
       { headers: { Accept: "application/json;odata=verbose" } }
     );
 
@@ -998,7 +1001,8 @@ const loadProjects = async (): Promise<void> => {
         `${siteUrl}/_api/web/lists/getbytitle('${projectListName}')/items` +
           `?$select=Id,Title,CustomerName,PC,ProjectReference,` +
           `GroupHead1Id,ProjectManagerId,` +
-          `EnggLeadId,EnggSubLead1Id,EnggSubLead2Id,EngineeringManagersId`,
+          `EnggLeadId,EnggSubLead1Id,EnggSubLead2Id,EngineeringManagersId` +
+          `&$top=5000`,
         { headers: { Accept: "application/json;odata=verbose" } }
       );
 
@@ -1062,7 +1066,6 @@ const loadProjects = async (): Promise<void> => {
 
       const assignedProjects = getAssignedProjects(projects);
       console.log(`📋 Assigned projects: ${assignedProjects.length}`);
-      console.log('📋 Assigned project titles:', assignedProjects.map(p => p.Title));
 
       projectSelect.innerHTML =
         `<option value="">Select Project</option>` +
@@ -1121,7 +1124,6 @@ const loadProjects = async (): Promise<void> => {
 
     const assignedProjects = getAssignedProjects(projects);
     console.log(`📋 Total projects: ${projects.length}, Assigned projects: ${assignedProjects.length}`);
-    console.log('📋 Assigned project titles:', assignedProjects.map(p => p.Title));
 
     projectSelect.innerHTML =
       `<option value="">Select Project</option>` +
@@ -1140,14 +1142,18 @@ const loadProjects = async (): Promise<void> => {
   }
 };
 
-      const loadForecasts = async (): Promise<void> => {
+      const loadForecasts = async (projectsReady?: Promise<void>, showLoader = true): Promise<void> => {
+        let loading: HTMLElement | null = null;
         try {
-          const loading = createLoadingOverlay("Loading Invoicing data...");
-          loaderHost().appendChild(loading);
+          if (showLoader) {
+            loading = createLoadingOverlay("Loading Invoicing data...");
+            loaderHost().appendChild(loading);
+          }
           const res = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?$select=Id,Title,Project/Id,Project/Title,ProfitCentre,OBL,ForecastData,InvoiceActual,CreatedDate,UpdatedDate&$expand=Project&$top=5000`, {
             headers: { Accept: "application/json;odata=verbose" }
           });
           const data: SharePointResponse<InvoicingForecastItem> = await res.json();
+          if (projectsReady) await projectsReady;
 
           // ✅ Get assigned projects
           const assignedProjects = getAssignedProjects(projects);
@@ -1176,7 +1182,191 @@ const loadProjects = async (): Promise<void> => {
           console.error("Error loading invoicing forecasts:", error);
           toast("error", "Failed to load invoicing forecasts");
         } finally {
-          removeLoadingOverlay();
+          if (loading) removeLoadingOverlay();
+        }
+      };
+
+      const syncMissingProjectsToInvoicingList = async (): Promise<void> => {
+        if (!canCreateRecord() || projects.length === 0) return;
+
+        const syncLockKey = `${siteUrl}::${listName}`;
+        const windowState = window as any;
+        const syncLocks: Set<string> = windowState.__invoicingSyncLocks || new Set<string>();
+        windowState.__invoicingSyncLocks = syncLocks;
+        if (syncLocks.has(syncLockKey)) {
+          console.info("Invoicing project sync is already running.");
+          return;
+        }
+        syncLocks.add(syncLockKey);
+
+        try {
+          const visibleProjects = canReadAllProjects() ? projects : getAssignedProjects(projects);
+          const existingRowsUrl =
+            `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items?` +
+            `$select=Id,ProjectId,Title,Project/Id,Project/Title&$expand=Project&$top=5000`;
+          const checkResponse = await fetch(
+            existingRowsUrl,
+            { headers: { Accept: "application/json;odata=verbose" } }
+          );
+          if (!checkResponse.ok) {
+            throw new Error(`Could not verify existing Invoicing rows (HTTP ${checkResponse.status}).`);
+          }
+
+          const serverRows = (await checkResponse.json())?.d?.results || [];
+          if (serverRows.length > 0 && forecasts.length === 0) {
+            console.error("Invoicing auto-sync stopped: SharePoint has rows but the page loaded none.");
+            return;
+          }
+
+          const getServerProjectIds = (rows: any[]): Set<number> => {
+            const ids = new Set<number>();
+            rows.forEach(row => {
+              [row.ProjectId, row.ProjectReferenceId, row.Project?.Id].forEach(value => {
+                const id = Number(value);
+                if (value !== null && value !== undefined && Number.isFinite(id) && id > 0) ids.add(id);
+              });
+            });
+            return ids;
+          };
+          const serverProjectIds = getServerProjectIds(serverRows);
+          const forecastProjectIds = new Set<number>();
+          const forecastProjectTitles = new Set<string>();
+          forecasts.forEach(forecast => {
+            if (forecast.Project?.Id !== undefined) forecastProjectIds.add(forecast.Project.Id);
+            if (forecast.Project?.Title) forecastProjectTitles.add(forecast.Project.Title);
+          });
+
+          const missingProjects = visibleProjects.filter(project =>
+            !serverProjectIds.has(project.Id) &&
+            !forecastProjectIds.has(project.Id) &&
+            !forecastProjectTitles.has(project.Title)
+          );
+          if (missingProjects.length === 0) return;
+
+          const digest = await getDigest();
+          const freshData = createFreshForecastStructure();
+          const freshDataJson = JSON.stringify(freshData);
+          let added = 0;
+          let failed = 0;
+
+          const createForecastForProject = async (project: ProjectItem): Promise<void> => {
+            let lastError = "Unknown SharePoint error";
+            let throttleAttempt = 0;
+
+            while (true) {
+              try {
+                const payload = {
+                  __metadata: { type: "SP.Data.InvoicingPlanningListItem" },
+                  Title: generateForecastTitle(project, freshData),
+                  ProjectId: project.Id,
+                  ProfitCentre: project.PC || "",
+                  OBL: 0,
+                  ForecastData: freshDataJson,
+                  InvoiceActual: "{}"
+                };
+                const response = await fetch(
+                  `${siteUrl}/_api/web/lists/getbytitle('${listName}')/items`,
+                  {
+                    method: "POST",
+                    headers: {
+                      Accept: "application/json;odata=verbose",
+                      "Content-Type": "application/json;odata=verbose",
+                      "X-RequestDigest": digest
+                    },
+                    body: JSON.stringify(payload)
+                  }
+                );
+
+                if (response.ok) {
+                  added++;
+                  return;
+                }
+
+                const bodyText = await response.text();
+                lastError = `HTTP ${response.status}`;
+                try {
+                  const errorData = JSON.parse(bodyText);
+                  lastError = errorData?.error?.message?.value || lastError;
+                } catch {
+                  if (bodyText) lastError = bodyText.slice(0, 250);
+                }
+
+                if (response.status !== 429) break;
+                if (throttleAttempt >= 5) break;
+
+                const retryAfter = response.headers.get("Retry-After");
+                const retryAfterSeconds = retryAfter === null ? NaN : Number(retryAfter);
+                const retryAfterDate = retryAfter && Number.isNaN(retryAfterSeconds)
+                  ? Date.parse(retryAfter)
+                  : NaN;
+                const waitMs = Number.isFinite(retryAfterSeconds)
+                  ? Math.max(0, retryAfterSeconds * 1000)
+                  : Number.isFinite(retryAfterDate)
+                    ? Math.max(0, retryAfterDate - Date.now())
+                    : Math.min(60000, 1000 * (2 ** throttleAttempt));
+                throttleAttempt++;
+                console.warn(`SharePoint throttled Invoicing sync; retrying in ${Math.ceil(waitMs / 1000)}s.`);
+                await new Promise(resolve => setTimeout(resolve, waitMs));
+              } catch (error) {
+                lastError = error instanceof Error ? error.message : String(error);
+                break;
+              }
+            }
+
+            failed++;
+            console.error(`Invoicing sync failed for ${project.Title}: ${lastError}`);
+          };
+
+          const batchPayloads = missingProjects.map((project): Record<string, unknown> => ({
+            __metadata: { type: "SP.Data.InvoicingPlanningListItem" },
+            Title: generateForecastTitle(project, freshData),
+            ProjectId: project.Id,
+            ProfitCentre: project.PC || "",
+            OBL: 0,
+            ForecastData: freshDataJson,
+            InvoiceActual: "{}"
+          }));
+          const batchResults = await createSharePointItemsInBatches(siteUrl, listName, digest, batchPayloads);
+          const failedBatchProjects: ProjectItem[] = [];
+          batchResults.forEach((result, index) => {
+            if (result.success) {
+              added++;
+            } else {
+              failedBatchProjects.push(missingProjects[index]);
+              console.error(`Invoicing batch create failed for ${missingProjects[index].Title}: ${result.error}`);
+            }
+          });
+
+          if (failedBatchProjects.length > 0) {
+            const verifyResponse = await fetch(existingRowsUrl, {
+              headers: { Accept: "application/json;odata=verbose" }
+            });
+            if (!verifyResponse.ok) {
+              throw new Error(`Could not verify Invoicing batch results (HTTP ${verifyResponse.status}); individual retries were stopped to avoid duplicate rows.`);
+            }
+            const verifiedRows = (await verifyResponse.json())?.d?.results || [];
+            const verifiedProjectIds = getServerProjectIds(verifiedRows);
+            const fallbackProjects = failedBatchProjects.filter(project => !verifiedProjectIds.has(project.Id));
+
+            if (fallbackProjects.length < failedBatchProjects.length) {
+              console.warn("Invoicing batch verification found rows already created; skipping duplicate retries.");
+            }
+            const fallbackConcurrency = 4;
+            for (let i = 0; i < fallbackProjects.length; i += fallbackConcurrency) {
+              await Promise.all(fallbackProjects.slice(i, i + fallbackConcurrency).map(createForecastForProject));
+            }
+          }
+
+          if (added > 0) await loadForecasts(undefined, false);
+          console.log(`Invoicing auto-sync added ${added} project(s)` + (failed > 0 ? ` (${failed} failed)` : ""));
+          if (failed > 0) {
+            toast("warning", `Invoicing sync failed for ${failed} project(s). Check the console for details.`);
+          }
+        } catch (error) {
+          console.error("Invoicing auto-sync failed:", error);
+          toast("error", "Could not sync missing Invoicing forecasts.");
+        } finally {
+          syncLocks.delete(syncLockKey);
         }
       };
 
@@ -4462,8 +4652,10 @@ const renderProjectDetails = (project: ProjectItem): void => {
         loaderHost().appendChild(loading);
 
         try {
-          await loadProjects();
-          await loadForecasts();
+          const projectsLoad = loadProjects();
+          const forecastsLoad = loadForecasts(projectsLoad, false);
+          await Promise.all([projectsLoad, forecastsLoad]);
+          await syncMissingProjectsToInvoicingList();
           populateFilterOptions();
           syncFilterUIFromSelects();
           filterTable();
@@ -4749,7 +4941,9 @@ if (backBtns && backBtns.length > 0) {
 
       // ========== INITIAL LOADS ==========
 
+      loaderHost().appendChild(createLoadingOverlay("Loading Invoicing data..."));
       try {
+        console.log("⏳ Initializing Invoicing permissions...");
         await authManager.initialize({ siteUrl });
 
         console.log(`🔑 Permission Level: ${getPermissionLevel().toUpperCase()}`);
@@ -4759,8 +4953,10 @@ if (backBtns && backBtns.length > 0) {
         console.log(`✅ Can Read All Projects: ${canReadAllProjects()} | Can Freeze: ${canFreeze()}`);
         console.log(`✅ Is GH Head: ${isGHHead()} | Is PM Manager: ${isPMManager()} | Is Engg User: ${isEngineeringUser()}`);
 
-        await loadProjects();
-        await loadForecasts();
+        console.log("⏳ Loading projects and Invoicing forecasts...");
+        const projectsLoad = loadProjects();
+        const forecastsLoad = loadForecasts(projectsLoad, false);
+        await Promise.all([projectsLoad, forecastsLoad]);
 
         setupPaginationEventListeners();
 
@@ -4775,9 +4971,31 @@ if (backBtns && backBtns.length > 0) {
           saveBtn: ".invoicing-btn-primary[type=\"submit\"]"
         });
 
+        const runBackgroundAutoUpdate = async (): Promise<void> => {
+          try {
+            setBackgroundAutoUpdateIndicator(".invoicing-page", true);
+            await syncMissingProjectsToInvoicingList();
+          } catch (error) {
+            console.error("Background Invoicing update failed:", error);
+            toast("error", "Invoicing background update failed");
+          } finally {
+            try {
+              filterTable();
+            } catch (error) {
+              console.error("Could not refresh the Invoicing table after background update:", error);
+              toast("error", "Could not refresh the Invoicing table");
+            } finally {
+              setBackgroundAutoUpdateIndicator(".invoicing-page", false);
+            }
+          }
+        };
+        void runBackgroundAutoUpdate();
+
       } catch (error) {
         console.error('❌ Error initializing Invoicing module:', error);
         toast("error", "Failed to initialize application");
+      } finally {
+        removeLoadingOverlay();
       }
 
       console.log("✅ Invoicing Forecast Module Initialized - Default page size: 25 per page");

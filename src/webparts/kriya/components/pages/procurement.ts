@@ -423,6 +423,7 @@ export default {
   script: () => {
    
     setTimeout(async () => {
+      if ((window as any).__dtActivePageKey !== 'procurement') return;
       // Configuration
       const siteUrl =
         typeof _spPageContextInfo !== "undefined"
